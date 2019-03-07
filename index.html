@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/blog-home.css" rel="stylesheet">
+</head>
+<style>
+h1 {
+   color:white;
+}
+body {
+  background-color: #3d3d3d;
+}
+    .links line {
+        stroke: #999;
+        stroke-opacity: 0.6;
+    }
+
+    .nodes circle {
+        stroke: #fff;
+        stroke-width: 2px;
+    }
+
+    .node .selected circle {
+        fill: red;
+    }
+.brush .extent {
+  fill-opacity: .1;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+.texts {
+  font: 16px sans-serif; 
+  fill: white;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 2px;
+  color: #fff;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+</style>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 center-block">
+    	<h1 class="display-4 text-center">Network topology</h1>
+    	<svg height="900" width="1400" id="graph"></svg>
+    </div>
+    <div class="col-sm-4"><h1 class="display-4 text-center">Statistics</h1>
+    </div>
+  </div>
+    <div class="row">
+  	    <h1 class="display-4 text-center" >PCA</h1>
+        <svg height="500" width="1900" id="PCA"></svg>
+  </div >
+</div>
+</body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="force_brush.js"></script>
+</html>
