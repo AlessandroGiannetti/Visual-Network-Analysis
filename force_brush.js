@@ -91,7 +91,6 @@ function drawcpa(data){
         y = {},
         dragging = {};
 
-
     var line = d3.line(),
         //axis = d3.axisLeft(x),
         background,
@@ -107,13 +106,13 @@ function drawcpa(data){
 // Extract the list of dimensions and create a scale for each.
     //cars[0] contains the header elements, then for all elements in the header
     //different than "name" it creates and y axis in a dictionary by variable name
-    var d
-    x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
-        d = d;
-        return y[d] = d3.scaleLinear()
-            .domain(//array dei valori)
-            .range([height, 0]);
-    }));
+    //var d
+   // x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
+   //     d = d;
+     //   return y[d] = d3.scaleLinear()
+       //     .domain(//array dei valori)
+         //   .range([height, 0]);
+    //}));
     extents = dimensions.map(function(p) { return [0,0]; });
 
     // Add grey background lines for context.
@@ -233,7 +232,7 @@ d3.json("miserables.json", function(error, data) {
         data.links[i].id=i
     }
     drawgraph(data);
-    drawcpa(data);
+    // drawcpa(data);
 
 });
 
