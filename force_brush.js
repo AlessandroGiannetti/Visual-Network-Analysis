@@ -83,8 +83,8 @@ function drawgraph(data){
 };
 
 function drawcpa(data){
-    var margin = {top: 30, right: 10, bottom: 10, left: 10},
-        width = 960 - margin.left - margin.right,
+    var margin = {top: 30, right: 10, bottom: 10, left: 20},
+        width = 1920 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().rangeRound([0, width+100]).padding(.1),
@@ -103,16 +103,22 @@ function drawcpa(data){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// Extract the list of dimensions and create a scale for each.
+    // Extract the list of dimensions and create a scale for each.
     //cars[0] contains the header elements, then for all elements in the header
     //different than "name" it creates and y axis in a dictionary by variable name
-    //var d
-   // x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
-   //     d = d;
-     //   return y[d] = d3.scaleLinear()
-       //     .domain(//array dei valori)
-         //   .range([height, 0]);
-    //}));
+
+    x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
+        if ((d == "id") || (d == "index")) {
+            return false;
+        }
+        return y[d] = d3.scale.ordinal()
+            .domain(d3.extent(data.links, function(p) {
+                if(d=="source" || d=="target") {
+                    return +p[d]["id"];
+                }
+                return +p[d]; }))
+            .range([height, 0]);
+    }));
     extents = dimensions.map(function(p) { return [0,0]; });
 
     // Add grey background lines for context.
@@ -194,7 +200,10 @@ function drawcpa(data){
 
 // Returns the path for a given data point.
     function path(d) {
-        return line(dimensions.map(function(p) { return [position(p), y[p](d[p])]; }));
+        return line(dimensions.map(function(p) {
+            if(p=="source" || p =="target")
+                return [position(p), y[p](d[p]["id"])];
+            return [position(p), y[p](d[p])]; }));
     }
 
     function brushstart() {
@@ -232,7 +241,7 @@ d3.json("miserables.json", function(error, data) {
         data.links[i].id=i
     }
     drawgraph(data);
-    // drawcpa(data);
+    drawcpa(data);
 
 });
 
