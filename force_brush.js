@@ -1,9 +1,31 @@
-var selectedCircle = new Set();
+var chiavi;
+
+var dataSelection=[];
+
+var focus;
+
+var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    margin2 = {top: 0, right: 0, bottom: 0, left: 0},
+    width = 1500 - margin.left - margin.right,
+    height = 800 - margin.top - margin.bottom,
+    height2 = 800 - margin2.top - margin2.bottom;
+
+var brush = d3.brushX()
+    .extent([[0, 0], [width, height2]])
+    .on("brush", brushed);
+
+var brushTot=d3.brush()
+    .extent([[0,0],[width, height]])
+    .on("end", selected);
+
+var color= d3.scaleOrdinal(d3.schemeCategory10);
 
 function drawgraph(data){
-    var svg = d3.select("#graph"),
-    width = +svg.attr("width",),
-    height = +svg.attr("height",);
+
+    var svg = d3.select("#graph").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -11,24 +33,37 @@ function drawgraph(data){
         .force("charge", d3.forceManyBody().strength(-200).distanceMax(250))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
-    var link = svg.append("g")
+    svg.append("defs").append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height);
+
+    focus = svg.append("g")
+        .attr("class", "focus")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var context = svg.append("g")
+        .attr("class", "context")
+        .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+    var link = focus.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(data.links)
         .enter().append("line");
 
-    var node = svg.append("g")
+    var node = focus.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(data.nodes)
         .enter().append("circle")
         .attr("r", 15)
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended));
+        .attr("opacity",".3")
+        .style("fill", function(d) {return color(d[chiavi[2]]); });
 
-    var textElements = svg.append("g")
+    var textElements = focus.append("g")
         .attr("class", "texts")
         .selectAll("text")
         .data(data.nodes)
@@ -38,6 +73,10 @@ function drawgraph(data){
         .attr("dx", 15)
         .attr("dy", 4);
 
+    svg.append("g")
+        .attr("class", "brushT")
+        .call(brushTot);
+
     node.append("title")
         .text(function(d) { return d.id; });
     simulation
@@ -45,27 +84,6 @@ function drawgraph(data){
         .on("tick", ticked);
     simulation.force("link")
         .links(data.links);
-
-    var brush = svg.append("g")
-        .datum(function() { return {selected: false, previouslySelected: false}; })
-        .attr("class", "brush")
-        .call(d3.brush()
-            .extent([[0, 0], [width, height]])
-            .on("brush", function() {
-                console.log(selectedCircle)
-                var extent = d3.event.selection;
-                node.style("fill", function(d) {
-                    var evaluation = extent[0][0] <= d.x && d.x < extent[1][0]
-                        && extent[0][1] <= d.y && d.y < extent[1][1];
-                    if (evaluation == true) {
-                        selectedCircle.add(d)
-                        return "red"
-                    } else {
-                        selectedCircle.delete(d)
-                        return d3.select(this).attr("fill-copied");
-                    }
-                });
-            }));
 
     function ticked() {
         link
@@ -80,6 +98,10 @@ function drawgraph(data){
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
     }
+
+    focus.append("g")
+        .attr("class", "brush")
+        .call(brush);
 };
 
 function drawcpa(data){
@@ -103,21 +125,25 @@ function drawcpa(data){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var Range = [];
+
+    for (var i = 0; i <= height*20; i= i+20) {
+        Range.push(i);
+    }
     // Extract the list of dimensions and create a scale for each.
     //cars[0] contains the header elements, then for all elements in the header
     //different than "name" it creates and y axis in a dictionary by variable name
-
     x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
-        if ((d == "id") || (d == "index")) {
+        if ((d == "id") || (d == "index") || (d == "Timestamp")) {
             return false;
         }
-        return y[d] = d3.scale.ordinal()
+        return y[d] = d3.scaleOrdinal()
             .domain(d3.extent(data.links, function(p) {
                 if(d=="source" || d=="target") {
                     return +p[d]["id"];
                 }
                 return +p[d]; }))
-            .range([height, 0]);
+            .range(Range);
     }));
     extents = dimensions.map(function(p) { return [0,0]; });
 
@@ -210,21 +236,24 @@ function drawcpa(data){
         d3.event.sourceEvent.stopPropagation();
     }
 
-
 // Handles a brush event, toggling the display of foreground lines.
     function brush_parallel_chart() {
         for(var i=0;i<dimensions.length;++i){
             if(d3.event.target==y[dimensions[i]].brush) {
                 extents[i]=d3.event.selection.map(y[dimensions[i]].invert,y[dimensions[i]]);
-
+                // PROBLEMONE - ORDINAL SCALE NON HA LA FUNZIONE INVERT
+                // problemi nella selezione su asse y
             }
         }
 
         foreground.style("display", function(d) {
-            return dimensions.every(function(p, i) {
+              return dimensions.every(function(p, i) {
                 if(extents[i][0]==0 && extents[i][0]==0) {
                     return true;
                 }
+                  console.log(extents[i][0] );
+                  console.log(extents[i][1] );
+
                 return extents[i][1] <= d[p] && d[p] <= extents[i][0];
             }) ? null : "none";
         });
@@ -233,31 +262,60 @@ function drawcpa(data){
 
 d3.json("miserables.json", function(error, data) {
     chiavi= d3.keys(data.links[0]);
-
     if (error) throw error;
     var l=data.links.length;
-    for (i=0;i<l;i++)
-    {
-        data.links[i].id=i
+    for (var i=0;i<l;i++) {
+        data.links[i].id = i;
     }
     drawgraph(data);
     drawcpa(data);
-
 });
 
-function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-}
 
-function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
+function brushed() {
+    focus.selectAll("circle")
+        .attr("cx", function (d) {
+            return (d.x);
+        })
+        .attr("cy", function (d) {
+            return d.y;
+        });
 }
+function selected(){
+    dataSelection=[]
+    var selection= d3.event.selection;
+    if (selection != null) {
+        focus.selectAll("circle")
+            .style("opacity", function (d) {
+                if ((d.x > selection[0][0]) && ((d.x) < selection[1][0]) && ((d.y) > selection[0][1]) && ((d.y) < selection[1][1])) {
+                    dataSelection.push(d.id);
+                    return "1.0";
+                } else {
+                    return "0.3";
+                }
+            })
+    }
+    else
+        {
+            focus.selectAll("circle")
+                .style("fill",function(d) {return color(d[chiavi[2]]); })
+                .style("opacity",".3");
+        }
 
-function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
+        d3.select("#PCA").selectAll(".forepath")
+            .style("stroke","steelblue");
+
+        var c=d3.select("#PCA").selectAll(".forepath")
+            .style("stroke",function(d){
+                console.log(d);
+                // da decidere se includere target e source
+                if ((d.source.x > selection[0][0]) && (d.source.x < selection[1][0]) && (d.source.y > selection[0][1]) && (d.source.y < selection[1][1])) {
+                    dataSelection.push(d.id)
+                    return "red"
+                }
+                else
+                {
+                    return "steelblue"
+                }
+            });
 }

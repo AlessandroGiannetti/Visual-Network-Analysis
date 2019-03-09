@@ -5,19 +5,19 @@ h1 {
    color:white;
 }
 
-    .links line {
-        stroke: #999;
-        stroke-opacity: 0.6;
-    }
+.links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
 
-    .nodes circle {
-        stroke: #fff;
-        stroke-width: 2px;
-    }
+.nodes circle {
+    stroke: #fff;
+    stroke-width: 2px;
+}
 
-    .node .selected circle {
-        fill: red;
-    }
+.node .selected circle {
+    fill: red;
+}
 .brush .extent {
   fill-opacity: .1;
   stroke: #fff;
@@ -84,6 +84,7 @@ svg {
 }
 
 .axis text {
+    font: 11px sans-serif;
     fill: white;
     cursor: move;
 }
