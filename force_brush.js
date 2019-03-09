@@ -4,9 +4,9 @@ var dataSelection=[];
 
 var focus;
 
-var margin = {top: 0, right: 0, bottom: 0, left: 0},
-    margin2 = {top: 0, right: 0, bottom: 0, left: 0},
-    width = 1500 - margin.left - margin.right,
+var margin = {top: 5, right: 5, bottom: 5, left: 5},
+    margin2 = {top: 5, right: 5, bottom: 5, left: 5},
+    width = 950 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom,
     height2 = 800 - margin2.top - margin2.bottom;
 
@@ -26,13 +26,12 @@ function drawgraph(data){
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
-
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
         .force("collide", d3.forceCollide().strength(2).radius(100))
         .force("charge", d3.forceManyBody().strength(-180).distanceMax(280))
         .force("xAxis",d3.forceX(width/2).strength(0.4))
-        .force("yAxis",d3.forceY(height/2).strength(0.6))
+        .force("yAxis", d3.forceY(height / 2).strength(0.8))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     svg.append("defs").append("clipPath")
@@ -44,11 +43,6 @@ function drawgraph(data){
     focus = svg.append("g")
         .attr("class", "focus")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var context = svg.append("g")
-        .attr("class", "context")
-        .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-
 
     var link = focus.append("g")
         .attr("class", "links")
@@ -62,7 +56,7 @@ function drawgraph(data){
         .data(data.nodes)
         .enter().append("circle")
         .attr("r", 15)
-        .attr("opacity",".3")
+        .attr("opacity", "1")
         .style("fill", function(d) {return color(d[chiavi[2]]); });
 
     var textElements = focus.append("g")
@@ -72,8 +66,8 @@ function drawgraph(data){
         .enter().append("text")
         .text(function (node) { return  node.id })
         .attr("font-size", 15)
-        .attr("dx", 15)
-        .attr("dy", 4);
+        .attr("dx", 20)
+        .attr("dy", 5);
 
     svg.append("g")
         .attr("class", "brushT")
@@ -104,11 +98,10 @@ function drawgraph(data){
     focus.append("g")
         .attr("class", "brush")
         .call(brush);
-};
-
+}
 function drawcpa(data){
-    var margin = {top: 30, right: 10, bottom: 10, left: 20},
-        width = 1920 - margin.left - margin.right,
+    var margin = {top: 30, right: 100, bottom: 10, left: 80},
+        width = 1800 - margin.left - margin.right,
         height = 700 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().rangeRound([0, width+100]).padding(.1),
@@ -260,8 +253,7 @@ function drawcpa(data){
             }) ? null : "none";
         });
     }
-};
-
+}
 d3.json("miserables.json", function(error, data) {
     chiavi= d3.keys(data.links[0]);
     if (error) throw error;
@@ -284,24 +276,24 @@ function brushed() {
         });
 }
 function selected(){
-    dataSelection=[]
+    dataSelection = [];
     var selection= d3.event.selection;
     if (selection != null) {
         focus.selectAll("circle")
-            .style("opacity", function (d) {
+            .style("stroke-width", function (d) {
                 if ((d.x > selection[0][0]) && ((d.x) < selection[1][0]) && ((d.y) > selection[0][1]) && ((d.y) < selection[1][1])) {
                     dataSelection.push(d.id);
-                    return "1.0";
+                    return "4";
                 } else {
-                    return "0.3";
+                    return "1";
                 }
-            })
+            });
     }
     else
         {
             focus.selectAll("circle")
                 .style("fill",function(d) {return color(d[chiavi[2]]); })
-                .style("opacity",".3");
+                .style("stroke-width", "1")
         }
 
         d3.select("#PCA").selectAll(".forepath")
@@ -309,15 +301,13 @@ function selected(){
 
         var c=d3.select("#PCA").selectAll(".forepath")
             .style("stroke",function(d){
-                console.log(d);
-                // da decidere se includere target e source
-                if ((d.source.x > selection[0][0]) && (d.source.x < selection[1][0]) && (d.source.y > selection[0][1]) && (d.source.y < selection[1][1])) {
-                    dataSelection.push(d.id)
-                    return "red"
+                if ((d.source.x > selection[0][0]) && (d.source.x < selection[1][0]) && (d.source.y > selection[0][1]) && (d.source.y < selection[1][1]) || (d.target.x > selection[0][0]) && (d.target.x < selection[1][0]) && (d.target.y > selection[0][1]) && (d.target.y < selection[1][1])) {
+                    dataSelection.push(d.id);
+                    return "red";
                 }
                 else
                 {
-                    return "steelblue"
+                    return "steelblue";
                 }
             });
 }
