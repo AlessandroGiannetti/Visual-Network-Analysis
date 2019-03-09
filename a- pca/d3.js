@@ -11467,6 +11467,11 @@ function continuous(deinterpolate, reinterpolate) {
     return (input || (input = piecewise(range$$1, domain, deinterpolateLinear, clamp ? reinterpolateClamp(reinterpolate) : reinterpolate)))(+y);
   };
 
+  scale.invert = function(x) {
+    // TODO take into account current ranger
+    return domain[d3.bisect(range, x) - 1];
+  };
+
   scale.domain = function(_) {
     return arguments.length ? (domain = map$3.call(_, number$1), rescale()) : domain.slice();
   };

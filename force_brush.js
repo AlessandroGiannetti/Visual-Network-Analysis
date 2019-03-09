@@ -29,8 +29,10 @@ function drawgraph(data){
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("collide", d3.forceCollide().strength(2).radius(35))
-        .force("charge", d3.forceManyBody().strength(-200).distanceMax(250))
+        .force("collide", d3.forceCollide().strength(2).radius(100))
+        .force("charge", d3.forceManyBody().strength(-180).distanceMax(280))
+        .force("xAxis",d3.forceX(width/2).strength(0.4))
+        .force("yAxis",d3.forceY(height/2).strength(0.6))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     svg.append("defs").append("clipPath")
@@ -107,7 +109,7 @@ function drawgraph(data){
 function drawcpa(data){
     var margin = {top: 30, right: 10, bottom: 10, left: 20},
         width = 1920 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        height = 700 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().rangeRound([0, width+100]).padding(.1),
         y = {},
