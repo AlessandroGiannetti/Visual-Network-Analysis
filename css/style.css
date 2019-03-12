@@ -59,7 +59,7 @@ svg {
 
 .background path {
     fill: none;
-    stroke: #ddd;
+    stroke: steelblue;
     shape-rendering: crispEdges;
 }
 
@@ -77,7 +77,7 @@ svg {
 .axis line,
 .axis path {
     fill: none;
-    stroke: #000;
+    stroke: #fff;
     shape-rendering: crispEdges;
 }
 

@@ -102,14 +102,13 @@ function drawgraph(data){
 function drawcpa(data){
     var margin = {top: 30, right: 100, bottom: 10, left: 80},
         width = 1800 - margin.left - margin.right,
-        height = 700 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().rangeRound([0, width+100]).padding(.1),
         y = {},
         dragging = {};
 
     var line = d3.line(),
-        //axis = d3.axisLeft(x),
         background,
         foreground,
         extents;
@@ -129,7 +128,7 @@ function drawcpa(data){
     //cars[0] contains the header elements, then for all elements in the header
     //different than "name" it creates and y axis in a dictionary by variable name
     x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
-        if ((d == "id") || (d == "index") || (d == "Timestamp")) {
+        if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration")) {
             return false;
         }
         return y[d] = d3.scaleOrdinal()
@@ -200,15 +199,15 @@ function drawcpa(data){
         .attr("y", -9)
         .text(function(d) { return d; });
 
-    // Add and store a brush for each axis.
-    g.append("g")
-        .attr("class", "brush")
-        .each(function(d) {
-            d3.select(this).call(y[d].brush = d3.brushY().extent([[-8, 0], [8,height]]).on("brush start", brushstart).on("brush", brush_parallel_chart));
-        })
-        .selectAll("rect")
-        .attr("x", -8)
-        .attr("width", 16);
+    /*  // Add and store a brush for each axis.
+      g.append("g")
+          .attr("class", "brush")
+          .each(function(d) {
+              d3.select(this).call(y[d].brush = d3.brushY().extent([[-8, 0], [8,height]]).on("brush start", brushstart).on("brush", brush_parallel_chart));
+          })
+          .selectAll("rect")
+          .attr("x", -8)
+          .attr("width", 16);*/
 
     function position(d) {
         var v = dragging[d];
@@ -227,32 +226,34 @@ function drawcpa(data){
             return [position(p), y[p](d[p])]; }));
     }
 
-    function brushstart() {
-        d3.event.sourceEvent.stopPropagation();
-    }
+    /*    function brushstart() {
+            d3.event.sourceEvent.stopPropagation();
+        }*/
 
 // Handles a brush event, toggling the display of foreground lines.
-    function brush_parallel_chart() {
-        for(var i=0;i<dimensions.length;++i){
-            if(d3.event.target==y[dimensions[i]].brush) {
-                extents[i]=d3.event.selection.map(y[dimensions[i]].invert,y[dimensions[i]]);
-                // PROBLEMONE - ORDINAL SCALE NON HA LA FUNZIONE INVERT
-                // problemi nella selezione su asse y
-            }
+    /*function brush_parallel_chart() {
+    var domain;
+    var range;
+    for(var i=0;i<dimensions.length;++i){
+        if(d3.event.target==y[dimensions[i]].brush) {
+            range = y[dimensions[i]].range();
+            extents[i]=d3.event.selection.map(y[dimensions[i]].invert,y[dimensions[i]]);
+            // PROBLEMONE - ORDINAL SCALE NON HA LA FUNZIONE INVERT
+            // problemi nella selezione su asse y
         }
+    }*/
 
-        foreground.style("display", function(d) {
-              return dimensions.every(function(p, i) {
-                if(extents[i][0]==0 && extents[i][0]==0) {
-                    return true;
-                }
-                  console.log(extents[i][0] );
-                  console.log(extents[i][1] );
+    /* foreground.style("display", function(d) {
+           return dimensions.every(function(p, i) {
+             if(extents[i][0]==0 && extents[i][0]==0) {
+                 return true;
+             }
+             console.log(extents[i]);
 
-                return extents[i][1] <= d[p] && d[p] <= extents[i][0];
-            }) ? null : "none";
-        });
-    }
+             return extents[i][1] <= d[p] && d[p] <= extents[i][0];
+         }) ? null : "none";
+     });
+ }*/
 }
 d3.json("miserables.json", function(error, data) {
     chiavi= d3.keys(data.links[0]);
@@ -265,7 +266,6 @@ d3.json("miserables.json", function(error, data) {
     drawcpa(data);
 });
 
-
 function brushed() {
     focus.selectAll("circle")
         .attr("cx", function (d) {
@@ -274,7 +274,9 @@ function brushed() {
         .attr("cy", function (d) {
             return d.y;
         });
+    focus.select(".axis--x").call(xAxis);
 }
+
 function selected(){
     dataSelection = [];
     var selection= d3.event.selection;
@@ -299,7 +301,7 @@ function selected(){
         d3.select("#PCA").selectAll(".forepath")
             .style("stroke","steelblue");
 
-        var c=d3.select("#PCA").selectAll(".forepath")
+    d3.select("#PCA").selectAll(".forepath")
             .style("stroke",function(d){
                 if ((d.source.x > selection[0][0]) && (d.source.x < selection[1][0]) && (d.source.y > selection[0][1]) && (d.source.y < selection[1][1]) || (d.target.x > selection[0][0]) && (d.target.x < selection[1][0]) && (d.target.y > selection[0][1]) && (d.target.y < selection[1][1])) {
                     dataSelection.push(d.id);
