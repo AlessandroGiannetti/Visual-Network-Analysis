@@ -61,11 +61,13 @@ svg {
     fill: none;
     stroke: steelblue;
     shape-rendering: crispEdges;
+    position: relative;
 }
 
 .foreground path {
     fill: none;
     stroke: steelblue;
+    position: relative;
 }
 
 .brush .extent {
@@ -79,6 +81,7 @@ svg {
     fill: none;
     stroke: #fff;
     shape-rendering: crispEdges;
+    position: relative;
 }
 
 .axis text {
