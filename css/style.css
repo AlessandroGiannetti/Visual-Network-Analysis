@@ -1,29 +1,23 @@
 body {
-  background-color: #3d3d3d;
+    background-color: #dddddd;
 }
 h1 {
-   color:white;
+    color: black;
 }
 
 .links line {
     stroke-opacity: 0.3;
-    stroke: #fff;
+    stroke: black;
 }
 
 .nodes circle {
-    stroke: #fff;
+    stroke: black;
     stroke-width: 1px;
 
 }
-
-.brush .extent {
-  fill-opacity: .1;
-  stroke: #fff;
-  shape-rendering: crispEdges;
-}
 .texts {
   font: 16px sans-serif;
-  fill: white;
+    fill: black;
 }
 
 .d3-tip {
@@ -31,7 +25,7 @@ h1 {
   font-weight: bold;
   padding: 12px;
   border-radius: 2px;
-  color: #fff;
+    color: black;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -70,22 +64,16 @@ svg {
     position: relative;
 }
 
-.brush .extent {
-    fill-opacity: .3;
-    stroke: #fff;
-    shape-rendering: crispEdges;
-}
-
 .axis line,
 .axis path {
     fill: none;
-    stroke: #fff;
+    stroke: black;
     shape-rendering: crispEdges;
     position: relative;
 }
 
 .axis text {
     font: 12px sans-serif;
-    fill: white;
+    fill: black;
     cursor: move;
 }

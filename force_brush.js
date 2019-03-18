@@ -6,9 +6,9 @@ var margin = {top: 5, right: 5, bottom: 5, left: 5},
     width = 950,
     height = 800;
 
-var color= d3.scaleOrdinal(d3.schemeCategory10);
+var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-function drawgraph(data){
+function drawgraph(data) {
 
     var svg = d3.select("#graph").append("svg")
         .attr("width", width)
@@ -47,7 +47,15 @@ function drawgraph(data){
             d3.select(this).style("fill", "steelblue");
             unselected(d3.select(this));
         })
-        .style("fill", function(d) {return color(d[chiavi[2]]); });
+        .on('mouseover', function () {
+            handlemouseover(d3.select(this));
+        })
+        .on('mouseout', function () {
+            handlemouseout();
+        })
+        .style("fill", function (d) {
+            return color(d[chiavi[2]]);
+        });
 
     var textElements = focus.append("g")
         .attr("class", "texts")
@@ -67,7 +75,9 @@ function drawgraph(data){
         .attr("dy", 5);
 
     node.append("title")
-        .text(function(d) { return d.id; });
+        .text(function (d) {
+            return d.id;
+        });
     simulation
         .nodes(data.nodes)
         .on("tick", ticked);
@@ -90,19 +100,28 @@ function drawgraph(data){
                 if (d.target.group == "2") return d.target.y;
             });
         node
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cx", function (d) {
+                return d.x;
+            })
+            .attr("cy", function (d) {
+                return d.y;
+            });
         textElements
-            .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y; });
+            .attr("x", function (d) {
+                return d.x;
+            })
+            .attr("y", function (d) {
+                return d.y;
+            });
     }
 }
-function drawcpa(data){
+
+function drawcpa(data) {
     var margin = {top: 30, right: 100, bottom: 10, left: 80},
         width = 1800 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
-    var x = d3.scaleBand().rangeRound([0, width+100]).padding(.1),
+    var x = d3.scaleBand().rangeRound([0, width + 100]).padding(.1),
         y = {},
         dragging = {};
 
@@ -118,22 +137,23 @@ function drawcpa(data){
 
     var Range = [];
 
-    for (var i = 0; i <= height*20; i= i+20) {
+    for (var i = 0; i <= height * 20; i = i + 20) {
         Range.push(i);
     }
     // Extract the list of dimensions and create a scale for each.
     //cars[0] contains the header elements, then for all elements in the header
     //different than "name" it creates and y axis in a dictionary by variable name
-    x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
+    x.domain(dimensions = d3.keys(data.links[0]).filter(function (d) {
         if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
             return false;
         }
         return y[d] = d3.scaleOrdinal()
-            .domain(d3.extent(data.links, function(p) {
-                if(d=="source" || d=="target") {
+            .domain(d3.extent(data.links, function (p) {
+                if (d == "source" || d == "target") {
                     return +p[d]["id"];
                 }
-                return +p[d]; }))
+                return +p[d];
+            }))
             .range(Range);
     }));
 
@@ -143,7 +163,7 @@ function drawcpa(data){
         .selectAll("path")
         .data(data.links)
         .enter().append("path")
-        .attr("class","backpath")
+        .attr("class", "backpath")
         .attr("d", path);
 
     // Add blue foreground lines for focus.
@@ -152,7 +172,7 @@ function drawcpa(data){
         .selectAll("path")
         .data(data.links)
         .enter().append("path")
-        .attr("class","forepath")
+        .attr("class", "forepath")
         .attr("d", path);
 
     // Add a group element for each dimension.
@@ -160,21 +180,29 @@ function drawcpa(data){
         .data(dimensions)
         .enter().append("g")
         .attr("class", "dimension")
-        .attr("transform", function(d) {  return "translate(" + x(d) + ")"; })
+        .attr("transform", function (d) {
+            return "translate(" + x(d) + ")";
+        })
         .call(d3.drag()
-            .subject(function(d) { return {x: x(d)}; })
-            .on("start", function(d) {
+            .subject(function (d) {
+                return {x: x(d)};
+            })
+            .on("start", function (d) {
                 dragging[d] = x(d);
                 background.attr("visibility", "hidden");
             })
-            .on("drag", function(d) {
+            .on("drag", function (d) {
                 dragging[d] = Math.min(width, Math.max(0, d3.event.x));
                 foreground.attr("d", path);
-                dimensions.sort(function(a, b) { return position(a) - position(b); });
+                dimensions.sort(function (a, b) {
+                    return position(a) - position(b);
+                });
                 x.domain(dimensions);
-                g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
+                g.attr("transform", function (d) {
+                    return "translate(" + position(d) + ")";
+                })
             })
-            .on("end", function(d) {
+            .on("end", function (d) {
                 delete dragging[d];
                 transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
                 transition(foreground).attr("d", path);
@@ -188,7 +216,9 @@ function drawcpa(data){
     // Add an axis and title.
     g.append("g")
         .attr("class", "axis")
-        .each(function(d) {  d3.select(this).call(d3.axisLeft(y[d]));})
+        .each(function (d) {
+            d3.select(this).call(d3.axisLeft(y[d]));
+        })
         //text does not show up because previous line breaks somehow
         .append("text")
         .style("text-anchor", "middle")
@@ -208,19 +238,20 @@ function drawcpa(data){
 
 // Returns the path for a given data point.
     function path(d) {
-        return line(dimensions.map(function(p) {
-            if(p=="source" || p =="target")
+        return line(dimensions.map(function (p) {
+            if (p == "source" || p == "target")
                 return [position(p), y[p](d[p]["id"].slice(0, -2))];
-            return [position(p), y[p](d[p])]; }));
+            return [position(p), y[p](d[p])];
+        }));
     }
 
 }
 
-d3.json("miserables.json", function(error, data) {
-    chiavi= d3.keys(data.links[0]);
+d3.json("miserables.json", function (error, data) {
+    chiavi = d3.keys(data.links[0]);
     if (error) throw error;
-    var l=data.links.length;
-    for (var i=0; i<l; i++) {
+    var l = data.links.length;
+    for (var i = 0; i < l; i++) {
         data.links[i].id = i;
     }
     drawgraph(data);
@@ -228,22 +259,57 @@ d3.json("miserables.json", function(error, data) {
 });
 
 function selected(circle) {
-
-    d3.select("#PCA").selectAll(".forepath")
-        .style("stroke",function(d){
-            if ((d.source.id == circle._groups[0][0].__data__.id)) {
+    d3.select("#PCA").selectAll(".forepath").transition().duration(200)
+        .style("stroke", function (d) {
+            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
                 return "red";
             }
+        })
+        .style("opacity", function (d) {
+            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
+                return "1";
+            } else
+                return "0.01";
         })
 }
 
 function unselected(circle) {
-    d3.select("#PCA").selectAll(".forepath")
+    d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
-            console.log(circle._groups[0][0].__data__.id);
-            if ((d.source.id == circle._groups[0][0].__data__.id)) {
+            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
                 return "steelblue";
             }
         })
+        .style("opacity", function (d) {
+            if ((d.source.id != circle._groups[0][0].__data__.id) || (d.target.id != circle._groups[0][0].__data__.id)) {
+                return "1";
+            }
+        })
+}
 
+function handlemouseover(circle) {
+    var nodes = [];
+    nodes.push(circle._groups[0][0].__data__.id);
+    d3.select("#graph").selectAll("line").transition().duration(200).delay(500)
+        .style("opacity", function (d) {
+            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
+                nodes.push(d.target.id);
+                nodes.push(d.source.id);
+                return "1";
+            }
+            if ((d.source.id != circle._groups[0][0].__data__.id) || (d.target.id != circle._groups[0][0].__data__.id))
+                return "0.1";
+        });
+    d3.select("#graph").selectAll("circle").transition().duration(200).delay(500)
+        .style("opacity", function (d) {
+            if (nodes.indexOf(d.id) > -1)
+                return "1";
+            else
+                return "0.1"
+        })
+}
+
+function handlemouseout() {
+    d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
+    d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
 }
