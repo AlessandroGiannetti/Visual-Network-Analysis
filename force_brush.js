@@ -3,31 +3,25 @@ var chiavi;
 var focus;
 
 var margin = {top: 5, right: 5, bottom: 5, left: 5},
-    width = 950 - margin.left - margin.right,
-    height = 800 - margin.top - margin.bottom;
+    width = 950,
+    height = 800;
 
 var color= d3.scaleOrdinal(d3.schemeCategory10);
 
 function drawgraph(data){
 
     var svg = d3.select("#graph").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-
-
-    var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("collide", d3.forceCollide().strength(2).radius(100))
-        .force("charge", d3.forceManyBody().strength(-180).distanceMax(280))
-        .force("xAxis",d3.forceX(width/2).strength(0.4))
-        .force("yAxis", d3.forceY(height / 2).strength(0.8))
-        .force("center", d3.forceCenter(width / 2, height / 2));
-
-    svg.append("defs").append("clipPath")
-        .attr("id", "clip")
-        .append("rect")
         .attr("width", width)
         .attr("height", height);
+
+    var simulation = d3.forceSimulation()
+        .force("charge", d3.forceManyBody().strength(-150).distanceMin(200).distanceMax(800))
+        .force("forceX", d3.forceX().strength(0.30).x(0.1))
+        .force("forceY", d3.forceY().strength(0.0105).y(height))
+        .force('x', d3.forceX(d => (d.group === '1') ? 200 : 930).strength(1))
+        .force("link", d3.forceLink().distance(700).strength(0).id(function (d) {
+            return d.id;
+        }));
 
     focus = svg.append("g")
         .attr("class", "focus")
@@ -45,7 +39,6 @@ function drawgraph(data){
         .data(data.nodes)
         .enter().append("circle")
         .attr("r", 15)
-        .attr("opacity", "1")
         .on("click", function () {
             d3.select(this).style("fill", "lightcoral");
             selected(d3.select(this));
@@ -61,9 +54,16 @@ function drawgraph(data){
         .selectAll("text")
         .data(data.nodes)
         .enter().append("text")
-        .text(function (node) { return  node.id })
+        .text(function (node) {
+            return node.id.slice(0, -2)
+        })
         .attr("font-size", 15)
-        .attr("dx", 20)
+        .attr("text-anchor", function () {
+            if (d3.select(this)._groups[0][0].__data__.group == "1") return "end"; else return "start";
+        })
+        .attr("dx", function () {
+            if (d3.select(this)._groups[0][0].__data__.group == "1") return -25; else return 25;
+        })
         .attr("dy", 5);
 
     node.append("title")
@@ -71,15 +71,24 @@ function drawgraph(data){
     simulation
         .nodes(data.nodes)
         .on("tick", ticked);
+
     simulation.force("link")
         .links(data.links);
 
     function ticked() {
         link
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
+            .attr("x1", function (d) {
+                if (d.source.group == '1') return d.source.x;
+            })
+            .attr("y1", function (d) {
+                if (d.source.group == "1") return d.source.y;
+            })
+            .attr("x2", function (d) {
+                if (d.target.group == "2") return d.target.x;
+            })
+            .attr("y2", function (d) {
+                if (d.target.group == "2") return d.target.y;
+            });
         node
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
@@ -116,7 +125,7 @@ function drawcpa(data){
     //cars[0] contains the header elements, then for all elements in the header
     //different than "name" it creates and y axis in a dictionary by variable name
     x.domain(dimensions = d3.keys(data.links[0]).filter(function(d) {
-        if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration")) {
+        if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
             return false;
         }
         return y[d] = d3.scaleOrdinal()
@@ -184,7 +193,9 @@ function drawcpa(data){
         .append("text")
         .style("text-anchor", "middle")
         .attr("y", -9)
-        .text(function(d) { return d; });
+        .text(function (d) {
+            return d;
+        });
 
     function position(d) {
         var v = dragging[d];
@@ -199,11 +210,12 @@ function drawcpa(data){
     function path(d) {
         return line(dimensions.map(function(p) {
             if(p=="source" || p =="target")
-                return [position(p), y[p](d[p]["id"])];
+                return [position(p), y[p](d[p]["id"].slice(0, -2))];
             return [position(p), y[p](d[p])]; }));
     }
 
 }
+
 d3.json("miserables.json", function(error, data) {
     chiavi= d3.keys(data.links[0]);
     if (error) throw error;
