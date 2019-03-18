@@ -1,6 +1,3 @@
-const forceSplit = d3.forceX(d => (d.group === '1') ? 200 : 700)
-    .strength(0.05);
-
 var chiavi;
 
 var focus;
@@ -24,8 +21,7 @@ function drawgraph(data){
         .force("charge", d3.forceManyBody().strength(-180).distanceMax(280))
         .force("xAxis",d3.forceX(width/2).strength(0.4))
         .force("yAxis", d3.forceY(height / 2).strength(0.8))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-    ;
+        .force("center", d3.forceCenter(width / 2, height / 2));
 
     svg.append("defs").append("clipPath")
         .attr("id", "clip")
@@ -224,7 +220,6 @@ function selected(circle) {
     d3.select("#PCA").selectAll(".forepath")
         .style("stroke",function(d){
             if ((d.source.id == circle._groups[0][0].__data__.id)) {
-                dataSelection.push(d.id);
                 return "red";
             }
         })
@@ -235,7 +230,6 @@ function unselected(circle) {
         .style("stroke", function (d) {
             console.log(circle._groups[0][0].__data__.id);
             if ((d.source.id == circle._groups[0][0].__data__.id)) {
-                dataSelection.push(d.id);
                 return "steelblue";
             }
         })
