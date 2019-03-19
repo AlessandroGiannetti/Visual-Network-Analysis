@@ -6200,14 +6200,14 @@ var Tab = function ($$$1) {
         }
 
         if (active.getAttribute('role') === 'tab') {
-          active.setAttribute('aria-selected', false);
+            active.setAttribute('aria-selectedNode', false);
         }
       }
 
       $$$1(element).addClass(ClassName.ACTIVE);
 
       if (element.getAttribute('role') === 'tab') {
-        element.setAttribute('aria-selected', true);
+          element.setAttribute('aria-selectedNode', true);
       }
 
       Util.reflow(element);

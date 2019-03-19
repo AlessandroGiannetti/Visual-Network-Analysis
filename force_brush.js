@@ -37,15 +37,17 @@ function drawgraph(data, Npackets) {
         .data(data.links)
         .enter().append("line")
         .on('mousemove', function (d) {
-            tooltip.transition().duration(150).delay(0)
+            tooltip.transition().duration(150)
                 .style('opacity', .9);
             tooltip.html(contentTip(d, Npackets))
                 .style('left', (d3.event.pageX + 50) + 'px')
-                .style('top', (d3.event.pageY) + 'px')
+                .style('top', (d3.event.pageY) + 'px');
+            handleMouseMoveEdge(d);
         })
-        .on('mouseout', function (d) {
-            tooltip.transition().duration(150).delay(0)
-                .style('opacity', 0)
+        .on('mouseout', function () {
+            tooltip.transition().duration(150).delay(0).delay(20)
+                .style('opacity', 0);
+            handleMouseOutEdge();
         })
         .attr("stroke-width", function (d) {
             return scalePack(Npackets[d.source + d.target]);
@@ -67,17 +69,17 @@ function drawgraph(data, Npackets) {
         .attr("r", 15)
         .on("click", function () {
             d3.select(this).style("fill", "lightcoral");
-            selected(d3.select(this));
+            selectedNode(d3.select(this));
         })
         .on('dblclick', function () {
             d3.select(this).style("fill", "steelblue");
-            unselected(d3.select(this));
+            unselectedNode(d3.select(this));
         })
         .on('mouseover', function () {
-            handlemouseover(d3.select(this));
+            handleMouseOverNode(d3.select(this));
         })
         .on('mouseout', function () {
-            handlemouseout();
+            handleMouseOutNode();
         })
         .style("fill", function (d) {
             return color(d[chiavi[2]]);
@@ -142,7 +144,6 @@ function drawgraph(data, Npackets) {
     }
 
     function contentTip(d) {
-        console.log(d);
         var content = " <table align='center'><tr><th>Attacker</th> <th>Target</th></tr>" +
             "<tr><td>" + d.source.id.slice(0, -2) + "</td><td>" + d.target.id.slice(0, -2) + "</td></tr>" +
             " <table align='center'><tr><th>Total number of packets</th></tr>" +
@@ -312,7 +313,7 @@ function scalePacket(map) {
     scalePack = d3.scale.linear().domain([min, max]).range([3, 20])
 }
 
-function selected(circle) {
+function selectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
             if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
@@ -327,7 +328,7 @@ function selected(circle) {
         });
 }
 
-function unselected(circle) {
+function unselectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
             if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
@@ -341,7 +342,7 @@ function unselected(circle) {
         });
 }
 
-function handlemouseover(circle) {
+function handleMouseOverNode(circle) {
     var nodes = [];
     nodes.push(circle._groups[0][0].__data__.id);
     d3.select("#graph").selectAll("line").transition().duration(200).delay(500)
@@ -363,7 +364,20 @@ function handlemouseover(circle) {
         })
 }
 
-function handlemouseout() {
+function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
+}
+
+function handleMouseMoveEdge(edge) {
+    d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", function (d) {
+        if (d.source.id == edge.source.id && d.target.id == edge.target.id)
+            return "1";
+        else
+            return "0.1";
+    })
+}
+
+function handleMouseOutEdge() {
+    d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
 }
