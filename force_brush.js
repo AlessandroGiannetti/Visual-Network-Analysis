@@ -1,5 +1,7 @@
 var chiavi;
 
+var scalePack;
+var map = {};
 var focus;
 
 var margin = {top: 5, right: 5, bottom: 5, left: 5},
@@ -8,7 +10,9 @@ var margin = {top: 5, right: 5, bottom: 5, left: 5},
 
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-function drawgraph(data) {
+function drawgraph(data, Npackets) {
+
+    var edges = [];
 
     var svg = d3.select("#graph").append("svg")
         .attr("width", width)
@@ -23,17 +27,39 @@ function drawgraph(data) {
             return d.id;
         }));
 
-    focus = svg.append("g")
-        .attr("class", "focus")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var tooltip = d3.select('body').append('div')
+        .style('opacity', 0)
+        .attr('class', 'd3-tip');
 
-    var link = focus.append("g")
+    var link = svg.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(data.links)
-        .enter().append("line");
+        .enter().append("line")
+        .on('mousemove', function (d) {
+            tooltip.transition().duration(150).delay(0)
+                .style('opacity', .9);
+            tooltip.html(contentTip(d, Npackets))
+                .style('left', (d3.event.pageX + 50) + 'px')
+                .style('top', (d3.event.pageY) + 'px')
+        })
+        .on('mouseout', function (d) {
+            tooltip.transition().duration(150).delay(0)
+                .style('opacity', 0)
+        })
+        .attr("stroke-width", function (d) {
+            return scalePack(Npackets[d.source + d.target]);
+        })
+        .attr("display", function (d) {
+            if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+                edges.push(d);
+                return "block";
+            } else {
+                return "none";
+            }
+        });
 
-    var node = focus.append("g")
+    var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(data.nodes)
@@ -57,7 +83,7 @@ function drawgraph(data) {
             return color(d[chiavi[2]]);
         });
 
-    var textElements = focus.append("g")
+    var textElements = svg.append("g")
         .attr("class", "texts")
         .selectAll("text")
         .data(data.nodes)
@@ -114,6 +140,15 @@ function drawgraph(data) {
                 return d.y;
             });
     }
+
+    function contentTip(d) {
+        console.log(d);
+        var content = " <table align='center'><tr><th>Attacker</th> <th>Target</th></tr>" +
+            "<tr><td>" + d.source.id.slice(0, -2) + "</td><td>" + d.target.id.slice(0, -2) + "</td></tr>" +
+            " <table align='center'><tr><th>Total number of packets</th></tr>" +
+            "<tr><td>" + Npackets[d.source.id + d.target.id] + "</td></tr>";
+        return content;
+    }
 }
 
 function drawcpa(data) {
@@ -140,9 +175,7 @@ function drawcpa(data) {
     for (var i = 0; i <= height * 20; i = i + 20) {
         Range.push(i);
     }
-    // Extract the list of dimensions and create a scale for each.
-    //cars[0] contains the header elements, then for all elements in the header
-    //different than "name" it creates and y axis in a dictionary by variable name
+
     x.domain(dimensions = d3.keys(data.links[0]).filter(function (d) {
         if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
             return false;
@@ -253,10 +286,31 @@ d3.json("miserables.json", function (error, data) {
     var l = data.links.length;
     for (var i = 0; i < l; i++) {
         data.links[i].id = i;
+        if (get(data.links[i].source + data.links[i].target) == null)
+            map[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+        else {
+            map[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
+        }
     }
-    drawgraph(data);
+    scalePacket(map);
+    drawgraph(data, map);
     drawcpa(data);
 });
+
+function get(k) {
+    return map[k];
+}
+
+function scalePacket(map) {
+    var max = 0, min = 9999999;
+    Object.keys(map).forEach(function (key) {
+        if (map[key] > max)
+            max = map[key];
+        if (map[key] < min)
+            min = map[key];
+    });
+    scalePack = d3.scale.linear().domain([min, max]).range([3, 20])
+}
 
 function selected(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
@@ -270,7 +324,7 @@ function selected(circle) {
                 return "1";
             } else
                 return "0.01";
-        })
+        });
 }
 
 function unselected(circle) {
@@ -284,7 +338,7 @@ function unselected(circle) {
             if ((d.source.id != circle._groups[0][0].__data__.id) || (d.target.id != circle._groups[0][0].__data__.id)) {
                 return "1";
             }
-        })
+        });
 }
 
 function handlemouseover(circle) {
