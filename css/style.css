@@ -6,7 +6,6 @@ html, body {
     font-family: 'Ubuntu', sans-serif;
     color: rgba(0, 0, 0, 0.8);
 }
-
 .links line {
     stroke-opacity: 0.3;
     stroke: black;
@@ -22,20 +21,17 @@ svg {
     display: block;
     margin: auto;
 }
-
 .background path {
     fill: none;
     stroke: steelblue;
     shape-rendering: geometricPrecision;
     position: relative;
 }
-
 .foreground path {
     fill: none;
     stroke: steelblue;
     position: relative;
 }
-
 .axis line,
 .axis path {
     fill: none;
@@ -43,14 +39,12 @@ svg {
     shape-rendering: geometricPrecision;
     position: relative;
 }
-
 .axis text {
     font-size: 14px;
     font-family: 'Ubuntu', sans-serif;
     fill: black;
     cursor: move;
 }
-
 .d3-tip {
     line-height: 1;
     padding: 12px;
@@ -61,22 +55,18 @@ svg {
     font-size: 14px;
     font-family: 'Ubuntu', sans-serif;
 }
-
 /* Style northward tooltips specifically */
 .d3-tip.n:after {
     margin: -2px 0 0 0;
     top: 100%;
     left: 0;
 }
-
 table, tr, td {
     padding: 5px;
     text-align: left;
     font-weight: normal;
 }
-
 tr, td:first-child {
     font-weight: bold;
     text-align: right;
 }
-

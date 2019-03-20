@@ -1,5 +1,4 @@
 var chiavi;
-
 var scalePack;
 var map = {};
 var focus;
