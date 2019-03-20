@@ -6,7 +6,7 @@ var focus;
 
 var margin = {top: 5, right: 5, bottom: 5, left: 5},
     width = 950,
-    height = 800;
+    height = 805;
 
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -19,11 +19,12 @@ function drawgraph(data, Npackets) {
         .attr("height", height);
 
     var simulation = d3.forceSimulation()
+        .force("forceX", d3.forceX().strength(0.30))
+        .force("forceY", d3.forceY().strength(0.01053))
         .force("charge", d3.forceManyBody().strength(-150).distanceMin(200).distanceMax(800))
-        .force("forceX", d3.forceX().strength(0.30).x(0.1))
-        .force("forceY", d3.forceY().strength(0.0105).y(height))
         .force('x', d3.forceX(d => (d.group === '1') ? 200 : 930).strength(1))
-        .force("link", d3.forceLink().distance(700).strength(0).id(function (d) {
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force("link", d3.forceLink().distance(730).strength(0).id(function (d) {
             return d.id;
         }));
 
@@ -107,6 +108,7 @@ function drawgraph(data, Npackets) {
             return d.id;
         });
     simulation
+
         .nodes(data.nodes)
         .on("tick", ticked);
 
@@ -144,10 +146,9 @@ function drawgraph(data, Npackets) {
     }
 
     function contentTip(d) {
-        var content = " <table align='center'><tr><th>Attacker</th> <th>Target</th></tr>" +
-            "<tr><td>" + d.source.id.slice(0, -2) + "</td><td>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            " <table align='center'><tr><th>Total number of packets</th></tr>" +
-            "<tr><td>" + Npackets[d.source.id + d.target.id] + "</td></tr>";
+        var content = " <table align='center'><tr><td>Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
+            "<tr><td>Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
+            "<tr><th>Tot n° of packets:</th> <td>" + Npackets[d.source.id + d.target.id] + "</td></tr></table>";
         return content;
     }
 }
@@ -256,6 +257,8 @@ function drawcpa(data) {
         //text does not show up because previous line breaks somehow
         .append("text")
         .style("text-anchor", "middle")
+        .style("font-size", "15px")
+        .style("font-family", "'Ubuntu', sans-serif")
         .attr("y", -9)
         .text(function (d) {
             return d;

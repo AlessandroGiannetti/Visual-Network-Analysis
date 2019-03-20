@@ -9,30 +9,31 @@
     <!-- Custom styles for this template -->
     <link href="css/blog-home.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
+    <script src="a- pca/d3.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="js/d3-tip.js"></script>
+    <script src="force_brush.js"></script>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" data-role="page" id="page1">
     <div class="row">
-        <div class="col-6">
-            <br>
-            <svg height="860" width="950" id="graph"></svg>
+        <div class="col-6" align="center">
+            <!--<table width="100%" ><tr><th id="left"><h1>Attacker</h1></th> <th id="right"><h1 >Target</h1></th></tr></table> -->
+            <svg height="870" width="950" id="graph"></svg>
         </div>
         <div class="col-6">
         </div>
     </div>
-</div>
-<div class="container-fluid">
     <div class="row">
-        <div class="center-block">
-            <svg height="600" width="1900" id="PCA"></svg>
-        </div>
+        <div class="col" align="center">filter</div>
+        <div class="col" align="center">fitler</div>
+        <div class="col" align="center">filter</div>
+        <div class="col" align="center">filter</div>
+    </div>
+    <div class="row" align="center">
+        <svg height="600" width="1600" id="PCA" align="center"></svg>
     </div>
 </div>
 </body>
-<script src="a- pca/d3.js"></script>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="js/d3-tip.js"></script>
-<script src="force_brush.js"></script>
 </html>

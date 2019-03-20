@@ -1,8 +1,10 @@
-body {
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700|Raleway:200|Ubuntu:300,400,500);
+
+html, body {
     background-color: #dddddd;
-}
-h1 {
-    color: black;
+    font-size: 16px;
+    font-family: 'Ubuntu', sans-serif;
+    color: rgba(0, 0, 0, 0.8);
 }
 
 .links line {
@@ -15,19 +17,16 @@ h1 {
     stroke-width: 1px;
 
 }
-.texts {
-  font: 16px sans-serif;
-    fill: black;
-}
-
 svg {
     font: 10px sans-serif;
+    display: block;
+    margin: auto;
 }
 
 .background path {
     fill: none;
     stroke: steelblue;
-    shape-rendering: crispEdges;
+    shape-rendering: geometricPrecision;
     position: relative;
 }
 
@@ -41,24 +40,26 @@ svg {
 .axis path {
     fill: none;
     stroke: black;
-    shape-rendering: crispEdges;
+    shape-rendering: geometricPrecision;
     position: relative;
 }
 
 .axis text {
-    font: 12px sans-serif;
+    font-size: 14px;
+    font-family: 'Ubuntu', sans-serif;
     fill: black;
     cursor: move;
 }
 
 .d3-tip {
     line-height: 1;
-    padding: 20px;
+    padding: 12px;
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 14px;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 /* Style northward tooltips specifically */
@@ -68,8 +69,14 @@ svg {
     left: 0;
 }
 
-table, th, td {
+table, tr, td {
     padding: 5px;
-    text-align: center;
+    text-align: left;
+    font-weight: normal;
+}
+
+tr, td:first-child {
+    font-weight: bold;
+    text-align: right;
 }
 
