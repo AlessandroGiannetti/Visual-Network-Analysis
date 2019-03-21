@@ -1,22 +1,37 @@
-var chiavi;
-var scalePack;
-var map = {};
-var focus;
-
-var margin = {top: 5, right: 5, bottom: 5, left: 5},
+// ======= Global variable declaration =======
+var
+    // ScalePack scale of packets
+    scalePack,
+    // NofPackets key: [source+target]  value : total n° of packets
+    NofPackets = {},
+    //SVG width and height
     width = 950,
     height = 805;
+// ======= Fine Global variable declaration=======
 
-var color = d3.scaleOrdinal(d3.schemeCategory10);
+// extraction of the dataset from the file
+d3.json("miserables.json", function (error, data) {
+    if (error) throw error;
+    // building the map packet
+    buildMapPacket(data);
+    // building the scale packet
+    scalePacket(NofPackets);
+    //drawing the graph network
+    drawGraph(data);
+    // drawing the cpa plot
+    drawCpa(data);
+});
 
-function drawgraph(data, Npackets) {
+function drawGraph(data) {
 
     var edges = [];
 
+    // create the svg on
     var svg = d3.select("#graph").append("svg")
         .attr("width", width)
         .attr("height", height);
 
+    // declaretion of the force for the simulation
     var simulation = d3.forceSimulation()
         .force("forceX", d3.forceX().strength(0.30))
         .force("forceY", d3.forceY().strength(0.01053))
@@ -27,10 +42,12 @@ function drawgraph(data, Npackets) {
             return d.id;
         }));
 
+    //declaration of the tooltip (extra info on over)
     var tooltip = d3.select('body').append('div')
         .style('opacity', 0)
         .attr('class', 'd3-tip');
 
+    //declaration of the link of the network
     var link = svg.append("g")
         .attr("class", "links")
         .selectAll("line")
@@ -39,7 +56,7 @@ function drawgraph(data, Npackets) {
         .on('mousemove', function (d) {
             tooltip.transition().duration(150)
                 .style('opacity', .9);
-            tooltip.html(contentTip(d, Npackets))
+            tooltip.html(contentLinkTip(d))
                 .style('left', (d3.event.pageX + 50) + 'px')
                 .style('top', (d3.event.pageY) + 'px');
             handleMouseMoveEdge(d);
@@ -50,7 +67,7 @@ function drawgraph(data, Npackets) {
             handleMouseOutEdge();
         })
         .attr("stroke-width", function (d) {
-            return scalePack(Npackets[d.source + d.target]);
+            return scalePack(NofPackets[d.source + d.target]);
         })
         .attr("display", function (d) {
             if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
@@ -61,6 +78,7 @@ function drawgraph(data, Npackets) {
             }
         });
 
+    // declaration of the node of the network
     var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
@@ -69,22 +87,20 @@ function drawgraph(data, Npackets) {
         .attr("r", 15)
         .on("click", function () {
             d3.select(this).style("fill", "lightcoral");
-            selectedNode(d3.select(this));
+            handleSelectedNode(d3.select(this));
         })
         .on('dblclick', function () {
             d3.select(this).style("fill", "steelblue");
-            unselectedNode(d3.select(this));
+            handleUnselectedNode(d3.select(this));
         })
         .on('mouseover', function () {
             handleMouseOverNode(d3.select(this));
         })
         .on('mouseout', function () {
             handleMouseOutNode();
-        })
-        .style("fill", function (d) {
-            return color(d[chiavi[2]]);
         });
 
+    //declaration of the text (ip) of the node
     var textElements = svg.append("g")
         .attr("class", "texts")
         .selectAll("text")
@@ -106,14 +122,16 @@ function drawgraph(data, Npackets) {
         .text(function (d) {
             return d.id;
         });
-    simulation
 
+    // starting the simulation
+    simulation
         .nodes(data.nodes)
         .on("tick", ticked);
 
     simulation.force("link")
         .links(data.links);
 
+    //associate the node with the link and the ip address
     function ticked() {
         link
             .attr("x1", function (d) {
@@ -144,15 +162,16 @@ function drawgraph(data, Npackets) {
             });
     }
 
-    function contentTip(d) {
+    // content of the windows on link mouse over
+    function contentLinkTip(d) {
         var content = " <table align='center'><tr><td>Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
             "<tr><td>Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            "<tr><th>Tot n° of packets:</th> <td>" + Npackets[d.source.id + d.target.id] + "</td></tr></table>";
+            "<tr><th>Tot n° of packets:</th> <td>" + NofPackets[d.source.id + d.target.id] + "</td></tr></table>";
         return content;
     }
 }
 
-function drawcpa(data) {
+function drawCpa(data) {
     var margin = {top: 30, right: 100, bottom: 10, left: 80},
         width = 1800 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -283,27 +302,21 @@ function drawcpa(data) {
 
 }
 
-d3.json("miserables.json", function (error, data) {
-    chiavi = d3.keys(data.links[0]);
-    if (error) throw error;
-    var l = data.links.length;
-    for (var i = 0; i < l; i++) {
-        data.links[i].id = i;
+function buildMapPacket(data) {
+    for (i = 0; i < data.links.length; i++) {
         if (get(data.links[i].source + data.links[i].target) == null)
-            map[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
-        else {
-            map[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
-        }
+            NofPackets[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+        else
+            NofPackets[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
     }
-    scalePacket(map);
-    drawgraph(data, map);
-    drawcpa(data);
-});
-
-function get(k) {
-    return map[k];
 }
 
+// return the value of the map with key k
+function get(k) {
+    return NofPackets[k];
+}
+
+// built the scale for the packets
 function scalePacket(map) {
     var max = 0, min = 9999999;
     Object.keys(map).forEach(function (key) {
@@ -315,7 +328,7 @@ function scalePacket(map) {
     scalePack = d3.scale.linear().domain([min, max]).range([3, 20])
 }
 
-function selectedNode(circle) {
+function handleSelectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
             if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
@@ -330,7 +343,7 @@ function selectedNode(circle) {
         });
 }
 
-function unselectedNode(circle) {
+function handleUnselectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
             if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
@@ -343,7 +356,6 @@ function unselectedNode(circle) {
             }
         });
 }
-
 function handleMouseOverNode(circle) {
     var nodes = [];
     nodes.push(circle._groups[0][0].__data__.id);
@@ -364,13 +376,12 @@ function handleMouseOverNode(circle) {
             else
                 return "0.1"
         })
-}
 
+}
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
 }
-
 function handleMouseMoveEdge(edge) {
     d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", function (d) {
         if (d.source.id == edge.source.id && d.target.id == edge.target.id)
@@ -379,7 +390,6 @@ function handleMouseMoveEdge(edge) {
             return "0.1";
     })
 }
-
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
 }

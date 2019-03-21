@@ -3766,14 +3766,14 @@ var Tab = function ($$$1) {
         }
 
         if (active.getAttribute('role') === 'tab') {
-            active.setAttribute('aria-selectedNode', false);
+            active.setAttribute('aria-handleSelectedNode', false);
         }
       }
 
       $$$1(element).addClass(ClassName.ACTIVE);
 
       if (element.getAttribute('role') === 'tab') {
-          element.setAttribute('aria-selectedNode', true);
+          element.setAttribute('aria-handleSelectedNode', true);
       }
 
       Util.reflow(element);
@@ -3891,4 +3891,4 @@ exports.Tooltip = Tooltip;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=bootstrap.js.map
+//# sourceMappingURL=bootstrap.js.NofPackets

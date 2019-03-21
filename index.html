@@ -4,12 +4,11 @@
 <head>
     <title>Visual security</title>
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <!-- javascript file -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="a- pca/d3.js"></script>
+    <script src="js/d3.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="js/d3-tip.js"></script>
@@ -18,9 +17,7 @@
 <body>
 <div class="container-fluid" data-role="page" id="page1">
     <div class="row">
-        <div class="col-6" align="center">
-            <!--<table width="100%" ><tr><th id="left"><h1>Attacker</h1></th> <th id="right"><h1 >Target</h1></th></tr></table> -->
-            <svg height="870" width="950" id="graph"></svg>
+        <div class="col-6" align="center" id="graph">
         </div>
         <div class="col-6">
         </div>
@@ -31,8 +28,7 @@
         <div class="col" align="center">filter</div>
         <div class="col" align="center">filter</div>
     </div>
-    <div class="row" align="center">
-        <svg height="600" width="1600" id="PCA" align="center"></svg>
+    <div class="row" align="center" id="PCA">
     </div>
 </div>
 </body>
