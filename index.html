@@ -8,25 +8,43 @@
 
     <!-- javascript file -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/d3.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="js/d3-tip.js"></script>
     <script src="force_brush.js"></script>
+    <script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
 </head>
 <body>
-<div class="container-fluid" data-role="page" id="page1">
+<div class="container-fluid" data-role="page">
     <div class="row">
         <div class="col-6" align="center" id="graph">
         </div>
-        <div class="col-6">
+        <div class="col-6" id="boxplot">
         </div>
     </div>
-    <div class="row">
-        <div class="col" align="center">filter</div>
-        <div class="col" align="center">fitler</div>
-        <div class="col" align="center">filter</div>
-        <div class="col" align="center">filter</div>
+    <div class="row" align="center">
+        <div class="col" align="center" id="controller1">
+            <div class="custom-control custom-checkbox checkbox-inline">
+                <input type="checkbox" class="custom-control-input" id="check1" checked>
+                <label class="custom-control-label" for="check1">Check this custom checkbox</label>
+            </div>
+        </div>
+        <div class="col" align="center" id="controller2">
+            <div class="custom-control custom-checkbox checkbox-inline">
+                <input type="checkbox" class="custom-control-input" id="check2" checked>
+                <label class="custom-control-label" for="check2">Check this custom checkbox</label>
+            </div>
+        </div>
+        <div class="col" align="center" id="controller3">
+            <div class="custom-control custom-checkbox checkbox-inline">
+                <input type="checkbox" class="custom-control-input" id="check3" checked>
+                <label class="custom-control-label" for="check3">Check this custom checkbox</label>
+            </div>
+        </div>
+        <div class="col" align="center" id="controller4">
+            <div class="custom-control custom-checkbox checkbox-inline">
+                <input type="checkbox" class="custom-control-input" id="check4" checked>
+                <label class="custom-control-label" for="check4">Check this custom checkbox</label>
+            </div>
+        </div>
     </div>
     <div class="row" align="center" id="PCA">
     </div>

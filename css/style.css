@@ -1,59 +1,63 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700|Raleway:200|Ubuntu:300,400,500);
 
 html, body {
-    background-color: #dddddd;
+    background-color: #393939;
     font-size: 16px;
-    font-family: 'Ubuntu', sans-serif;
-    color: rgba(0, 0, 0, 0.8);
+    font-family: 'Raleway', sans-serif;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    fill: white;
 }
 .links line {
-    stroke-opacity: 0.3;
-    stroke: black;
+    stroke-opacity: 0.4;
+    stroke: white;
 }
 
 .nodes circle {
     stroke: black;
-    stroke-width: 1px;
-
+    stroke-width: 2px;
+    fill: white;
 }
 svg {
-    font: 10px sans-serif;
+    font-family: 'Raleway', sans-serif;
     display: block;
     margin: auto;
 }
 .background path {
     fill: none;
-    stroke: steelblue;
+    stroke: #007bff;
     shape-rendering: geometricPrecision;
     position: relative;
 }
 .foreground path {
     fill: none;
-    stroke: steelblue;
+    stroke: #007bff;
     position: relative;
 }
 .axis line,
 .axis path {
     fill: none;
-    stroke: black;
+    stroke: white;
     shape-rendering: geometricPrecision;
     position: relative;
 }
 .axis text {
-    font-size: 14px;
-    font-family: 'Ubuntu', sans-serif;
-    fill: black;
+    font-size: 15px;
+    fill: white;
     cursor: move;
 }
 .d3-tip {
     line-height: 1;
     padding: 12px;
     position: absolute;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(35, 35, 35, 0.8);
     color: #fff;
     border-radius: 4px;
     font-size: 14px;
-    font-family: 'Ubuntu', sans-serif;
 }
 /* Style northward tooltips specifically */
 .d3-tip.n:after {
@@ -69,4 +73,54 @@ table, tr, td {
 tr, td:first-child {
     font-weight: bold;
     text-align: right;
+}
+
+.axis {
+    fill: gray;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.axis .halo {
+    stroke: gray;
+    stroke-width: 4px;
+    stroke-linecap: round;
+}
+
+.handle path {
+    stroke: white;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.handle text {
+    fill: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+/*style boxplot */
+.box line,
+.box rect,
+.box circle {
+    fill: steelblue;
+    stroke: #000;
+    stroke-width: 1px;
+}
+
+.box .center {
+    stroke-dasharray: 3, 3;
+}
+
+.box .outlier {
+    fill: none;
+    stroke: #000;
+}
+
+.x.axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
 }

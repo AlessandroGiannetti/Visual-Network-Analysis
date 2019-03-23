@@ -1,7 +1,8 @@
 // ======= Global variable declaration =======
 var
-    // ScalePack scale of packets
-    scalePack,
+    // ScalePack of packets for link dimension
+    scalePackets,
+    colorScalePackets,
     // NofPackets key: [source+target]  value : total n° of packets
     NofPackets = {},
     //SVG width and height
@@ -12,6 +13,12 @@ var
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, data) {
     if (error) throw error;
+
+    drawDataController("controller1");
+    drawDataController("controller2");
+    drawDataController("controller3");
+    drawDataController("controller4");
+
     // building the map packet
     buildMapPacket(data);
     // building the scale packet
@@ -20,8 +27,151 @@ d3.json("miserables.json", function (error, data) {
     drawGraph(data);
     // drawing the cpa plot
     drawCpa(data);
+
+
+    // ================ LISTENER ===================
+    d3.select("#check1").on("change", updateCheck1);
+
+    function updateCheck1() {
+        if (d3.select("#check1").property("checked"))
+            d3.select("#svgcontroller1").transition().duration(200).style("display", "block").style("opacity", "1");
+        else {
+            d3.select("#svgcontroller1").transition().duration(200).style("opacity", "0");
+            d3.select("#svgcontroller1").transition().delay(200).style("display", "none");
+        }
+    }
+
+    d3.select("#check2").on("change", updateCheck2);
+
+    function updateCheck2() {
+        if (d3.select("#check2").property("checked"))
+            d3.select("#svgcontroller2").transition().duration(200).style("display", "block").style("opacity", "1");
+        else {
+            d3.select("#svgcontroller2").transition().duration(200).style("opacity", "0");
+            d3.select("#svgcontroller2").transition().delay(200).style("display", "none");
+        }
+    }
+
+    d3.select("#check3").on("change", updateCheck3);
+
+    function updateCheck3() {
+        if (d3.select("#check3").property("checked"))
+            d3.select("#svgcontroller3").transition().duration(200).style("display", "block").style("opacity", "1");
+        else {
+            d3.select("#svgcontroller3").transition().duration(200).style("opacity", "0");
+            d3.select("#svgcontroller3").transition().delay(200).style("display", "none");
+        }
+    }
+
+    d3.select("#check4").on("change", updateCheck4);
+
+    function updateCheck4() {
+        if (d3.select("#check4").property("checked"))
+            d3.select("#svgcontroller4").transition().duration(200).style("display", "block").style("opacity", "1")
+            ;
+        else {
+            d3.select("#svgcontroller4").transition().duration(200).style("opacity", "0");
+            d3.select("#svgcontroller4").transition().delay(200).style("display", "none");
+        }
+    }
+
 });
 
+function drawDataController(tag) {
+    var margin = {top: 50, right: 30, bottom: 50, left: 30},
+        width = 440 - margin.left - margin.right,
+        height = 150 - margin.bottom - margin.top;
+
+    // scale function
+    var timeScale = d3.scaleTime()
+        .domain([new Date(), new Date()])
+        .range([0, width])
+        .nice(d3.timeDay)
+        .clamp(true);
+
+    var formatDate = d3.timeFormat('%H:%M');
+
+    var svg = d3.select("#" + tag).append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("id", "svg" + tag)
+        .append("g")
+        // classic transform to position g
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("rect")
+        .style("pointer-events", "all")
+        .style("fill", "none")
+        .attr("width", width)
+        .attr("height", height)
+        .style("cursor", "crosshair")
+        .on("mousedown", function () {
+            updateStartingPos(this);
+        })
+        .on("mousemove", function () {
+            if (d3.event.which === 1) {
+                updateEndingPos(this);
+            }
+        });
+
+    function updateStartingPos(elem) {
+        var xPos = d3.mouse(elem)[0];
+        handle2.attr('transform', 'translate(' + xPos + ",0)");
+        text2.text(formatDate(timeScale.invert(xPos)));
+        handle1.attr('transform', 'translate(' + xPos + ",0)");
+        text1.text(formatDate(timeScale.invert(xPos)));
+    }
+
+    function updateEndingPos(elem) {
+        var xPos = d3.mouse(elem)[0];
+        handle1.attr('transform', 'translate(' + xPos + ",0)");
+        text1.text(formatDate(timeScale.invert(xPos)));
+    }
+
+    svg.append("g")
+        .attr("class", "x axis")
+        // put in middle of screen
+        .attr("transform", "translate(0," + height / 2 + ")")
+        // inroduce axis
+        .call(d3.axisBottom()
+            .scale(timeScale)
+            .tickFormat(function (d) {
+                return formatDate(d);
+            })
+            .ticks(12)
+            .tickSize(0)
+            .tickPadding(12))
+        .select(".domain")
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "halo");
+
+    var handle1 = svg.append("g")
+        .attr("class", "handle");
+
+    handle1.append("path")
+        .attr("transform", "translate(0," + height / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+
+    var text1 = handle1.append('text')
+        .text(formatDate(timeScale.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (height / 2 - 25) + ")");
+
+    var handle2 = svg.append("g")
+        .attr("class", "handle");
+
+    handle2.append("path")
+        .attr("transform", "translate(0," + height / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+
+    var text2 = handle2.append('text')
+        .text(formatDate(timeScale.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (height / 2 - 25) + ")");
+
+    handle1.attr('transform', 'translate(0,0)');
+    handle2.attr('transform', 'translate(' + width + ",0)");
+}
 function drawGraph(data) {
 
     var edges = [];
@@ -67,7 +217,7 @@ function drawGraph(data) {
             handleMouseOutEdge();
         })
         .attr("stroke-width", function (d) {
-            return scalePack(NofPackets[d.source + d.target]);
+            return scalePackets(NofPackets[d.source]);
         })
         .attr("display", function (d) {
             if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
@@ -85,12 +235,15 @@ function drawGraph(data) {
         .data(data.nodes)
         .enter().append("circle")
         .attr("r", 15)
+        .style("fill", function (d) {
+            return colorScalePackets(NofPackets[d.id])
+        })
         .on("click", function () {
-            d3.select(this).style("fill", "lightcoral");
+            d3.select(this).transition().duration(100).style("stroke", "red");
             handleSelectedNode(d3.select(this));
         })
         .on('dblclick', function () {
-            d3.select(this).style("fill", "steelblue");
+            d3.select(this).transition().duration(100).style("stroke", "black");
             handleUnselectedNode(d3.select(this));
         })
         .on('mouseover', function () {
@@ -166,13 +319,12 @@ function drawGraph(data) {
     function contentLinkTip(d) {
         var content = " <table align='center'><tr><td>Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
             "<tr><td>Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            "<tr><th>Tot n° of packets:</th> <td>" + NofPackets[d.source.id + d.target.id] + "</td></tr></table>";
+            "<tr><th>Tot n° of packets:</th> <td>" + NofPackets[d.source.id] + "</td></tr></table>";
         return content;
     }
 }
-
 function drawCpa(data) {
-    var margin = {top: 30, right: 100, bottom: 10, left: 80},
+    var margin = {top: 30, right: 200, bottom: 10, left: 265},
         width = 1800 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -275,8 +427,6 @@ function drawCpa(data) {
         //text does not show up because previous line breaks somehow
         .append("text")
         .style("text-anchor", "middle")
-        .style("font-size", "15px")
-        .style("font-family", "'Ubuntu', sans-serif")
         .attr("y", -9)
         .text(function (d) {
             return d;
@@ -301,21 +451,18 @@ function drawCpa(data) {
     }
 
 }
-
 function buildMapPacket(data) {
-    for (i = 0; i < data.links.length; i++) {
-        if (get(data.links[i].source + data.links[i].target) == null)
-            NofPackets[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+    for (var i = 0; i < data.links.length; i++) {
+        if (get(data.links[i].source) == null)
+            NofPackets[data.links[i].source] = parseInt(data.links[i].TotalFwdPackets);
         else
-            NofPackets[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
+            NofPackets[data.links[i].source] += parseInt(data.links[i].TotalFwdPackets);
     }
 }
-
 // return the value of the map with key k
 function get(k) {
     return NofPackets[k];
 }
-
 // built the scale for the packets
 function scalePacket(map) {
     var max = 0, min = 9999999;
@@ -325,33 +472,32 @@ function scalePacket(map) {
         if (map[key] < min)
             min = map[key];
     });
-    scalePack = d3.scale.linear().domain([min, max]).range([3, 20])
+    scalePackets = d3.scaleLinear().domain([min, max]).range([3, 20]);
+    colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([min, max]);
 }
-
 function handleSelectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
-            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
+            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
                 return "red";
             }
         })
         .style("opacity", function (d) {
-            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
+            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
                 return "1";
             } else
                 return "0.01";
         });
 }
-
 function handleUnselectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
-            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
+            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
                 return "steelblue";
             }
         })
         .style("opacity", function (d) {
-            if ((d.source.id != circle._groups[0][0].__data__.id) || (d.target.id != circle._groups[0][0].__data__.id)) {
+            if ((d.source.id !== circle._groups[0][0].__data__.id) || (d.target.id !== circle._groups[0][0].__data__.id)) {
                 return "1";
             }
         });
@@ -361,12 +507,12 @@ function handleMouseOverNode(circle) {
     nodes.push(circle._groups[0][0].__data__.id);
     d3.select("#graph").selectAll("line").transition().duration(200).delay(500)
         .style("opacity", function (d) {
-            if ((d.source.id == circle._groups[0][0].__data__.id) || (d.target.id == circle._groups[0][0].__data__.id)) {
+            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
                 nodes.push(d.target.id);
                 nodes.push(d.source.id);
                 return "1";
             }
-            if ((d.source.id != circle._groups[0][0].__data__.id) || (d.target.id != circle._groups[0][0].__data__.id))
+            if ((d.source.id !== circle._groups[0][0].__data__.id) || (d.target.id !== circle._groups[0][0].__data__.id))
                 return "0.1";
         });
     d3.select("#graph").selectAll("circle").transition().duration(200).delay(500)
@@ -384,7 +530,14 @@ function handleMouseOutNode() {
 }
 function handleMouseMoveEdge(edge) {
     d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", function (d) {
-        if (d.source.id == edge.source.id && d.target.id == edge.target.id)
+        if (d.source.id === edge.source.id && d.target.id === edge.target.id)
+            return "1";
+        else
+            return "0.1";
+    });
+
+    d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", function (d) {
+        if (d.id === edge.source.id || d.id === edge.target.id)
             return "1";
         else
             return "0.1";
@@ -392,4 +545,6 @@ function handleMouseMoveEdge(edge) {
 }
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
+    d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
 }
+
