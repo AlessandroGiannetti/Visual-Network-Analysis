@@ -108,7 +108,7 @@ d3.tip = function () {
         return tip
     };
 
-    // Public: Set or get the direction of the tooltip
+    // Public: Set or getAttackPackets the direction of the tooltip
     //
     // v - One of n(north), s(south), e(east), or w(west), nw(northwest),
     //     sw(southwest), ne(northeast) or se(southeast)

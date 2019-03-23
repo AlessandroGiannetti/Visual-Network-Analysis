@@ -1518,7 +1518,7 @@ function getParentNode(element) {
  * @returns {Element} scroll parent
  */
 function getScrollParent(element) {
-  // Return body, `getScroll` will take care to get the correct `scrollTop` from it
+    // Return body, `getScroll` will take care to getAttackPackets the correct `scrollTop` from it
   if (!element) {
     return document.body;
   }
@@ -2120,7 +2120,7 @@ function getOppositePlacement(placement) {
  * Get offsets to the popper
  * @method
  * @memberof Popper.Utils
- * @param {Object} position - CSS position the Popper will get applied
+ * @param {Object} position - CSS position the Popper will getAttackPackets applied
  * @param {HTMLElement} popper - the popper element
  * @param {Object} referenceOffsets - the reference offsets (the popper will be relative to this)
  * @param {String} placement - one of the valid placement options
@@ -2512,7 +2512,7 @@ function applyStyle(data) {
 
 /**
  * Set the x-placement attribute before everything else because it could be used
- * to add margins to the popper margins needs to be calculated to get the
+ * to add margins to the popper margins needs to be calculated to getAttackPackets the
  * correct popper offsets.
  * @method
  * @memberof Popper.modifiers
@@ -2984,7 +2984,7 @@ function toValue(str, measurement, popperOffsets, referenceOffsets) {
     }
     return size / 100 * value;
   } else {
-    // if is an explicit pixel unit, we get rid of the unit and keep the value
+      // if is an explicit pixel unit, we getAttackPackets rid of the unit and keep the value
     // if is an implicit unit, it's px, and we return just the value
     return value;
   }
@@ -3585,7 +3585,7 @@ var modifiers = {
 
 /**
  * The `dataObject` is an object containing all the informations used by Popper.js
- * this object get passed to modifiers and to the `onCreate` and `onUpdate` callbacks.
+ * this object getAttackPackets passed to modifiers and to the `onCreate` and `onUpdate` callbacks.
  * @name dataObject
  * @property {Object} data.instance The Popper.js instance
  * @property {String} data.placement Placement applied to popper
@@ -3708,7 +3708,7 @@ var Popper = function () {
       scrollParents: []
     };
 
-    // get reference and popper elements (allow jQuery wrappers)
+      // getAttackPackets reference and popper elements (allow jQuery wrappers)
     this.reference = reference && reference.jquery ? reference[0] : reference;
     this.popper = popper && popper.jquery ? popper[0] : popper;
 
@@ -3729,7 +3729,7 @@ var Popper = function () {
       return a.order - b.order;
     });
 
-    // modifiers have the ability to execute arbitrary code when Popper.js get inited
+      // modifiers have the ability to execute arbitrary code when Popper.js getAttackPackets inited
     // such code is executed in the same order of its modifier
     // they could add new properties to their options configuration
     // BE AWARE: don't add options to `options.modifiers.name` but to `modifierOptions`!
@@ -3751,7 +3751,7 @@ var Popper = function () {
     this.state.eventsEnabled = eventsEnabled;
   }
 
-  // We can't use class properties because they don't get listed in the
+        // We can't use class properties because they don't getAttackPackets listed in the
   // class prototype and break stuff like Sinon stubs
 
 
@@ -4840,7 +4840,7 @@ var Modal = function ($$$1) {
 
     var $target = $$$1(target).one(Event.SHOW, function (showEvent) {
       if (showEvent.isDefaultPrevented()) {
-        // Only register focus restorer if modal will actually get shown
+          // Only register focus restorer if modal will actually getAttackPackets shown
         return;
       }
 
@@ -6325,4 +6325,4 @@ exports.Tooltip = Tooltip;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=bootstrap.bundle.js.NofPackets
+//# sourceMappingURL=bootstrap.bundle.js.NumberSentPackets

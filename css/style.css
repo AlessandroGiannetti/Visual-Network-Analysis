@@ -106,7 +106,7 @@ tr, td:first-child {
 .box rect,
 .box circle {
     fill: steelblue;
-    stroke: #000;
+    stroke: grey;
     stroke-width: 1px;
 }
 
@@ -121,6 +121,6 @@ tr, td:first-child {
 
 .x.axis path {
     fill: none;
-    stroke: #000;
+    stroke: grey;
     shape-rendering: crispEdges;
 }

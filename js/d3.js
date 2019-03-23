@@ -5057,7 +5057,7 @@
             else while (++i < n) map.set(f(o = object[i], i, object), o);
         }
 
-        // Convert object to NofPackets.
+        // Convert object to NumberSentPackets.
         else if (object) for (var key in object) map.set(key, object[key]);
 
         return map;

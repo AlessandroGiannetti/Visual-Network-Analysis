@@ -3,8 +3,10 @@ var
     // ScalePack of packets for link dimension
     scalePackets,
     colorScalePackets,
-    // NofPackets key: [source+target]  value : total n° of packets
-    NofPackets = {},
+    // NumberSentPackets key: [source]  value : total n° of packets
+    NumberSentPackets = {},
+    NumberDeliveredPackets = {},
+    transferedPackets = {},
     //SVG width and height
     width = 950,
     height = 805;
@@ -22,16 +24,17 @@ d3.json("miserables.json", function (error, data) {
     // building the map packet
     buildMapPacket(data);
     // building the scale packet
-    scalePacket(NofPackets);
+    scalePacket(NumberDeliveredPackets);
     //drawing the graph network
     drawGraph(data);
     // drawing the cpa plot
     drawCpa(data);
+    // drawing the box plot
+    drawBoxPlot(data);
 
-
+    drawLegend();
     // ================ LISTENER ===================
     d3.select("#check1").on("change", updateCheck1);
-
     function updateCheck1() {
         if (d3.select("#check1").property("checked"))
             d3.select("#svgcontroller1").transition().duration(200).style("display", "block").style("opacity", "1");
@@ -40,9 +43,7 @@ d3.json("miserables.json", function (error, data) {
             d3.select("#svgcontroller1").transition().delay(200).style("display", "none");
         }
     }
-
     d3.select("#check2").on("change", updateCheck2);
-
     function updateCheck2() {
         if (d3.select("#check2").property("checked"))
             d3.select("#svgcontroller2").transition().duration(200).style("display", "block").style("opacity", "1");
@@ -51,9 +52,7 @@ d3.json("miserables.json", function (error, data) {
             d3.select("#svgcontroller2").transition().delay(200).style("display", "none");
         }
     }
-
     d3.select("#check3").on("change", updateCheck3);
-
     function updateCheck3() {
         if (d3.select("#check3").property("checked"))
             d3.select("#svgcontroller3").transition().duration(200).style("display", "block").style("opacity", "1");
@@ -62,9 +61,7 @@ d3.json("miserables.json", function (error, data) {
             d3.select("#svgcontroller3").transition().delay(200).style("display", "none");
         }
     }
-
     d3.select("#check4").on("change", updateCheck4);
-
     function updateCheck4() {
         if (d3.select("#check4").property("checked"))
             d3.select("#svgcontroller4").transition().duration(200).style("display", "block").style("opacity", "1")
@@ -75,6 +72,7 @@ d3.json("miserables.json", function (error, data) {
         }
     }
 
+    // ================ FINE LISTENER ===================
 });
 
 function drawDataController(tag) {
@@ -173,6 +171,8 @@ function drawDataController(tag) {
     handle2.attr('transform', 'translate(' + width + ",0)");
 }
 function drawGraph(data) {
+    var width = 950,
+        height = 805;
 
     var edges = [];
 
@@ -192,8 +192,12 @@ function drawGraph(data) {
             return d.id;
         }));
 
-    //declaration of the tooltip (extra info on over)
-    var tooltip = d3.select('body').append('div')
+    //declaration of the tooltipLink (extra info on over)
+    var tooltipLink = d3.select('body').append('div')
+        .style('opacity', 0)
+        .attr('class', 'd3-tip');
+
+    var tooltipNode = d3.select('body').append('div')
         .style('opacity', 0)
         .attr('class', 'd3-tip');
 
@@ -204,20 +208,20 @@ function drawGraph(data) {
         .data(data.links)
         .enter().append("line")
         .on('mousemove', function (d) {
-            tooltip.transition().duration(150)
+            tooltipLink.transition().duration(150)
                 .style('opacity', .9);
-            tooltip.html(contentLinkTip(d))
+            tooltipLink.html(contentLinkTip(d))
                 .style('left', (d3.event.pageX + 50) + 'px')
                 .style('top', (d3.event.pageY) + 'px');
             handleMouseMoveEdge(d);
         })
         .on('mouseout', function () {
-            tooltip.transition().duration(150).delay(0).delay(20)
+            tooltipLink.transition().duration(150).delay(0).delay(20)
                 .style('opacity', 0);
             handleMouseOutEdge();
         })
         .attr("stroke-width", function (d) {
-            return scalePackets(NofPackets[d.source]);
+            return scalePackets(transferedPackets[d.source + d.target]);
         })
         .attr("display", function (d) {
             if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
@@ -236,7 +240,10 @@ function drawGraph(data) {
         .enter().append("circle")
         .attr("r", 15)
         .style("fill", function (d) {
-            return colorScalePackets(NofPackets[d.id])
+            if (d.group === "1")
+                return colorScalePackets(NumberSentPackets[d.id]);
+            if (d.group === "2")
+                return colorScalePackets(NumberDeliveredPackets[d.id])
         })
         .on("click", function () {
             d3.select(this).transition().duration(100).style("stroke", "red");
@@ -246,10 +253,17 @@ function drawGraph(data) {
             d3.select(this).transition().duration(100).style("stroke", "black");
             handleUnselectedNode(d3.select(this));
         })
-        .on('mouseover', function () {
+        .on('mouseover', function (d) {
             handleMouseOverNode(d3.select(this));
+            tooltipNode.transition().duration(150)
+                .style('opacity', .9);
+            tooltipNode.html(contentNodeTip(d))
+                .style('left', (d3.event.pageX + 50) + 'px')
+                .style('top', (d3.event.pageY) + 'px');
         })
         .on('mouseout', function () {
+            tooltipNode.transition().duration(150).delay(0).delay(20)
+                .style('opacity', 0);
             handleMouseOutNode();
         });
 
@@ -266,15 +280,11 @@ function drawGraph(data) {
         .attr("text-anchor", function () {
             if (d3.select(this)._groups[0][0].__data__.group == "1") return "end"; else return "start";
         })
+        // riflette gli indirizzi IP a destra e sinistra
         .attr("dx", function () {
             if (d3.select(this)._groups[0][0].__data__.group == "1") return -25; else return 25;
         })
         .attr("dy", 5);
-
-    node.append("title")
-        .text(function (d) {
-            return d.id;
-        });
 
     // starting the simulation
     simulation
@@ -317,9 +327,26 @@ function drawGraph(data) {
 
     // content of the windows on link mouse over
     function contentLinkTip(d) {
-        var content = " <table align='center'><tr><td>Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
-            "<tr><td>Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            "<tr><th>Tot n° of packets:</th> <td>" + NofPackets[d.source.id] + "</td></tr></table>";
+        var content = "<h5 align='center'>LINK</h5>";
+        content += " <table align='center'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
+            "<tr><td> IP address Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
+            "<tr><th>Tot N° of packets:</th> <td>" + transferedPackets[d.source.id + d.target.id] + "</td></tr></table>";
+        return content;
+    }
+
+    function contentNodeTip(d) {
+        var value = 0;
+        if (NumberSentPackets[d.id] != null && d.group === "1")
+            value = NumberSentPackets[d.id];
+        if (NumberDeliveredPackets[d.id] != null && d.group === "2")
+            value = NumberDeliveredPackets[d.id];
+        var content = "<h5 align='center'>NODE</h5>";
+        if (d.group === "1")
+            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
+                "<tr><td>N° malicious packages sent: </td><td align='left'>" + value + "</td></tr></table>";
+        if (d.group === "2")
+            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
+                "<tr><td>N° malicious packets delivered: </td><td align='left'>" + value + "</td></tr></table>";
         return content;
     }
 }
@@ -451,30 +478,27 @@ function drawCpa(data) {
     }
 
 }
+
+function drawBoxPlot(data) {
+    //TODO imlementare;
+}
 function buildMapPacket(data) {
     for (var i = 0; i < data.links.length; i++) {
-        if (get(data.links[i].source) == null)
-            NofPackets[data.links[i].source] = parseInt(data.links[i].TotalFwdPackets);
+        if (getAttackPackets(data.links[i].source) == null)
+            NumberSentPackets[data.links[i].source] = parseInt(data.links[i].TotalFwdPackets);
         else
-            NofPackets[data.links[i].source] += parseInt(data.links[i].TotalFwdPackets);
+            NumberSentPackets[data.links[i].source] += parseInt(data.links[i].TotalFwdPackets);
+        if (getTargetPackets(data.links[i].target) == null)
+            NumberDeliveredPackets[data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+        else
+            NumberDeliveredPackets[data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
+        if (getTransferedPackets(data.links[i].source + data.links[i].target) == null)
+            transferedPackets[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+        else
+            transferedPackets[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
     }
 }
-// return the value of the map with key k
-function get(k) {
-    return NofPackets[k];
-}
-// built the scale for the packets
-function scalePacket(map) {
-    var max = 0, min = 9999999;
-    Object.keys(map).forEach(function (key) {
-        if (map[key] > max)
-            max = map[key];
-        if (map[key] < min)
-            min = map[key];
-    });
-    scalePackets = d3.scaleLinear().domain([min, max]).range([3, 20]);
-    colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([min, max]);
-}
+
 function handleSelectedNode(circle) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
@@ -546,5 +570,102 @@ function handleMouseMoveEdge(edge) {
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
+}
+
+
+function drawLegend() {
+    var legendheight = 300,
+        legendwidth = 80,
+        margin = {top: 10, right: 60, bottom: 10, left: 2};
+
+    var canvas = d3.select("#boxplot")
+        .style("height", legendheight + "px")
+        .style("width", legendwidth + "px")
+        .style("position", "relative")
+        .append("canvas")
+        .attr("height", legendheight - margin.top - margin.bottom)
+        .attr("width", 1)
+        .style("height", (legendheight - margin.top - margin.bottom) + "px")
+        .style("width", (legendwidth - margin.left - margin.right) + "px")
+        .style("border", "1px solid #000")
+        .style("position", "absolute")
+        .style("top", (margin.top) + "px")
+        .style("left", (margin.left) + "px")
+        .node();
+
+    var ctx = canvas.getContext("2d");
+
+    var legendscale = d3.scaleLinear()
+        .range([1, legendheight - margin.top - margin.bottom])
+        .domain(colorScalePackets.domain());
+
+    // image data hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
+    var image = ctx.createImageData(1, legendheight);
+    d3.range(legendheight).forEach(function (i) {
+        var c = d3.rgb(colorScalePackets(legendscale.invert(i)));
+        image.data[4 * i] = c.r;
+        image.data[4 * i + 1] = c.g;
+        image.data[4 * i + 2] = c.b;
+        image.data[4 * i + 3] = 255;
+    });
+    ctx.putImageData(image, 0, 0);
+
+    var legendaxis = d3.axisRight()
+        .scale(legendscale)
+        .tickSize(5)
+        .ticks(20);
+
+    var svg = d3.select("#boxplot")
+        .append("svg")
+        .attr("height", (legendheight) + "px")
+        .attr("width", (legendwidth) + "px")
+        .style("position", "absolute")
+        .style("left", "0px")
+        .style("top", "0px");
+
+    svg
+        .append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + (legendwidth - margin.left - margin.right + 3) + "," + (margin.top) + ")")
+        .call(legendaxis);
+}
+
+// built the scale for the packets
+function scalePacket() {
+    var max = 0;
+    Object.keys(NumberSentPackets).forEach(function (key) {
+        if (NumberSentPackets[key] > max)
+            max = NumberSentPackets[key];
+
+    });
+    Object.keys(NumberDeliveredPackets).forEach(function (key) {
+        if (NumberDeliveredPackets[key] > max)
+            max = NumberDeliveredPackets[key];
+    });
+    colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
+
+    max = 0;
+    var min = 999999999;
+    Object.keys(transferedPackets).forEach(function (key) {
+        if (transferedPackets[key] > max)
+            max = transferedPackets[key];
+        if (transferedPackets[key] < min)
+            min = transferedPackets[key];
+    });
+    scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
+
+}
+
+// return the value of the map with key k
+function getAttackPackets(k) {
+    return NumberSentPackets[k];
+}
+
+function getTargetPackets(k) {
+    return NumberDeliveredPackets[k];
+}
+
+function getTransferedPackets(k) {
+    return transferedPackets[k];
 }
 
