@@ -19,8 +19,7 @@ text {
 
 .nodes circle {
     stroke: black;
-    stroke-width: 2px;
-    fill: white;
+    stroke-width: 1px;
 }
 svg {
     font-family: 'Raleway', sans-serif;
