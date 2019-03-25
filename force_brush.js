@@ -13,228 +13,29 @@ var
     width = 950,
     height = 805;
 var data;
+var step = 0;
 // ======= Fine Global variable declaration=======
 
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, datas) {
     if (error) throw error;
-
     data = datas;
-
-
     // building the map packet
-    buildMapPacket(data);
+    buildMapPacket(data.links);
     // building the scale packet
     scalePacket(NumberDeliveredPackets);
     //drawing the graph network
-    drawGraph(data);
     // drawing the cpa plot
-    cpa = new drawCpa();
-    // drawing the box plot
-    drawBoxPlot(data);
-    drawLegend();
-
-    // ================ LISTENER ===================
-
-    // ================ FINE LISTENER ===================
+    drawCpa();
 });
 
-function drawGraph(data) {
-    var width = 950,
-        height = 805;
-
-    var edges = [];
-    var nodes = new Set();
-
-    // create the svg on
-    var svg = d3.select("#graph").append("svg")
-        .attr("width", width)
-        .attr("height", height);
-
-    // declaretion of the force for the simulation
-    var simulation = d3.forceSimulation()
-        .force("forceX", d3.forceX().strength(0.30))
-        .force("forceY", d3.forceY().strength(0.01053))
-        .force("charge", d3.forceManyBody().strength(-150).distanceMin(200).distanceMax(800))
-        .force('x', d3.forceX(d => (d.group === '1') ? 200 : 930).strength(1))
-        .force('center', d3.forceCenter(width / 2, height / 2))
-        .force("link", d3.forceLink().distance(730).strength(0).id(function (d) {
-            return d.id;
-        }));
-
-    //declaration of the tooltipLink (extra info on over)
-    var tooltipLink = d3.select('body').append('div')
-        .style('opacity', 0)
-        .attr('class', 'd3-tip');
-
-    var tooltipNode = d3.select('body').append('div')
-        .style('opacity', 0)
-        .attr('class', 'd3-tip');
-
-    //declaration of the link of the network
-    var link = svg.append("g")
-        .attr("class", "links")
-        .selectAll("line")
-        .data(data.links)
-        .enter().append("line")
-        .on('mousemove', function (d) {
-            tooltipLink.transition().duration(150)
-                .style('opacity', 1);
-            tooltipLink.html(contentLinkTip(d))
-                .style('left', (d3.event.pageX + 50) + 'px')
-                .style('top', (d3.event.pageY) + 'px');
-            handleMouseMoveEdge(d);
-        })
-        .on('mouseout', function () {
-            tooltipLink.transition().duration(150).delay(0).delay(20)
-                .style('opacity', 0);
-            handleMouseOutEdge();
-        })
-        .attr("stroke-width", function (d) {
-            return scalePackets(transferPackets[d.source + d.target]);
-        })
-        .attr("display", function (d) {
-            if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
-                edges.push(d);
-                return "block";
-            } else {
-                return "none";
-            }
-        });
-
-    // declaration of the node of the network
-    var node = svg.append("g")
-        .attr("class", "nodes")
-        .selectAll("circle")
-        .data(data.nodes)
-        .enter().append("circle")
-        .attr("r", 15)
-        .style("fill", function (d) {
-            if (d.group === "1")
-                if (colorScalePackets(NumberSentPackets[d.id]) != null)
-                    return colorScalePackets(NumberSentPackets[d.id]);
-                else
-                    return colorScalePackets(0);
-            if (d.group === "2")
-                if (colorScalePackets(NumberDeliveredPackets[d.id]) != null)
-                    return colorScalePackets(NumberDeliveredPackets[d.id]);
-                else
-                    return colorScalePackets(0);
-        })
-        .on("click", function () {
-            d3.select(this).transition().duration(200).style("stroke", "red");
-            nodes.add(d3.select(this)._groups[0][0].__data__.id);
-            handleSelectedNode(nodes);
-        })
-        .on('dblclick', function () {
-            d3.select(this).transition().duration(200).style("stroke", "black");
-            nodes.delete(d3.select(this)._groups[0][0].__data__.id);
-            handleSelectedNode(nodes);
-        })
-        .on('mouseover', function (d) {
-            handleMouseOverNode(d3.select(this));
-            tooltipNode.transition().duration(150)
-                .style('opacity', .9);
-            tooltipNode.html(contentNodeTip(d))
-                .style('left', (d3.event.pageX + 50) + 'px')
-                .style('top', (d3.event.pageY) + 'px');
-        })
-        .on('mouseout', function () {
-            tooltipNode.transition().duration(150).delay(0).delay(20)
-                .style('opacity', 0);
-            handleMouseOutNode();
-        });
-
-    //declaration of the text (ip) of the node
-    var textElements = svg.append("g")
-        .attr("class", "texts")
-        .selectAll("text")
-        .data(data.nodes)
-        .enter().append("text")
-        .text(function (node) {
-            return node.id.slice(0, -2)
-        })
-        .attr("font-size", 15)
-        .attr("text-anchor", function () {
-            if (d3.select(this)._groups[0][0].__data__.group == "1") return "end"; else return "start";
-        })
-        // riflette gli indirizzi IP a destra e sinistra
-        .attr("dx", function () {
-            if (d3.select(this)._groups[0][0].__data__.group == "1") return -25; else return 25;
-        })
-        .attr("dy", 5);
-
-    // starting the simulation
-    simulation
-        .nodes(data.nodes)
-        .on("tick", ticked);
-
-    simulation.force("link")
-        .links(data.links);
-
-    //associate the node with the link and the ip address
-    function ticked() {
-        link
-            .attr("x1", function (d) {
-                if (d.source.group == '1') return d.source.x;
-            })
-            .attr("y1", function (d) {
-                if (d.source.group == "1") return d.source.y;
-            })
-            .attr("x2", function (d) {
-                if (d.target.group == "2") return d.target.x;
-            })
-            .attr("y2", function (d) {
-                if (d.target.group == "2") return d.target.y;
-            });
-        node
-            .attr("cx", function (d) {
-                return d.x;
-            })
-            .attr("cy", function (d) {
-                return d.y;
-            });
-        textElements
-            .attr("x", function (d) {
-                return d.x;
-            })
-            .attr("y", function (d) {
-                return d.y;
-            });
-    }
-
-    // content of the windows on link mouse over
-    function contentLinkTip(d) {
-        var content = "<h5 align='center'>LINK</h5>";
-        content += " <table align='center'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
-            "<tr><td> IP address Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            "<tr><th>Tot N° of packets:</th> <td>" + transferPackets[d.source.id + d.target.id] + "</td></tr></table>";
-        return content;
-    }
-
-    function contentNodeTip(d) {
-        var value = 0;
-        if (NumberSentPackets[d.id] != null && d.group === "1")
-            value = NumberSentPackets[d.id];
-        if (NumberDeliveredPackets[d.id] != null && d.group === "2")
-            value = NumberDeliveredPackets[d.id];
-        var content = "<h5 align='center'>NODE</h5>";
-        if (d.group === "1")
-            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
-                "<tr><td>N° malicious packages sent: </td><td align='left'>" + value + "</td></tr></table>";
-        if (d.group === "2")
-            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
-                "<tr><td>N° malicious packets delivered: </td><td align='left'>" + value + "</td></tr></table>";
-        return content;
-    }
-}
-
 function drawCpa() {
+
+    // ========================= SLIDERS ===================================
     var marginSlider = {top: 50, right: 30, bottom: 50, left: 30},
         widthSlider = 440 - marginSlider.left - marginSlider.right,
         heightSlider = 150 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
-
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
     var timeScale1 = d3.scaleTime()
@@ -299,9 +100,7 @@ function drawCpa() {
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
-
-
-    // ================= SLIDER GIORNO 5/7/2017 =========================
+    // ====================== SLIDER GIORNO 5/7/2017 =========================
     var timeScale2 = d3.scaleTime()
         .domain([new Date(moment("07/05/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/05/2017 23:59", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
@@ -364,9 +163,7 @@ function drawCpa() {
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
-
-
-    // ================= SLIDER GIORNO 6/7/2017 ==============================
+    // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
         .domain([new Date(moment("07/06/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/06/2017 23:59", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
@@ -429,9 +226,7 @@ function drawCpa() {
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
-
-
-    // ================= SLIDER GIORNO 7/7/2017 =========================
+    // ====================== SLIDER GIORNO 7/7/2017 =========================
     var timeScale4 = d3.scaleTime()
         .domain([new Date(moment("07/07/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 23:59", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
@@ -493,31 +288,223 @@ function drawCpa() {
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
-    // ================= FINE SLIDER GIORNO 7/7/2017 =========================
+    // ================= FINE SLIDER GIORNO 7/7/2017 ===========================
+    // ================= DICHIARAZIONI DRAWING GRAPH ===========================
+    var widthGRAPH = 950,
+        heightGRAPH = 805;
+    // create the svg on
+    var svgGRAPH = d3.select("#graph").append("svg")
+        .attr("width", widthGRAPH)
+        .attr("height", heightGRAPH);
+    var tooltipLink,  // FINESTRA SU LINK
+        tooltipNode,  // FINESTRA SU NODI
+        node,
+        link,
+        textElements;
+    var simulation = d3.forceSimulation(data.nodes)
+        .force("forceX", d3.forceX().strength(0.30))
+        .force("forceY", d3.forceY().strength(0.01053))
+        .force("charge", d3.forceManyBody().strength(-150).distanceMin(200).distanceMax(800))
+        .force('x', d3.forceX(d => (d.group === '1') ? 200 : 930).strength(1))
+        .force('center', d3.forceCenter(widthGRAPH / 2, heightGRAPH / 2))
+        .force("link", d3.forceLink().distance(730).strength(0).id(function (d) {
+            return d.id;
+        }))
+        .alphaTarget(0).on("tick", ticked);
 
+    simulation.nodes(data.nodes).on("tick", ticked);
+    // ==================FINE DICHIARAZIONI GRAPH =============================
+    // ==============  DICHIARAZIONI LEGEND ===================================
+    var heightLegend = 800,
+        widthLegend = 80,
+        marginLegend = {top: 20, right: 60, bottom: 20, left: 2};
 
-    // ================= DRAWING CPA PLOT ====================================
-    var margin = {top: 30, right: 200, bottom: 10, left: 265},
-        width = 1800 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    var canvas = d3.select("#legend")
+        .style("height", heightLegend + "px")
+        .style("width", widthLegend + "px")
+        .style("position", "relative")
+        .append("canvas")
+        .attr("height", heightLegend - marginLegend.top - marginLegend.bottom)
+        .attr("width", 1)
+        .style("height", (heightLegend - marginLegend.top - marginLegend.bottom) + "px")
+        .style("width", (widthLegend - marginLegend.left - marginLegend.right) + "px")
+        .style("border", "1px solid #000")
+        .style("position", "absolute")
+        .style("top", "20px")
+        .style("left", "70px")
+        .node();
 
-    var x = d3.scaleBand().rangeRound([0, width + 100]).padding(.1),
-        y = {},
-        dragging = {};
+    var ctx = canvas.getContext("2d");
 
-    var line = d3.line();
+    var legendscale = d3.scaleLinear()
+        .range([1, heightLegend - marginLegend.top - marginLegend.bottom])
+        .domain(colorScalePackets.domain());
 
-    var svg = d3.select("#PCA").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+    // image data hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
+    var image = ctx.createImageData(1, heightLegend);
+    d3.range(heightLegend).forEach(function (i) {
+        var c = d3.rgb(colorScalePackets(legendscale.invert(i)));
+        image.data[4 * i] = c.r;
+        image.data[4 * i + 1] = c.g;
+        image.data[4 * i + 2] = c.b;
+        image.data[4 * i + 3] = 255;
+    });
+    ctx.putImageData(image, 0, 0);
+
+    var legendaxis = d3.axisRight()
+        .scale(legendscale)
+        .tickSize(5)
+        .ticks(15);
+
+    var svg = d3.select("#legend")
+        .append("svg")
+        .attr("height", (heightLegend) + "px")
+        .attr("width", (widthLegend) + "px")
+        .style("position", "absolute")
+        .style("left", "70px")
+        .style("top", "0px");
+
+    svg
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var Range = [];
-
-    for (var i = 0; i <= height * 20; i = i + 20) {
+        .attr("class", "axis")
+        .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
+        .call(legendaxis)
+        .attr("class", "legendGraph");
+    // ==============  FINE DICHIARAZIONI LEGEND ==============================
+    // ================= DICHIARAZIONI CPA ====================================
+    var marginCPA = {top: 30, right: 200, bottom: 10, left: 265},
+        widthCPA = 1800 - marginCPA.left - marginCPA.right,
+        heightCPA = 500 - marginCPA.top - marginCPA.bottom;
+    var x = d3.scaleBand().rangeRound([0, widthCPA + 100]).padding(.1),
+        y = {},
+        dragging = {},
+        line = d3.line(),
+        Range = [];
+    var svgCPA = d3.select("#PCA").append("svg")
+        .attr("width", widthCPA + marginCPA.left + marginCPA.right)
+        .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
+        .append("g")
+        .attr("transform", "translate(" + marginCPA.left + "," + marginCPA.top + ")");
+    for (var i = 0; i <= heightCPA * 20; i = i + 20) {
         Range.push(i);
+    } // FORSE DA RIMUOVERE
+    // ================= FINE DICHIARAZIONI CPA ==================================
+
+    function initGraph() {
+        var edges = [],
+            nodes = new Set();
+        //declaration of the tooltipLink (extra info on over)
+        tooltipLink = d3.select('body').append('div')
+            .style('opacity', 0)
+            .attr('class', 'd3-tip');
+
+        tooltipNode = d3.select('body').append('div')
+            .style('opacity', 0)
+            .attr('class', 'd3-tip');
+
+        //declaration of the link of the network
+        link = svgGRAPH.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(data.links)
+            .enter().append("line")
+            .on('mousemove', function (d) {
+                tooltipLink.transition().duration(150)
+                    .style('opacity', 1);
+                tooltipLink.html(contentLinkTip(d))
+                    .style('left', (d3.event.pageX + 50) + 'px')
+                    .style('top', (d3.event.pageY) + 'px');
+                handleMouseMoveEdge(d);
+            })
+            .on('mouseout', function () {
+                tooltipLink.transition().duration(150).delay(0).delay(20)
+                    .style('opacity', 0);
+                handleMouseOutEdge();
+            })
+            .attr("stroke-width", function (d) {
+                return scalePackets(transferPackets[d.source + d.target]);
+            })
+            .attr("display", function (d) {
+                if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+                    edges.push(d);
+                    return "block";
+                } else {
+                    return "none";
+                }
+            });
+
+        // declaration of the node of the network
+        node = svgGRAPH.append("g")
+            .attr("class", "nodes")
+            .selectAll("circle")
+            .data(data.nodes)
+            .enter().append("circle")
+            .attr("r", 15)
+            .style("fill", function (d) {
+                if (d.group === "1")
+                    if (colorScalePackets(NumberSentPackets[d.id]) != null)
+                        return colorScalePackets(NumberSentPackets[d.id]);
+                    else
+                        return colorScalePackets(0);
+                if (d.group === "2")
+                    if (colorScalePackets(NumberDeliveredPackets[d.id]) != null)
+                        return colorScalePackets(NumberDeliveredPackets[d.id]);
+                    else
+                        return colorScalePackets(0);
+            })
+            .on("click", function () {
+                d3.select(this).transition().duration(200).style("stroke", "red");
+                nodes.add(d3.select(this)._groups[0][0].__data__.id);
+                handleSelectedNode(nodes);
+            })
+            .on('dblclick', function () {
+                d3.select(this).transition().duration(200).style("stroke", "black");
+                nodes.delete(d3.select(this)._groups[0][0].__data__.id);
+                handleSelectedNode(nodes);
+            })
+            .on('mouseover', function (d) {
+                handleMouseOverNode(d3.select(this));
+                tooltipNode.transition().duration(150)
+                    .style('opacity', .9);
+                tooltipNode.html(contentNodeTip(d))
+                    .style('left', (d3.event.pageX + 50) + 'px')
+                    .style('top', (d3.event.pageY) + 'px');
+            })
+            .on('mouseout', function () {
+                tooltipNode.transition().duration(150).delay(0).delay(20)
+                    .style('opacity', 0);
+                handleMouseOutNode();
+            });
+
+        //declaration of the text (ip) of the node
+        textElements = svgGRAPH.append("g")
+            .attr("class", "texts")
+            .selectAll("text")
+            .data(data.nodes)
+            .enter().append("text")
+            .text(function (node) {
+                return node.id.slice(0, -2)
+            })
+            .attr("font-size", 15)
+            .attr("text-anchor", function () {
+                if (d3.select(this)._groups[0][0].__data__.group == "1") return "end"; else return "start";
+            })
+            // riflette gli indirizzi IP a destra e sinistra
+            .attr("dx", function () {
+                if (d3.select(this)._groups[0][0].__data__.group == "1") return -25; else return 25;
+            })
+            .attr("dy", 5);
+
+        // starting the simulation
+        simulation
+            .nodes(data.nodes);
+
+        simulation.force("link")
+            .links(data.links);
     }
+
+    initGraph();
+
 
     d3.selectAll(".custom-control-input").on("change", update);
     update();
@@ -531,9 +518,8 @@ function drawCpa() {
             }
         });
         if (checkedValue.length === 0) {
-            newData = []
+            newData = data.links;
         }
-
         selection1 = d3.brushSelection(d3.select(".brush1").node());
         selection2 = d3.brushSelection(d3.select(".brush2").node());
         selection3 = d3.brushSelection(d3.select(".brush3").node());
@@ -565,7 +551,6 @@ function drawCpa() {
             text1.text(formatDate(timeScale1.invert(selection1[0])));
             handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
             text2.text(formatDate(timeScale1.invert(selection1[1])));
-            console.log(timeScale1.invert(selection1[0]));
         } else {
             d3.select("#svgcontroller1").transition().duration(200).style("opacity", "0");
         }
@@ -573,7 +558,6 @@ function drawCpa() {
         if (checkedValue.includes("5/7/2017")) {
             d3.select("#svgcontroller2").style("opacity", "1");
             selection2 = d3.brushSelection(d3.select(".brush2").node());
-            console.log(selection2);
             if (selection2 == null)
                 selection2 = [0, 380];
             handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
@@ -610,122 +594,305 @@ function drawCpa() {
             d3.select("#svgcontroller4").transition().duration(200).style("opacity", "0");
         }
 
+        if (step === 1) {
+            buildMapPacket(newData);
+            scalePacket(NumberDeliveredPackets);
+            updateGraph();
+        }
+        step = 1;
+        updateLegend();
+        updateCPA();
 
-        var background;
-        var foreground;
+        function updateGraph() {
+            var edges = [],
+                nodes = new Set();
 
-        d3.selectAll(".forepath").remove();
-        d3.selectAll(".backpath").remove();
-        d3.selectAll(".dimension").remove();
+            d3.selectAll(".d3-tip").remove();
 
-        x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
-            if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
-                return false;
-            }
-            return y[d] = d3.scaleOrdinal()
-                .domain(d3.extent(newData, function (p) {
-                    if (d == "source" || d == "target") {
-                        return +p[d]["id"];
-                    }
-                    return +p[d];
-                }))
-                .range(Range);
-        }));
+            //declaration of the tooltipLink (extra info on over)
+            tooltipLink = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
 
-        // Add grey background lines for context.
-        background = svg.append("g")
-            .attr("class", "background")
-            .selectAll("path")
-            .data(newData)
-            .enter().append("path")
-            .attr("class", "backpath")
-            .attr("d", path);
-        // Add blue foreground lines for focus.
-        foreground = svg.append("g")
-            .attr("class", "foreground")
-            .selectAll("path")
-            .data(newData)
-            .enter().append("path")
-            .attr("class", "forepath")
-            .attr("d", path);
+            tooltipNode = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
 
-        // Add a group element for each dimension.
-        var g = svg.selectAll(".dimension")
-            .data(dimensions)
-            .enter().append("g")
-            .attr("class", "dimension")
-            .attr("transform", function (d) {
-                return "translate(" + x(d) + ")";
-            })
-            .call(d3.drag()
-                .subject(function (d) {
-                    return {x: x(d)};
-                })
-                .on("start", function (d) {
-                    dragging[d] = x(d);
-                    background.attr("visibility", "hidden");
-                })
-                .on("drag", function (d) {
-                    dragging[d] = Math.min(width, Math.max(0, d3.event.x));
-                    foreground.attr("d", path);
-                    dimensions.sort(function (a, b) {
-                        return position(a) - position(b);
-                    });
-                    x.domain(dimensions);
-                    g.attr("transform", function (d) {
-                        return "translate(" + position(d) + ")";
-                    })
-                })
-                .on("end", function (d) {
-                    delete dragging[d];
-                    transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
-                    transition(foreground).attr("d", path);
-                    background
-                        .attr("d", path)
-                        .transition()
-                        .delay(500)
-                        .duration(0)
-                        .attr("visibility", null);
-                }));
-        // Add an axis and title.
-        g.append("g")
-            .attr("class", "axis")
-            .each(function (d) {
-                d3.select(this).call(d3.axisLeft(y[d]));
-            })
-            //text does not show up because previous line breaks somehow
-            .append("text")
-            .style("text-anchor", "middle")
-            .attr("y", -9)
-            .text(function (d) {
-                return d;
+            node = node.data(data.nodes, function (d) {
+                return d.id;
             });
 
-        function position(d) {
-            var v = dragging[d];
-            return v == null ? x(d) : v;
+            node = node.data(data.nodes, function (d) {
+                return d.id;
+            });
+            node.exit().remove();
+            node = node.enter().append("circle").attr("r", 8).merge(node)
+                .style("fill", function (d) {
+                    if (d.group === "1")
+                        if (colorScalePackets(NumberSentPackets[d.id]) != null)
+                            return colorScalePackets(NumberSentPackets[d.id]);
+                        else
+                            return colorScalePackets(0);
+                    if (d.group === "2")
+                        if (colorScalePackets(NumberDeliveredPackets[d.id]) != null)
+                            return colorScalePackets(NumberDeliveredPackets[d.id]);
+                        else
+                            return colorScalePackets(0);
+                });
+
+            textElements = textElements.data(data.nodes, function (d) {
+                return d.id
+            });
+            textElements.exit().remove();
+            textElements = textElements.enter().append("text").merge(textElements);
+
+            link = link.data(newData, function (d) {
+                return d.source.id + "-" + d.target.id;
+            });
+            link.exit().remove();
+            link = link.enter().append("line").merge(link)
+                .on('mousemove', function (d) {
+                    tooltipLink.transition().duration(150)
+                        .style('opacity', 1);
+                    tooltipLink.html(contentLinkTip(d))
+                        .style('left', (d3.event.pageX + 50) + 'px')
+                        .style('top', (d3.event.pageY) + 'px');
+                    handleMouseMoveEdge(d);
+                })
+                .on('mouseout', function () {
+                    tooltipLink.transition().duration(150).delay(0).delay(20)
+                        .style('opacity', 0);
+                    handleMouseOutEdge();
+                })
+                .attr("stroke-width", function (d) {
+                    return scalePackets(transferPackets[d.source.id + d.target.id]);
+                })
+                .attr("display", function (d) {
+                    if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+                        edges.push(d);
+                        return "block";
+                    } else {
+                        return "none";
+                    }
+                });
+
+            // starting the simulation
+            simulation.nodes(data.nodes);
+            simulation.force("link").links(newData);
+            simulation.alpha(0).restart();
         }
 
-        function transition(g) {
-            return g.transition().duration(500);
+        function updateLegend() {
+            d3.selectAll(".legendGraph").remove();
+
+            legendscale = d3.scaleLinear()
+                .range([1, heightLegend - marginLegend.top - marginLegend.bottom])
+                .domain(colorScalePackets.domain());
+
+            // image data hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
+            image = ctx.createImageData(1, heightLegend);
+            d3.range(heightLegend).forEach(function (i) {
+                c = d3.rgb(colorScalePackets(legendscale.invert(i)));
+                image.data[4 * i] = c.r;
+                image.data[4 * i + 1] = c.g;
+                image.data[4 * i + 2] = c.b;
+                image.data[4 * i + 3] = 255;
+            });
+            ctx.putImageData(image, 0, 0);
+
+            legendaxis = d3.axisRight()
+                .scale(legendscale)
+                .tickSize(5)
+                .ticks(15);
+
+            svg = d3.select("#legend")
+                .append("svg")
+                .attr("height", (heightLegend) + "px")
+                .attr("width", (widthLegend) + "px")
+                .style("position", "absolute")
+                .style("left", "70px")
+                .style("top", "0px");
+
+            svg
+                .append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
+                .call(legendaxis)
+                .attr("class", "legendGraph");
         }
+
+        function updateCPA() {
+            //===== remove the previous data =========
+            d3.selectAll(".forepath").remove();
+            d3.selectAll(".backpath").remove();
+            d3.selectAll(".dimension").remove();
+            // =============== update the cpa ==================
+            x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
+                if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
+                    return false;
+                }
+                return y[d] = d3.scaleOrdinal()
+                    .domain(d3.extent(newData, function (p) {
+                        if (d == "source" || d == "target") {
+                            return +p[d]["id"];
+                        }
+                        return +p[d];
+                    }))
+                    .range(Range);
+            }));
+
+            // Add grey background lines for context.
+            background = svgCPA.append("g")
+                .attr("class", "background")
+                .selectAll("path")
+                .data(newData)
+                .enter().append("path")
+                .attr("class", "backpath")
+                .attr("d", path);
+            // Add blue foreground lines for focus.
+            foreground = svgCPA.append("g")
+                .attr("class", "foreground")
+                .selectAll("path")
+                .data(newData)
+                .enter().append("path")
+                .attr("class", "forepath")
+                .attr("d", path);
+
+            // Add a group element for each dimension.
+            var g = svgCPA.selectAll(".dimension")
+                .data(dimensions)
+                .enter().append("g")
+                .attr("class", "dimension")
+                .attr("transform", function (d) {
+                    return "translate(" + x(d) + ")";
+                })
+                .call(d3.drag()
+                    .subject(function (d) {
+                        return {x: x(d)};
+                    })
+                    .on("start", function (d) {
+                        dragging[d] = x(d);
+                        background.attr("visibility", "hidden");
+                    })
+                    .on("drag", function (d) {
+                        dragging[d] = Math.min(widthCPA, Math.max(0, d3.event.x));
+                        foreground.attr("d", path);
+                        dimensions.sort(function (a, b) {
+                            return position(a) - position(b);
+                        });
+                        x.domain(dimensions);
+                        g.attr("transform", function (d) {
+                            return "translate(" + position(d) + ")";
+                        })
+                    })
+                    .on("end", function (d) {
+                        delete dragging[d];
+                        transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
+                        transition(foreground).attr("d", path);
+                        background
+                            .attr("d", path)
+                            .transition()
+                            .delay(500)
+                            .duration(0)
+                            .attr("visibility", null);
+                    }));
+            // Add an axis and title.
+            g.append("g")
+                .attr("class", "axis")
+                .each(function (d) {
+                    d3.select(this).call(d3.axisLeft(y[d]).ticks(12)
+                        .tickSize(8)
+                        .tickPadding(12));
+                })
+                //text does not show up because previous line breaks somehow
+                .append("text")
+                .style("text-anchor", "middle")
+                .attr("y", -9)
+                .text(function (d) {
+                    return d;
+                });
+
+            function position(d) {
+                var v = dragging[d];
+                return v == null ? x(d) : v;
+            }
+
+            function transition(g) {
+                return g.transition().duration(500);
+            }
 
 // Returns the path for a given data point.
-        function path(d) {
-            return line(dimensions.map(function (p) {
-                if (p == "source" || p == "target")
-                    return [position(p), y[p](d[p]["id"].slice(0, -2))];
-                return [position(p), y[p](d[p])];
-            }));
+            function path(d) {
+                return line(dimensions.map(function (p) {
+                    if (p == "source" || p == "target")
+                        return [position(p), y[p](d[p]["id"].slice(0, -2))];
+                    return [position(p), y[p](d[p])];
+                }));
+            }
+
+            svgCPA.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
+            svgCPA.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
+            svgCPA.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
+            svgCPA.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
         }
 
-        svg.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
-        svg.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
-        svg.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
-        svg.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
     }
 
-    drawCpa.update = update;
+    function ticked() {
+        link
+            .attr("x1", function (d) {
+                if (d.source.group == '1') return d.source.x;
+            })
+            .attr("y1", function (d) {
+                if (d.source.group == "1") return d.source.y;
+            })
+            .attr("x2", function (d) {
+                if (d.target.group == "2") return d.target.x;
+            })
+            .attr("y2", function (d) {
+                if (d.target.group == "2") return d.target.y;
+            });
+        node
+            .attr("cx", function (d) {
+                return d.x;
+            })
+            .attr("cy", function (d) {
+                return d.y;
+            });
+        textElements
+            .attr("x", function (d) {
+                return d.x;
+            })
+            .attr("y", function (d) {
+                return d.y;
+            });
+    }
+
+    // content of the windows on link mouse over
+    function contentLinkTip(d) {
+        var content = "<h5 align='center'>LINK</h5>";
+        content += " <table align='center'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
+            "<tr><td> IP address Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
+            "<tr><th>Tot N° of packets:</th> <td>" + transferPackets[d.source.id + d.target.id] + "</td></tr></table>";
+        return content;
+    }
+
+    function contentNodeTip(d) {
+        var value = 0;
+        if (NumberSentPackets[d.id] != null && d.group === "1")
+            value = NumberSentPackets[d.id];
+        if (NumberDeliveredPackets[d.id] != null && d.group === "2")
+            value = NumberDeliveredPackets[d.id];
+        var content = "<h5 align='center'>NODE</h5>";
+        if (d.group === "1")
+            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
+                "<tr><td>N° malicious packages sent: </td><td align='left'>" + value + "</td></tr></table>";
+        if (d.group === "2")
+            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
+                "<tr><td>N° malicious packets delivered: </td><td align='left'>" + value + "</td></tr></table>";
+        return content;
+    }
+
 }
 
 function drawBoxPlot(data) {
@@ -799,83 +966,46 @@ function handleMouseOutEdge() {
 }
 
 function buildMapPacket(data) {
-    for (var i = 0; i < data.links.length; i++) {
-        if (getAttackPackets(data.links[i].source) == null)
-            NumberSentPackets[data.links[i].source] = parseInt(data.links[i].TotalFwdPackets);
-        else
-            NumberSentPackets[data.links[i].source] += parseInt(data.links[i].TotalFwdPackets);
-        if (getTargetPackets(data.links[i].target) == null)
-            NumberDeliveredPackets[data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
-        else
-            NumberDeliveredPackets[data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
-        if (getTransferedPackets(data.links[i].source + data.links[i].target) == null)
-            transferPackets[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
-        else
-            transferPackets[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
+    NumberDeliveredPackets = [];
+    NumberSentPackets = [];
+    transferPackets = [];
+    if (step === 1) {
+        for (var i = 0; i < data.length; i++) {
+            if (getAttackPackets(data[i].source.id) == null)
+                NumberSentPackets[data[i].source.id] = parseInt(data[i].TotalFwdPackets);
+            else
+                NumberSentPackets[data[i].source.id] += parseInt(data[i].TotalFwdPackets);
+            if (getTargetPackets(data[i].target.id) == null)
+                NumberDeliveredPackets[data[i].target.id] = parseInt(data[i].TotalFwdPackets);
+            else
+                NumberDeliveredPackets[data[i].target.id] += parseInt(data[i].TotalFwdPackets);
+            if (getTransferedPackets(data[i].source.id + data[i].target.id) == null)
+                transferPackets[data[i].source.id + data[i].target.id] = parseInt(data[i].TotalFwdPackets);
+            else
+                transferPackets[data[i].source.id + data[i].target.id] += parseInt(data[i].TotalFwdPackets);
+        }
     }
-}
-
-// draw legend for the graph
-function drawLegend() {
-    var legendheight = 800,
-        legendwidth = 80,
-        margin = {top: 20, right: 60, bottom: 20, left: 2};
-
-    var canvas = d3.select("#legend")
-        .style("height", legendheight + "px")
-        .style("width", legendwidth + "px")
-        .style("position", "relative")
-        .append("canvas")
-        .attr("height", legendheight - margin.top - margin.bottom)
-        .attr("width", 1)
-        .style("height", (legendheight - margin.top - margin.bottom) + "px")
-        .style("width", (legendwidth - margin.left - margin.right) + "px")
-        .style("border", "1px solid #000")
-        .style("position", "absolute")
-        .style("top", "20px")
-        .style("left", "70px")
-        .node();
-
-    var ctx = canvas.getContext("2d");
-
-    var legendscale = d3.scaleLinear()
-        .range([1, legendheight - margin.top - margin.bottom])
-        .domain(colorScalePackets.domain());
-
-    // image data hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
-    var image = ctx.createImageData(1, legendheight);
-    d3.range(legendheight).forEach(function (i) {
-        var c = d3.rgb(colorScalePackets(legendscale.invert(i)));
-        image.data[4 * i] = c.r;
-        image.data[4 * i + 1] = c.g;
-        image.data[4 * i + 2] = c.b;
-        image.data[4 * i + 3] = 255;
-    });
-    ctx.putImageData(image, 0, 0);
-
-    var legendaxis = d3.axisRight()
-        .scale(legendscale)
-        .tickSize(5)
-        .ticks(15);
-
-    var svg = d3.select("#legend")
-        .append("svg")
-        .attr("height", (legendheight) + "px")
-        .attr("width", (legendwidth) + "px")
-        .style("position", "absolute")
-        .style("left", "70px")
-        .style("top", "0px");
-
-    svg
-        .append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(" + (legendwidth - margin.left - margin.right + 3) + "," + (margin.top) + ")")
-        .call(legendaxis);
+    if (step === 0) {
+        for (var i = 0; i < data.length; i++) {
+            if (getAttackPackets(data[i].source) == null)
+                NumberSentPackets[data[i].source] = parseInt(data[i].TotalFwdPackets);
+            else
+                NumberSentPackets[data[i].source] += parseInt(data[i].TotalFwdPackets);
+            if (getTargetPackets(data[i].target) == null)
+                NumberDeliveredPackets[data[i].target] = parseInt(data[i].TotalFwdPackets);
+            else
+                NumberDeliveredPackets[data[i].target] += parseInt(data[i].TotalFwdPackets);
+            if (getTransferedPackets(data[i].source + data[i].target) == null)
+                transferPackets[data[i].source + data[i].target] = parseInt(data[i].TotalFwdPackets);
+            else
+                transferPackets[data[i].source + data[i].target] += parseInt(data[i].TotalFwdPackets);
+        }
+    }
 }
 
 // built the scale for the packets
 function scalePacket() {
-    var max = 0;
+    max = 0;
     Object.keys(NumberSentPackets).forEach(function (key) {
         if (NumberSentPackets[key] > max)
             max = NumberSentPackets[key];
@@ -888,7 +1018,7 @@ function scalePacket() {
     colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
 
     max = 0;
-    var min = 999999999;
+    min = 999999999;
     Object.keys(transferPackets).forEach(function (key) {
         if (transferPackets[key] > max)
             max = transferPackets[key];
