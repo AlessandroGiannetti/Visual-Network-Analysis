@@ -290,6 +290,8 @@ function drawCpa() {
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 7/7/2017 ===========================
     // ================= DICHIARAZIONI DRAWING GRAPH ===========================
+    var edges = [],
+        nodeSelected = new Set();
     var widthGRAPH = 950,
         heightGRAPH = 805;
     // create the svg on
@@ -391,8 +393,6 @@ function drawCpa() {
     // ================= FINE DICHIARAZIONI CPA ==================================
 
     function initGraph() {
-        var edges = [],
-            nodes = new Set();
         //declaration of the tooltipLink (extra info on over)
         tooltipLink = d3.select('body').append('div')
             .style('opacity', 0)
@@ -454,13 +454,13 @@ function drawCpa() {
             })
             .on("click", function () {
                 d3.select(this).transition().duration(200).style("stroke", "red");
-                nodes.add(d3.select(this)._groups[0][0].__data__.id);
-                handleSelectedNode(nodes);
+                nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
+                handleSelectedNode(nodeSelected);
             })
             .on('dblclick', function () {
                 d3.select(this).transition().duration(200).style("stroke", "black");
-                nodes.delete(d3.select(this)._groups[0][0].__data__.id);
-                handleSelectedNode(nodes);
+                nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
+                handleSelectedNode(nodeSelected);
             })
             .on('mouseover', function (d) {
                 handleMouseOverNode(d3.select(this));
@@ -604,8 +604,7 @@ function drawCpa() {
         updateCPA();
 
         function updateGraph() {
-            var edges = [],
-                nodes = new Set();
+            var edges = [];
 
             d3.selectAll(".d3-tip").remove();
 
@@ -626,7 +625,8 @@ function drawCpa() {
                 return d.id;
             });
             node.exit().remove();
-            node = node.enter().append("circle").attr("r", 8).merge(node)
+            node = node.enter().append("circle").merge(node)
+                .attr("r", 15)
                 .style("fill", function (d) {
                     if (d.group === "1")
                         if (colorScalePackets(NumberSentPackets[d.id]) != null)
@@ -681,6 +681,8 @@ function drawCpa() {
             simulation.force("link").links(newData);
             simulation.alpha(0).restart();
         }
+
+        handleSelectedNode(nodeSelected);
 
         function updateLegend() {
             d3.selectAll(".legendGraph").remove();
@@ -900,21 +902,28 @@ function drawBoxPlot(data) {
 }
 
 function handleSelectedNode(nodes) {
-    d3.select("#PCA").selectAll(".forepath").transition().duration(200)
+    d3.select("#PCA").selectAll(".backpath")
+        .style("stroke", function (d) {
+            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
+                return "#007bff";
+        })
+        .style("opacity", function (d) {
+            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
+                return "0";
+            else
+                return "1";
+        });
+    d3.select("#PCA").selectAll(".forepath")
         .style("stroke", function (d) {
             if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
                 return "red";
-            else
-                return "#007bff";
-
         })
         .style("opacity", function (d) {
             if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
                 return "1";
             else
-                return "0.3";
+                return "0";
         });
-
 }
 
 function handleMouseOverNode(circle) {

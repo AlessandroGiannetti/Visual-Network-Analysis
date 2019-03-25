@@ -12,6 +12,7 @@ text {
     font-size: 18px;
     fill: white;
 }
+
 .links line {
     stroke-opacity: 0.4;
     stroke: white;
@@ -20,33 +21,36 @@ text {
 #attacker {
     font-size: 40px;
 }
+
 .dimension {
     z-index: 10;
 }
+
 .nodes circle {
     stroke: black;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
+
 svg {
     font-family: 'Raleway', sans-serif;
     display: block;
     margin: auto;
 }
+
 .background path {
     fill: none;
     stroke: #007bff;
     shape-rendering: geometricPrecision;
     position: relative;
-    opacity: 0.2;
-    z-index: -1;
 }
+
 .foreground path {
     fill: none;
     stroke: #007bff;
     position: relative;
     shape-rendering: geometricPrecision;
-    z-index: -1;
 }
+
 .axis line,
 .axis path {
     fill: none;
@@ -55,11 +59,13 @@ svg {
     position: relative;
     z-index: 10;
 }
+
 .axis text {
     font-size: 15px;
     fill: white;
     cursor: move;
 }
+
 .d3-tip {
     line-height: 1;
     padding: 12px;
@@ -69,17 +75,20 @@ svg {
     border-radius: 4px;
     font-size: 14px;
 }
+
 /* Style northward tooltips specifically */
 .d3-tip.n:after {
     margin: -2px 0 0 0;
     top: 100%;
     left: 0;
 }
+
 table, tr, td {
     padding: 5px;
     text-align: left;
     font-weight: normal;
 }
+
 tr, td:first-child {
     font-weight: bold;
     text-align: right;
