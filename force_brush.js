@@ -731,6 +731,7 @@ function drawCpa() {
 function drawBoxPlot(data) {
     //TODO imlementare;
 }
+
 function handleSelectedNode(nodes) {
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
@@ -748,6 +749,7 @@ function handleSelectedNode(nodes) {
         });
 
 }
+
 function handleMouseOverNode(circle) {
     var nodes = [];
     nodes.push(circle._groups[0][0].__data__.id);
@@ -769,10 +771,12 @@ function handleMouseOverNode(circle) {
                 return "0.1"
         })
 }
+
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
 }
+
 function handleMouseMoveEdge(edge) {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
         if (d.source.id === edge.source.id && d.target.id === edge.target.id)
@@ -788,6 +792,7 @@ function handleMouseMoveEdge(edge) {
             return "0.1";
     })
 }
+
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
@@ -812,11 +817,11 @@ function buildMapPacket(data) {
 
 // draw legend for the graph
 function drawLegend() {
-    var legendheight = 300,
+    var legendheight = 800,
         legendwidth = 80,
-        margin = {top: 10, right: 60, bottom: 10, left: 2};
+        margin = {top: 20, right: 60, bottom: 20, left: 2};
 
-    var canvas = d3.select("#boxplot")
+    var canvas = d3.select("#legend")
         .style("height", legendheight + "px")
         .style("width", legendwidth + "px")
         .style("position", "relative")
@@ -827,8 +832,8 @@ function drawLegend() {
         .style("width", (legendwidth - margin.left - margin.right) + "px")
         .style("border", "1px solid #000")
         .style("position", "absolute")
-        .style("top", (margin.top) + "px")
-        .style("left", (margin.left) + "px")
+        .style("top", "20px")
+        .style("left", "70px")
         .node();
 
     var ctx = canvas.getContext("2d");
@@ -851,14 +856,14 @@ function drawLegend() {
     var legendaxis = d3.axisRight()
         .scale(legendscale)
         .tickSize(5)
-        .ticks(10);
+        .ticks(15);
 
-    var svg = d3.select("#boxplot")
+    var svg = d3.select("#legend")
         .append("svg")
         .attr("height", (legendheight) + "px")
         .attr("width", (legendwidth) + "px")
         .style("position", "absolute")
-        .style("left", "0px")
+        .style("left", "70px")
         .style("top", "0px");
 
     svg
@@ -867,6 +872,7 @@ function drawLegend() {
         .attr("transform", "translate(" + (legendwidth - margin.left - margin.right + 3) + "," + (margin.top) + ")")
         .call(legendaxis);
 }
+
 // built the scale for the packets
 function scalePacket() {
     var max = 0;
@@ -891,13 +897,16 @@ function scalePacket() {
     });
     scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
 }
+
 // return the value of the map with key k
 function getAttackPackets(k) {
     return NumberSentPackets[k];
 }
+
 function getTargetPackets(k) {
     return NumberDeliveredPackets[k];
 }
+
 function getTransferedPackets(k) {
     return transferPackets[k];
 }

@@ -17,6 +17,9 @@ text {
     stroke: white;
 }
 
+#attacker {
+    font-size: 40px;
+}
 .dimension {
     z-index: 10;
 }
