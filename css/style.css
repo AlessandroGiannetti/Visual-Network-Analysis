@@ -17,6 +17,9 @@ text {
     stroke: white;
 }
 
+.dimension {
+    z-index: 10;
+}
 .nodes circle {
     stroke: black;
     stroke-width: 1px;
@@ -31,11 +34,15 @@ svg {
     stroke: #007bff;
     shape-rendering: geometricPrecision;
     position: relative;
+    opacity: 0.2;
+    z-index: -1;
 }
 .foreground path {
     fill: none;
     stroke: #007bff;
     position: relative;
+    shape-rendering: geometricPrecision;
+    z-index: -1;
 }
 .axis line,
 .axis path {
@@ -43,6 +50,7 @@ svg {
     stroke: white;
     shape-rendering: geometricPrecision;
     position: relative;
+    z-index: 10;
 }
 .axis text {
     font-size: 15px;
@@ -79,6 +87,7 @@ tr, td:first-child {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    z-index: 10;
 }
 
 .axis .halo {

@@ -5,21 +5,22 @@ var
     colorScalePackets,
     // NumberSentPackets key: [source]  value : total n° of packets
     NumberSentPackets = {},
+    // NumberDeliveredPackets key: [target]  value : total n° of packets
     NumberDeliveredPackets = {},
+    // transferedPackets key: [source+target]  value : total n° of packets
     transferPackets = {},
     //SVG width and height
     width = 950,
     height = 805;
+var data;
 // ======= Fine Global variable declaration=======
 
 // extraction of the dataset from the file
-d3.json("miserables.json", function (error, data) {
+d3.json("miserables.json", function (error, datas) {
     if (error) throw error;
 
-    drawDataController("controller1");
-    drawDataController("controller2");
-    drawDataController("controller3");
-    drawDataController("controller4");
+    data = datas;
+
 
     // building the map packet
     buildMapPacket(data);
@@ -28,148 +29,16 @@ d3.json("miserables.json", function (error, data) {
     //drawing the graph network
     drawGraph(data);
     // drawing the cpa plot
-    drawCpa(data);
+    cpa = new drawCpa();
     // drawing the box plot
     drawBoxPlot(data);
-
     drawLegend();
+
     // ================ LISTENER ===================
-    d3.select("#check1").on("change", updateCheck1);
-    function updateCheck1() {
-        if (d3.select("#check1").property("checked"))
-            d3.select("#svgcontroller1").transition().duration(200).style("display", "block").style("opacity", "1");
-        else {
-            d3.select("#svgcontroller1").transition().duration(200).style("opacity", "0");
-            d3.select("#svgcontroller1").transition().delay(200).style("display", "none");
-        }
-    }
-    d3.select("#check2").on("change", updateCheck2);
-    function updateCheck2() {
-        if (d3.select("#check2").property("checked"))
-            d3.select("#svgcontroller2").transition().duration(200).style("display", "block").style("opacity", "1");
-        else {
-            d3.select("#svgcontroller2").transition().duration(200).style("opacity", "0");
-            d3.select("#svgcontroller2").transition().delay(200).style("display", "none");
-        }
-    }
-    d3.select("#check3").on("change", updateCheck3);
-    function updateCheck3() {
-        if (d3.select("#check3").property("checked"))
-            d3.select("#svgcontroller3").transition().duration(200).style("display", "block").style("opacity", "1");
-        else {
-            d3.select("#svgcontroller3").transition().duration(200).style("opacity", "0");
-            d3.select("#svgcontroller3").transition().delay(200).style("display", "none");
-        }
-    }
-    d3.select("#check4").on("change", updateCheck4);
-    function updateCheck4() {
-        if (d3.select("#check4").property("checked"))
-            d3.select("#svgcontroller4").transition().duration(200).style("display", "block").style("opacity", "1")
-            ;
-        else {
-            d3.select("#svgcontroller4").transition().duration(200).style("opacity", "0");
-            d3.select("#svgcontroller4").transition().delay(200).style("display", "none");
-        }
-    }
 
     // ================ FINE LISTENER ===================
 });
 
-function drawDataController(tag) {
-    var margin = {top: 50, right: 30, bottom: 50, left: 30},
-        width = 440 - margin.left - margin.right,
-        height = 150 - margin.bottom - margin.top;
-
-    // scale function
-    var timeScale = d3.scaleTime()
-        .domain([new Date(), new Date()])
-        .range([0, width])
-        .nice(d3.timeDay)
-        .clamp(true);
-
-    var formatDate = d3.timeFormat('%H:%M');
-
-    var svg = d3.select("#" + tag).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .attr("id", "svg" + tag)
-        .append("g")
-        // classic transform to position g
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    svg.append("rect")
-        .style("pointer-events", "all")
-        .style("fill", "none")
-        .attr("width", width)
-        .attr("height", height)
-        .style("cursor", "crosshair")
-        .on("mousedown", function () {
-            updateStartingPos(this);
-        })
-        .on("mousemove", function () {
-            if (d3.event.which === 1) {
-                updateEndingPos(this);
-            }
-        });
-
-    function updateStartingPos(elem) {
-        var xPos = d3.mouse(elem)[0];
-        handle2.attr('transform', 'translate(' + xPos + ",0)");
-        text2.text(formatDate(timeScale.invert(xPos)));
-        handle1.attr('transform', 'translate(' + xPos + ",0)");
-        text1.text(formatDate(timeScale.invert(xPos)));
-    }
-
-    function updateEndingPos(elem) {
-        var xPos = d3.mouse(elem)[0];
-        handle1.attr('transform', 'translate(' + xPos + ",0)");
-        text1.text(formatDate(timeScale.invert(xPos)));
-    }
-
-    svg.append("g")
-        .attr("class", "x axis")
-        // put in middle of screen
-        .attr("transform", "translate(0," + height / 2 + ")")
-        // inroduce axis
-        .call(d3.axisBottom()
-            .scale(timeScale)
-            .tickFormat(function (d) {
-                return formatDate(d);
-            })
-            .ticks(12)
-            .tickSize(8)
-            .tickPadding(12))
-        .select(".domain")
-        .select(function () {
-            return this.parentNode.appendChild(this.cloneNode(true));
-        })
-        .attr("class", "halo");
-
-    var handle1 = svg.append("g")
-        .attr("class", "handle");
-
-    handle1.append("path")
-        .attr("transform", "translate(0," + height / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
-
-    var text1 = handle1.append('text')
-        .text(formatDate(timeScale.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (height / 2 - 25) + ")");
-
-    var handle2 = svg.append("g")
-        .attr("class", "handle");
-
-    handle2.append("path")
-        .attr("transform", "translate(0," + height / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
-
-    var text2 = handle2.append('text')
-        .text(formatDate(timeScale.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (height / 2 - 25) + ")");
-
-    handle1.attr('transform', 'translate(0,0)');
-    handle2.attr('transform', 'translate(' + width + ",0)");
-}
 function drawGraph(data) {
     var width = 950,
         height = 805;
@@ -333,6 +202,7 @@ function drawGraph(data) {
                 return d.y;
             });
     }
+
     // content of the windows on link mouse over
     function contentLinkTip(d) {
         var content = "<h5 align='center'>LINK</h5>";
@@ -341,6 +211,7 @@ function drawGraph(data) {
             "<tr><th>Tot N° of packets:</th> <td>" + transferPackets[d.source.id + d.target.id] + "</td></tr></table>";
         return content;
     }
+
     function contentNodeTip(d) {
         var value = 0;
         if (NumberSentPackets[d.id] != null && d.group === "1")
@@ -357,7 +228,275 @@ function drawGraph(data) {
         return content;
     }
 }
-function drawCpa(data) {
+
+function drawCpa() {
+    var marginSlider = {top: 50, right: 30, bottom: 50, left: 30},
+        widthSlider = 440 - marginSlider.left - marginSlider.right,
+        heightSlider = 150 - marginSlider.bottom - marginSlider.top;
+    var formatDate = d3.timeFormat('%H:%M');
+
+
+    // ================= SLIDER 1 GIORNO 4/7/2017 =========================
+    var timeScale1 = d3.scaleTime()
+        .domain([new Date(moment("07/04/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/04/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .range([0, widthSlider])
+        .nice(d3.timeDay)
+        .clamp(true);
+    var svgSlider1 = d3.select("#controller1").append("svg")
+        .attr("width", widthSlider + marginSlider.left + marginSlider.right)
+        .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
+        .attr("id", "svgcontroller1")
+        .append("g")
+        // classic transform to position g
+        .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
+    svgSlider1.append("rect")
+        .style("pointer-events", "all")
+        .style("fill", "none")
+        .attr("width", widthSlider)
+        .attr("height", heightSlider)
+        .style("cursor", "crosshair");
+    svgSlider1.append("g")
+        .attr("class", "x axis")
+        // put in middle of screen
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        // inroduce axis
+        .call(d3.axisBottom()
+            .scale(timeScale1)
+            .tickFormat(function (d) {
+                return formatDate(d);
+            })
+            .ticks(12)
+            .tickSize(8)
+            .tickPadding(12))
+        .select(".domain")
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "halo");
+    var brush1 = d3.brushX()
+        .extent([[0, 0], [widthSlider, heightSlider]])
+        .on("start brush end", update);
+    svgSlider1.append("g")
+        .attr("class", "brush1")
+        .style("opacity", "0")
+        .call(brush1);
+    var handle1 = svgSlider1.append("g")
+        .attr("class", "handle");
+    handle1.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text1 = handle1.append('text')
+        .text(formatDate(timeScale1.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    var handle2 = svgSlider1.append("g")
+        .attr("class", "handle");
+    handle2.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text2 = handle2.append('text')
+        .text(formatDate(timeScale1.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    handle1.attr('transform', 'translate(0,0)');
+    handle2.attr('transform', 'translate(' + widthSlider + ",0)");
+    // ================= FINE SLIDER GIORNO 4/7/2017 =========================
+
+
+    // ================= SLIDER GIORNO 5/7/2017 =========================
+    var timeScale2 = d3.scaleTime()
+        .domain([new Date(moment("07/05/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/05/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .range([0, widthSlider])
+        .nice(d3.timeDay)
+        .clamp(true);
+    var svgSlider2 = d3.select("#controller2").append("svg")
+        .attr("width", widthSlider + marginSlider.left + marginSlider.right)
+        .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
+        .attr("id", "svgcontroller2")
+        .append("g")
+        // classic transform to position g
+        .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
+    svgSlider2.append("rect")
+        .style("pointer-events", "all")
+        .style("fill", "none")
+        .attr("width", widthSlider)
+        .attr("height", heightSlider)
+        .style("cursor", "crosshair");
+    svgSlider2.append("g")
+        .attr("class", "x axis")
+        // put in middle of screen
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        // inroduce axis
+        .call(d3.axisBottom()
+            .scale(timeScale2)
+            .tickFormat(function (d) {
+                return formatDate(d);
+            })
+            .ticks(12)
+            .tickSize(8)
+            .tickPadding(12))
+        .select(".domain")
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "halo");
+    var brush2 = d3.brushX()
+        .extent([[0, 0], [widthSlider, heightSlider]])
+        .on("start brush end", update);
+    svgSlider2.append("g")
+        .attr("class", "brush2")
+        .style("opacity", "0")
+        .call(brush2);
+    var handle3 = svgSlider2.append("g")
+        .attr("class", "handle");
+    handle3.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text3 = handle3.append('text')
+        .text(formatDate(timeScale2.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    var handle4 = svgSlider2.append("g")
+        .attr("class", "handle");
+    handle4.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text4 = handle4.append('text')
+        .text(formatDate(timeScale2.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    handle3.attr('transform', 'translate(0,0)');
+    handle4.attr('transform', 'translate(' + widthSlider + ",0)");
+    // ================= FINE SLIDER GIORNO 5/7/2017 =========================
+
+
+    // ================= SLIDER GIORNO 6/7/2017 ==============================
+    var timeScale3 = d3.scaleTime()
+        .domain([new Date(moment("07/06/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/06/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .range([0, widthSlider])
+        .nice(d3.timeDay)
+        .clamp(true);
+    var svgSlider3 = d3.select("#controller3").append("svg")
+        .attr("width", widthSlider + marginSlider.left + marginSlider.right)
+        .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
+        .attr("id", "svgcontroller3")
+        .append("g")
+        // classic transform to position g
+        .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
+    svgSlider3.append("rect")
+        .style("pointer-events", "all")
+        .style("fill", "none")
+        .attr("width", widthSlider)
+        .attr("height", heightSlider)
+        .style("cursor", "crosshair");
+    svgSlider3.append("g")
+        .attr("class", "x axis")
+        // put in middle of screen
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        // inroduce axis
+        .call(d3.axisBottom()
+            .scale(timeScale3)
+            .tickFormat(function (d) {
+                return formatDate(d);
+            })
+            .ticks(12)
+            .tickSize(8)
+            .tickPadding(12))
+        .select(".domain")
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "halo");
+    var brush3 = d3.brushX()
+        .extent([[0, 0], [widthSlider, heightSlider]])
+        .on("start brush end", update);
+    svgSlider3.append("g")
+        .attr("class", "brush3")
+        .style("opacity", "0")
+        .call(brush3);
+    var handle5 = svgSlider3.append("g")
+        .attr("class", "handle");
+    handle5.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text5 = handle5.append('text')
+        .text(formatDate(timeScale3.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    var handle6 = svgSlider3.append("g")
+        .attr("class", "handle");
+    handle6.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text6 = handle6.append('text')
+        .text(formatDate(timeScale3.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    handle5.attr('transform', 'translate(0,0)');
+    handle6.attr('transform', 'translate(' + widthSlider + ",0)");
+    // ================= FINE SLIDER GIORNO 6/7/2017 =========================
+
+
+    // ================= SLIDER GIORNO 7/7/2017 =========================
+    var timeScale4 = d3.scaleTime()
+        .domain([new Date(moment("07/07/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .range([0, widthSlider])
+        .nice(d3.timeDay)
+        .clamp(true);
+    var svgSlider4 = d3.select("#controller4").append("svg")
+        .attr("width", widthSlider + marginSlider.left + marginSlider.right)
+        .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
+        .attr("id", "svgcontroller4")
+        .append("g")
+        // classic transform to position g
+        .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
+    svgSlider4.append("rect")
+        .style("pointer-events", "all")
+        .style("fill", "none")
+        .attr("width", widthSlider)
+        .attr("height", heightSlider)
+        .style("cursor", "crosshair");
+    svgSlider4.append("g")
+        .attr("class", "x axis")
+        // put in middle of screen
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        // inroduce axis
+        .call(d3.axisBottom()
+            .scale(timeScale4)
+            .tickFormat(function (d) {
+                return formatDate(d);
+            })
+            .ticks(12)
+            .tickSize(8)
+            .tickPadding(12))
+        .select(".domain")
+        .select(function () {
+            return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "halo");
+    var brush4 = d3.brushX()
+        .extent([[0, 0], [widthSlider, heightSlider]])
+        .on("start brush end", update);
+    svgSlider4.append("g")
+        .attr("class", "brush4")
+        .style("opacity", "0")
+        .call(brush4);
+    var handle7 = svgSlider4.append("g")
+        .attr("class", "handle");
+    handle7.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text7 = handle7.append('text')
+        .text(formatDate(timeScale4.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    var handle8 = svgSlider4.append("g")
+        .attr("class", "handle");
+    handle8.append("path")
+        .attr("transform", "translate(0," + heightSlider / 2 + ")")
+        .attr("d", "M 0 -20 V 20");
+    var text8 = handle8.append('text')
+        .text(formatDate(timeScale4.domain()[0]))
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+    handle7.attr('transform', 'translate(0,0)');
+    handle8.attr('transform', 'translate(' + widthSlider + ",0)");
+    // ================= FINE SLIDER GIORNO 7/7/2017 =========================
+
+
+    // ================= DRAWING CPA PLOT ====================================
     var margin = {top: 30, right: 200, bottom: 10, left: 265},
         width = 1800 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -366,9 +505,7 @@ function drawCpa(data) {
         y = {},
         dragging = {};
 
-    var line = d3.line(),
-        background,
-        foreground;
+    var line = d3.line();
 
     var svg = d3.select("#PCA").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -382,137 +519,219 @@ function drawCpa(data) {
         Range.push(i);
     }
 
-    x.domain(dimensions = d3.keys(data.links[0]).filter(function (d) {
-        if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
-            return false;
+    d3.selectAll(".custom-control-input").on("change", update);
+    update();
+
+    function update() {
+        var checkedValue = [];
+        d3.selectAll('.custom-control-input').each(function () {
+            cb = d3.select(this);
+            if (cb.property("checked")) {
+                checkedValue.push(cb.property("value"));
+            }
+        });
+        if (checkedValue.length === 0) {
+            newData = []
         }
-        return y[d] = d3.scaleOrdinal()
-            .domain(d3.extent(data.links, function (p) {
-                if (d == "source" || d == "target") {
-                    return +p[d]["id"];
-                }
-                return +p[d];
-            }))
-            .range(Range);
-    }));
 
-    // Add grey background lines for context.
-    background = svg.append("g")
-        .attr("class", "background")
-        .selectAll("path")
-        .data(data.links)
-        .enter().append("path")
-        .attr("class", "backpath")
-        .attr("d", path);
+        selection1 = d3.brushSelection(d3.select(".brush1").node());
+        selection2 = d3.brushSelection(d3.select(".brush2").node());
+        selection3 = d3.brushSelection(d3.select(".brush3").node());
+        selection4 = d3.brushSelection(d3.select(".brush4").node());
 
-    // Add blue foreground lines for focus.
-    foreground = svg.append("g")
-        .attr("class", "foreground")
-        .selectAll("path")
-        .data(data.links)
-        .enter().append("path")
-        .attr("class", "forepath")
-        .attr("d", path)
-        .style("stroke", "#007bff");
+        if (selection1 == null)
+            selection1 = [0, 380];
+        if (selection2 == null)
+            selection2 = [0, 380];
+        if (selection3 == null)
+            selection3 = [0, 380];
+        if (selection4 == null)
+            selection4 = [0, 380];
 
-    // Add a group element for each dimension.
-    var g = svg.selectAll(".dimension")
-        .data(dimensions)
-        .enter().append("g")
-        .attr("class", "dimension")
-        .attr("transform", function (d) {
-            return "translate(" + x(d) + ")";
-        })
-        .call(d3.drag()
-            .subject(function (d) {
-                return {x: x(d)};
-            })
-            .on("start", function (d) {
-                dragging[d] = x(d);
-                background.attr("visibility", "hidden");
-            })
-            .on("drag", function (d) {
-                dragging[d] = Math.min(width, Math.max(0, d3.event.x));
-                foreground.attr("d", path);
-                dimensions.sort(function (a, b) {
-                    return position(a) - position(b);
-                });
-                x.domain(dimensions);
-                g.attr("transform", function (d) {
-                    return "translate(" + position(d) + ")";
-                })
-            })
-            .on("end", function (d) {
-                delete dragging[d];
-                transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
-                transition(foreground).attr("d", path);
-                background
-                    .attr("d", path)
-                    .transition()
-                    .delay(500)
-                    .duration(0)
-                    .attr("visibility", null);
-            }));
-    // Add an axis and title.
-    g.append("g")
-        .attr("class", "axis")
-        .each(function (d) {
-            d3.select(this).call(d3.axisLeft(y[d]));
-        })
-        //text does not show up because previous line breaks somehow
-        .append("text")
-        .style("text-anchor", "middle")
-        .attr("y", -9)
-        .text(function (d) {
-            return d;
+        newData = data.links.filter(function (d) {
+            return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
         });
 
-    function position(d) {
-        var v = dragging[d];
-        return v == null ? x(d) : v;
-    }
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        if (checkedValue.includes("4/7/2017")) {
+            d3.select("#svgcontroller1").style("opacity", "1");
+            selection1 = d3.brushSelection(d3.select(".brush1").node());
+            if (selection1 == null)
+                selection1 = [0, 380];
+            handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
+            text1.text(formatDate(timeScale1.invert(selection1[0])));
+            handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
+            text2.text(formatDate(timeScale1.invert(selection1[1])));
+            console.log(timeScale1.invert(selection1[0]));
+        } else {
+            d3.select("#svgcontroller1").transition().duration(200).style("opacity", "0");
+        }
+        // EVENT LISTENER SLIDER 2 DATA 5/7/2017
+        if (checkedValue.includes("5/7/2017")) {
+            d3.select("#svgcontroller2").style("opacity", "1");
+            selection2 = d3.brushSelection(d3.select(".brush2").node());
+            console.log(selection2);
+            if (selection2 == null)
+                selection2 = [0, 380];
+            handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
+            text3.text(formatDate(timeScale1.invert(selection2[0])));
+            handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
+            text4.text(formatDate(timeScale1.invert(selection2[1])));
+        } else {
+            d3.select("#svgcontroller2").transition().duration(200).style("opacity", "0");
+        }
+        // EVENT LISTENER SLIDER 3 DATA 5/7/2017
+        if (checkedValue.includes("6/7/2017")) {
+            d3.select("#svgcontroller3").style("opacity", "1");
+            selection3 = d3.brushSelection(d3.select(".brush3").node());
+            if (selection3 == null)
+                selection3 = [0, 380];
+            handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
+            text5.text(formatDate(timeScale1.invert(selection3[0])));
+            handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
+            text6.text(formatDate(timeScale1.invert(selection3[1])));
+        } else {
+            d3.select("#svgcontroller3").transition().duration(200).style("opacity", "0");
+        }
+        // EVENT LISTENER SLIDER 4 DATA 7/7/2017
+        if (checkedValue.includes("7/7/2017")) {
+            d3.select("#svgcontroller4").style("opacity", "1");
+            selection4 = d3.brushSelection(d3.select(".brush4").node());
+            if (selection4 == null)
+                selection4 = [0, 380];
+            handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
+            text7.text(formatDate(timeScale4.invert(selection4[0])));
+            handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
+            text8.text(formatDate(timeScale4.invert(selection4[1])));
+        } else {
+            d3.select("#svgcontroller4").transition().duration(200).style("opacity", "0");
+        }
 
-    function transition(g) {
-        return g.transition().duration(500);
-    }
+
+        var background;
+        var foreground;
+
+        d3.selectAll(".forepath").remove();
+        d3.selectAll(".backpath").remove();
+        d3.selectAll(".dimension").remove();
+
+        x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
+            if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
+                return false;
+            }
+            return y[d] = d3.scaleOrdinal()
+                .domain(d3.extent(newData, function (p) {
+                    if (d == "source" || d == "target") {
+                        return +p[d]["id"];
+                    }
+                    return +p[d];
+                }))
+                .range(Range);
+        }));
+
+        // Add grey background lines for context.
+        background = svg.append("g")
+            .attr("class", "background")
+            .selectAll("path")
+            .data(newData)
+            .enter().append("path")
+            .attr("class", "backpath")
+            .attr("d", path);
+        // Add blue foreground lines for focus.
+        foreground = svg.append("g")
+            .attr("class", "foreground")
+            .selectAll("path")
+            .data(newData)
+            .enter().append("path")
+            .attr("class", "forepath")
+            .attr("d", path);
+
+        // Add a group element for each dimension.
+        var g = svg.selectAll(".dimension")
+            .data(dimensions)
+            .enter().append("g")
+            .attr("class", "dimension")
+            .attr("transform", function (d) {
+                return "translate(" + x(d) + ")";
+            })
+            .call(d3.drag()
+                .subject(function (d) {
+                    return {x: x(d)};
+                })
+                .on("start", function (d) {
+                    dragging[d] = x(d);
+                    background.attr("visibility", "hidden");
+                })
+                .on("drag", function (d) {
+                    dragging[d] = Math.min(width, Math.max(0, d3.event.x));
+                    foreground.attr("d", path);
+                    dimensions.sort(function (a, b) {
+                        return position(a) - position(b);
+                    });
+                    x.domain(dimensions);
+                    g.attr("transform", function (d) {
+                        return "translate(" + position(d) + ")";
+                    })
+                })
+                .on("end", function (d) {
+                    delete dragging[d];
+                    transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
+                    transition(foreground).attr("d", path);
+                    background
+                        .attr("d", path)
+                        .transition()
+                        .delay(500)
+                        .duration(0)
+                        .attr("visibility", null);
+                }));
+        // Add an axis and title.
+        g.append("g")
+            .attr("class", "axis")
+            .each(function (d) {
+                d3.select(this).call(d3.axisLeft(y[d]));
+            })
+            //text does not show up because previous line breaks somehow
+            .append("text")
+            .style("text-anchor", "middle")
+            .attr("y", -9)
+            .text(function (d) {
+                return d;
+            });
+
+        function position(d) {
+            var v = dragging[d];
+            return v == null ? x(d) : v;
+        }
+
+        function transition(g) {
+            return g.transition().duration(500);
+        }
 
 // Returns the path for a given data point.
-    function path(d) {
-        return line(dimensions.map(function (p) {
-            if (p == "source" || p == "target")
-                return [position(p), y[p](d[p]["id"].slice(0, -2))];
-            return [position(p), y[p](d[p])];
-        }));
+        function path(d) {
+            return line(dimensions.map(function (p) {
+                if (p == "source" || p == "target")
+                    return [position(p), y[p](d[p]["id"].slice(0, -2))];
+                return [position(p), y[p](d[p])];
+            }));
+        }
+
+        svg.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
+        svg.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
+        svg.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
     }
 
-    svg.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
-    svg.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
-    svg.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
-
+    drawCpa.update = update;
 }
+
 function drawBoxPlot(data) {
     //TODO imlementare;
 }
-function buildMapPacket(data) {
-    for (var i = 0; i < data.links.length; i++) {
-        if (getAttackPackets(data.links[i].source) == null)
-            NumberSentPackets[data.links[i].source] = parseInt(data.links[i].TotalFwdPackets);
-        else
-            NumberSentPackets[data.links[i].source] += parseInt(data.links[i].TotalFwdPackets);
-        if (getTargetPackets(data.links[i].target) == null)
-            NumberDeliveredPackets[data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
-        else
-            NumberDeliveredPackets[data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
-        if (getTransferedPackets(data.links[i].source + data.links[i].target) == null)
-            transferPackets[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
-        else
-            transferPackets[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
-    }
-}
-
 function handleSelectedNode(nodes) {
-    console.log(nodes);
     d3.select("#PCA").selectAll(".forepath").transition().duration(200)
         .style("stroke", function (d) {
             if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
@@ -525,9 +744,8 @@ function handleSelectedNode(nodes) {
             if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
                 return "1";
             else
-                return "0";
+                return "0.3";
         });
-    console.log(nodes)
 
 }
 function handleMouseOverNode(circle) {
@@ -550,7 +768,6 @@ function handleMouseOverNode(circle) {
             else
                 return "0.1"
         })
-
 }
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
@@ -575,6 +792,25 @@ function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
 }
+
+function buildMapPacket(data) {
+    for (var i = 0; i < data.links.length; i++) {
+        if (getAttackPackets(data.links[i].source) == null)
+            NumberSentPackets[data.links[i].source] = parseInt(data.links[i].TotalFwdPackets);
+        else
+            NumberSentPackets[data.links[i].source] += parseInt(data.links[i].TotalFwdPackets);
+        if (getTargetPackets(data.links[i].target) == null)
+            NumberDeliveredPackets[data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+        else
+            NumberDeliveredPackets[data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
+        if (getTransferedPackets(data.links[i].source + data.links[i].target) == null)
+            transferPackets[data.links[i].source + data.links[i].target] = parseInt(data.links[i].TotalFwdPackets);
+        else
+            transferPackets[data.links[i].source + data.links[i].target] += parseInt(data.links[i].TotalFwdPackets);
+    }
+}
+
+// draw legend for the graph
 function drawLegend() {
     var legendheight = 300,
         legendwidth = 80,
@@ -654,9 +890,7 @@ function scalePacket() {
             min = transferPackets[key];
     });
     scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
-
 }
-
 // return the value of the map with key k
 function getAttackPackets(k) {
     return NumberSentPackets[k];
