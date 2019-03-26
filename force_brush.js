@@ -24,13 +24,12 @@ d3.json("miserables.json", function (error, datas) {
     buildMapPacket(data.links);
     // building the scale packet
     scalePacket(NumberDeliveredPackets);
-    //drawing the graph network
-    // drawing the cpa plot
-    drawCpa();
+
+    drawData();
     drawBoxPlot()
 });
 
-function drawCpa() {
+function drawData() {
 
     // ========================= SLIDERS ===================================
     var marginSlider = {top: 50, right: 30, bottom: 50, left: 30},
@@ -289,8 +288,30 @@ function drawCpa() {
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
-    // ================= FINE SLIDER GIORNO 7/7/2017 ===========================
-    // ================= DICHIARAZIONI DRAWING GRAPH ===========================
+    // ================= FINE SLIDER GIORNO 7/7/2017 =======================
+    // =========================FINE SLIDERS ===================================
+
+    // =============================INIT INFO N ATTACK ============================
+    day1 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "4/7/2017"
+    });
+    day2 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "5/7/2017"
+    });
+    day3 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "6/7/2017"
+    });
+    day4 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "7/7/2017"
+    });
+
+    d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
+    d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
+    d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
+    d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
+    // ====================FINE INIT INFO N ATTACK ============================
+
+    // ========================== DRAWING GRAPH ================================
     var edges = [],
         nodeSelected = new Set();
     var widthGRAPH = 950,
@@ -317,7 +338,7 @@ function drawCpa() {
 
     simulation.nodes(data.nodes).on("tick", ticked);
     // ==================FINE DICHIARAZIONI GRAPH =============================
-    // ==============  DICHIARAZIONI LEGEND ===================================
+    // ===================== DICHIARAZIONI LEGEND =============================
     var heightLegend = 800,
         widthLegend = 80,
         marginLegend = {top: 20, right: 60, bottom: 20, left: 2};
@@ -390,7 +411,8 @@ function drawCpa() {
         .attr("transform", "translate(" + marginCPA.left + "," + marginCPA.top + ")");
     for (var i = 0; i <= heightCPA * 20; i = i + 20) {
         Range.push(i);
-    } // FORSE DA RIMUOVERE
+    }
+
     // ================= FINE DICHIARAZIONI CPA ==================================
 
     function initGraph() {
@@ -541,6 +563,26 @@ function drawCpa() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
         });
+
+        // =============================UPDATE INFO N ATTACK ============================
+        UPday1 = newData.filter(function (d) {
+            return d.Timestamp.slice(0, -6) === "4/7/2017"
+        });
+        UPday2 = newData.filter(function (d) {
+            return d.Timestamp.slice(0, -6) === "5/7/2017"
+        });
+        UPday3 = newData.filter(function (d) {
+            return d.Timestamp.slice(0, -6) === "6/7/2017"
+        });
+        UPday4 = newData.filter(function (d) {
+            return d.Timestamp.slice(0, -6) === "7/7/2017"
+        });
+
+        d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
+        d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
+        d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
+        d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+        // ====================FINE UPDATE INFO N ATTACK ============================
 
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         if (checkedValue.includes("4/7/2017")) {
@@ -886,6 +928,7 @@ function drawCpa() {
         }
 
     }
+
     function ticked() {
         link
             .attr("x1", function (d) {
@@ -915,14 +958,16 @@ function drawCpa() {
                 return d.y;
             });
     }
+
     // content of the windows on link mouse over
     function contentLinkTip(d) {
         var content = "<h5 align='center'>LINK</h5>";
-        content += " <table align='center'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
+        content += " <table align='center' id='tooltip'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
             "<tr><td> IP address Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
             "<tr><th>Tot N° of packets:</th> <td>" + transferPackets[d.source.id + d.target.id] + "</td></tr></table>";
         return content;
     }
+
     function contentNodeTip(d) {
         var value = 0;
         if (NumberSentPackets[d.id] != null && d.group === "1")
@@ -931,10 +976,10 @@ function drawCpa() {
             value = NumberDeliveredPackets[d.id];
         var content = "<h5 align='center'>NODE</h5>";
         if (d.group === "1")
-            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
+            content += " <table align='center' id='tooltip'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
                 "<tr><td>N° malicious packages sent: </td><td align='left'>" + value + "</td></tr></table>";
         if (d.group === "2")
-            content += " <table align='center'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
+            content += " <table align='center' id='tooltip'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
                 "<tr><td>N° malicious packets delivered: </td><td align='left'>" + value + "</td></tr></table>";
         return content;
     }

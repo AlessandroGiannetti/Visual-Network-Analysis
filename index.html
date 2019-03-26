@@ -16,14 +16,11 @@
 <body>
 
 <div class="container-fluid" data-role="page">
-    <p style="display: inline; position: relative; left:295px; top:10px; font-size:25px;">ATTACKER</p>
-    <p style="display: inline; position: relative; left:740px; top:8px; font-size:25px;">TARGET</p>
+    <p style="display: inline; position: relative; right:20px; top:10px; font-size:18px;">N° of packets</p>
     <div class="row">
-        <div class="col-sm-1" id="legend">
-        </div>
-        <div class="col-sm-6" align="center" id="graph">
-        </div>
-
+        <div class="col-sm-1" id="legend"></div>
+        <div class="col-sm-6" id="graph"><p id="attacker">ATTACKER</p>
+            <p id="target">TARGET</p></div>
         <div class="col-5" id="my_dataviz">
         </div>
     </div>
@@ -37,7 +34,7 @@
                         <input class="custom-control-input" type="checkbox" name="checkbox" id="check1" value="4/7/2017"
                                checked/>
                         <label for="check1">4/7/2017</label>
-                        <p>60/<b>60</b></p>
+                        <p id="day1"></p>
                     </div>
                 </div>
             </div>
@@ -50,31 +47,31 @@
                         <input class="custom-control-input" type="checkbox" name="checkbox" id="check2" value="5/7/2017"
                                checked/>
                         <label for="check2">5/7/2017</label>
-                        <p>60/<b>60</b></p>
+                        <p id="day2"></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col" align="center" id="controller3">
+        <div class="col" id="controller3">
             <div class="custom-control custom-checkbox checkbox-inline">
                 <div class="funkyradio">
                     <div class="funkyradio-primary">
                         <input class="custom-control-input" type="checkbox" name="checkbox" id="check3" value="6/7/2017"
                                checked/>
                         <label for="check3">6/7/2017</label>
-                        <p>60/<b>60</b></p>
+                        <p id="day3"></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col" align="center" id="controller4">
+        <div class="col" id="controller4">
             <div class="custom-control custom-checkbox checkbox-inline">
                 <div class="funkyradio">
                     <div class="funkyradio-primary">
                         <input class="custom-control-input" type="checkbox" name="checkbox" id="check4" value="7/7/2017"
                                checked/>
                         <label for="check4">7/7/2017</label>
-                        <p>60/<b>60</b></p>
+                        <p id="day4"></p>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@ text {
 h4 {
     display: inline;
 }
+
 .links line {
     stroke-opacity: 0.4;
     stroke: white;
@@ -87,13 +88,13 @@ svg {
     left: 0;
 }
 
-table, tr, td {
+#tooltip table, #tooltip tr, #tooltip td {
     padding: 5px;
     text-align: left;
     font-weight: normal;
 }
 
-tr, td:first-child {
+#tooltip tr, #tooltip td:first-child {
     font-weight: bold;
     text-align: right;
 }
@@ -231,4 +232,26 @@ p {
 .funkyradio-primary input[type="checkbox"]:checked ~ label:before {
     color: #ffffff;
     background-color: #007bff;
+}
+
+#attacker {
+    font-size: 30px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    position: absolute;
+    top: 50%;
+    right: 90%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+#target {
+    font-size: 30px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%)
 }
