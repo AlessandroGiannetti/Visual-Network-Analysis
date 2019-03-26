@@ -39,7 +39,7 @@ svg {
 
 .background path {
     fill: none;
-    stroke: #007bff;
+    stroke: #444444;
     shape-rendering: geometricPrecision;
     position: relative;
 }
@@ -47,9 +47,8 @@ svg {
 .foreground path {
     fill: none;
     stroke: #007bff;
-    position: relative;
     shape-rendering: geometricPrecision;
-    opacity: 0.2;
+    position: relative;
 }
 
 .axis line,

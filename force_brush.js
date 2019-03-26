@@ -858,23 +858,24 @@ function drawCpa() {
             function brush_parallel_chart() {
                 for (var i = 0; i < dimensions.length; ++i) {
                     if (d3.event.target == y[dimensions[i]].brush) {
-                        var min = d3.event.selection[0];
-                        var max = d3.event.selection[1];
+                        min = d3.event.selection[0];
+                        max = d3.event.selection[1];
                         extents[i] = y[dimensions[i]].domain().filter(function (d) {
                             return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
                         });
                     }
                 }
-                background.style("display", function (d) {
+                d3.select("#PCA").selectAll(".backpath").style("stroke", "#444444");
+                foreground.style("display", function (d) {
                     return dimensions.every(function (p, i) {
                         if (extents[i][0] == 0 && extents[i][0] == 0)
                             return true;
                         if (p === "source" || p === "target") {
                             return extents[i].includes(d[p].id.slice(0, -2));
                         } else {
-                            return extents[i].includes(d[p]);
+                            return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
                         }
-                    }) ? null : "none";
+                    }) ? "block" : "none";
                 });
             }
 
@@ -885,7 +886,6 @@ function drawCpa() {
         }
 
     }
-
     function ticked() {
         link
             .attr("x1", function (d) {
@@ -915,7 +915,6 @@ function drawCpa() {
                 return d.y;
             });
     }
-
     // content of the windows on link mouse over
     function contentLinkTip(d) {
         var content = "<h5 align='center'>LINK</h5>";
@@ -924,7 +923,6 @@ function drawCpa() {
             "<tr><th>Tot N° of packets:</th> <td>" + transferPackets[d.source.id + d.target.id] + "</td></tr></table>";
         return content;
     }
-
     function contentNodeTip(d) {
         var value = 0;
         if (NumberSentPackets[d.id] != null && d.group === "1")
@@ -1131,27 +1129,12 @@ function drawBoxPlot() {
 }
 
 function handleSelectedNode(nodes) {
-    d3.select("#PCA").selectAll(".backpath")
-        .style("stroke", function (d) {
-            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                return "#007bff";
-        })
-        .style("opacity", function (d) {
-            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                return "0";
-            else
-                return "1";
-        });
     d3.select("#PCA").selectAll(".forepath")
         .style("stroke", function (d) {
             if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
                 return "red";
-        })
-        .style("opacity", function (d) {
-            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                return "1";
             else
-                return "0";
+                return "#007bff"
         });
 }
 
