@@ -49,6 +49,7 @@ svg {
     stroke: #007bff;
     position: relative;
     shape-rendering: geometricPrecision;
+    opacity: 0.2;
 }
 
 .axis line,

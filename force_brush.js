@@ -730,6 +730,8 @@ function drawCpa() {
             d3.selectAll(".backpath").remove();
             d3.selectAll(".dimension").remove();
             // =============== update the cpa ==================
+
+            var extents;
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
                 if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
@@ -743,6 +745,10 @@ function drawCpa() {
                     }))
                     .range(Range);
             }));
+
+            extents = dimensions.map(function (p) {
+                return [0, 0];
+            });
 
             // Add grey background lines for context.
             background = svgCPA.append("g")
@@ -815,6 +821,16 @@ function drawCpa() {
                     return d;
                 });
 
+            // Add and store a brush for each axis.
+            g.append("g")
+                .attr("class", "brush")
+                .each(function (d) {
+                    d3.select(this).call(y[d].brush = d3.brushY().extent([[-8, 0], [8, height]]).on("brush start", brushstart).on("brush", brush_parallel_chart));
+                })
+                .selectAll("rect")
+                .attr("x", -8)
+                .attr("width", 16);
+
             function position(d) {
                 var v = dragging[d];
                 return v == null ? x(d) : v;
@@ -831,6 +847,35 @@ function drawCpa() {
                         return [position(p), y[p](d[p]["id"].slice(0, -2))];
                     return [position(p), y[p](d[p])];
                 }));
+            }
+
+            function brushstart() {
+                d3.event.sourceEvent.stopPropagation();
+            }
+
+
+// Handles a brush event, toggling the display of foreground lines.
+            function brush_parallel_chart() {
+                for (var i = 0; i < dimensions.length; ++i) {
+                    if (d3.event.target == y[dimensions[i]].brush) {
+                        var min = d3.event.selection[0];
+                        var max = d3.event.selection[1];
+                        extents[i] = y[dimensions[i]].domain().filter(function (d) {
+                            return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
+                        });
+                    }
+                }
+                background.style("display", function (d) {
+                    return dimensions.every(function (p, i) {
+                        if (extents[i][0] == 0 && extents[i][0] == 0)
+                            return true;
+                        if (p === "source" || p === "target") {
+                            return extents[i].includes(d[p].id.slice(0, -2));
+                        } else {
+                            return extents[i].includes(d[p]);
+                        }
+                    }) ? null : "none";
+                });
             }
 
             svgCPA.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
@@ -997,10 +1042,10 @@ function drawBoxPlot() {
             .append("rect")
             .attr("x", function (d) {
                 return (x(d.value.q1))
-            }) // console.log(x(d.value.q1)) ;
+            })
             .attr("width", function (d) {
                 return (x(d.value.q3) - x(d.value.q1))
-            }) //console.log(x(d.value.q3)-x(d.value.q1))
+            })
             .attr("y", function (d) {
                 return y(d.key);
             })
