@@ -1880,7 +1880,7 @@
             }
 
             if (data) {
-                // moment.duration._locale = moment._locale = data;
+                // moment.duration._locale = moment._locale = prova;
                 globalLocale = data;
             } else {
                 if ((typeof console !== 'undefined') && console.warn) {
@@ -1973,7 +1973,7 @@
         return locales[name];
     }
 
-    // returns locale data
+    // returns locale prova
     function getLocale(key) {
         var locale;
 

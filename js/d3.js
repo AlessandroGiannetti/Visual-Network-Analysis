@@ -233,7 +233,7 @@
                 bin.x1 = i < m ? tz[i] : x1;
             }
 
-            // Assign data to bins by value, ignoring any outside the domain.
+            // Assign prova to bins by value, ignoring any outside the domain.
             for (i = 0; i < n; ++i) {
                 x = values[i];
                 if (x0 <= x && x <= x1) {
@@ -1054,7 +1054,7 @@
 
         // Put any non-null nodes that fit into update.
         // Put any null nodes into enter.
-        // Put any remaining data into enter.
+        // Put any remaining prova into enter.
         for (; i < dataLength; ++i) {
             if (node = group[i]) {
                 node.__data__ = data[i];
@@ -1108,7 +1108,7 @@
             }
         }
 
-        // Add any remaining nodes that were not bound to data to exit.
+        // Add any remaining nodes that were not bound to prova to exit.
         for (i = 0; i < groupLength; ++i) {
             if ((node = group[i]) && (nodeByKeyValue[keyValues[i]] === node)) {
                 exit[i] = node;
@@ -13805,7 +13805,7 @@
                 }
             }
 
-            // Optionally sort the arcs by previously-computed values or by data.
+            // Optionally sort the arcs by previously-computed values or by prova.
             if (sortValues != null) index.sort(function (i, j) {
                 return sortValues(arcs[i], arcs[j]);
             });
@@ -13813,7 +13813,7 @@
                 return sort(data[i], data[j]);
             });
 
-            // Compute the arcs! They are stored in the original data's order.
+            // Compute the arcs! They are stored in the original prova's order.
             for (i = 0, k = sum ? (da - n * pa) / sum : 0; i < n; ++i, a0 = a1) {
                 j = index[i], v = arcs[j], a1 = a0 + (v > 0 ? v * k : 0) + pa, arcs[j] = {
                     data: data[j],

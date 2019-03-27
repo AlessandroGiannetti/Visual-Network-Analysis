@@ -185,9 +185,6 @@ p {
     text-indent: 3.25em;
     margin-top: 2em;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 
 }
@@ -254,4 +251,10 @@ p {
     left: 90%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%)
+}
+
+.barchart {
+    display: inline;
+    clear: both;
+    overflow: hidden;
 }
