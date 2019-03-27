@@ -22,11 +22,6 @@ h4 {
     stroke: white;
 }
 
-#attacker {
-    font-size: 40px;
-}
-
-
 .dimension {
     z-index: 10;
 }
@@ -49,13 +44,20 @@ svg {
     position: relative;
 }
 
-.foreground path {
+.evidence path {
+    display: none;
+    fill: none;
+    stroke: red;
+    shape-rendering: geometricPrecision;
+    position: relative;
+}
+
+.notEvidence path {
     fill: none;
     stroke: #007bff;
     shape-rendering: geometricPrecision;
     position: relative;
 }
-
 .axis line,
 .axis path {
     fill: none;
@@ -231,24 +233,23 @@ p {
     background-color: #007bff;
 }
 
-#attacker {
-    font-size: 30px;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    position: absolute;
-    top: 50%;
-    right: 90%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%)
-}
-
 #target {
     font-size: 30px;
     writing-mode: vertical-rl;
     text-orientation: upright;
     position: absolute;
     top: 50%;
-    left: 90%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+#attacker {
+    font-size: 30px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    position: absolute;
+    top: 50%;
+    right: 97%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%)
 }

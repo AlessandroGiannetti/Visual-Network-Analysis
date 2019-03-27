@@ -794,7 +794,8 @@ function drawData() {
 
         function updateCPA() {
             //===== remove the previous prova =========
-            d3.selectAll(".forepath").remove();
+            d3.selectAll(".selected").remove();
+            d3.selectAll(".notSelected").remove();
             d3.selectAll(".backpath").remove();
             d3.selectAll(".dimension").remove();
             // =============== update the cpa ==================
@@ -826,13 +827,22 @@ function drawData() {
                 .enter().append("path")
                 .attr("class", "backpath")
                 .attr("d", path);
-            // Add blue foreground lines for focus.
-            foreground = svgCPA.append("g")
-                .attr("class", "foreground")
+            // Add blue selected lines for focus.
+
+            notSelected = svgCPA.append("g")
+                .attr("class", "notEvidence")
                 .selectAll("path")
                 .data(newData)
                 .enter().append("path")
-                .attr("class", "forepath")
+                .attr("class", "notSelected")
+                .attr("d", path);
+
+            selected = svgCPA.append("g")
+                .attr("class", "evidence")
+                .selectAll("path")
+                .data(newData)
+                .enter().append("path")
+                .attr("class", "selected")
                 .attr("d", path);
 
             // Add a group element for each dimension.
@@ -853,7 +863,7 @@ function drawData() {
                     })
                     .on("drag", function (d) {
                         dragging[d] = Math.min(widthCPA, Math.max(0, d3.event.x));
-                        foreground.attr("d", path);
+                        selected.attr("d", path);
                         dimensions.sort(function (a, b) {
                             return position(a) - position(b);
                         });
@@ -865,7 +875,7 @@ function drawData() {
                     .on("end", function (d) {
                         delete dragging[d];
                         transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
-                        transition(foreground).attr("d", path);
+                        transition(selected).attr("d", path);
                         background
                             .attr("d", path)
                             .transition()
@@ -923,7 +933,7 @@ function drawData() {
             }
 
 
-// Handles a brush event, toggling the display of foreground lines.
+// Handles a brush event, toggling the display of selected lines.
             function brush_parallel_chart() {
                 for (var i = 0; i < dimensions.length; ++i) {
                     if (d3.event.target == y[dimensions[i]].brush) {
@@ -935,7 +945,7 @@ function drawData() {
                     }
                 }
                 d3.select("#PCA").selectAll(".backpath").style("stroke", "#444444");
-                foreground.style("display", function (d) {
+                notSelected.style("display", function (d) {
                     return dimensions.every(function (p, i) {
                         if (extents[i][0] == 0 && extents[i][0] == 0)
                             return true;
@@ -946,6 +956,18 @@ function drawData() {
                         }
                     }) ? "block" : "none";
                 });
+                selected.style("display", function (d) {
+                    return dimensions.every(function (p, i) {
+                        if (extents[i][0] == 0 && extents[i][0] == 0)
+                            return true;
+                        if (p === "source" || p === "target") {
+                            return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        } else {
+                            return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
+                        }
+                    }) ? "block" : "none";
+                });
+
             }
 
             svgCPA.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
@@ -1521,15 +1543,21 @@ function drawBoxPlot() {
 }
 
 function handleSelectedNode(nodes) {
-    d3.select("#PCA").selectAll(".forepath")
-        .style("stroke", function (d) {
+    d3.select("#PCA").selectAll(".selected")
+        .style("display", function (d) {
             if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                return "red";
+                return "block";
             else
-                return "#007bff"
+                return "none";
+        });
+    d3.select("#PCA").selectAll(".notSelected")
+        .style("display", function (d) {
+            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
+                return "none";
+            else
+                return "block";
         });
 }
-
 function handleMouseOverNode(circle) {
     var nodes = [];
     nodes.push(circle._groups[0][0].__data__.id);
@@ -1551,12 +1579,10 @@ function handleMouseOverNode(circle) {
                 return "0.1"
         })
 }
-
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
 }
-
 function handleMouseMoveEdge(edge) {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
         if (d.source.id === edge.source.id && d.target.id === edge.target.id)
@@ -1572,12 +1598,10 @@ function handleMouseMoveEdge(edge) {
             return "0.1";
     })
 }
-
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
 }
-
 function buildMapPacket(data) {
     NumberDeliveredPackets = [];
     NumberSentPackets = [];
@@ -1692,15 +1716,12 @@ function getTargetPackets(k) {
 function getPackDay1(k) {
     return attackDay1[k];
 }
-
 function getPackDay2(k) {
     return attackDay2[k];
 }
-
 function getPackDay3(k) {
     return attackDay3[k];
 }
-
 function getPackDay4(k) {
     return attackDay4[k];
 }
