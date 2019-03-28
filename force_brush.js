@@ -658,11 +658,11 @@ function drawData() {
             d3.select("#barchartDay4").transition().duration(200).style("opacity", "0");
         }
 
-
+        // se non è lo step iniziale eseguo queste funzioni
         if (step === 1) {
             buildMapPacket(newData);
             scalePacket(NumberDeliveredPackets);
-            updateGraph();
+            updateGraph(newData);
         }
         step = 1;
         updateLegend();
@@ -674,7 +674,7 @@ function drawData() {
         updateChartDay3();
         updateChartDay4();
 
-        function updateGraph() {
+        function updateGraph(newData) {
             var edges = [];
 
             d3.selectAll(".d3-tip").remove();
@@ -918,7 +918,7 @@ function drawData() {
                 //text does not show up because previous line breaks somehow
                 .append("text")
                 .style("text-anchor", "middle")
-                .attr("y", -17)
+                .attr("y", -15)
                 .style("font-size", "18px")
                 .text(function (d) {
                     return d;
@@ -956,16 +956,11 @@ function drawData() {
                 d3.event.sourceEvent.stopPropagation();
             }
 
-
-// Handles a brush event, toggling the display of selected lines.
-
-
             svgCPA.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
             svgCPA.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
             svgCPA.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
             svgCPA.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
         }
-
 
         function updateChartDay1() {
             d3.selectAll(".barday1").remove();
@@ -1291,6 +1286,7 @@ function drawData() {
 
         }
 
+        // update.updateGraph = updateGraph
     }
 
     function brush_parallel_chart() {
@@ -1325,7 +1321,6 @@ function drawData() {
                 }
             }) ? "block" : "none";
         });
-
     }
 
     function handleSelectedNode(nodes) {
@@ -1344,6 +1339,7 @@ function drawData() {
                     return "block";
             });
     }
+
     function ticked() {
         link
             .attr("x1", function (d) {
