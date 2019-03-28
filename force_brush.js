@@ -1310,17 +1310,19 @@ function drawData() {
                 }
             }) ? "block" : "none";
         });
-        selected.style("display", function (d) {
-            return dimensions.every(function (p, i) {
-                if (extents[i][0] == 0 && extents[i][0] == 0)
-                    return true;
-                if (p === "source" || p === "target") {
-                    return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
-                } else {
-                    return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
-                }
-            }) ? "block" : "none";
-        });
+        if (nodeSelected.size != 0) {
+            selected.style("display", function (d) {
+                return dimensions.every(function (p, i) {
+                    if (extents[i][0] == 0 && extents[i][0] == 0)
+                        return true;
+                    if (p === "source" || p === "target") {
+                        return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                    } else {
+                        return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
+                    }
+                }) ? "block" : "none";
+            });
+        }
     }
 
     function handleSelectedNode(nodes) {
