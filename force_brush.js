@@ -18,7 +18,7 @@ var attackDay1 = {};
 var attackDay2 = [];
 var attackDay3 = [];
 var attackDay4 = [];
-
+var extents;
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, datas) {
@@ -72,7 +72,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(12))
+            .tickPadding(17))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -135,7 +135,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(12))
+            .tickPadding(17))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -198,7 +198,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(12))
+            .tickPadding(17))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -261,7 +261,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(12))
+            .tickPadding(17))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -473,7 +473,7 @@ function drawData() {
             .selectAll("circle")
             .data(data.nodes)
             .enter().append("circle")
-            .attr("r", 15)
+            .attr("r", 17)
             .style("fill", function (d) {
                 if (d.group === "1")
                     if (colorScalePackets(NumberSentPackets[d.id]) != null)
@@ -490,6 +490,8 @@ function drawData() {
                 d3.select(this).transition().duration(200).style("stroke", "red");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                if (!brushEmpty())
+                    brush_parallel_chart()
             })
             .on('dblclick', function () {
                 d3.select(this).transition().duration(200).style("stroke", "black");
@@ -799,8 +801,6 @@ function drawData() {
             d3.selectAll(".backpath").remove();
             d3.selectAll(".dimension").remove();
             // =============== update the cpa ==================
-
-            var extents;
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
                 if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
@@ -835,7 +835,18 @@ function drawData() {
                 .data(newData)
                 .enter().append("path")
                 .attr("class", "notSelected")
-                .attr("d", path);
+                .attr("d", path)
+                .on('mouseover', function () {
+                    d3.select(this).transition().duration(100).style("stroke-width", "4px");
+                    handleFocusStroke(d3.select(this)._groups[0][0].__data__);
+
+                })
+                .on('mouseout', function () {
+                    d3.select(this).transition().duration(100).style("stroke-width", "1px");
+                    handleOutFocusStroke();
+                    if (!brushEmpty())
+                        brush_parallel_chart()
+                });
 
             selected = svgCPA.append("g")
                 .attr("class", "evidence")
@@ -843,7 +854,17 @@ function drawData() {
                 .data(newData)
                 .enter().append("path")
                 .attr("class", "selected")
-                .attr("d", path);
+                .attr("d", path)
+                .on('mouseover', function () {
+                    d3.select(this).transition().duration(100).style("stroke-width", "4px");
+                    handleFocusStroke(d3.select(this)._groups[0][0].__data__);
+                })
+                .on('mouseout', function () {
+                    d3.select(this).transition().duration(100).style("stroke-width", "1px");
+                    handleOutFocusStroke();
+                    if (!brushEmpty())
+                        brush_parallel_chart()
+                });
 
             // Add a group element for each dimension.
             var g = svgCPA.selectAll(".dimension")
@@ -864,6 +885,7 @@ function drawData() {
                     .on("drag", function (d) {
                         dragging[d] = Math.min(widthCPA, Math.max(0, d3.event.x));
                         selected.attr("d", path);
+                        notSelected.attr("d", path);
                         dimensions.sort(function (a, b) {
                             return position(a) - position(b);
                         });
@@ -876,6 +898,7 @@ function drawData() {
                         delete dragging[d];
                         transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
                         transition(selected).attr("d", path);
+                        transition(notSelected).attr("d", path);
                         background
                             .attr("d", path)
                             .transition()
@@ -887,14 +910,15 @@ function drawData() {
             g.append("g")
                 .attr("class", "axis")
                 .each(function (d) {
-                    d3.select(this).call(d3.axisLeft(y[d]).ticks(12)
-                        .tickSize(8)
-                        .tickPadding(12));
+                    d3.select(this).call(d3.axisLeft(y[d])
+                        .ticks(12)
+                        .tickSize(9)
+                        .tickPadding(16));
                 })
                 //text does not show up because previous line breaks somehow
                 .append("text")
                 .style("text-anchor", "middle")
-                .attr("y", -9)
+                .attr("y", -17)
                 .style("font-size", "18px")
                 .text(function (d) {
                     return d;
@@ -934,47 +958,14 @@ function drawData() {
 
 
 // Handles a brush event, toggling the display of selected lines.
-            function brush_parallel_chart() {
-                for (var i = 0; i < dimensions.length; ++i) {
-                    if (d3.event.target == y[dimensions[i]].brush) {
-                        min = d3.event.selection[0];
-                        max = d3.event.selection[1];
-                        extents[i] = y[dimensions[i]].domain().filter(function (d) {
-                            return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
-                        });
-                    }
-                }
-                d3.select("#PCA").selectAll(".backpath").style("stroke", "#444444");
-                notSelected.style("display", function (d) {
-                    return dimensions.every(function (p, i) {
-                        if (extents[i][0] == 0 && extents[i][0] == 0)
-                            return true;
-                        if (p === "source" || p === "target") {
-                            return extents[i].includes(d[p].id.slice(0, -2));
-                        } else {
-                            return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
-                        }
-                    }) ? "block" : "none";
-                });
-                selected.style("display", function (d) {
-                    return dimensions.every(function (p, i) {
-                        if (extents[i][0] == 0 && extents[i][0] == 0)
-                            return true;
-                        if (p === "source" || p === "target") {
-                            return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
-                        } else {
-                            return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
-                        }
-                    }) ? "block" : "none";
-                });
 
-            }
 
             svgCPA.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
             svgCPA.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
             svgCPA.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
             svgCPA.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
         }
+
 
         function updateChartDay1() {
             d3.selectAll(".barday1").remove();
@@ -993,6 +984,7 @@ function drawData() {
 
             var barLegenday1 = d3.axisTop()
                 .scale(xScaleDay1)
+                .tickPadding(8)
                 .tickSize(5)
                 .ticks(3);
 
@@ -1072,6 +1064,7 @@ function drawData() {
 
             var barLegenday2 = d3.axisTop()
                 .scale(xScaleDay2)
+                .tickPadding(8)
                 .tickSize(5)
                 .ticks(3);
 
@@ -1152,6 +1145,7 @@ function drawData() {
 
             var barLegenday3 = d3.axisTop()
                 .scale(xScaleDay3)
+                .tickPadding(8)
                 .tickSize(5)
                 .ticks(3);
 
@@ -1232,6 +1226,7 @@ function drawData() {
 
             var barLegenday4 = d3.axisTop()
                 .scale(xScaleDay4)
+                .tickPadding(8)
                 .tickSize(5)
                 .ticks(3);
 
@@ -1298,6 +1293,57 @@ function drawData() {
 
     }
 
+    function brush_parallel_chart() {
+        for (var i = 0; i < dimensions.length; ++i) {
+            if (d3.event.target == y[dimensions[i]].brush) {
+                min = d3.event.selection[0];
+                max = d3.event.selection[1];
+                extents[i] = y[dimensions[i]].domain().filter(function (d) {
+                    return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
+                });
+            }
+        }
+        notSelected.style("display", function (d) {
+            return dimensions.every(function (p, i) {
+                if (extents[i][0] == 0 && extents[i][0] == 0)
+                    return true;
+                if (p === "source" || p === "target") {
+                    return extents[i].includes(d[p].id.slice(0, -2));
+                } else {
+                    return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
+                }
+            }) ? "block" : "none";
+        });
+        selected.style("display", function (d) {
+            return dimensions.every(function (p, i) {
+                if (extents[i][0] == 0 && extents[i][0] == 0)
+                    return true;
+                if (p === "source" || p === "target") {
+                    return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                } else {
+                    return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
+                }
+            }) ? "block" : "none";
+        });
+
+    }
+
+    function handleSelectedNode(nodes) {
+        d3.select("#PCA").selectAll(".selected")
+            .style("display", function (d) {
+                if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
+                    return "block";
+                else
+                    return "none";
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("display", function (d) {
+                if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
+                    return "none";
+                else
+                    return "block";
+            });
+    }
     function ticked() {
         link
             .attr("x1", function (d) {
@@ -1542,22 +1588,6 @@ function drawBoxPlot() {
     })
 }
 
-function handleSelectedNode(nodes) {
-    d3.select("#PCA").selectAll(".selected")
-        .style("display", function (d) {
-            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                return "block";
-            else
-                return "none";
-        });
-    d3.select("#PCA").selectAll(".notSelected")
-        .style("display", function (d) {
-            if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                return "none";
-            else
-                return "block";
-        });
-}
 function handleMouseOverNode(circle) {
     var nodes = [];
     nodes.push(circle._groups[0][0].__data__.id);
@@ -1579,10 +1609,12 @@ function handleMouseOverNode(circle) {
                 return "0.1"
         })
 }
+
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
 }
+
 function handleMouseMoveEdge(edge) {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
         if (d.source.id === edge.source.id && d.target.id === edge.target.id)
@@ -1598,10 +1630,36 @@ function handleMouseMoveEdge(edge) {
             return "0.1";
     })
 }
+
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
 }
+
+function handleFocusStroke(stroke) {
+    d3.select("#PCA").selectAll(".notSelected")
+        .style("display", function (d) {
+            if (d == stroke)
+                return "block";
+            else
+                return "none";
+        });
+    d3.select("#PCA").selectAll(".selected")
+        .style("opacity", function (d) {
+            if (d == stroke)
+                return "1";
+            else
+                return "0";
+        });
+}
+
+function handleOutFocusStroke() {
+    d3.select("#PCA").selectAll(".notSelected")
+        .style("display", "block");
+    d3.select("#PCA").selectAll(".selected")
+        .style("opacity", "1");
+}
+
 function buildMapPacket(data) {
     NumberDeliveredPackets = [];
     NumberSentPackets = [];
@@ -1716,17 +1774,31 @@ function getTargetPackets(k) {
 function getPackDay1(k) {
     return attackDay1[k];
 }
+
 function getPackDay2(k) {
     return attackDay2[k];
 }
+
 function getPackDay3(k) {
     return attackDay3[k];
 }
+
 function getPackDay4(k) {
     return attackDay4[k];
 }
 
 function getTransferedPackets(k) {
     return transferPackets[k];
+}
+
+function brushEmpty() {
+    var empty = true;
+    for (var i = 0; i < extents.length; i++) {
+        for (var j = 0; j < 2; j++) {
+            if (extents[i][j] != 0)
+                return false;
+        }
+    }
+    return empty
 }
 

@@ -9,7 +9,7 @@ html, body {
 
 text {
     font-family: 'Raleway', sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     fill: white;
 }
 
@@ -20,10 +20,6 @@ h4 {
 .links line {
     stroke-opacity: 0.4;
     stroke: white;
-}
-
-.dimension {
-    z-index: 10;
 }
 
 .nodes circle {
@@ -45,7 +41,6 @@ svg {
 }
 
 .evidence path {
-    display: none;
     fill: none;
     stroke: red;
     shape-rendering: geometricPrecision;
@@ -68,7 +63,7 @@ svg {
 }
 
 .axis text {
-    font-size: 15px;
+    font-size: 16px;
     fill: white;
     cursor: move;
 }
@@ -159,10 +154,10 @@ p {
 }
 
 .funkyradio div {
+    height: 20px;
     display: inline;
     clear: both;
     overflow: hidden;
-    font-size: 24px;
     font-family: 'Raleway', sans-serif;
 }
 
@@ -171,24 +166,21 @@ p {
     border-radius: 1px;
     border: 2px solid #808080;
     font-weight: normal;
-    font-size: 20px;
     font-family: 'Raleway', sans-serif;
+    font-size: 24px;
 }
 
 .funkyradio input[type="checkbox"]:empty {
     display: none;
-
-
 }
 
 .funkyradio input[type="checkbox"]:empty ~ label {
     position: relative;
     line-height: 2.5em;
-    text-indent: 3.25em;
-    margin-top: 2em;
+    text-indent: 4.25em;
+    margin-top: 1em;
     cursor: pointer;
     user-select: none;
-
 }
 
 .funkyradio input[type="checkbox"]:empty ~ label:before {
@@ -200,11 +192,11 @@ p {
     content: '';
     width: 2.5em;
     background: #D1D3D4;
-    border-radius: 3px 0 0 3px;
 }
 
 .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
     border: 2px solid #007bff;
+
 }
 
 .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
@@ -225,6 +217,7 @@ p {
 
 .funkyradio input[type="checkbox"]:focus ~ label:before {
     box-shadow: 0 0 0 3px #999;
+
 }
 
 
@@ -258,4 +251,9 @@ p {
     display: inline;
     clear: both;
     overflow: hidden;
+}
+
+
+#day1, #day2, #day3, #day4 {
+    font-size: 30px;
 }
