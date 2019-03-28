@@ -449,11 +449,15 @@ function drawData() {
                     .style('left', (d3.event.pageX + 50) + 'px')
                     .style('top', (d3.event.pageY) + 'px');
                 handleMouseMoveEdge(d);
+                handleFocusStrokeOnEdge(d);
             })
             .on('mouseout', function () {
                 tooltipLink.transition().duration(150).delay(0).delay(20)
                     .style('opacity', 0);
                 handleMouseOutEdge();
+                handleOutFocusStroke();
+                if (!brushEmpty())
+                    brush_parallel_chart()
             })
             .attr("stroke-width", function (d) {
                 return scalePackets(transferPackets[d.source + d.target]);
@@ -561,14 +565,18 @@ function drawData() {
         selection3 = d3.brushSelection(d3.select(".brush3").node());
         selection4 = d3.brushSelection(d3.select(".brush4").node());
 
-        if (selection1 == null)
+        if (selection1 == null) {
             selection1 = [0, 380];
-        if (selection2 == null)
+        }
+        if (selection2 == null) {
             selection2 = [0, 380];
-        if (selection3 == null)
+        }
+        if (selection3 == null) {
             selection3 = [0, 380];
-        if (selection4 == null)
+        }
+        if (selection4 == null) {
             selection4 = [0, 380];
+        }
 
         newData = data.links.filter(function (d) {
             return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
@@ -723,17 +731,22 @@ function drawData() {
             link.exit().remove();
             link = link.enter().append("line").merge(link)
                 .on('mousemove', function (d) {
+                    console.log(d);
                     tooltipLink.transition().duration(150)
                         .style('opacity', 1);
                     tooltipLink.html(contentLinkTip(d))
                         .style('left', (d3.event.pageX + 50) + 'px')
                         .style('top', (d3.event.pageY) + 'px');
                     handleMouseMoveEdge(d);
+                    handleFocusStrokeOnEdge(d);
                 })
                 .on('mouseout', function () {
                     tooltipLink.transition().duration(150).delay(0).delay(20)
                         .style('opacity', 0);
                     handleMouseOutEdge();
+                    handleOutFocusStroke();
+                    if (!brushEmpty())
+                        brush_parallel_chart()
                 })
                 .attr("stroke-width", function (d) {
                     return scalePackets(transferPackets[d.source.id + d.target.id]);
@@ -837,13 +850,13 @@ function drawData() {
                 .attr("class", "notSelected")
                 .attr("d", path)
                 .on('mouseover', function () {
-                    d3.select(this).transition().duration(100).style("stroke-width", "4px");
                     handleFocusStroke(d3.select(this)._groups[0][0].__data__);
-
+                    handleMouseMoveEdge(d3.select(this)._groups[0][0].__data__);
                 })
                 .on('mouseout', function () {
                     d3.select(this).transition().duration(100).style("stroke-width", "1px");
                     handleOutFocusStroke();
+                    handleMouseOutEdge();
                     if (!brushEmpty())
                         brush_parallel_chart()
                 });
@@ -856,12 +869,12 @@ function drawData() {
                 .attr("class", "selected")
                 .attr("d", path)
                 .on('mouseover', function () {
-                    d3.select(this).transition().duration(100).style("stroke-width", "4px");
                     handleFocusStroke(d3.select(this)._groups[0][0].__data__);
+                    handleMouseMoveEdge(d3.select(this)._groups[0][0].__data__);
                 })
                 .on('mouseout', function () {
-                    d3.select(this).transition().duration(100).style("stroke-width", "1px");
                     handleOutFocusStroke();
+                    handleMouseOutEdge();
                     if (!brushEmpty())
                         brush_parallel_chart()
                 });
@@ -1342,6 +1355,25 @@ function drawData() {
             });
     }
 
+    function handleFocusStrokeOnEdge(edge) {
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("display", function (d) {
+                if (edge.source.id == d.source.id || edge.source.id == d.target.id)
+                    return "block";
+                else
+                    return "none";
+            })
+            .style("stroke-width", "4px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if (edge.source.id == d.source.id || edge.source.id == d.target.id)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "4px");
+    }
+
     function ticked() {
         link
             .attr("x1", function (d) {
@@ -1641,21 +1673,25 @@ function handleFocusStroke(stroke) {
                 return "block";
             else
                 return "none";
-        });
+        })
+        .style("stroke-width", "4px");
     d3.select("#PCA").selectAll(".selected")
         .style("opacity", function (d) {
             if (d == stroke)
                 return "1";
             else
                 return "0";
-        });
+        })
+        .style("stroke-width", "4px");
 }
 
 function handleOutFocusStroke() {
     d3.select("#PCA").selectAll(".notSelected")
-        .style("display", "block");
+        .style("display", "block")
+        .style("stroke-width", "1px");
     d3.select("#PCA").selectAll(".selected")
-        .style("opacity", "1");
+        .style("opacity", "1")
+        .style("stroke-width", "1px");
 }
 
 function buildMapPacket(data) {
