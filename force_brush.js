@@ -1331,7 +1331,7 @@ function drawData() {
                     if (p === "source" || p === "target") {
                         return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
                     } else {
-                        return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
+                        return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
                     }
                 }) ? "block" : "none";
             });
