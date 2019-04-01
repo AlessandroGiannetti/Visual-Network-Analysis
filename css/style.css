@@ -59,7 +59,6 @@ svg {
     stroke: white;
     shape-rendering: geometricPrecision;
     position: relative;
-    z-index: 10;
 }
 
 .axis text {
@@ -162,12 +161,12 @@ p {
 }
 
 .funkyradio label {
-    width: 60%;
+    width: 40%;
     border-radius: 1px;
     border: 2px solid #808080;
     font-weight: normal;
     font-family: 'Raleway', sans-serif;
-    font-size: 24px;
+    font-size: 15px;
 }
 
 .funkyradio input[type="checkbox"]:empty {
@@ -177,7 +176,7 @@ p {
 .funkyradio input[type="checkbox"]:empty ~ label {
     position: relative;
     line-height: 2.5em;
-    text-indent: 4.3em;
+    text-indent: 4em;
     margin-top: 1em;
     cursor: pointer;
     user-select: none;
@@ -226,34 +225,12 @@ p {
     background-color: #007bff;
 }
 
-#target {
-    font-size: 30px;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%)
-}
-
-#attacker {
-    font-size: 30px;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    position: absolute;
-    top: 50%;
-    right: 97%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%)
-}
-
 .barchart {
     display: inline;
     clear: both;
     overflow: hidden;
 }
 
-
 #day1, #day2, #day3, #day4 {
-    font-size: 30px;
+    font-size: 20px;
 }

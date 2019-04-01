@@ -30,7 +30,6 @@ d3.json("miserables.json", function (error, datas) {
     scalePacket(NumberDeliveredPackets);
 
     drawData();
-    drawBoxPlot()
 });
 
 function drawData() {
@@ -327,8 +326,8 @@ function drawData() {
     // ========================== DRAWING GRAPH ================================
     var edges = [],
         nodeSelected = new Set();
-    var widthGRAPH = 950,
-        heightGRAPH = 805;
+    var widthGRAPH = 800,
+        heightGRAPH = 555;
     // create the svg on
     var svgGRAPH = d3.select("#graph").append("svg")
         .attr("width", widthGRAPH)
@@ -339,12 +338,21 @@ function drawData() {
         link,
         textElements;
     var simulation = d3.forceSimulation(data.nodes)
-        .force("forceX", d3.forceX().strength(0.30))
-        .force("forceY", d3.forceY().strength(0.01053))
-        .force("charge", d3.forceManyBody().strength(-150).distanceMin(200).distanceMax(800))
-        .force('x', d3.forceX(d => (d.group === '1') ? 200 : 930).strength(1))
+        .force('forceX', d3.forceX(function (d) {
+            if (d.id === "205.174.165.73sx")
+                return 500;
+            if (d.id === "205.174.165.73dx")
+                return 500;
+            if (d.group === '1')
+                return 250;
+            if (d.group === '2')
+                return 750;
+        }).strength(1))
+        .force("forceY", d3.forceY((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 1 : 0)).strength(0.0011))
+        .force('collision', d3.forceCollide().radius((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 0 : 23)))
+        .force("charge", d3.forceManyBody().strength((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 5 : 0)).distanceMin(1).distanceMax(800))
         .force('center', d3.forceCenter(widthGRAPH / 2, heightGRAPH / 2))
-        .force("link", d3.forceLink().distance(730).strength(0).id(function (d) {
+        .force("link", d3.forceLink().distance(800).strength(0).id(function (d) {
             return d.id;
         }))
         .alphaTarget(0).on("tick", ticked);
@@ -352,74 +360,31 @@ function drawData() {
     simulation.nodes(data.nodes).on("tick", ticked);
     // ==================FINE DICHIARAZIONI GRAPH =============================
     // ===================== DICHIARAZIONI LEGEND =============================
-    var heightLegend = 800,
+    var heightLegend = 570,
         widthLegend = 80,
-        marginLegend = {top: 20, right: 60, bottom: 20, left: 2};
-
-    var canvas = d3.select("#legend")
-        .style("height", heightLegend + "px")
-        .style("width", widthLegend + "px")
-        .style("position", "relative")
-        .append("canvas")
-        .attr("height", heightLegend - marginLegend.top - marginLegend.bottom)
-        .attr("width", 1)
-        .style("height", (heightLegend - marginLegend.top - marginLegend.bottom) + "px")
-        .style("width", (widthLegend - marginLegend.left - marginLegend.right) + "px")
-        .style("border", "1px solid #000")
-        .style("position", "absolute")
-        .style("top", "20px")
-        .style("left", "70px")
-        .node();
-
-    var ctx = canvas.getContext("2d");
-    var legendscale = d3.scaleLinear()
-        .range([1, heightLegend - marginLegend.top - marginLegend.bottom])
-        .domain(colorScalePackets.domain());
-
-    var image = ctx.createImageData(1, heightLegend);
-    d3.range(heightLegend).forEach(function (i) {
-        var c = d3.rgb(colorScalePackets(legendscale.invert(i)));
-        image.data[4 * i] = c.r;
-        image.data[4 * i + 1] = c.g;
-        image.data[4 * i + 2] = c.b;
-        image.data[4 * i + 3] = 255;
-    });
-    ctx.putImageData(image, 0, 0);
-
-    var legendaxis = d3.axisRight()
-        .scale(legendscale)
-        .tickSize(5)
-        .ticks(15);
-
-    var svg = d3.select("#legend")
-        .append("svg")
-        .attr("height", (heightLegend) + "px")
-        .attr("width", (widthLegend) + "px")
-        .style("position", "absolute")
-        .style("left", "70px")
-        .style("top", "0px");
-
-    svg
-        .append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
-        .call(legendaxis)
-        .attr("class", "legendGraph");
+        marginLegend = {top: 20, right: 60, bottom: 20, left: 2},
+        canvas,
+        ctx,
+        legendscale,
+        image,
+        legendaxis,
+        svgLegend,
+        c;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
-    var marginCPA = {top: 30, right: 200, bottom: 10, left: 265},
-        widthCPA = 1800 - marginCPA.left - marginCPA.right,
+    var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
+        widthCPA = 975 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([0, widthCPA + 100]).padding(.1),
+    var x = d3.scaleBand().rangeRound([0, widthCPA]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
         Range = [];
     var svgCPA = d3.select("#PCA").append("svg")
-        .attr("width", widthCPA + marginCPA.left + marginCPA.right)
+        .attr("width", widthCPA)
         .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
         .append("g")
-        .attr("transform", "translate(" + marginCPA.left + "," + marginCPA.top + ")");
+        .attr("transform", "translate(" + 100 + "," + 28 + ")");
     for (var i = 0; i <= heightCPA * 20; i = i + 20) {
         Range.push(i);
     }
@@ -477,7 +442,7 @@ function drawData() {
             .selectAll("circle")
             .data(data.nodes)
             .enter().append("circle")
-            .attr("r", 17)
+            .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 17))
             .style("fill", function (d) {
                 if (d.group === "1")
                     if (colorScalePackets(NumberSentPackets[d.id]) != null)
@@ -523,17 +488,23 @@ function drawData() {
             .data(data.nodes)
             .enter().append("text")
             .text(function (node) {
+                if (node.id === "205.174.165.73sx")
+                    return "";
                 return node.id.slice(0, -2)
             })
             .attr("font-size", 15)
-            .attr("text-anchor", function () {
-                if (d3.select(this)._groups[0][0].__data__.group == "1") return "end"; else return "start";
+            .attr("text-anchor", function (d) {
+                if (d.id === "205.174.165.73dx")
+                    return "middle";
+                if (d.group == "1") return "end"; else return "start";
             })
             // riflette gli indirizzi IP a destra e sinistra
-            .attr("dx", function () {
-                if (d3.select(this)._groups[0][0].__data__.group == "1") return -25; else return 25;
+            .attr("dx", function (d) {
+                if (d.group == "1") return -25; else return 25;
             })
-            .attr("dy", 5);
+            .attr("dy", function (d) {
+                if (d.id === "205.174.165.73dx") return -38; else return 5;
+            });
 
         // starting the simulation
         simulation
@@ -705,7 +676,7 @@ function drawData() {
             });
             node.exit().remove();
             node = node.enter().append("circle").merge(node)
-                .attr("r", 15)
+                .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 17))
                 .style("fill", function (d) {
                     if (d.group === "1")
                         if (colorScalePackets(NumberSentPackets[d.id]) != null)
@@ -731,7 +702,6 @@ function drawData() {
             link.exit().remove();
             link = link.enter().append("line").merge(link)
                 .on('mousemove', function (d) {
-                    console.log(d);
                     tooltipLink.transition().duration(150)
                         .style('opacity', 1);
                     tooltipLink.html(contentLinkTip(d))
@@ -771,11 +741,26 @@ function drawData() {
         function updateLegend() {
             d3.selectAll(".legendGraph").remove();
 
+            canvas = d3.select("#legend")
+                .style("height", heightLegend + "px")
+                .style("width", widthLegend + "px")
+                .style("position", "relative")
+                .append("canvas")
+                .attr("height", heightLegend - marginLegend.top - marginLegend.bottom)
+                .attr("width", 1)
+                .style("height", (heightLegend - marginLegend.top - marginLegend.bottom) + "px")
+                .style("width", (widthLegend - marginLegend.left - marginLegend.right) + "px")
+                .style("border", "1px solid #000")
+                .style("position", "absolute")
+                .style("top", "20px")
+                .style("left", "10px")
+                .node();
+
+            ctx = canvas.getContext("2d");
             legendscale = d3.scaleLinear()
                 .range([1, heightLegend - marginLegend.top - marginLegend.bottom])
                 .domain(colorScalePackets.domain());
 
-            // image prova hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
             image = ctx.createImageData(1, heightLegend);
             d3.range(heightLegend).forEach(function (i) {
                 c = d3.rgb(colorScalePackets(legendscale.invert(i)));
@@ -791,15 +776,15 @@ function drawData() {
                 .tickSize(5)
                 .ticks(15);
 
-            svg = d3.select("#legend")
+            svgLegend = d3.select("#legend")
                 .append("svg")
                 .attr("height", (heightLegend) + "px")
                 .attr("width", (widthLegend) + "px")
                 .style("position", "absolute")
-                .style("left", "70px")
+                .style("left", "10px")
                 .style("top", "0px");
 
-            svg
+            svgLegend
                 .append("g")
                 .attr("class", "axis")
                 .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
@@ -926,13 +911,13 @@ function drawData() {
                     d3.select(this).call(d3.axisLeft(y[d])
                         .ticks(12)
                         .tickSize(9)
-                        .tickPadding(16));
+                        .tickPadding(7));
                 })
                 //text does not show up because previous line breaks somehow
                 .append("text")
                 .style("text-anchor", "middle")
                 .attr("y", -15)
-                .style("font-size", "18px")
+                .style("font-size", "15px")
                 .text(function (d) {
                     return d;
                 });
@@ -968,11 +953,6 @@ function drawData() {
             function brushstart() {
                 d3.event.sourceEvent.stopPropagation();
             }
-
-            svgCPA.append("circle").attr("cx", 1340).attr("cy", 30).attr("r", 9).style("fill", "red");
-            svgCPA.append("circle").attr("cx", 1340).attr("cy", 60).attr("r", 9).style("fill", "#007bff");
-            svgCPA.append("text").attr("x", 1380).attr("y", 30).text("Selected Node").style("font-size", "15px").attr("alignment-baseline", "middle");
-            svgCPA.append("text").attr("x", 1380).attr("y", 60).text("Unselected Node").style("font-size", "15px").attr("alignment-baseline", "middle")
         }
 
         function updateChartDay1() {
@@ -1429,193 +1409,6 @@ function drawData() {
         return content;
     }
 
-}
-
-function drawBoxPlot() {
-// set the dimensions and margins of the graph
-    var margin = {top: 0, right: 20, bottom: 50, left: 85},
-        width = 750 - margin.left - margin.right,
-        height = 650 - margin.top - margin.bottom;
-
-// append the svg object to the body of the page
-    var svg = d3.select("#my_dataviz")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-
-// Read the prova and compute summary statistics for each specie
-    d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv", function (data) {
-
-        // Compute quartiles, median, inter quantile range min and max --> these info are then used to draw the box.
-        var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-            .key(function (d) {
-                return d.Species;
-            })
-            .rollup(function (d) {
-                q1 = d3.quantile(d.map(function (g) {
-                    return g.Sepal_Length;
-                }).sort(d3.ascending), .25);
-                median = d3.quantile(d.map(function (g) {
-                    return g.Sepal_Length;
-                }).sort(d3.ascending), .5);
-                q3 = d3.quantile(d.map(function (g) {
-                    return g.Sepal_Length;
-                }).sort(d3.ascending), .75);
-                interQuantileRange = q3 - q1;
-                min = q1 - 1.5 * interQuantileRange;
-                max = q3 + 1.5 * interQuantileRange;
-                return ({q1: q1, median: median, q3: q3, interQuantileRange: interQuantileRange, min: min, max: max})
-            })
-            .entries(data);
-
-        // Show the Y scale
-        var y = d3.scaleBand()
-            .range([height, 0])
-            .domain(["setosa", "versicolor", "virginica"])
-            .padding(.4);
-        svg.append("g")
-            .call(d3.axisLeft(y).tickSize(0))
-            .select(".domain").remove();
-
-        // Show the X scale
-        var x = d3.scaleLinear()
-            .domain([4, 8])
-            .range([0, width]);
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).ticks(5))
-            .select(".domain").remove();
-
-        // Color scale
-        var myColor = d3.scaleSequential()
-            .interpolator(d3.interpolateViridis)
-            .domain([4, 8]);
-
-        // Add X axis label:
-        svg.append("text")
-            .attr("text-anchor", "end")
-            .attr("x", width)
-            .attr("y", height + margin.top + 30)
-            .text("Sepal Length");
-
-        // Show the main vertical line
-        svg
-            .selectAll("vertLines")
-            .data(sumstat)
-            .enter()
-            .append("line")
-            .attr("x1", function (d) {
-                return (x(d.value.min))
-            })
-            .attr("x2", function (d) {
-                return (x(d.value.max))
-            })
-            .attr("y1", function (d) {
-                return (y(d.key) + y.bandwidth() / 2)
-            })
-            .attr("y2", function (d) {
-                return (y(d.key) + y.bandwidth() / 2)
-            })
-            .attr("stroke", "black")
-            .style("width", 40);
-
-        // rectangle for the main box
-        svg
-            .selectAll("boxes")
-            .data(sumstat)
-            .enter()
-            .append("rect")
-            .attr("x", function (d) {
-                return (x(d.value.q1))
-            })
-            .attr("width", function (d) {
-                return (x(d.value.q3) - x(d.value.q1))
-            })
-            .attr("y", function (d) {
-                return y(d.key);
-            })
-            .attr("height", y.bandwidth())
-            .attr("stroke", "black")
-            .style("fill", "#69b3a2")
-            .style("opacity", 0.3);
-
-        // Show the median
-        svg
-            .selectAll("medianLines")
-            .data(sumstat)
-            .enter()
-            .append("line")
-            .attr("y1", function (d) {
-                return (y(d.key) + y.bandwidth() / 2)
-            })
-            .attr("y2", function (d) {
-                return (y(d.key) + y.bandwidth() / 2)
-            })
-            .attr("x1", function (d) {
-                return (x(d.value.median))
-            })
-            .attr("x2", function (d) {
-                return (x(d.value.median))
-            })
-            .attr("stroke", "black")
-            .style("width", 80);
-
-        // create a tooltip
-        var tooltip = d3.select("#my_dataviz")
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("font-size", "16px");
-        // Three function that change the tooltip when user hover / move / leave a cell
-        var mouseover = function (d) {
-            tooltip
-                .transition()
-                .duration(200)
-                .style("opacity", 1);
-            tooltip
-                .html("<span style='color:grey'>Sepal length: </span>" + d.Sepal_Length) // + d.Prior_disorder + "<br>" + "HR: " +  d.HR)
-                .style("left", (d3.mouse(this)[0] + 30) + "px")
-                .style("top", (d3.mouse(this)[1] + 30) + "px")
-        };
-        var mousemove = function (d) {
-            tooltip
-                .style("left", (d3.mouse(this)[0] + 30) + "px")
-                .style("top", (d3.mouse(this)[1] + 30) + "px")
-        };
-        var mouseleave = function (d) {
-            tooltip
-                .transition()
-                .duration(200)
-                .style("opacity", 0)
-        };
-
-        // Add individual points with jitter
-        var jitterWidth = 50;
-        svg
-            .selectAll("indPoints")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d) {
-                return (x(d.Sepal_Length))
-            })
-            .attr("cy", function (d) {
-                return (y(d.Species) + (y.bandwidth() / 2) - jitterWidth / 2 + Math.random() * jitterWidth)
-            })
-            .attr("r", 4)
-            .style("fill", function (d) {
-                return (myColor(+d.Sepal_Length))
-            })
-            .attr("stroke", "black")
-            .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
-            .on("mouseleave", mouseleave)
-
-
-    })
 }
 
 function handleMouseOverNode(circle) {
