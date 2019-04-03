@@ -27,7 +27,7 @@ d3.json("miserables.json", function (error, datas) {
     // building the map packet
     buildMapPacket(data.links);
     // building the scale packet
-    scalePacket(NumberDeliveredPackets);
+    scalePacket();
 
     drawData();
 });
@@ -318,6 +318,7 @@ function drawData() {
     var widthBar = 200;
     var heightBar = 20;
     var svgWidthBar = 390;
+    var svgHeightBar = 100;
 
     var tooltipBar = d3.select('body').append('div')
         .style('opacity', 0)
@@ -327,7 +328,7 @@ function drawData() {
     var edges = [],
         nodeSelected = new Set();
     var widthGRAPH = 730,
-        heightGRAPH = 555;
+        heightGRAPH = 500;
     // create the svg on
     var svgGRAPH = d3.select("#graph").append("svg")
         .attr("width", widthGRAPH)
@@ -349,7 +350,7 @@ function drawData() {
                 return 750;
         }).strength(1))
         .force("forceY", d3.forceY((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 1 : 0)).strength(0.0011))
-        .force('collision', d3.forceCollide().radius((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 0 : 23)))
+        .force('collision', d3.forceCollide().radius((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 0 : 21)))
         .force("charge", d3.forceManyBody().strength((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 5 : 0)).distanceMin(1).distanceMax(800))
         .force('center', d3.forceCenter(widthGRAPH / 2, heightGRAPH / 2))
         .force("link", d3.forceLink().distance(800).strength(0).id(function (d) {
@@ -360,7 +361,7 @@ function drawData() {
     simulation.nodes(data.nodes).on("tick", ticked);
     // ==================FINE DICHIARAZIONI GRAPH =============================
     // ===================== DICHIARAZIONI LEGEND =============================
-    var heightLegend = 570,
+    var heightLegend = 500,
         widthLegend = 80,
         marginLegend = {top: 20, right: 60, bottom: 20, left: 2},
         canvas,
@@ -417,7 +418,7 @@ function drawData() {
                 handleFocusStrokeOnEdge(d);
             })
             .on('mouseout', function () {
-                tooltipLink.transition().duration(150).delay(0).delay(20)
+                tooltipLink.transition().duration(150)
                     .style('opacity', 0);
                 handleMouseOutEdge();
                 handleOutFocusStroke();
@@ -476,7 +477,7 @@ function drawData() {
                     .style('top', (d3.event.pageY) + 'px');
             })
             .on('mouseout', function () {
-                tooltipNode.transition().duration(150).delay(0).delay(20)
+                tooltipNode.transition().duration(150)
                     .style('opacity', 0);
                 handleMouseOutNode();
             });
@@ -550,6 +551,7 @@ function drawData() {
         if (selection4 == null) {
             selection4 = [0, widthSlider - 0.2];
         }
+        //console.log(selectionLegend);
 
         newData = data.links.filter(function (d) {
             return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
@@ -649,6 +651,8 @@ function drawData() {
         updateLegend();
         updateCPA();
 
+        updateScatterplot();
+
         attackPackets(newData);
         updateChartDay1();
         updateChartDay2();
@@ -713,7 +717,7 @@ function drawData() {
                     handleFocusStrokeOnEdge(d);
                 })
                 .on('mouseout', function () {
-                    tooltipLink.transition().duration(150).delay(0).delay(20)
+                    tooltipLink.transition().duration(150)
                         .style('opacity', 0);
                     handleMouseOutEdge();
                     handleOutFocusStroke();
@@ -786,12 +790,23 @@ function drawData() {
                 .style("left", "20px")
                 .style("top", "0px");
 
+
+            brushLegend = d3.brushY()
+                .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend]])
+                .on("start brush end", filterView);
+
+            svgLegend.append("g")
+                .attr("class", "brushLegend")
+                .attr("transform", "translate(" + (0) + "," + (marginLegend.top) + ")")
+                .call(brushLegend);
+
             svgLegend
                 .append("g")
                 .attr("class", "axis")
                 .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
                 .call(legendaxis)
                 .attr("class", "legendGraph");
+
         }
 
         function updateCPA() {
@@ -802,7 +817,7 @@ function drawData() {
             d3.selectAll(".dimension").remove();
             // =============== update the cpa ==================
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
-                if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "Protocol") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
+                if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
                 }
                 return y[d] = d3.scaleOrdinal()
@@ -814,6 +829,7 @@ function drawData() {
                     }))
                     .range(Range);
             }));
+
 
             extents = dimensions.map(function (p) {
                 return [0, 0];
@@ -962,14 +978,14 @@ function drawData() {
             bindedDay1 = d3.entries(attackDay1);
             xScaleDay1 = d3.scaleLinear().domain([0, UPday1.length]).range([0, widthBar]);
             yScaleDay1 = d3.scaleBand()
-                .range([160, 0])
+                .range([svgHeightBar, 0])
                 .domain(bindedDay1.map(function (d) {
                     return d.key;
                 }))
                 .padding(0.2);
             // SVG
             barDay1 = d3.select('#barchartDay1').append('svg')
-                .attr("width", svgWidthBar).attr('height', 160)
+                .attr("width", svgWidthBar).attr('height', svgHeightBar)
                 .attr("class", "barday1");
 
             barLegenday1 = d3.axisTop()
@@ -1042,14 +1058,14 @@ function drawData() {
             var bindedDay2 = d3.entries(attackDay2);
             var xScaleDay2 = d3.scaleLinear().domain([0, UPday2.length]).range([0, widthBar]);
             var yScaleDay2 = d3.scaleBand()
-                .range([160, 0])
+                .range([svgHeightBar, 0])
                 .domain(bindedDay2.map(function (d) {
                     return d.key;
                 }))
                 .padding(0.2);
             // SVG
             var barDay2 = d3.select('#barchartDay2').append('svg')
-                .attr("width", svgWidthBar).attr('height', 160)
+                .attr("width", svgWidthBar).attr('height', svgHeightBar)
                 .attr("class", "barday2");
 
             var barLegenday2 = d3.axisTop()
@@ -1061,11 +1077,11 @@ function drawData() {
             barDay2.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday2)
-                .attr('transform', 'translate(130,25)');
+                .attr('transform', 'translate(80,30)');
 
 
             // CHART AREA
-            var valsDay1 = barDay2.append('g').attr('transform', 'translate(110,0)')
+            var valsDay1 = barDay2.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             function initChartDay1(data) {
@@ -1123,14 +1139,14 @@ function drawData() {
             var bindedDay3 = d3.entries(attackDay3);
             var xScaleDay3 = d3.scaleLinear().domain([0, UPday3.length]).range([0, widthBar]);
             var yScaleDay3 = d3.scaleBand()
-                .range([160, 0])
+                .range([svgHeightBar, 0])
                 .domain(bindedDay3.map(function (d) {
                     return d.key;
                 }))
                 .padding(0.2);
             // SVG
             var barDay3 = d3.select('#barchartDay3').append('svg')
-                .attr("width", svgWidthBar).attr('height', 160)
+                .attr("width", svgWidthBar).attr('height', svgHeightBar)
                 .attr("class", "barday2");//.style('border','1px solid')
 
             var barLegenday3 = d3.axisTop()
@@ -1142,11 +1158,11 @@ function drawData() {
             barDay3.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday3)
-                .attr('transform', 'translate(130,25)');
+                .attr('transform', 'translate(80,30)');
 
 
             // CHART AREA
-            var valsDay3 = barDay3.append('g').attr('transform', 'translate(110,0)')
+            var valsDay3 = barDay3.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             function initChartDay3(data) {
@@ -1204,15 +1220,15 @@ function drawData() {
             var bindedDay4 = d3.entries(attackDay4);
             var xScaleDay4 = d3.scaleLinear().domain([0, UPday4.length]).range([0, widthBar]);
             var yScaleDay4 = d3.scaleBand()
-                .range([160, 0])
+                .range([svgHeightBar, 0])
                 .domain(bindedDay4.map(function (d) {
                     return d.key;
                 }))
                 .padding(0.2);
             // SVG
             var barDay4 = d3.select('#barchartDay4').append('svg')
-                .attr("width", svgWidthBar).attr('height', 160)
-                .attr("class", "barday4");//.style('border','1px solid')
+                .attr("width", svgWidthBar).attr('height', svgHeightBar)
+                .attr("class", "barday4");
 
             var barLegenday4 = d3.axisTop()
                 .scale(xScaleDay4)
@@ -1223,11 +1239,11 @@ function drawData() {
             barDay4.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday4)
-                .attr('transform', 'translate(130,25)');
+                .attr('transform', 'translate(80,30)');
 
 
             // CHART AREA
-            var valsDay4 = barDay4.append('g').attr('transform', 'translate(110,0)')
+            var valsDay4 = barDay4.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             function initChartDay4(data) {
@@ -1281,7 +1297,10 @@ function drawData() {
 
         }
 
-        // update.updateGraph = updateGraph
+        function updateScatterplot() {
+
+        }
+
     }
 
     function brush_parallel_chart() {
@@ -1294,7 +1313,7 @@ function drawData() {
                 });
             }
         }
-        notSelected.style("display", function (d) {
+        notSelected.style("opacity", function (d) {
             return dimensions.every(function (p, i) {
                 if (extents[i][0] == 0 && extents[i][0] == 0)
                     return true;
@@ -1303,10 +1322,10 @@ function drawData() {
                 } else {
                     return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
                 }
-            }) ? "block" : "none";
+            }) ? "1" : "0";
         });
         if (nodeSelected.size != 0) {
-            selected.style("display", function (d) {
+            selected.style("opacity", function (d) {
                 return dimensions.every(function (p, i) {
                     if (extents[i][0] == 0 && extents[i][0] == 0)
                         return true;
@@ -1315,7 +1334,7 @@ function drawData() {
                     } else {
                         return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
                     }
-                }) ? "block" : "none";
+                }) ? "1" : "0";
             });
         }
     }
@@ -1339,11 +1358,11 @@ function drawData() {
 
     function handleFocusStrokeOnEdge(edge) {
         d3.select("#PCA").selectAll(".notSelected")
-            .style("display", function (d) {
+            .style("opacity", function (d) {
                 if (edge.source.id == d.source.id || edge.source.id == d.target.id)
-                    return "block";
+                    return "1";
                 else
-                    return "none";
+                    return "0";
             })
             .style("stroke-width", "4px");
         d3.select("#PCA").selectAll(".selected")
@@ -1411,7 +1430,59 @@ function drawData() {
         return content;
     }
 
+    function filterView() {
+        displayElements = [];
+        selectionLegend1 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
+        selectionLegend2 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
+        console.log(selectionLegend1);
+        for (var i = 0; i < data.nodes.length; i++) {
+            if ((NumberSentPackets[data.nodes[i]["id"]] >= selectionLegend1 && NumberSentPackets[data.nodes[i]["id"]] <= selectionLegend2) || (NumberDeliveredPackets[data.nodes[i]["id"]] >= selectionLegend1 && NumberDeliveredPackets[data.nodes[i]["id"]] <= selectionLegend2) || (selectionLegend1 < 1 && (NumberDeliveredPackets[data.nodes[i]["id"]] == null || NumberSentPackets[data.nodes[i]["id"]] == null)))
+                displayElements.push(data.nodes[i]["id"]);
+        }
+        handleFilterLegend(displayElements);
+    }
+
+    function handleFilterLegend(nodes) {
+        d3.select("#graph").selectAll("circle")
+            .style("display", function (d) {
+                if (nodes.includes(d["id"]) !== false)
+                    return "block";
+                else
+                    return "none"
+            });
+        edges = [];
+        d3.select("#graph").selectAll("line")
+            .style("display", function (d) {
+                if (nodes.includes(d.source.id) && nodes.includes(d.target.id)) {
+                    if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+                        edges.push(d);
+                        return "block";
+                    }
+                } else {
+                    return "none";
+                }
+            });
+
+        d3.select("#graph").selectAll("text")
+            .style("opacity", function (d) {
+                if (nodes.includes(d.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
+
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("display", function (d) {
+                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+                    return "block";
+                else
+                    return "none";
+            })
+
+    }
 }
+
+
 
 function handleMouseOverNode(circle) {
     var nodes = [];
@@ -1457,19 +1528,19 @@ function handleMouseMoveEdge(edge) {
 }
 
 function handleMouseOutEdge() {
-    d3.select("#graph").selectAll("line").transition().duration(150).delay(20).style("opacity", "1");
-    d3.select("#graph").selectAll("circle").transition().duration(150).delay(20).style("opacity", "1");
+    d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
+    d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
 }
 
 function handleFocusStroke(stroke) {
     d3.select("#PCA").selectAll(".notSelected")
-        .style("display", function (d) {
+        .style("opacity", function (d) {
             if (d == stroke)
-                return "block";
+                return "1";
             else
-                return "none";
+                return "0";
         })
-        .style("stroke-width", "4px");
+        .style("stroke-width", "3px");
     d3.select("#PCA").selectAll(".selected")
         .style("opacity", function (d) {
             if (d == stroke)
@@ -1477,12 +1548,12 @@ function handleFocusStroke(stroke) {
             else
                 return "0";
         })
-        .style("stroke-width", "4px");
+        .style("stroke-width", "3px");
 }
 
 function handleOutFocusStroke() {
     d3.select("#PCA").selectAll(".notSelected")
-        .style("display", "block")
+        .style("opacity", "1")
         .style("stroke-width", "1px");
     d3.select("#PCA").selectAll(".selected")
         .style("opacity", "1")
@@ -1590,6 +1661,7 @@ function scalePacket() {
     });
     scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
 }
+
 
 // return the value of the map with key k
 function getAttackPackets(k) {

@@ -14,16 +14,16 @@
 </head>
 <body>
 
-<div style="width: 100%;">
+<div id="controllers" style="width: 100%;">
     <!-- <p style="display: inline; position: relative; right:20px; top:10px; font-size:18px;">N° of packets</p> -->
     <div class="row">
         <div class="w-5 p-0 d-inline-block" id="legend"></div>
         <div class="w-30 p-0 d-inline-block" id="graph"></div>
         <div class="w-65 p-0 d-inline-block" id="PCA"></div>
     </div>
-    <div class="row" id="controllers" style="width: 100%;">
+    <div class="row" style="width: 100%;">
         <div class="w-40 p-0 d-inline-block">
-            <div class="w-45 p-0 d-block">
+            <div class="w-45 p-2 d-block">
                 <div class="w-30 p-0 d-inline-block">
                     <div class="custom-control custom-checkbox checkbox-inline">
                         <div class="funkyradio">
@@ -39,8 +39,7 @@
                 </div>
                 <div class="p-0 d-inline-block" id="controller1"></div>
             </div>
-            <!--        <div id="barchartDay1"></div>-->
-            <div class="w-45 p-0 d-block">
+            <div class="w-45 p-2 d-block">
                 <div class="w-3 p-0 d-inline-block">
                     <div class="custom-control custom-checkbox checkbox-inline">
                         <div class="funkyradio">
@@ -55,9 +54,9 @@
                     </div>
                 </div>
                 <!--        <p id="barchartDay2"></p>-->
-                <div class="w-10 p-0 d-inline-block" id="controller2"></div>
+                <div class="p-0 d-inline-block" id="controller2"></div>
             </div>
-            <div class="w-45 p-0 d-block">
+            <div class="w-45 p-2 d-block">
                 <div class="w-40 p-0 d-inline-block">
                     <div class="custom-control custom-checkbox checkbox-inline">
                         <div class="funkyradio">
@@ -67,14 +66,13 @@
                                        checked/>
                                 <p id="day3"></p>
                                 <label for="check3">6/7/2017</label>
-                                <!--                        <p id="barchartDay3"></p>-->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="w-10 p-0 d-inline-block" id="controller3"></div>
+                <div class="p-0 d-inline-block" id="controller3"></div>
             </div>
-            <div class="w-45 p-0 d-block">
+            <div class="w-45 p-2 d-block">
                 <div class="w-40 p-0 d-inline-block">
                     <div class="custom-control custom-checkbox checkbox-inline">
                         <div class="funkyradio">
@@ -84,13 +82,21 @@
                                        checked/>
                                 <p id="day4"></p>
                                 <label for="check4">7/7/2017</label>
-                                <!--                        <p id="barchartDay3"></p>-->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="w-10 p-0 d-inline-block" id="controller4"></div>
+                <div class="p-0 d-inline-block" id="controller4"></div>
             </div>
         </div>
+        <div class="w-40 p-0 d-inline-block">
+            <div class="p-0 d-block" id="barchartDay1"></div>
+            <div class="p-0 d-block" id="barchartDay2"></div>
+            <div class="p-0 d-block" id="barchartDay3"></div>
+            <div class="p-0 d-block" id="barchartDay4"></div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
