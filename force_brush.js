@@ -36,8 +36,8 @@ function drawData() {
 
     // ========================= SLIDERS ===================================
     var marginSlider = {top: 0, right: 30, bottom: 0, left: 30},
-        widthSlider = 440 - marginSlider.left - marginSlider.right,
-        heightSlider = 100 - marginSlider.bottom - marginSlider.top;
+        widthSlider = 302 - marginSlider.left - marginSlider.right,
+        heightSlider = 65 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
@@ -71,7 +71,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(17))
+            .tickPadding(13))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -91,7 +91,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text1 = handle1.append('text')
         .text(formatDate(timeScale1.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     var handle2 = svgSlider1.append("g")
         .attr("class", "handle");
     handle2.append("path")
@@ -99,7 +99,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text2 = handle2.append('text')
         .text(formatDate(timeScale1.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
@@ -134,7 +134,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(17))
+            .tickPadding(13))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -154,7 +154,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text3 = handle3.append('text')
         .text(formatDate(timeScale2.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     var handle4 = svgSlider2.append("g")
         .attr("class", "handle");
     handle4.append("path")
@@ -162,7 +162,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text4 = handle4.append('text')
         .text(formatDate(timeScale2.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
@@ -197,7 +197,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(17))
+            .tickPadding(13))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -217,7 +217,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text5 = handle5.append('text')
         .text(formatDate(timeScale3.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     var handle6 = svgSlider3.append("g")
         .attr("class", "handle");
     handle6.append("path")
@@ -225,7 +225,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text6 = handle6.append('text')
         .text(formatDate(timeScale3.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
@@ -260,7 +260,7 @@ function drawData() {
             })
             .ticks(12)
             .tickSize(8)
-            .tickPadding(17))
+            .tickPadding(13))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -280,7 +280,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text7 = handle7.append('text')
         .text(formatDate(timeScale4.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     var handle8 = svgSlider4.append("g")
         .attr("class", "handle");
     handle8.append("path")
@@ -288,7 +288,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text8 = handle8.append('text')
         .text(formatDate(timeScale4.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 25) + ")");
+        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
@@ -315,9 +315,9 @@ function drawData() {
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     // ====================FINE INIT INFO N ATTACK ============================
     //====================================== BAR CHART =============================
-    var widthBar = 270;
+    var widthBar = 200;
     var heightBar = 20;
-    var svgWidthBar = 460;
+    var svgWidthBar = 390;
 
     var tooltipBar = d3.select('body').append('div')
         .style('opacity', 0)
@@ -326,7 +326,7 @@ function drawData() {
     // ========================== DRAWING GRAPH ================================
     var edges = [],
         nodeSelected = new Set();
-    var widthGRAPH = 800,
+    var widthGRAPH = 730,
         heightGRAPH = 555;
     // create the svg on
     var svgGRAPH = d3.select("#graph").append("svg")
@@ -373,7 +373,7 @@ function drawData() {
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
-        widthCPA = 975 - marginCPA.left - marginCPA.right,
+        widthCPA = 1074 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
     var x = d3.scaleBand().rangeRound([0, widthCPA]).padding(.1),
         y = {},
@@ -384,7 +384,7 @@ function drawData() {
         .attr("width", widthCPA)
         .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
         .append("g")
-        .attr("transform", "translate(" + 100 + "," + 28 + ")");
+        .attr("transform", "translate(" + 70 + "," + 28 + ")");
     for (var i = 0; i <= heightCPA * 20; i = i + 20) {
         Range.push(i);
     }
@@ -442,7 +442,7 @@ function drawData() {
             .selectAll("circle")
             .data(data.nodes)
             .enter().append("circle")
-            .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 17))
+            .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 14))
             .style("fill", function (d) {
                 if (d.group === "1")
                     if (colorScalePackets(NumberSentPackets[d.id]) != null)
@@ -496,7 +496,9 @@ function drawData() {
             .attr("text-anchor", function (d) {
                 if (d.id === "205.174.165.73dx")
                     return "middle";
-                if (d.group == "1") return "end"; else return "start";
+                else {
+                    if (d.group == "1") return "end"; else return "start";
+                }
             })
             // riflette gli indirizzi IP a destra e sinistra
             .attr("dx", function (d) {
@@ -537,16 +539,16 @@ function drawData() {
         selection4 = d3.brushSelection(d3.select(".brush4").node());
 
         if (selection1 == null) {
-            selection1 = [0, 380];
+            selection1 = [0, widthSlider - 0.2];
         }
         if (selection2 == null) {
-            selection2 = [0, 380];
+            selection2 = [0, widthSlider - 0.2];
         }
         if (selection3 == null) {
-            selection3 = [0, 380];
+            selection3 = [0, widthSlider - 0.2];
         }
         if (selection4 == null) {
-            selection4 = [0, 380];
+            selection4 = [0, widthSlider - 0.2];
         }
 
         newData = data.links.filter(function (d) {
@@ -582,7 +584,7 @@ function drawData() {
             d3.select("#barchartDay1").style("opacity", "1");
             selection1 = d3.brushSelection(d3.select(".brush1").node());
             if (selection1 == null)
-                selection1 = [0, 379.8];
+                selection1 = [0, widthSlider - 0.2];
             handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
             text1.text(formatDate(timeScale1.invert(selection1[0])));
             handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
@@ -597,7 +599,7 @@ function drawData() {
             d3.select("#barchartDay2").transition().duration(200).style("opacity", "1");
             selection2 = d3.brushSelection(d3.select(".brush2").node());
             if (selection2 == null)
-                selection2 = [0, 379.8];
+                selection2 = [0, widthSlider - 0.2];
             handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
             text3.text(formatDate(timeScale1.invert(selection2[0])));
             handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
@@ -612,7 +614,7 @@ function drawData() {
             d3.select("#barchartDay3").transition().duration(200).style("opacity", "1");
             selection3 = d3.brushSelection(d3.select(".brush3").node());
             if (selection3 == null)
-                selection3 = [0, 379.8];
+                selection3 = [0, widthSlider - 0.2];
             handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
             text5.text(formatDate(timeScale1.invert(selection3[0])));
             handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
@@ -627,7 +629,7 @@ function drawData() {
             d3.select("#barchartDay4").transition().duration(200).style("opacity", "1");
             selection4 = d3.brushSelection(d3.select(".brush4").node());
             if (selection4 == null)
-                selection4 = [0, 379.8];
+                selection4 = [0, widthSlider - 0.2];
             handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
             text7.text(formatDate(timeScale4.invert(selection4[0])));
             handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
@@ -676,7 +678,7 @@ function drawData() {
             });
             node.exit().remove();
             node = node.enter().append("circle").merge(node)
-                .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 17))
+                .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 14))
                 .style("fill", function (d) {
                     if (d.group === "1")
                         if (colorScalePackets(NumberSentPackets[d.id]) != null)
@@ -753,7 +755,7 @@ function drawData() {
                 .style("border", "1px solid #000")
                 .style("position", "absolute")
                 .style("top", "20px")
-                .style("left", "10px")
+                .style("left", "20px")
                 .node();
 
             ctx = canvas.getContext("2d");
@@ -781,7 +783,7 @@ function drawData() {
                 .attr("height", (heightLegend) + "px")
                 .attr("width", (widthLegend) + "px")
                 .style("position", "absolute")
-                .style("left", "10px")
+                .style("left", "20px")
                 .style("top", "0px");
 
             svgLegend
@@ -916,8 +918,8 @@ function drawData() {
                 //text does not show up because previous line breaks somehow
                 .append("text")
                 .style("text-anchor", "middle")
-                .attr("y", -15)
-                .style("font-size", "15px")
+                .attr("y", -12)
+                .style("font-size", "13px")
                 .text(function (d) {
                     return d;
                 });
@@ -957,20 +959,20 @@ function drawData() {
 
         function updateChartDay1() {
             d3.selectAll(".barday1").remove();
-            var bindedDay1 = d3.entries(attackDay1);
-            var xScaleDay1 = d3.scaleLinear().domain([0, UPday1.length]).range([0, widthBar]);
-            var yScaleDay1 = d3.scaleBand()
+            bindedDay1 = d3.entries(attackDay1);
+            xScaleDay1 = d3.scaleLinear().domain([0, UPday1.length]).range([0, widthBar]);
+            yScaleDay1 = d3.scaleBand()
                 .range([160, 0])
                 .domain(bindedDay1.map(function (d) {
                     return d.key;
                 }))
                 .padding(0.2);
             // SVG
-            var barDay1 = d3.select('#barchartDay1').append('svg')
+            barDay1 = d3.select('#barchartDay1').append('svg')
                 .attr("width", svgWidthBar).attr('height', 160)
                 .attr("class", "barday1");
 
-            var barLegenday1 = d3.axisTop()
+            barLegenday1 = d3.axisTop()
                 .scale(xScaleDay1)
                 .tickPadding(8)
                 .tickSize(5)
@@ -979,23 +981,23 @@ function drawData() {
             barDay1.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday1)
-                .attr('transform', 'translate(130,25)');
+                .attr('transform', 'translate(80,30)');
 
             // CHART AREA
-            var valsDay1 = barDay1.append('g').attr('transform', 'translate(110,0)')
+            valsDay1 = barDay1.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             function initChartDay1(data) {
                 // DATA BIND
-                var chartDay1 = valsDay1.selectAll('rect').data(data);
+                chartDay1 = valsDay1.selectAll('rect').data(data);
                 // ENTER
                 chartDay1.enter().append('rect')
                     .attr("width", function (d) {
                         return xScaleDay1(d.value);
                     })
-                    .attr("height", 20)
+                    .attr("height", 10)
                     .attr('x', 20).attr('y', function (d) {
-                    return yScaleDay1(d.key) + 20;
+                    return yScaleDay1(d.key) + 25;
                 })
                     .attr("fill", "#007BBF")
                     .attr("width", function (d) {
@@ -1012,7 +1014,7 @@ function drawData() {
                     });
 
                 // DATA BIND
-                var keyDay1 = valsDay1.selectAll('text.key').data(data);
+                keyDay1 = valsDay1.selectAll('text.key').data(data);
                 // ENTER
                 keyDay1.enter().append("text").attr("class", "key")
                     .attr("x", 0)
@@ -1074,7 +1076,7 @@ function drawData() {
                     .attr("width", function (d) {
                         return xScaleDay2(d.value);
                     })
-                    .attr("height", 20)
+                    .attr("height", 10)
                     .attr('x', 20).attr('y', function (d) {
                     return yScaleDay2(d.key) + 20;
                 })
@@ -1156,7 +1158,7 @@ function drawData() {
                         return xScaleDay3(d.value);
                     })
                     .attr("height", 20)
-                    .attr('x', 20).attr('y', function (d) {
+                    .attr('x', 10).attr('y', function (d) {
                     return yScaleDay3(d.key) + 20;
                 })
                     .attr("fill", "#007BBF")
@@ -1236,7 +1238,7 @@ function drawData() {
                     .attr("width", function (d) {
                         return xScaleDay4(d.value);
                     })
-                    .attr("height", 20)
+                    .attr("height", 10)
                     .attr('x', 20).attr('y', function (d) {
                     return yScaleDay4(d.key) + 20;
                 })

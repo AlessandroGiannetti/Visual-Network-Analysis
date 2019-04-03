@@ -2,14 +2,14 @@
 
 html, body {
     background-color: #393939;
-    font-size: 16px;
+    font-size: 12px;
     font-family: 'Raleway', sans-serif;
     color: rgba(255, 255, 255, 0.8);
 }
 
 text {
     font-family: 'Raleway', sans-serif;
-    font-size: 20px;
+    font-size: 12px;
     fill: white;
 }
 
@@ -30,7 +30,6 @@ h4 {
 svg {
     font-family: 'Raleway', sans-serif;
     display: block;
-    margin: auto;
 }
 
 .background path {
@@ -62,7 +61,7 @@ svg {
 }
 
 .axis text {
-    font-size: 16px;
+    font-size: 10px;
     fill: white;
     cursor: move;
 }
@@ -100,7 +99,6 @@ svg {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    z-index: 10;
 }
 
 .axis .halo {
@@ -119,50 +117,22 @@ svg {
 .handle text {
     fill: white;
     text-align: center;
-    font-size: 18px;
-}
-
-/*style boxplot */
-.box line,
-.box rect,
-.box circle {
-    fill: steelblue;
-    stroke: grey;
-    stroke-width: 1px;
-}
-
-.box .center {
-    stroke-dasharray: 3, 3;
-}
-
-.box .outlier {
-    fill: none;
-    stroke: #000;
-}
-
-.x.axis path {
-    fill: none;
-    stroke: grey;
-    shape-rendering: crispEdges;
+    font-size: 14px;
 }
 
 p {
-    display: inline;
-    padding-left: 40px;
-    font-size: 22px;
+    display: block;
+    font-size: 15px;
 }
 
 .funkyradio div {
-    height: 20px;
     display: inline;
-    clear: both;
-    overflow: hidden;
-    font-family: 'Raleway', sans-serif;
+    position: relative;
+    top: -25px;
 }
 
 .funkyradio label {
-    width: 40%;
-    border-radius: 1px;
+    width: 115px;
     border: 2px solid #808080;
     font-weight: normal;
     font-family: 'Raleway', sans-serif;
@@ -175,9 +145,8 @@ p {
 
 .funkyradio input[type="checkbox"]:empty ~ label {
     position: relative;
-    line-height: 2.5em;
-    text-indent: 4em;
-    margin-top: 1em;
+    line-height: 2em;
+    text-indent: 3em;
     cursor: pointer;
     user-select: none;
 }
@@ -185,9 +154,6 @@ p {
 .funkyradio input[type="checkbox"]:empty ~ label:before {
     position: absolute;
     display: block;
-    top: 0;
-    bottom: 0;
-    left: 0;
     content: '';
     width: 2.5em;
     background: #D1D3D4;
@@ -232,5 +198,5 @@ p {
 }
 
 #day1, #day2, #day3, #day4 {
-    font-size: 20px;
+    font-size: 15px;
 }
