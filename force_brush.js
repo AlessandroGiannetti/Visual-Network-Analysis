@@ -370,7 +370,8 @@ function drawData() {
         image,
         legendaxis,
         svgLegend,
-        c;
+        c,
+        brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
@@ -551,7 +552,6 @@ function drawData() {
         if (selection4 == null) {
             selection4 = [0, widthSlider - 0.2];
         }
-        //console.log(selectionLegend);
 
         newData = data.links.filter(function (d) {
             return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
@@ -746,6 +746,7 @@ function drawData() {
 
         function updateLegend() {
             d3.selectAll(".legendGraph").remove();
+            d3.selectAll(".brushLegend").remove();
 
             canvas = d3.select("#legend")
                 .style("height", heightLegend + "px")
@@ -1301,41 +1302,57 @@ function drawData() {
 
         }
 
-    }
 
-    function brush_parallel_chart() {
-        for (var i = 0; i < dimensions.length; ++i) {
-            if (d3.event.target == y[dimensions[i]].brush) {
-                min = d3.event.selection[0];
-                max = d3.event.selection[1];
-                extents[i] = y[dimensions[i]].domain().filter(function (d) {
-                    return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
-                });
-            }
-        }
-        notSelected.style("opacity", function (d) {
-            return dimensions.every(function (p, i) {
-                if (extents[i][0] == 0 && extents[i][0] == 0)
-                    return true;
-                if (p === "source" || p === "target") {
-                    return extents[i].includes(d[p].id.slice(0, -2));
-                } else {
-                    return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
+        function brush_parallel_chart() {
+            for (var i = 0; i < dimensions.length; ++i) {
+                if (d3.event.target == y[dimensions[i]].brush) {
+                    min = d3.event.selection[0];
+                    max = d3.event.selection[1];
+                    extents[i] = y[dimensions[i]].domain().filter(function (d) {
+                        return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
+                    });
                 }
-            }) ? "1" : "0";
-        });
-        if (nodeSelected.size != 0) {
-            selected.style("opacity", function (d) {
+            }
+            notSelected.style("opacity", function (d) {
                 return dimensions.every(function (p, i) {
                     if (extents[i][0] == 0 && extents[i][0] == 0)
                         return true;
                     if (p === "source" || p === "target") {
-                        return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        return extents[i].includes(d[p].id.slice(0, -2));
                     } else {
-                        return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
                     }
                 }) ? "1" : "0";
             });
+            if (nodeSelected.size != 0) {
+                selected.style("opacity", function (d) {
+                    return dimensions.every(function (p, i) {
+                        if (extents[i][0] == 0 && extents[i][0] == 0)
+                            return true;
+                        if (p === "source" || p === "target") {
+                            return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        } else {
+                            return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        }
+                    }) ? "1" : "0";
+                });
+            }
+            filteredData = newData.filter(function (d) {
+                return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0)) && (extents[1].includes(d.SourcePort) || (extents[1][0] === 0 && extents[1][1] === 0)) &&
+                    (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0)) && (extents[3].includes(d.DestinationPort) || (extents[3][0] === 0 && extents[3][1] === 0)) &&
+                    (extents[5].includes(d.TotalFwdPackets) || (extents[5][0] === 0 && extents[5][1] === 0)) &&
+                    (extents[6].includes(d.TotalLenghtFwdPackets) || (extents[6][0] === 0 && extents[6][1] === 0)) && (extents[7].includes(d.Label) || (extents[7][0] === 0 && extents[7][1] === 0));
+            });
+            showAll();
+            buildMapPacket(filteredData);
+            scalePacket(NumberDeliveredPackets);
+            updateGraph(filteredData);
+            attackPackets(filteredData);
+            updateLegend();
+            updateChartDay1();
+            updateChartDay2();
+            updateChartDay3();
+
         }
     }
 
@@ -1364,7 +1381,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "4px");
+            .style("stroke-width", "3px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
                 if (edge.source.id == d.source.id || edge.source.id == d.target.id)
@@ -1372,7 +1389,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "4px");
+            .style("stroke-width", "3px");
     }
 
     function ticked() {
@@ -1434,7 +1451,6 @@ function drawData() {
         displayElements = [];
         selectionLegend1 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
         selectionLegend2 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
-        console.log(selectionLegend1);
         for (var i = 0; i < data.nodes.length; i++) {
             if ((NumberSentPackets[data.nodes[i]["id"]] >= selectionLegend1 && NumberSentPackets[data.nodes[i]["id"]] <= selectionLegend2) || (NumberDeliveredPackets[data.nodes[i]["id"]] >= selectionLegend1 && NumberDeliveredPackets[data.nodes[i]["id"]] <= selectionLegend2) || (selectionLegend1 < 1 && (NumberDeliveredPackets[data.nodes[i]["id"]] == null || NumberSentPackets[data.nodes[i]["id"]] == null)))
                 displayElements.push(data.nodes[i]["id"]);
@@ -1483,6 +1499,10 @@ function drawData() {
 }
 
 
+function showAll() {
+    d3.select("#graph").selectAll("line").style("display", "block");
+    d3.select("#graph").selectAll("circle").style("display", "block");
+}
 
 function handleMouseOverNode(circle) {
     var nodes = [];
