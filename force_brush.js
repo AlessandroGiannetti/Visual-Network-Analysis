@@ -294,26 +294,6 @@ function drawData() {
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
 
-
-    // =============================INIT INFO N ATTACK ============================
-    day1 = data.links.filter(function (d) {
-        return d.Timestamp.slice(0, -6) === "4/7/2017"
-    });
-    day2 = data.links.filter(function (d) {
-        return d.Timestamp.slice(0, -6) === "5/7/2017"
-    });
-    day3 = data.links.filter(function (d) {
-        return d.Timestamp.slice(0, -6) === "6/7/2017"
-    });
-    day4 = data.links.filter(function (d) {
-        return d.Timestamp.slice(0, -6) === "7/7/2017"
-    });
-
-    d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
-    d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
-    d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
-    d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
-    // ====================FINE INIT INFO N ATTACK ============================
     //====================================== BAR CHART =============================
     var widthBar = 200;
     var heightBar = 20;
@@ -561,23 +541,27 @@ function drawData() {
         });
 
         // =============================UPDATE INFO N ATTACK ============================
-        UPday1 = newData.filter(function (d) {
-            return d.Timestamp.slice(0, -6) === "4/7/2017"
-        });
-        UPday2 = newData.filter(function (d) {
-            return d.Timestamp.slice(0, -6) === "5/7/2017"
-        });
-        UPday3 = newData.filter(function (d) {
-            return d.Timestamp.slice(0, -6) === "6/7/2017"
-        });
-        UPday4 = newData.filter(function (d) {
-            return d.Timestamp.slice(0, -6) === "7/7/2017"
-        });
+        function updateNumberOfAttack(data) {
+            day1 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "4/7/2017"
+            });
+            day2 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "5/7/2017"
+            });
+            day3 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "6/7/2017"
+            });
+            day4 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "7/7/2017"
+            });
 
-        d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
-        d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
-        d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
-        d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+            d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
+            d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
+            d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
+            d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
+        }
+
+        updateNumberOfAttack(newData);
         // ====================FINE UPDATE INFO N ATTACK ============================
 
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
@@ -978,7 +962,7 @@ function drawData() {
             d3.selectAll(".barday1").remove();
             var chartDay1;
             bindedDay1 = d3.entries(attackDay1);
-            xScaleDay1 = d3.scaleLinear().domain([0, UPday1.length]).range([0, widthBar]);
+            xScaleDay1 = d3.scaleLinear().domain([0, day1.length]).range([0, widthBar]);
             yScaleDay1 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay1.map(function (d) {
@@ -1059,7 +1043,7 @@ function drawData() {
             d3.selectAll(".barday2").remove();
             var chartDay2;
             var bindedDay2 = d3.entries(attackDay2);
-            var xScaleDay2 = d3.scaleLinear().domain([0, UPday2.length]).range([0, widthBar]);
+            var xScaleDay2 = d3.scaleLinear().domain([0, day2.length]).range([0, widthBar]);
             var yScaleDay2 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay2.map(function (d) {
@@ -1141,7 +1125,7 @@ function drawData() {
             d3.selectAll(".barday3").remove();
             var chartDay3;
             var bindedDay3 = d3.entries(attackDay3);
-            var xScaleDay3 = d3.scaleLinear().domain([0, UPday3.length]).range([0, widthBar]);
+            var xScaleDay3 = d3.scaleLinear().domain([0, day3.length]).range([0, widthBar]);
             var yScaleDay3 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay3.map(function (d) {
@@ -1222,7 +1206,7 @@ function drawData() {
         function updateChartDay4() {
             d3.selectAll(".barday4").remove();
             var bindedDay4 = d3.entries(attackDay4);
-            var xScaleDay4 = d3.scaleLinear().domain([0, UPday4.length]).range([0, widthBar]);
+            var xScaleDay4 = d3.scaleLinear().domain([0, day4.length]).range([0, widthBar]);
             var yScaleDay4 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay4.map(function (d) {
@@ -1305,7 +1289,6 @@ function drawData() {
 
         }
 
-
         function brush_parallel_chart() {
             for (var i = 0; i < dimensions.length; ++i) {
                 if (d3.event.target == y[dimensions[i]].brush) {
@@ -1352,6 +1335,7 @@ function drawData() {
             updateGraph(filteredData);
             attackPackets(filteredData);
             updateLegend();
+            updateNumberOfAttack(filteredData);
             updateChartDay1();
             updateChartDay2();
             updateChartDay3();
@@ -1685,7 +1669,6 @@ function scalePacket() {
     });
     scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
 }
-
 
 // return the value of the map with key k
 function getAttackPackets(k) {
