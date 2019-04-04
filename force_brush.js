@@ -793,7 +793,7 @@ function drawData() {
 
 
             brushLegend = d3.brushY()
-                .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend]])
+                .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend - marginLegend.top - 20]])
                 .on("start brush end", filterView);
 
             svgLegend.append("g")
@@ -818,7 +818,7 @@ function drawData() {
             d3.selectAll(".dimension").remove();
             // =============== update the cpa ==================
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
-                if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
+                if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
                 }
                 return y[d] = d3.scaleOrdinal()
@@ -1338,10 +1338,10 @@ function drawData() {
                 });
             }
             filteredData = newData.filter(function (d) {
-                return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0)) && (extents[1].includes(d.SourcePort) || (extents[1][0] === 0 && extents[1][1] === 0)) &&
-                    (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0)) && (extents[3].includes(d.DestinationPort) || (extents[3][0] === 0 && extents[3][1] === 0)) &&
-                    (extents[5].includes(d.TotalFwdPackets) || (extents[5][0] === 0 && extents[5][1] === 0)) &&
-                    (extents[6].includes(d.TotalLenghtOfFwdPackets) || (extents[6][0] === 0 && extents[6][1] === 0)) && (extents[7].includes(d.Label) || (extents[7][0] === 0 && extents[7][1] === 0));
+                return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0)) && (extents[1].includes(d.SourcePort) || extents[1].includes(parseInt(d.SourcePort)) || (extents[1][0] === 0 && extents[1][1] === 0)) &&
+                    (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0)) && (extents[3].includes(d.DestinationPort) || extents[3].includes(parseInt(d.DestinationPort)) || (extents[3][0] === 0 && extents[3][1] === 0)) &&
+                    (extents[4].includes(d.TotalFwdPackets) || extents[4].includes(parseInt(d.TotalFwdPackets)) || (extents[4][0] === 0 && extents[4][1] === 0)) &&
+                    (extents[5].includes(d.TotalLenghtOfFwdPackets) || extents[5].includes(parseInt(d.TotalLenghtOfFwdPackets)) || (extents[5][0] === 0 && extents[6][1] === 0)) && (extents[6].includes(d.Label) || (extents[6][0] === 0 && extents[6][1] === 0));
             });
             showAll();
             buildMapPacket(filteredData);
