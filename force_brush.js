@@ -299,10 +299,7 @@ function drawData() {
     var heightBar = 20;
     var svgWidthBar = 390;
     var svgHeightBar = 100;
-
-    var tooltipBar = d3.select('body').append('div')
-        .style('opacity', 0)
-        .attr('class', 'd3-tip');
+    var tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [],
@@ -540,29 +537,7 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
         });
 
-        // =============================UPDATE INFO N ATTACK ============================
-        function updateNumberOfAttack(data) {
-            day1 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "4/7/2017"
-            });
-            day2 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "5/7/2017"
-            });
-            day3 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "6/7/2017"
-            });
-            day4 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "7/7/2017"
-            });
-
-            d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
-            d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
-            d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
-            d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
-        }
-
         updateNumberOfAttack(newData);
-        // ====================FINE UPDATE INFO N ATTACK ============================
 
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         if (checkedValue.includes("4/7/2017")) {
@@ -634,14 +609,14 @@ function drawData() {
         step = 1;
         updateLegend();
         updateCPA();
-
-        updateScatterplot();
-
+        updateScatterPlot();
         attackPackets(newData);
         updateChartDay1();
         updateChartDay2();
         updateChartDay3();
         updateChartDay4();
+
+        handleSelectedNode(nodeSelected);
 
         function updateGraph(newData) {
             var edges = [];
@@ -725,8 +700,6 @@ function drawData() {
             simulation.force("link").links(newData);
             simulation.alpha(0).restart();
         }
-
-        handleSelectedNode(nodeSelected);
 
         function updateLegend() {
             d3.selectAll(".legendGraph").remove();
@@ -989,53 +962,53 @@ function drawData() {
             valsDay1 = barDay1.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
-            function initChartDay1(data) {
-                // DATA BIND
-                chartDay1 = valsDay1.selectAll('rect').data(data);
-                // ENTER
-                chartDay1.enter().append('rect')
-                    .attr("width", function (d) {
-                        return xScaleDay1(d.value);
-                    })
-                    .attr("height", 10)
-                    .attr('x', 20).attr('y', function (d) {
-                    return yScaleDay1(d.key) + 25;
+            tooltipBar = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
+
+            // DATA BIND
+            chartDay1 = valsDay1.selectAll('rect').data(bindedDay1);
+            // ENTER
+            chartDay1.enter().append('rect')
+                .attr("width", function (d) {
+                    return xScaleDay1(d.value);
                 })
-                    .attr("fill", "#007BBF")
-                    .attr("width", function (d) {
-                        return xScaleDay1(d.value)
-                    })
-                    .on('mousemove', function (d) {
-                        tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                            .style("top", d3.event.pageY - 70 + "px")
-                            .style("opacity", "1")
-                            .html((d.key) + ": " + (d.value));
-                    })
-                    .on('mouseout', function () {
-                        tooltipBar.style("opacity", "0");
-                    });
-
-                // DATA BIND
-                keyDay1 = valsDay1.selectAll('text.key').data(data);
-                // ENTER
-                keyDay1.enter().append("text").attr("class", "key")
-                    .attr("x", 0)
-                    .attr("y", function (d) {
-                        return yScaleDay1(d.key) + 20;
-                    })
-                    .attr('dy', 16)
-                    .attr("text-anchor", "end")
-                    .text(function (d) {
-                        return d.key;
-                    });
-
-                // UPDATE
-                keyDay1.text(function (d) {
-                    return d.key
+                .attr("height", 10)
+                .attr('x', 20).attr('y', function (d) {
+                return yScaleDay1(d.key) + 25;
+            })
+                .attr("fill", "#007BBF")
+                .attr("width", function (d) {
+                    return xScaleDay1(d.value)
+                })
+                .on('mousemove', function (d) {
+                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style("opacity", "1")
+                        .html((d.key) + ": " + (d.value));
+                })
+                .on('mouseout', function () {
+                    tooltipBar.style("opacity", "0");
                 });
-            }
 
-            initChartDay1(bindedDay1);
+            // DATA BIND
+            keyDay1 = valsDay1.selectAll('text.key').data(bindedDay1);
+            // ENTER
+            keyDay1.enter().append("text").attr("class", "key")
+                .attr("x", 0)
+                .attr("y", function (d) {
+                    return yScaleDay1(d.key) + 20;
+                })
+                .attr('dy', 16)
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return d.key;
+                });
+
+            // UPDATE
+            keyDay1.text(function (d) {
+                return d.key
+            });
 
         }
 
@@ -1071,53 +1044,52 @@ function drawData() {
             var valsDay2 = barDay2.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
-            function initChartDay2(data) {
-                // DATA BIND
-                chartDay2 = valsDay2.selectAll('rect').data(data);
-                // ENTER
-                chartDay2.enter().append('rect')
-                    .attr("width", function (d) {
-                        return xScaleDay2(d.value);
-                    })
-                    .attr("height", 10)
-                    .attr('x', 20).attr('y', function (d) {
+            tooltipBar = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
+
+            // DATA BIND
+            chartDay2 = valsDay2.selectAll('rect').data(bindedDay2);
+            // ENTER
+            chartDay2.enter().append('rect')
+                .attr("width", function (d) {
+                    return xScaleDay2(d.value);
+                })
+                .attr("height", 10)
+                .attr('x', 20).attr('y', function (d) {
+                return yScaleDay2(d.key) + 20;
+            })
+                .attr("fill", "#007BBF")
+                .attr("width", function (d) {
+                    return xScaleDay2(d.value)
+                }).on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("opacity", "1")
+                    .html((d.key) + ": " + (d.value));
+            })
+                .on('mouseout', function () {
+                    tooltipBar.style("opacity", "0");
+                });
+
+            // DATA BIND
+            var keyDay2 = valsDay2.selectAll('text.key').data(bindedDay2);
+            // ENTER
+            keyDay2.enter().append("text").attr("class", "key")
+                .attr("x", 0)
+                .attr("y", function (d) {
                     return yScaleDay2(d.key) + 20;
                 })
-                    .attr("fill", "#007BBF")
-                    .attr("width", function (d) {
-                        return xScaleDay2(d.value)
-                    }).on('mousemove', function (d) {
-                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
-                        .style("opacity", "1")
-                        .html((d.key) + ": " + (d.value));
-                })
-                    .on('mouseout', function () {
-                        tooltipBar.style("opacity", "0");
-                    });
-
-
-                // DATA BIND
-                var keyDay2 = valsDay2.selectAll('text.key').data(data);
-                // ENTER
-                keyDay2.enter().append("text").attr("class", "key")
-                    .attr("x", 0)
-                    .attr("y", function (d) {
-                        return yScaleDay2(d.key) + 20;
-                    })
-                    .attr('dy', 16)
-                    .attr("text-anchor", "end")
-                    .text(function (d) {
-                        return d.key;
-                    });
-
-                // UPDATE
-                keyDay1.text(function (d) {
-                    return d.key
+                .attr('dy', 16)
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return d.key;
                 });
-            }
 
-            initChartDay2(bindedDay2);
+            // UPDATE
+            keyDay1.text(function (d) {
+                return d.key
+            });
 
         }
 
@@ -1137,7 +1109,7 @@ function drawData() {
                 .attr("width", svgWidthBar).attr('height', svgHeightBar)
                 .attr("class", "barday2");//.style('border','1px solid')
 
-            var barLegenday3 = d3.axisTop()
+            barLegenday3 = d3.axisTop()
                 .scale(xScaleDay3)
                 .tickPadding(8)
                 .tickSize(5)
@@ -1148,58 +1120,56 @@ function drawData() {
                 .call(barLegenday3)
                 .attr('transform', 'translate(80,30)');
 
-
             // CHART AREA
-            var valsDay3 = barDay3.append('g').attr('transform', 'translate(60,0)')
+            valsDay3 = barDay3.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
-            function initChartDay3(data) {
-                // DATA BIND
-                chartDay3 = valsDay3.selectAll('rect').data(data);
-                // ENTER
-                chartDay3.enter().append('rect')
-                    .attr("width", function (d) {
-                        return xScaleDay3(d.value);
-                    })
-                    .attr("height", 20)
-                    .attr('x', 10).attr('y', function (d) {
+            tooltipBar = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
+            // DATA BIND
+            chartDay3 = valsDay3.selectAll('rect').data(bindedDay3);
+            // ENTER
+            chartDay3.enter().append('rect')
+                .attr("width", function (d) {
+                    return xScaleDay3(d.value);
+                })
+                .attr("height", 20)
+                .attr('x', 10).attr('y', function (d) {
+                return yScaleDay3(d.key) + 20;
+            })
+                .attr("fill", "#007BBF")
+                .attr("width", function (d) {
+                    return xScaleDay3(d.value)
+                })
+                .on('mousemove', function (d) {
+                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style("opacity", "1")
+                        .html((d.key) + ": " + (d.value));
+                })
+                .on('mouseout', function () {
+                    tooltipBar.style("opacity", "0");
+                });
+
+            // DATA BIND
+            var keyDay3 = valsDay3.selectAll('text.key').data(bindedDay3);
+            // ENTER
+            keyDay3.enter().append("text").attr("class", "key")
+                .attr("x", 0)
+                .attr("y", function (d) {
                     return yScaleDay3(d.key) + 20;
                 })
-                    .attr("fill", "#007BBF")
-                    .attr("width", function (d) {
-                        return xScaleDay3(d.value)
-                    })
-                    .on('mousemove', function (d) {
-                        tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                            .style("top", d3.event.pageY - 70 + "px")
-                            .style("opacity", "1")
-                            .html((d.key) + ": " + (d.value));
-                    })
-                    .on('mouseout', function () {
-                        tooltipBar.style("opacity", "0");
-                    });
-
-                // DATA BIND
-                var keyDay3 = valsDay3.selectAll('text.key').data(data);
-                // ENTER
-                keyDay3.enter().append("text").attr("class", "key")
-                    .attr("x", 0)
-                    .attr("y", function (d) {
-                        return yScaleDay3(d.key) + 20;
-                    })
-                    .attr('dy', 16)
-                    .attr("text-anchor", "end")
-                    .text(function (d) {
-                        return d.key;
-                    });
-
-                // UPDATE
-                keyDay3.text(function (d) {
-                    return d.key
+                .attr('dy', 16)
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return d.key;
                 });
-            }
 
-            initChartDay3(bindedDay3);
+            // UPDATE
+            keyDay3.text(function (d) {
+                return d.key
+            });
 
         }
 
@@ -1229,63 +1199,82 @@ function drawData() {
                 .call(barLegenday4)
                 .attr('transform', 'translate(80,30)');
 
-
             // CHART AREA
             var valsDay4 = barDay4.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
-            function initChartDay4(data) {
-                // DATA BIND
-                var chartDay4 = valsDay4.selectAll('rect').data(data);
-                // ENTER
-                chartDay4.enter().append('rect')
-                    .attr("width", function (d) {
-                        return xScaleDay4(d.value);
-                    })
-                    .attr("height", 10)
-                    .attr('x', 20).attr('y', function (d) {
+            tooltipBar = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
+
+            // DATA BIND
+            var chartDay4 = valsDay4.selectAll('rect').data(bindedDay4);
+            // ENTER
+            chartDay4.enter().append('rect')
+                .attr("width", function (d) {
+                    return xScaleDay4(d.value);
+                })
+                .attr("height", 10)
+                .attr('x', 20).attr('y', function (d) {
+                return yScaleDay4(d.key) + 20;
+            })
+                .attr("fill", "#007BBF")
+                .attr("width", function (d) {
+                    return xScaleDay4(d.value)
+                })
+
+                .on('mousemove', function (d) {
+                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style("opacity", "1")
+                        .html((d.key) + ": " + (d.value));
+                })
+                .on('mouseout', function () {
+                    tooltipBar.style("opacity", "0");
+                });
+
+            // DATA BIND
+            var keyDay4 = valsDay4.selectAll('text.key').data(bindedDay4);
+            // ENTER
+            keyDay4.enter().append("text").attr("class", "key")
+                .attr("x", 0)
+                .attr("y", function (d) {
                     return yScaleDay4(d.key) + 20;
                 })
-                    .attr("fill", "#007BBF")
-                    .attr("width", function (d) {
-                        return xScaleDay4(d.value)
-                    })
-
-                    .on('mousemove', function (d) {
-                        tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                            .style("top", d3.event.pageY - 70 + "px")
-                            .style("opacity", "1")
-                            .html((d.key) + ": " + (d.value));
-                    })
-                    .on('mouseout', function () {
-                        tooltipBar.style("opacity", "0");
-                    });
-
-                // DATA BIND
-                var keyDay4 = valsDay4.selectAll('text.key').data(data);
-                // ENTER
-                keyDay4.enter().append("text").attr("class", "key")
-                    .attr("x", 0)
-                    .attr("y", function (d) {
-                        return yScaleDay4(d.key) + 20;
-                    })
-                    .attr('dy', 16)
-                    .attr("text-anchor", "end")
-                    .text(function (d) {
-                        return d.key;
-                    });
-
-                // UPDATE
-                keyDay4.text(function (d) {
-                    return d.key
+                .attr('dy', 16)
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return d.key;
                 });
-            }
 
-            initChartDay4(bindedDay4);
+            // UPDATE
+            keyDay4.text(function (d) {
+                return d.key
+            });
 
         }
 
-        function updateScatterplot() {
+        function updateNumberOfAttack(data) {
+            day1 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "4/7/2017"
+            });
+            day2 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "5/7/2017"
+            });
+            day3 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "6/7/2017"
+            });
+            day4 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "7/7/2017"
+            });
+
+            d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
+            d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
+            d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
+            d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
+        }
+
+        function updateScatterPlot() {
 
         }
 
@@ -1299,7 +1288,7 @@ function drawData() {
                     });
                 }
             }
-            notSelected.style("opacity", function (d) {
+            notSelected.style("display", function (d) {
                 return dimensions.every(function (p, i) {
                     if (extents[i][0] == 0 && extents[i][0] == 0)
                         return true;
@@ -1308,7 +1297,7 @@ function drawData() {
                     } else {
                         return extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]));
                     }
-                }) ? "1" : "0";
+                }) ? "block" : "none";
             });
             if (nodeSelected.size != 0) {
                 selected.style("opacity", function (d) {
