@@ -976,6 +976,7 @@ function drawData() {
 
         function updateChartDay1() {
             d3.selectAll(".barday1").remove();
+            var chartDay1;
             bindedDay1 = d3.entries(attackDay1);
             xScaleDay1 = d3.scaleLinear().domain([0, UPday1.length]).range([0, widthBar]);
             yScaleDay1 = d3.scaleBand()
@@ -1056,6 +1057,7 @@ function drawData() {
 
         function updateChartDay2() {
             d3.selectAll(".barday2").remove();
+            var chartDay2;
             var bindedDay2 = d3.entries(attackDay2);
             var xScaleDay2 = d3.scaleLinear().domain([0, UPday2.length]).range([0, widthBar]);
             var yScaleDay2 = d3.scaleBand()
@@ -1082,14 +1084,14 @@ function drawData() {
 
 
             // CHART AREA
-            var valsDay1 = barDay2.append('g').attr('transform', 'translate(60,0)')
+            var valsDay2 = barDay2.append('g').attr('transform', 'translate(60,0)')
                 .attr('width', widthBar).attr("height", heightBar);
 
-            function initChartDay1(data) {
+            function initChartDay2(data) {
                 // DATA BIND
-                var chartDay1 = valsDay1.selectAll('rect').data(data);
+                chartDay2 = valsDay2.selectAll('rect').data(data);
                 // ENTER
-                chartDay1.enter().append('rect')
+                chartDay2.enter().append('rect')
                     .attr("width", function (d) {
                         return xScaleDay2(d.value);
                     })
@@ -1112,9 +1114,9 @@ function drawData() {
 
 
                 // DATA BIND
-                var keyDay1 = valsDay1.selectAll('text.key').data(data);
+                var keyDay2 = valsDay2.selectAll('text.key').data(data);
                 // ENTER
-                keyDay1.enter().append("text").attr("class", "key")
+                keyDay2.enter().append("text").attr("class", "key")
                     .attr("x", 0)
                     .attr("y", function (d) {
                         return yScaleDay2(d.key) + 20;
@@ -1131,12 +1133,13 @@ function drawData() {
                 });
             }
 
-            initChartDay1(bindedDay2);
+            initChartDay2(bindedDay2);
 
         }
 
         function updateChartDay3() {
             d3.selectAll(".barday3").remove();
+            var chartDay3;
             var bindedDay3 = d3.entries(attackDay3);
             var xScaleDay3 = d3.scaleLinear().domain([0, UPday3.length]).range([0, widthBar]);
             var yScaleDay3 = d3.scaleBand()
@@ -1168,7 +1171,7 @@ function drawData() {
 
             function initChartDay3(data) {
                 // DATA BIND
-                var chartDay3 = valsDay3.selectAll('rect').data(data);
+                chartDay3 = valsDay3.selectAll('rect').data(data);
                 // ENTER
                 chartDay3.enter().append('rect')
                     .attr("width", function (d) {
