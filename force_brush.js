@@ -416,8 +416,6 @@ function drawData() {
                     .style('opacity', 0);
                 handleMouseOutEdge();
                 handleOutFocusStroke();
-                if (!brushEmpty())
-                    brush_parallel_chart()
             })
             .attr("stroke-width", function (d) {
                 return scalePackets(transferPackets[d.source + d.target]);
@@ -1308,7 +1306,6 @@ function drawData() {
             PortsSource.clear();
             PortsDestination.clear();
             IPAddress.clear();
-
             for (var i = 0; i < data.length; i++) {
                 if (!PortsSource.has(data[i].SourcePort))
                     PortsSource.set(data[i].SourcePort, parseInt(data[i].TotalFwdPackets));
@@ -1501,7 +1498,6 @@ function drawData() {
                 });
 
         }
-
         function brush_parallel_chart() {
             for (var i = 0; i < dimensions.length; ++i) {
                 if (d3.event.target == y[dimensions[i]].brush) {
@@ -1719,7 +1715,6 @@ function drawData() {
         }
         handleFilterLegend(displayElements);
     }
-
     function handleFilterLegend(nodes) {
         d3.select("#graph").selectAll("circle")
             .style("display", function (d) {
@@ -1742,21 +1737,20 @@ function drawData() {
             });
 
         d3.select("#graph").selectAll("text")
-            .style("opacity", function (d) {
-                if (nodes.includes(d.id))
-                    return "1";
-                else
-                    return "0.1";
-            });
-
-        d3.select("#PCA").selectAll(".notSelected")
             .style("display", function (d) {
-                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+                if (nodes.includes(d.id))
                     return "block";
                 else
                     return "none";
-            })
+            });
 
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+                    return "1";
+                else
+                    return "0";
+            })
     }
 }
 
@@ -1764,6 +1758,7 @@ function drawData() {
 function showAllGraph() {
     d3.select("#graph").selectAll("line").style("display", "block");
     d3.select("#graph").selectAll("circle").style("display", "block");
+    d3.select("#graph").selectAll("text").style("display", "block");
 }
 
 function handleMouseOverNode(circle) {
@@ -1964,7 +1959,10 @@ function scalePacket() {
         if (NumberDeliveredPackets[key] > max)
             max = NumberDeliveredPackets[key];
     });
-    colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
+    if (max == -Infinity)
+        colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, 0]);
+    else
+        colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
 
     max = -Infinity;
     min = +Infinity;
@@ -1974,6 +1972,7 @@ function scalePacket() {
         if (transferPackets[key] < min)
             min = transferPackets[key];
     });
+
     scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
 }
 
