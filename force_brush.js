@@ -28,7 +28,6 @@ d3.json("miserables.json", function (error, datas) {
     buildMapPacket(data.links);
     // building the scale packet
     scalePacket();
-
     drawData();
 });
 
@@ -293,11 +292,28 @@ function drawData() {
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
+    // =============================INIT INFO N ATTACK ============================
+    day1 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "4/7/2017"
+    });
+    day2 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "5/7/2017"
+    });
+    day3 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "6/7/2017"
+    });
+    day4 = data.links.filter(function (d) {
+        return d.Timestamp.slice(0, -6) === "7/7/2017"
+    });
 
+    d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
+    d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
+    d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
+    d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
     var widthBar = 200;
     var heightBar = 20;
-    var svgWidthBar = 390;
+    var svgWidthBar = 300;
     var svgHeightBar = 100;
     var tooltipBar;
     //==================================FINE BAR CHART =============================
@@ -442,7 +458,7 @@ function drawData() {
                     brush_parallel_chart()
             })
             .on('dblclick', function () {
-                d3.select(this).transition().duration(200).style("stroke", "black");
+                d3.select(this).transition().duration(200).style("stroke", "none");
                 nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
             })
@@ -455,9 +471,10 @@ function drawData() {
                     .style('top', (d3.event.pageY) + 'px');
             })
             .on('mouseout', function () {
+                handleOutFocusStroke();
+                handleMouseOutNode();
                 tooltipNode.transition().duration(150)
                     .style('opacity', 0);
-                handleMouseOutNode();
             });
 
         //declaration of the text (ip) of the node
@@ -497,6 +514,20 @@ function drawData() {
 
     initGraph();
 
+    // ======================== SCATTERPLOT ===============================
+    var marginScatterPlot = {top: 20, right: 20, bottom: 20, left: 70},
+        widthScatterPlot = 1165 - marginScatterPlot.left - marginScatterPlot.right,
+        heightScatterPlot = 450 - marginScatterPlot.top - marginScatterPlot.bottom,
+        PortsSource = new Map(),
+        PortsDestination = new Map(),
+        xScatterPlot,
+        yScatterPlot,
+        xAxisScatterPlot,
+        yAxisScatterPlot,
+        svgScatterPlot,
+        legendScatterPlot,
+        IPAddress = new Set();
+    // ============================= Fine DICHIARAZIONE SCATTERPLOT =========
 
     d3.selectAll(".custom-control-input").on("change", update);
     update();
@@ -537,7 +568,6 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
         });
 
-        updateNumberOfAttack(newData);
 
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         if (checkedValue.includes("4/7/2017")) {
@@ -606,10 +636,12 @@ function drawData() {
             scalePacket(NumberDeliveredPackets);
             updateGraph(newData);
         }
+
         step = 1;
+        updateNumberOfAttack(newData);
         updateLegend();
-        updateCPA();
-        updateScatterPlot();
+        updateCPA(newData);
+        updateScatterPlot(newData);
         attackPackets(newData);
         updateChartDay1();
         updateChartDay2();
@@ -673,7 +705,6 @@ function drawData() {
                         .style('left', (d3.event.pageX + 50) + 'px')
                         .style('top', (d3.event.pageY) + 'px');
                     handleMouseMoveEdge(d);
-                    handleFocusStrokeOnEdge(d);
                 })
                 .on('mouseout', function () {
                     tooltipLink.transition().duration(150)
@@ -767,13 +798,34 @@ function drawData() {
 
         }
 
+        function updateNumberOfAttack(data) {
+            UPday1 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "4/7/2017"
+            });
+            UPday2 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "5/7/2017"
+            });
+            UPday3 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "6/7/2017"
+            });
+            UPday4 = data.filter(function (d) {
+                return d.Timestamp.slice(0, -6) === "7/7/2017"
+            });
+        }
+
+        d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
+        d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
+        d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
+        d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+
         function updateCPA() {
-            //===== remove the previous prova =========
+            //===== remove the previous data=========
             d3.selectAll(".selected").remove();
             d3.selectAll(".notSelected").remove();
             d3.selectAll(".backpath").remove();
             d3.selectAll(".dimension").remove();
             // =============== update the cpa ==================
+
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
                 if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
@@ -788,8 +840,7 @@ function drawData() {
                     .range(Range);
             }));
 
-
-            extents = dimensions.map(function (p) {
+            extents = dimensions.map(function () {
                 return [0, 0];
             });
 
@@ -1011,7 +1062,6 @@ function drawData() {
             });
 
         }
-
         function updateChartDay2() {
             d3.selectAll(".barday2").remove();
             var chartDay2;
@@ -1092,7 +1142,6 @@ function drawData() {
             });
 
         }
-
         function updateChartDay3() {
             d3.selectAll(".barday3").remove();
             var chartDay3;
@@ -1172,7 +1221,6 @@ function drawData() {
             });
 
         }
-
         function updateChartDay4() {
             d3.selectAll(".barday4").remove();
             var bindedDay4 = d3.entries(attackDay4);
@@ -1254,27 +1302,203 @@ function drawData() {
 
         }
 
-        function updateNumberOfAttack(data) {
-            day1 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "4/7/2017"
-            });
-            day2 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "5/7/2017"
-            });
-            day3 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "6/7/2017"
-            });
-            day4 = data.filter(function (d) {
-                return d.Timestamp.slice(0, -6) === "7/7/2017"
-            });
+        function updateScatterPlot(data) {
+            d3.selectAll(".scatterPlot").remove();
 
-            d3.select("#day1").html(day1.length + " / <b>" + day1.length + "</b>");
-            d3.select("#day2").html(day2.length + " / <b>" + day2.length + "</b>");
-            d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
-            d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
-        }
+            PortsSource.clear();
+            PortsDestination.clear();
+            IPAddress.clear();
 
-        function updateScatterPlot() {
+            for (var i = 0; i < data.length; i++) {
+                if (!PortsSource.has(data[i].SourcePort))
+                    PortsSource.set(data[i].SourcePort, parseInt(data[i].TotalFwdPackets));
+                else
+                    PortsSource.set(data[i].SourcePort, PortsSource.get(data[i].SourcePort) + parseInt(data[i].TotalFwdPackets));
+
+                if (!PortsDestination.has(data[i].DestinationPort))
+                    PortsDestination.set(data[i].DestinationPort, parseInt(data[i].TotalFwdPackets));
+                else
+                    PortsDestination.set(data[i].DestinationPort, PortsDestination.get(data[i].DestinationPort) + parseInt(data[i].TotalFwdPackets));
+
+                IPAddress.add(data[i].source.id.slice(0, -2));
+                IPAddress.add(data[i].target.id.slice(0, -2));
+            }
+
+            xScatterPlot = d3.scalePoint();
+            yScatterPlot = d3.scalePoint();
+
+
+            ScalePackPort = d3.scaleLinear().domain([0, Math.max(...Array.from(PortsSource.values()).concat(Array.from(PortsDestination.values())))]).range([5, 12]);
+
+            xAxisScatterPlot = d3.axisBottom(xScatterPlot);
+
+            yAxisScatterPlot = d3.axisLeft(yScatterPlot);
+
+            svgScatterPlot = d3.select("#scatterPlot").append("svg")
+                .attr("class", "scatterPlot")
+                .attr("width", widthScatterPlot + marginScatterPlot.left + marginScatterPlot.right)
+                .attr("height", heightScatterPlot + marginScatterPlot.top + marginScatterPlot.bottom)
+                .append("g")
+                .attr("transform", "translate(" + marginScatterPlot.left + "," + marginScatterPlot.top + ")");
+
+            tooltipScatterPlot = d3.select('body').append('div')
+                .style('opacity', 0)
+                .attr('class', 'd3-tip');
+
+            xScatterPlot.domain(Array.from(PortsSource.keys()).concat(Array.from(PortsDestination.keys())).sort(function (a, b) {
+                return a - b;
+            })).range([0, widthScatterPlot]).padding(0.4);
+            yScatterPlot.domain(Array.from(IPAddress).sort(function (a, b) {
+                return a - b;
+            })).range([heightScatterPlot, 0]).padding(0.4);
+
+            // gridlines in x axis function
+            function make_x_gridlines() {
+                return d3.axisBottom(xScatterPlot)
+            }
+
+            // gridlines in y axis function
+            function make_y_gridlines() {
+                return d3.axisLeft(yScatterPlot)
+            }
+
+            // add the X gridlines
+            svgScatterPlot.append("g")
+                .attr("class", "grid")
+                .attr("transform", "translate(0," + heightScatterPlot + ")")
+                .call(make_x_gridlines()
+                    .tickSize(-heightScatterPlot)
+                    .tickFormat("").tickSizeOuter(0)
+                );
+            // add the Y gridlines
+            svgScatterPlot.append("g")
+                .attr("class", "grid")
+                .call(make_y_gridlines()
+                    .tickSize(-widthScatterPlot)
+                    .tickFormat("").tickSizeOuter(0)
+                );
+
+
+            svgScatterPlot.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + heightScatterPlot + ")")
+                .call(xAxisScatterPlot.tickSize(8).tickSizeOuter(0))
+                .append("text")
+                .attr("class", "label")
+                .attr("x", widthScatterPlot)
+                .attr("y", -6)
+                .style("text-anchor", "end")
+                .text("Port");
+
+            svgScatterPlot.append("g")
+                .attr("class", "y axis")
+                .call(yAxisScatterPlot.tickSize(6).tickSizeOuter(0))
+                .append("text")
+                .attr("class", "label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 4)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("IP Address");
+
+            svgScatterPlot.selectAll(".dot")
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dotDestination")
+                .attr("r", function (d) {
+                    return ScalePackPort(PortsDestination.get(d.DestinationPort))
+                })
+                .attr("cx", function (d) {
+                    return xScatterPlot(d.DestinationPort);
+                })
+                .attr("cy", function (d) {
+                    return yScatterPlot(d.target.id.slice(0, -2));
+                })
+                .style("fill", "green")
+                .on("mouseover", function (d) {
+                    tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style("opacity", "1")
+                        .html("<h6>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</h6> <h6>Packets: " + (PortsDestination.get(d.DestinationPort)) + "</h6>");
+                    handleMouseMoveEdge(d);
+                    handleFocusDotDestination(d);
+                })
+                .on("mouseout", function () {
+                    tooltipScatterPlot.style("opacity", "0");
+                    handleMouseOutEdge();
+                    handleOutFocusStroke();
+                });
+
+            legendScatterPlot = svgScatterPlot.selectAll(".legend")
+                .data(["Source", "Target"])
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function (d, i) {
+                    return "translate(20," + i * 20 + ")";
+                });
+
+            svgScatterPlot.selectAll(".dot")
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dotSource")
+                .attr("r", function (d) {
+                    return ScalePackPort(PortsSource.get(d.SourcePort));
+                })
+                .attr("cx", function (d) {
+                    return xScatterPlot(d.SourcePort);
+                })
+                .attr("cy", function (d) {
+                    return yScatterPlot(d.source.id.slice(0, -2));
+                })
+                .style("fill", "#3398cc")
+                .on("mouseover", function (d) {
+                    tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style("opacity", "1")
+                        .html("<h6>" + (d.source.id.slice(0, -2)) + ": " + (d.SourcePort) + "</h6> <h6>Packets: " + PortsSource.get(d.SourcePort) + "</h6>");
+                    handleMouseMoveEdge(d);
+                    handleFocusDotSource(d);
+                })
+                .on("mouseout", function () {
+                    tooltipScatterPlot.style("opacity", "0");
+                    handleMouseOutEdge();
+                    handleOutFocusStroke();
+                });
+
+            legendScatterPlot.append("rect")
+                .attr("y", 18)
+                .attr("x", widthScatterPlot - 22)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", function (d) {
+                    if (d === "Source")
+                        return "#3398cc";
+                    else
+                        return "green";
+                })
+                .on("click", function (d) {
+                    d3.select(this).transition().duration(200).style("stroke", "red");
+                    if (d === "Source")
+                        d3.selectAll(".dotDestination").style("display", "none");
+                    else
+                        d3.selectAll(".dotSource").style("display", "none");
+                })
+                .on("dblclick", function (d) {
+                    d3.select(this).transition().duration(200).style("stroke", "none");
+                    if (d === "Source")
+                        d3.selectAll(".dotDestination").style("display", "block");
+                    else
+                        d3.selectAll(".dotSource").style("display", "block");
+                });
+
+            legendScatterPlot.append("text")
+                .attr("x", widthScatterPlot - 27)
+                .attr("y", 27)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function (d) {
+                    return d;
+                });
 
         }
 
@@ -1318,7 +1542,7 @@ function drawData() {
                     (extents[4].includes(d.TotalFwdPackets) || extents[4].includes(parseInt(d.TotalFwdPackets)) || (extents[4][0] === 0 && extents[4][1] === 0)) &&
                     (extents[5].includes(d.TotalLenghtOfFwdPackets) || extents[5].includes(parseInt(d.TotalLenghtOfFwdPackets)) || (extents[5][0] === 0 && extents[6][1] === 0)) && (extents[6].includes(d.Label) || (extents[6][0] === 0 && extents[6][1] === 0));
             });
-            showAll();
+            showAllGraph();
             buildMapPacket(filteredData);
             scalePacket(NumberDeliveredPackets);
             updateGraph(filteredData);
@@ -1329,6 +1553,7 @@ function drawData() {
             updateChartDay2();
             updateChartDay3();
             updateChartDay4();
+            updateScatterPlot(filteredData)
 
         }
     }
@@ -1348,12 +1573,19 @@ function drawData() {
                 else
                     return "block";
             });
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+            .style("stroke", function (d) {
+                if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
+                    return "red";
+                else
+                    return "none"
+            });
     }
 
-    function handleFocusStrokeOnEdge(edge) {
+    function handleFocusDotDestination(edge) {
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
-                if (edge.source.id == d.source.id || edge.source.id == d.target.id)
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort == d.DestinationPort)
                     return "1";
                 else
                     return "0";
@@ -1361,7 +1593,60 @@ function drawData() {
             .style("stroke-width", "3px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
-                if (edge.source.id == d.source.id || edge.source.id == d.target.id)
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort == d.DestinationPort)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#scatterPlot").selectAll("circle").transition().delay(500)
+            .style("display", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.DestinationPort === edge.DestinationPort))
+                    return "block";
+                else
+                    return "none"
+            })
+    }
+
+    function handleFocusDotSource(edge) {
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.SourcePort == d.SourcePort)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.SourcePort == d.SourcePort)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#scatterPlot").selectAll("circle")
+            .style("display", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.SourcePort === edge.SourcePort))
+                    return "block";
+                else
+                    return "none"
+            })
+
+    }
+
+    function handleFocusStrokeOnEdge(edge) {
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if (edge.source.id == d.source.id && edge.target.id == d.target.id)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if (edge.source.id == d.source.id && edge.target.id == d.target.id)
                     return "1";
                 else
                     return "0";
@@ -1476,7 +1761,7 @@ function drawData() {
 }
 
 
-function showAll() {
+function showAllGraph() {
     d3.select("#graph").selectAll("line").style("display", "block");
     d3.select("#graph").selectAll("circle").style("display", "block");
 }
@@ -1500,12 +1785,36 @@ function handleMouseOverNode(circle) {
                 return "1";
             else
                 return "0.1"
+        });
+    d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+        .style("display", function (d) {
+            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id))
+                return "block";
+            else
+                return "none"
+        });
+    d3.select("#PCA").selectAll(".notSelected")
+        .style("opacity", function (d) {
+            if (d.source.id == circle._groups[0][0].__data__.id || d.target.id == circle._groups[0][0].__data__.id)
+                return "1";
+            else
+                return "0";
         })
+        .style("stroke-width", "3px");
+    d3.select("#PCA").selectAll(".selected")
+        .style("opacity", function (d) {
+            if (d.source.id == circle._groups[0][0].__data__.id || d.target.id == circle._groups[0][0].__data__.id)
+                return "1";
+            else
+                return "0";
+        })
+        .style("stroke-width", "3px");
 }
 
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
-    d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1")
+    d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
+    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("display", "block");
 }
 
 function handleMouseMoveEdge(edge) {
@@ -1515,18 +1824,27 @@ function handleMouseMoveEdge(edge) {
         else
             return "0.1";
     });
-
-    d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", function (d) {
-        if (d.id === edge.source.id || d.id === edge.target.id)
+    d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+        .style("display", function (d) {
+            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                return "block";
+            else
+                return "none"
+        });
+    d3.select("#graph").selectAll("circle").transition().duration(200)
+        .style("opacity", function (d) {
+            if ((d.id === edge.source.id) || (d.id === edge.target.id))
             return "1";
         else
             return "0.1";
-    })
+        });
 }
 
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
+    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("display", "block");
+    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
 }
 
 function handleFocusStroke(stroke) {
@@ -1636,7 +1954,7 @@ function attackPackets(data) {
 
 // built the scale for the packets
 function scalePacket() {
-    max = 0;
+    max = -Infinity;
     Object.keys(NumberSentPackets).forEach(function (key) {
         if (NumberSentPackets[key] > max)
             max = NumberSentPackets[key];
@@ -1648,8 +1966,8 @@ function scalePacket() {
     });
     colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
 
-    max = 0;
-    min = 999999999;
+    max = -Infinity;
+    min = +Infinity;
     Object.keys(transferPackets).forEach(function (key) {
         if (transferPackets[key] > max)
             max = transferPackets[key];
@@ -1671,15 +1989,12 @@ function getTargetPackets(k) {
 function getPackDay1(k) {
     return attackDay1[k];
 }
-
 function getPackDay2(k) {
     return attackDay2[k];
 }
-
 function getPackDay3(k) {
     return attackDay3[k];
 }
-
 function getPackDay4(k) {
     return attackDay4[k];
 }

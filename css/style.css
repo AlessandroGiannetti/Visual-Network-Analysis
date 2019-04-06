@@ -23,8 +23,13 @@ h4 {
 }
 
 .nodes circle {
-    stroke: black;
-    stroke-width: 2px;
+    stroke: none;
+    stroke-width: 3px;
+}
+
+.dot circle {
+    stroke: none;
+    stroke-width: 3px;
 }
 
 svg {
@@ -198,5 +203,19 @@ p {
 }
 
 #day1, #day2, #day3, #day4 {
-    font-size: 15px;
+    font-size: 17px;
+}
+
+.dotSource {
+    opacity: 1;
+}
+
+.dotDestination {
+    opacity: 1;
+}
+
+.grid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.1;
+    shape-rendering: crispEdges;
 }
