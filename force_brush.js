@@ -1080,6 +1080,7 @@ function drawData() {
             });
 
         }
+
         function updateChartDay2() {
             d3.selectAll(".barday2").remove();
             var chartDay2;
@@ -1160,6 +1161,7 @@ function drawData() {
             });
 
         }
+
         function updateChartDay3() {
             d3.selectAll(".barday3").remove();
             var chartDay3;
@@ -1239,6 +1241,7 @@ function drawData() {
             });
 
         }
+
         function updateChartDay4() {
             d3.selectAll(".barday4").remove();
             var bindedDay4 = d3.entries(attackDay4);
@@ -1343,11 +1346,8 @@ function drawData() {
 
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
-
             ScalePackPort = d3.scaleLinear().domain([0, Math.max(...Array.from(PortsSource.values()).concat(Array.from(PortsDestination.values())))]).range([5, 12]);
-
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
-
             yAxisScatterPlot = d3.axisLeft(yScatterPlot);
 
             svgScatterPlot = d3.select("#scatterPlot").append("svg")
@@ -1515,6 +1515,7 @@ function drawData() {
                 });
 
         }
+
         function brush_parallel_chart() {
             for (var i = 0; i < dimensions.length; ++i) {
                 if (d3.event.target == y[dimensions[i]].brush) {
@@ -1555,10 +1556,13 @@ function drawData() {
                     (extents[4].includes(d.TotalFwdPackets) || extents[4].includes(parseInt(d.TotalFwdPackets)) || (extents[4][0] === 0 && extents[4][1] === 0)) &&
                     (extents[5].includes(d.TotalLenghtOfFwdPackets) || extents[5].includes(parseInt(d.TotalLenghtOfFwdPackets)) || (extents[5][0] === 0 && extents[6][1] === 0)) && (extents[6].includes(d.Label) || (extents[6][0] === 0 && extents[6][1] === 0));
             });
+
             showAllGraph();
             buildMapPacket(filteredData);
             scalePacket(NumberDeliveredPackets);
             updateGraph(filteredData);
+            updateScatterPlot(filteredData);
+            handleSelectedNode(nodeSelected);
             attackPackets(filteredData);
             updateLegend();
             updateNumberOfAttack(filteredData);
@@ -1566,7 +1570,6 @@ function drawData() {
             updateChartDay2();
             updateChartDay3();
             updateChartDay4();
-            updateScatterPlot(filteredData)
 
         }
     }
@@ -1594,6 +1597,7 @@ function drawData() {
                     return "none"
             });
     }
+
     function handleFocusDotDestination(edge) {
         d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
             if (d.source.id === edge.source.id && d.target.id === edge.target.id)
@@ -1633,6 +1637,7 @@ function drawData() {
                     return "0"
             })
     }
+
     function handleFocusDotSource(edge) {
         d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
             if (d.source.id === edge.source.id && d.target.id === edge.target.id)
@@ -1758,6 +1763,7 @@ function drawData() {
         }
         handleFilterLegend(displayElements);
     }
+
     function handleFilterLegend(nodes) {
         d3.select("#graph").selectAll("circle")
             .style("display", function (d) {
@@ -1839,11 +1845,11 @@ function handleMouseOverNode(circle) {
                 return "0.1"
         });
     d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
-        .style("display", function (d) {
+        .style("opacity", function (d) {
             if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id))
-                return "block";
+                return "1";
             else
-                return "none"
+                return "0"
         });
     d3.select("#PCA").selectAll(".notSelected")
         .style("opacity", function (d) {
@@ -1866,7 +1872,7 @@ function handleMouseOverNode(circle) {
 function handleMouseOutNode() {
     d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
-    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("display", "block");
+    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
 }
 
 function handleMouseMoveEdge(edge) {
@@ -1879,9 +1885,9 @@ function handleMouseMoveEdge(edge) {
     d3.select("#graph").selectAll("circle").transition().duration(200)
         .style("opacity", function (d) {
             if ((d.id === edge.source.id) || (d.id === edge.target.id))
-            return "1";
-        else
-            return "0.1";
+                return "1";
+            else
+                return "0.1";
         });
     d3.select("#scatterPlot").selectAll("circle")
         .style("opacity", function (d) {
@@ -2080,12 +2086,15 @@ function getTargetPackets(k) {
 function getPackDay1(k) {
     return attackDay1[k];
 }
+
 function getPackDay2(k) {
     return attackDay2[k];
 }
+
 function getPackDay3(k) {
     return attackDay3[k];
 }
+
 function getPackDay4(k) {
     return attackDay4[k];
 }
