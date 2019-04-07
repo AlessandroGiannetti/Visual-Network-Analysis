@@ -852,6 +852,21 @@ function drawData() {
                 }
                 return y[d] = d3.scaleOrdinal()
                     .domain(d3.extent(newData, function (p) {
+                      //console.log("newData" + newData.toSource());
+        /*                if(d == "SourcePort"){
+                          //console.log()
+
+                        }
+
+                        if(d == "DestinationPort"){
+                          var destPortSort = Object.keys(newData).map(e => ({destPort: newData[e].DestinationPort}))
+                            .sort((a, b) => a.destPort - b.destPort);
+
+                          console.log(destPortSort.toSource())
+
+                          return +destPortSort;
+                        }
+        */                  
                         if (d == "source" || d == "target") {
                             return +p[d]["id"];
                         }
@@ -2113,4 +2128,3 @@ function brushEmpty() {
     }
     return empty
 }
-
