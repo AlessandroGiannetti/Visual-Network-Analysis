@@ -368,18 +368,14 @@ function drawData() {
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
-        widthCPA = 1110 - marginCPA.left - marginCPA.right,
+        widthCPA = 1090 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
     var x = d3.scaleBand().rangeRound([-10, widthCPA + 80]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
         Range = [];
-    var svgCPA = d3.select("#PCA").append("svg")
-        .attr("width", widthCPA)
-        .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
-        .append("g")
-        .attr("transform", "translate(" + 70 + "," + 28 + ")");
+    var svgCPA;
     for (var i = 0; i <= heightCPA * 20; i = i + 20) {
         Range.push(i);
     }
@@ -452,11 +448,13 @@ function drawData() {
                 d3.select(this).transition().duration(200).style("stroke", "red");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                FocusDotScatterPlot(nodeSelected);
             })
             .on('dblclick', function () {
                 d3.select(this).transition().duration(200).style("stroke", "none");
                 nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                FocusDotScatterPlot(nodeSelected);
             })
             .on('mouseover', function (d) {
                 handleMouseOverNode(d3.select(this));
@@ -644,6 +642,7 @@ function drawData() {
         updateChartDay4();
 
         handleSelectedNode(nodeSelected);
+        FocusDotScatterPlot(nodeSelected);
 
         function updateGraph(newData) {
             var edges = [];
@@ -684,11 +683,13 @@ function drawData() {
                     d3.select(this).transition().duration(200).style("stroke", "red");
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
+                    FocusDotScatterPlot(nodeSelected);
                 })
                 .on('dblclick', function () {
                     d3.select(this).transition().duration(200).style("stroke", "none");
                     nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
+                    FocusDotScatterPlot(nodeSelected);
                 })
                 .on('mouseover', function (d) {
                     handleMouseOverNode(d3.select(this));
@@ -754,6 +755,7 @@ function drawData() {
 
         function updateLegend() {
             d3.selectAll(".legendScale").remove();
+            d3.selectAll(".canvas").remove();
 
             canvas = d3.select("#legend")
                 .style("height", heightLegend + "px")
@@ -762,6 +764,7 @@ function drawData() {
                 .append("canvas")
                 .attr("height", heightLegend - marginLegend.top - marginLegend.bottom)
                 .attr("width", 1)
+                .attr("class", "canvas")
                 .style("height", (heightLegend - marginLegend.top - marginLegend.bottom) + "px")
                 .style("width", (widthLegend - marginLegend.left - marginLegend.right) + "px")
                 .style("border", "1px solid #000")
@@ -814,7 +817,6 @@ function drawData() {
                 .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
                 .attr("class", "y axis")
                 .call(legendaxis);
-
         }
 
         function updateNumberOfAttack(data) {
@@ -840,11 +842,15 @@ function drawData() {
 
         function updateCPA() {
             //===== remove the previous data=========
-            d3.selectAll(".selected").remove();
-            d3.selectAll(".notSelected").remove();
-            d3.selectAll(".backpath").remove();
-            d3.selectAll(".dimension").remove();
+            d3.selectAll(".cpa").remove();
             // =============== update the cpa ==================
+
+            svgCPA = d3.select("#PCA").append("svg")
+                .attr("class", "cpa")
+                .attr("width", widthCPA)
+                .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
+                .append("g")
+                .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
                 if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
@@ -855,9 +861,7 @@ function drawData() {
                       //console.log("newData" + newData.toSource());
         /*                if(d == "SourcePort"){
                           //console.log()
-
                         }
-
                         if(d == "DestinationPort"){
                           var destPortSort = Object.keys(newData).map(e => ({destPort: newData[e].DestinationPort}))
                             .sort((a, b) => a.destPort - b.destPort);
@@ -866,7 +870,7 @@ function drawData() {
 
                           return +destPortSort;
                         }
-        */                  
+        */
                         if (d == "source" || d == "target") {
                             return +p[d]["id"];
                         }
@@ -887,8 +891,8 @@ function drawData() {
                 .enter().append("path")
                 .attr("class", "backpath")
                 .attr("d", path);
-            // Add blue selected lines for focus.
 
+            // Add blue unselected lines
             notSelected = svgCPA.append("g")
                 .attr("class", "notEvidence")
                 .selectAll("path")
@@ -906,7 +910,7 @@ function drawData() {
                     if (!brushEmpty())
                         brush_parallel_chart()
                 });
-
+            //add red selected lines for focus
             selected = svgCPA.append("g")
                 .attr("class", "evidence")
                 .selectAll("path")
@@ -1543,7 +1547,7 @@ function drawData() {
             }
             notSelected.style("display", function (d) {
                 return dimensions.every(function (p, i) {
-                    if (extents[i][0] == 0 && extents[i][0] == 0)
+                    if (extents[i][0] === 0 && extents[i][0] === 0)
                         return true;
                     if (p === "source" || p === "target") {
                         return extents[i].includes(d[p].id.slice(0, -2));
@@ -1552,10 +1556,10 @@ function drawData() {
                     }
                 }) ? "block" : "none";
             });
-            if (nodeSelected.size != 0) {
+            if (nodeSelected.size !== 0) {
                 selected.style("display", function (d) {
                     return dimensions.every(function (p, i) {
-                        if (extents[i][0] == 0 && extents[i][0] == 0)
+                        if (extents[i][0] === 0 && extents[i][0] === 0)
                             return true;
                         if (p === "source" || p === "target") {
                             return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
@@ -1579,6 +1583,7 @@ function drawData() {
             updateScatterPlot(filteredData);
             attackPackets(filteredData);
             updateLegend();
+            FocusDotScatterPlot(nodeSelected);
             updateNumberOfAttack(filteredData);
             updateChartDay1();
             updateChartDay2();
@@ -1604,6 +1609,9 @@ function drawData() {
                 else
                     return "block";
             });
+    }
+
+    function FocusDotScatterPlot(nodes) {
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
             .style("stroke", function (d) {
                 if (nodes.has(d.source.id) || (nodes.has(d.target.id)))

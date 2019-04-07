@@ -103,7 +103,6 @@ svg {
     fill: gray;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none;
 }
 
 .axis .halo {
@@ -153,7 +152,6 @@ p {
     line-height: 2em;
     text-indent: 3em;
     cursor: pointer;
-    user-select: none;
 }
 
 .funkyradio input[type="checkbox"]:empty ~ label:before {
