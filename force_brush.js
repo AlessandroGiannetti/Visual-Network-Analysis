@@ -368,9 +368,9 @@ function drawData() {
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
-        widthCPA = 1074 - marginCPA.left - marginCPA.right,
+        widthCPA = 1110 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([0, widthCPA]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-10, widthCPA + 80]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -387,13 +387,14 @@ function drawData() {
     // ================= FINE DICHIARAZIONI CPA ==================================
 
     function initGraph() {
+
         //declaration of the tooltipLink (extra info on over)
         tooltipLink = d3.select('body').append('div')
-            .style('opacity', 0)
+            .style('display', "none")
             .attr('class', 'd3-tip');
 
         tooltipNode = d3.select('body').append('div')
-            .style('opacity', 0)
+            .style('display', "none")
             .attr('class', 'd3-tip');
 
         //declaration of the link of the network
@@ -404,7 +405,7 @@ function drawData() {
             .enter().append("line")
             .on('mousemove', function (d) {
                 tooltipLink.transition().duration(150)
-                    .style('opacity', 1);
+                    .style('display', "block");
                 tooltipLink.html(contentLinkTip(d))
                     .style('left', (d3.event.pageX + 50) + 'px')
                     .style('top', (d3.event.pageY) + 'px');
@@ -413,7 +414,7 @@ function drawData() {
             })
             .on('mouseout', function () {
                 tooltipLink.transition().duration(150)
-                    .style('opacity', 0);
+                    .style('display', "none");
                 handleMouseOutEdge();
                 handleOutFocusStroke();
             })
@@ -447,13 +448,10 @@ function drawData() {
                         return colorScalePackets(NumberDeliveredPackets[d.id]);
                     else
                         return colorScalePackets(0);
-            })
-            .on("click", function () {
+            }).on("click", function () {
                 d3.select(this).transition().duration(200).style("stroke", "red");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
-                if (!brushEmpty())
-                    brush_parallel_chart()
             })
             .on('dblclick', function () {
                 d3.select(this).transition().duration(200).style("stroke", "none");
@@ -463,16 +461,16 @@ function drawData() {
             .on('mouseover', function (d) {
                 handleMouseOverNode(d3.select(this));
                 tooltipNode.transition().duration(150)
-                    .style('opacity', .9);
+                    .style('display', "block");
                 tooltipNode.html(contentNodeTip(d))
                     .style('left', (d3.event.pageX + 50) + 'px')
                     .style('top', (d3.event.pageY) + 'px');
             })
             .on('mouseout', function () {
-                handleOutFocusStroke();
-                handleMouseOutNode();
                 tooltipNode.transition().duration(150)
-                    .style('opacity', 0);
+                    .style('display', "none");
+                handleMouseOutNode();
+                handleOutFocusStroke();
             });
 
         //declaration of the text (ip) of the node
@@ -514,7 +512,7 @@ function drawData() {
 
     // ======================== SCATTERPLOT ===============================
     var marginScatterPlot = {top: 20, right: 20, bottom: 20, left: 70},
-        widthScatterPlot = 1165 - marginScatterPlot.left - marginScatterPlot.right,
+        widthScatterPlot = 1185 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 450 - marginScatterPlot.top - marginScatterPlot.bottom,
         PortsSource = new Map(),
         PortsDestination = new Map(),
@@ -526,7 +524,6 @@ function drawData() {
         legendScatterPlot,
         IPAddress = new Set();
     // ============================= Fine DICHIARAZIONE SCATTERPLOT =========
-
     d3.selectAll(".custom-control-input").on("change", update);
     update();
 
@@ -655,11 +652,11 @@ function drawData() {
 
             //declaration of the tooltipLink (extra info on over)
             tooltipLink = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
 
             tooltipNode = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
 
             node = node.data(data.nodes, function (d) {
@@ -683,6 +680,31 @@ function drawData() {
                             return colorScalePackets(NumberDeliveredPackets[d.id]);
                         else
                             return colorScalePackets(0);
+                }).on("click", function () {
+                    d3.select(this).transition().duration(200).style("stroke", "red");
+                    nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
+                    handleSelectedNode(nodeSelected);
+                })
+                .on('dblclick', function () {
+                    d3.select(this).transition().duration(200).style("stroke", "none");
+                    nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
+                    handleSelectedNode(nodeSelected);
+                })
+                .on('mouseover', function (d) {
+                    handleMouseOverNode(d3.select(this));
+                    tooltipNode.transition().duration(150)
+                        .style('display', "block");
+                    tooltipNode.html(contentNodeTip(d))
+                        .style('left', (d3.event.pageX + 50) + 'px')
+                        .style('top', (d3.event.pageY) + 'px');
+                })
+                .on('mouseout', function () {
+                    tooltipNode.transition().duration(150)
+                        .style('display', "none");
+                    handleMouseOutNode();
+                    handleOutFocusStroke();
+                    if (!brushEmpty())
+                        brush_parallel_chart();
                 });
 
             textElements = textElements.data(data.nodes, function (d) {
@@ -731,8 +753,7 @@ function drawData() {
         }
 
         function updateLegend() {
-            d3.selectAll(".legendGraph").remove();
-            d3.selectAll(".brushLegend").remove();
+            d3.selectAll(".legendScale").remove();
 
             canvas = d3.select("#legend")
                 .style("height", heightLegend + "px")
@@ -746,7 +767,7 @@ function drawData() {
                 .style("border", "1px solid #000")
                 .style("position", "absolute")
                 .style("top", "20px")
-                .style("left", "20px")
+                .style("left", "30px")
                 .node();
 
             ctx = canvas.getContext("2d");
@@ -771,10 +792,11 @@ function drawData() {
 
             svgLegend = d3.select("#legend")
                 .append("svg")
+                .attr("class", "legendScale")
                 .attr("height", (heightLegend) + "px")
                 .attr("width", (widthLegend) + "px")
                 .style("position", "absolute")
-                .style("left", "20px")
+                .style("left", "30px")
                 .style("top", "0px");
 
 
@@ -789,10 +811,9 @@ function drawData() {
 
             svgLegend
                 .append("g")
-                .attr("class", "axis")
                 .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
-                .call(legendaxis)
-                .attr("class", "legendGraph");
+                .attr("class", "y axis")
+                .call(legendaxis);
 
         }
 
@@ -809,12 +830,13 @@ function drawData() {
             UPday4 = data.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "7/7/2017"
             });
-        }
 
-        d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
-        d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
-        d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
-        d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+            // UPDATE number of attack per day
+            d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
+            d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
+            d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
+            d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+        }
 
         function updateCPA() {
             //===== remove the previous data=========
@@ -861,7 +883,6 @@ function drawData() {
                 .attr("d", path)
                 .on('mouseover', function () {
                     handleFocusStroke(d3.select(this)._groups[0][0].__data__);
-                    handleMouseMoveEdge(d3.select(this)._groups[0][0].__data__);
                 })
                 .on('mouseout', function () {
                     d3.select(this).transition().duration(100).style("stroke-width", "1px");
@@ -880,7 +901,6 @@ function drawData() {
                 .attr("d", path)
                 .on('mouseover', function () {
                     handleFocusStroke(d3.select(this)._groups[0][0].__data__);
-                    handleMouseMoveEdge(d3.select(this)._groups[0][0].__data__);
                 })
                 .on('mouseout', function () {
                     handleOutFocusStroke();
@@ -1012,7 +1032,7 @@ function drawData() {
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
 
             // DATA BIND
@@ -1033,11 +1053,11 @@ function drawData() {
                 .on('mousemove', function (d) {
                     tooltipBar.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
-                        .style("opacity", "1")
+                        .style('display', "block")
                         .html((d.key) + ": " + (d.value));
                 })
                 .on('mouseout', function () {
-                    tooltipBar.style("opacity", "0");
+                    tooltipBar.style('display', "none");
                 });
 
             // DATA BIND
@@ -1093,7 +1113,7 @@ function drawData() {
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
 
             // DATA BIND
@@ -1113,11 +1133,11 @@ function drawData() {
                 }).on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
-                    .style("opacity", "1")
+                    .style('display', "block")
                     .html((d.key) + ": " + (d.value));
             })
                 .on('mouseout', function () {
-                    tooltipBar.style("opacity", "0");
+                    tooltipBar.style('display', "none");
                 });
 
             // DATA BIND
@@ -1172,7 +1192,7 @@ function drawData() {
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
             // DATA BIND
             chartDay3 = valsDay3.selectAll('rect').data(bindedDay3);
@@ -1192,11 +1212,11 @@ function drawData() {
                 .on('mousemove', function (d) {
                     tooltipBar.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
-                        .style("opacity", "1")
+                        .style('display', "block")
                         .html((d.key) + ": " + (d.value));
                 })
                 .on('mouseout', function () {
-                    tooltipBar.style("opacity", "0");
+                    tooltipBar.style('display', "none");
                 });
 
             // DATA BIND
@@ -1250,7 +1270,7 @@ function drawData() {
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
 
             // DATA BIND
@@ -1272,11 +1292,11 @@ function drawData() {
                 .on('mousemove', function (d) {
                     tooltipBar.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
-                        .style("opacity", "1")
+                        .style('display', "block")
                         .html((d.key) + ": " + (d.value));
                 })
                 .on('mouseout', function () {
-                    tooltipBar.style("opacity", "0");
+                    tooltipBar.style('display', "none");
                 });
 
             // DATA BIND
@@ -1324,7 +1344,6 @@ function drawData() {
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
 
-
             ScalePackPort = d3.scaleLinear().domain([0, Math.max(...Array.from(PortsSource.values()).concat(Array.from(PortsDestination.values())))]).range([5, 12]);
 
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
@@ -1339,7 +1358,7 @@ function drawData() {
                 .attr("transform", "translate(" + marginScatterPlot.left + "," + marginScatterPlot.top + ")");
 
             tooltipScatterPlot = d3.select('body').append('div')
-                .style('opacity', 0)
+                .style('display', "none")
                 .attr('class', 'd3-tip');
 
             xScatterPlot.domain(Array.from(PortsSource.keys()).concat(Array.from(PortsDestination.keys())).sort(function (a, b) {
@@ -1374,7 +1393,6 @@ function drawData() {
                     .tickSize(-widthScatterPlot)
                     .tickFormat("").tickSizeOuter(0)
                 );
-
 
             svgScatterPlot.append("g")
                 .attr("class", "x axis")
@@ -1415,23 +1433,14 @@ function drawData() {
                 .on("mouseover", function (d) {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
-                        .style("opacity", "1")
+                        .style('display', "block")
                         .html("<h6>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</h6> <h6>Packets: " + (PortsDestination.get(d.DestinationPort)) + "</h6>");
-                    handleMouseMoveEdge(d);
                     handleFocusDotDestination(d);
                 })
                 .on("mouseout", function () {
-                    tooltipScatterPlot.style("opacity", "0");
+                    tooltipScatterPlot.style('display', "none");
                     handleMouseOutEdge();
                     handleOutFocusStroke();
-                });
-
-            legendScatterPlot = svgScatterPlot.selectAll(".legend")
-                .data(["Source", "Target"])
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function (d, i) {
-                    return "translate(20," + i * 20 + ")";
                 });
 
             svgScatterPlot.selectAll(".dot")
@@ -1451,22 +1460,29 @@ function drawData() {
                 .on("mouseover", function (d) {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
-                        .style("opacity", "1")
+                        .style('display', "block")
                         .html("<h6>" + (d.source.id.slice(0, -2)) + ": " + (d.SourcePort) + "</h6> <h6>Packets: " + PortsSource.get(d.SourcePort) + "</h6>");
-                    handleMouseMoveEdge(d);
                     handleFocusDotSource(d);
                 })
                 .on("mouseout", function () {
-                    tooltipScatterPlot.style("opacity", "0");
+                    tooltipScatterPlot.style('display', "none");
                     handleMouseOutEdge();
                     handleOutFocusStroke();
                 });
 
+            legendScatterPlot = svgScatterPlot.selectAll(".legend")
+                .data(["Source", "Target"])
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function (d, i) {
+                    return "translate(20," + i * 16 + ")";
+                });
+
             legendScatterPlot.append("rect")
-                .attr("y", 18)
-                .attr("x", widthScatterPlot - 22)
-                .attr("width", 18)
-                .attr("height", 18)
+                .attr("y", -20)
+                .attr("x", widthScatterPlot - 20)
+                .attr("width", 13)
+                .attr("height", 13)
                 .style("fill", function (d) {
                     if (d === "Source")
                         return "#3398cc";
@@ -1489,10 +1505,11 @@ function drawData() {
                 });
 
             legendScatterPlot.append("text")
-                .attr("x", widthScatterPlot - 27)
-                .attr("y", 27)
+                .attr("x", widthScatterPlot - 25)
+                .attr("y", -14)
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
+                .style("font-size", "10px")
                 .text(function (d) {
                     return d;
                 });
@@ -1520,7 +1537,7 @@ function drawData() {
                 }) ? "block" : "none";
             });
             if (nodeSelected.size != 0) {
-                selected.style("opacity", function (d) {
+                selected.style("display", function (d) {
                     return dimensions.every(function (p, i) {
                         if (extents[i][0] == 0 && extents[i][0] == 0)
                             return true;
@@ -1529,7 +1546,7 @@ function drawData() {
                         } else {
                             return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
                         }
-                    }) ? "1" : "0";
+                    }) ? "block" : "none";
                 });
             }
             filteredData = newData.filter(function (d) {
@@ -1577,8 +1594,20 @@ function drawData() {
                     return "none"
             });
     }
-
     function handleFocusDotDestination(edge) {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+            if (d.source.id === edge.source.id && d.target.id === edge.target.id)
+                return "1";
+            else
+                return "0.1";
+        });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.id === edge.source.id) || (d.id === edge.target.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort == d.DestinationPort)
@@ -1595,16 +1624,29 @@ function drawData() {
                     return "0";
             })
             .style("stroke-width", "3px");
-        d3.select("#scatterPlot").selectAll("circle").transition().delay(500)
-            .style("display", function (d) {
+
+        d3.select("#scatterPlot").selectAll("circle")
+            .style("opacity", function (d) {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.DestinationPort === edge.DestinationPort))
-                    return "block";
+                    return "1";
                 else
-                    return "none"
+                    return "0"
             })
     }
-
     function handleFocusDotSource(edge) {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+            if (d.source.id === edge.source.id && d.target.id === edge.target.id)
+                return "1";
+            else
+                return "0.1";
+        });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.id === edge.source.id) || (d.id === edge.target.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.SourcePort == d.SourcePort)
@@ -1621,12 +1663,13 @@ function drawData() {
                     return "0";
             })
             .style("stroke-width", "3px");
+
         d3.select("#scatterPlot").selectAll("circle")
-            .style("display", function (d) {
+            .style("opacity", function (d) {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.SourcePort === edge.SourcePort))
-                    return "block";
+                    return "1";
                 else
-                    return "none"
+                    return "0"
             })
 
     }
@@ -1750,7 +1793,21 @@ function drawData() {
                     return "1";
                 else
                     return "0";
-            })
+            });
+        d3.select("#scatterPlot").selectAll(".dotSource")
+            .style("display", function (d) {
+                if (nodes.includes(d.source.id))
+                    return "block";
+                else
+                    return "none"
+            });
+        d3.select("#scatterPlot").selectAll(".dotDestination")
+            .style("display", function (d) {
+                if (nodes.includes(d.target.id))
+                    return "block";
+                else
+                    return "none"
+            });
     }
 }
 
@@ -1819,13 +1876,6 @@ function handleMouseMoveEdge(edge) {
         else
             return "0.1";
     });
-    d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
-        .style("display", function (d) {
-            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                return "block";
-            else
-                return "none"
-        });
     d3.select("#graph").selectAll("circle").transition().duration(200)
         .style("opacity", function (d) {
             if ((d.id === edge.source.id) || (d.id === edge.target.id))
@@ -1833,16 +1883,51 @@ function handleMouseMoveEdge(edge) {
         else
             return "0.1";
         });
+    d3.select("#scatterPlot").selectAll("circle")
+        .style("opacity", function (d) {
+            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                return "1";
+            else
+                return "0"
+        });
+    d3.select("#PCA").selectAll(".notSelected")
+        .style("opacity", function (d) {
+            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                return "1";
+            else
+                return "0";
+        })
+        .style("stroke-width", "3px");
+    d3.select("#PCA").selectAll(".selected")
+        .style("opacity", function (d) {
+            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                return "1";
+            else
+                return "0";
+        })
+        .style("stroke-width", "3px");
 }
 
 function handleMouseOutEdge() {
     d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
     d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
-    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("display", "block");
     d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
 }
 
 function handleFocusStroke(stroke) {
+    d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+        if (d.source.id === stroke.source.id && d.target.id === stroke.target.id)
+            return "1";
+        else
+            return "0.1";
+    });
+    d3.select("#graph").selectAll("circle").transition().duration(200)
+        .style("opacity", function (d) {
+            if ((d.id === stroke.source.id) || (d.id === stroke.target.id))
+                return "1";
+            else
+                return "0.1";
+        });
     d3.select("#PCA").selectAll(".notSelected")
         .style("opacity", function (d) {
             if (d == stroke)
@@ -1859,6 +1944,13 @@ function handleFocusStroke(stroke) {
                 return "0";
         })
         .style("stroke-width", "3px");
+    d3.select("#scatterPlot").selectAll("circle")
+        .style("opacity", function (d) {
+            if (d == stroke)
+                return "1";
+            else
+                return "0"
+        });
 }
 
 function handleOutFocusStroke() {
