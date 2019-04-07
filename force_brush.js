@@ -1562,7 +1562,6 @@ function drawData() {
             scalePacket(NumberDeliveredPackets);
             updateGraph(filteredData);
             updateScatterPlot(filteredData);
-            handleSelectedNode(nodeSelected);
             attackPackets(filteredData);
             updateLegend();
             updateNumberOfAttack(filteredData);
@@ -1570,6 +1569,7 @@ function drawData() {
             updateChartDay2();
             updateChartDay3();
             updateChartDay4();
+
 
         }
     }
