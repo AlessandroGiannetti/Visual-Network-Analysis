@@ -852,36 +852,74 @@ function drawData() {
                 .append("g")
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
+            var SourcePort = [];
+            var TargetPort = [];
+            var SourceIP = [];
+            var TargetIP = [];
+            var TotalFwdPackets = [];
+            var TotalLenghtOfFwdPackets = [];
+            var Label = [];
+            for (var i = 0; i < newData.length; i++) {
+                SourceIP.push(newData[i].source.id.slice(0, -2));
+                TargetIP.push(newData[i].target.id.slice(0, -2));
+                SourcePort.push(newData[i].SourcePort);
+                SourcePort.push(newData[i].SourcePort);
+                TargetPort.push(newData[i].DestinationPort);
+                TotalFwdPackets.push(newData[i].TotalFwdPackets);
+                TotalLenghtOfFwdPackets.push(newData[i].TotalLenghtOfFwdPackets);
+                Label.push(newData[i].Label);
+            }
+            SourceIP.sort(function (a, b) {
+                return a - b;
+            });
+            SourcePort.sort(function (a, b) {
+                return a - b;
+            });
+            TargetIP.sort(function (a, b) {
+                return a - b;
+            });
+            TargetPort.sort(function (a, b) {
+                return a - b;
+            });
+            TotalFwdPackets.sort(function (a, b) {
+                return a - b;
+            });
+            TotalLenghtOfFwdPackets.sort(function (a, b) {
+                return a - b;
+            });
+            Label.sort(function (a, b) {
+                return a - b;
+            });
+
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
                 if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
                 }
-                return y[d] = d3.scaleOrdinal()
-                    .domain(d3.extent(newData, function (p) {
-                      //console.log("newData" + newData.toSource());
-        /*                if(d == "SourcePort"){
-                          //console.log()
-                        }
-                        if(d == "DestinationPort"){
-                          var destPortSort = Object.keys(newData).map(e => ({destPort: newData[e].DestinationPort}))
-                            .sort((a, b) => a.destPort - b.destPort);
-
-                          console.log(destPortSort.toSource())
-
-                          return +destPortSort;
-                        }
-        */
-                        if (d == "source" || d == "target") {
-                            return +p[d]["id"];
-                        }
-                        return +p[d];
-                    }))
-                    .range(Range);
+                return y[d] = d3.scalePoint().domain(value(d)).range([0, heightCPA]);
             }));
 
             extents = dimensions.map(function () {
                 return [0, 0];
             });
+
+            function value(d) {
+                switch (d) {
+                    case "source":
+                        return SourceIP;
+                    case "SourcePort":
+                        return SourcePort;
+                    case "target":
+                        return TargetIP;
+                    case "DestinationPort":
+                        return TargetPort;
+                    case "TotalFwdPackets":
+                        return TotalFwdPackets;
+                    case "TotalLenghtOfFwdPackets":
+                        return TotalLenghtOfFwdPackets;
+                    case "Label":
+                        return Label;
+                }
+            }
 
             // Add grey background lines for context.
             background = svgCPA.append("g")
@@ -1589,8 +1627,6 @@ function drawData() {
             updateChartDay2();
             updateChartDay3();
             updateChartDay4();
-
-
         }
     }
 
