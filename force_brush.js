@@ -4,20 +4,20 @@ var
     scalePackets,
     colorScalePackets,
     // NumberSentPackets key: [source]  value : total n° of packets
-    NumberSentPackets = {},
+    NumberSentPackets = new Map(),
     // NumberDeliveredPackets key: [target]  value : total n° of packets
-    NumberDeliveredPackets = {},
+    NumberDeliveredPackets = new Map(),
     // transferedPackets key: [source+target]  value : total n° of packets
-    transferPackets = {},
+    transferPackets = new Map(),
     //SVG width and height
     width = 950,
     height = 805;
 var data;
 var step = 0;
-var attackDay1 = {};
-var attackDay2 = [];
-var attackDay3 = [];
-var attackDay4 = [];
+var attackDay1 = new Map();
+var attackDay2 = new Map();
+var attackDay3 = new Map();
+var attackDay4 = new Map();
 var extents;
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
@@ -415,7 +415,7 @@ function drawData() {
                 handleOutFocusStroke();
             })
             .attr("stroke-width", function (d) {
-                return scalePackets(transferPackets[d.source + d.target]);
+                return scalePackets(transferPackets.get(d.source + d.target));
             })
             .attr("display", function (d) {
                 if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
@@ -435,13 +435,13 @@ function drawData() {
             .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 14))
             .style("fill", function (d) {
                 if (d.group === "1")
-                    if (colorScalePackets(NumberSentPackets[d.id]) != null)
-                        return colorScalePackets(NumberSentPackets[d.id]);
+                    if (colorScalePackets(NumberSentPackets.get(d.id)) != null)
+                        return colorScalePackets(NumberSentPackets.get(d.id));
                     else
                         return colorScalePackets(0);
                 if (d.group === "2")
-                    if (colorScalePackets(NumberDeliveredPackets[d.id]) != null)
-                        return colorScalePackets(NumberDeliveredPackets[d.id]);
+                    if (colorScalePackets(NumberDeliveredPackets.get(d.id)) != null)
+                        return colorScalePackets(NumberDeliveredPackets.get(d.id));
                     else
                         return colorScalePackets(0);
             }).on("click", function () {
@@ -536,24 +536,50 @@ function drawData() {
         if (checkedValue.length === 0) {
             newData = data.links;
         }
+
         selection1 = d3.brushSelection(d3.select(".brush1").node());
-        selection2 = d3.brushSelection(d3.select(".brush2").node());
-        selection3 = d3.brushSelection(d3.select(".brush3").node());
-        selection4 = d3.brushSelection(d3.select(".brush4").node());
-
-        if (selection1 == null) {
+        if (selection1 == null)
             selection1 = [0, widthSlider - 0.2];
-        }
-        if (selection2 == null) {
+        selection2 = d3.brushSelection(d3.select(".brush2").node());
+        if (selection2 == null)
             selection2 = [0, widthSlider - 0.2];
-        }
-        if (selection3 == null) {
+        selection3 = d3.brushSelection(d3.select(".brush3").node());
+        if (selection3 == null)
             selection3 = [0, widthSlider - 0.2];
-        }
-        if (selection4 == null) {
+        selection4 = d3.brushSelection(d3.select(".brush4").node());
+        if (selection4 == null)
             selection4 = [0, widthSlider - 0.2];
+
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        if (checkedValue.includes("4/7/2017")) {
+            handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
+            text1.text(formatDate(timeScale1.invert(selection1[0])));
+            handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
+            text2.text(formatDate(timeScale1.invert(selection1[1])));
+        }
+        // EVENT LISTENER SLIDER 2 DATA 5/7/2017
+        if (checkedValue.includes("5/7/2017")) {
+            handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
+            text3.text(formatDate(timeScale1.invert(selection2[0])));
+            handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
+            text4.text(formatDate(timeScale1.invert(selection2[1])));
+        }
+        // EVENT LISTENER SLIDER 3 DATA 5/7/2017
+        if (checkedValue.includes("6/7/2017")) {
+            handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
+            text5.text(formatDate(timeScale1.invert(selection3[0])));
+            handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
+            text6.text(formatDate(timeScale1.invert(selection3[1])));
+        }
+        // EVENT LISTENER SLIDER 4 DATA 7/7/2017
+        if (checkedValue.includes("7/7/2017")) {
+            handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
+            text7.text(formatDate(timeScale4.invert(selection4[0])));
+            handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
+            text8.text(formatDate(timeScale4.invert(selection4[1])));
         }
 
+        // filtraggio dei dati in base ai giorno e all'ora
         newData = data.links.filter(function (d) {
             return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
@@ -561,67 +587,6 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
         });
 
-
-        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
-        if (checkedValue.includes("4/7/2017")) {
-            d3.select("#svgcontroller1").transition().duration(200).style("opacity", "1");
-            d3.select("#barchartDay1").style("opacity", "1");
-            selection1 = d3.brushSelection(d3.select(".brush1").node());
-            if (selection1 == null)
-                selection1 = [0, widthSlider - 0.2];
-            handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
-            text1.text(formatDate(timeScale1.invert(selection1[0])));
-            handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
-            text2.text(formatDate(timeScale1.invert(selection1[1])));
-        } else {
-            d3.select("#svgcontroller1").transition().duration(200).style("opacity", "0");
-            d3.select("#barchartDay1").transition().duration(200).style("opacity", "0");
-        }
-        // EVENT LISTENER SLIDER 2 DATA 5/7/2017
-        if (checkedValue.includes("5/7/2017")) {
-            d3.select("#svgcontroller2").transition().duration(200).style("opacity", "1");
-            d3.select("#barchartDay2").transition().duration(200).style("opacity", "1");
-            selection2 = d3.brushSelection(d3.select(".brush2").node());
-            if (selection2 == null)
-                selection2 = [0, widthSlider - 0.2];
-            handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
-            text3.text(formatDate(timeScale1.invert(selection2[0])));
-            handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
-            text4.text(formatDate(timeScale1.invert(selection2[1])));
-        } else {
-            d3.select("#svgcontroller2").transition().duration(200).style("opacity", "0");
-            d3.select("#barchartDay2").transition().duration(200).style("opacity", "0");
-        }
-        // EVENT LISTENER SLIDER 3 DATA 5/7/2017
-        if (checkedValue.includes("6/7/2017")) {
-            d3.select("#svgcontroller3").transition().duration(200).style("opacity", "1");
-            d3.select("#barchartDay3").transition().duration(200).style("opacity", "1");
-            selection3 = d3.brushSelection(d3.select(".brush3").node());
-            if (selection3 == null)
-                selection3 = [0, widthSlider - 0.2];
-            handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
-            text5.text(formatDate(timeScale1.invert(selection3[0])));
-            handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
-            text6.text(formatDate(timeScale1.invert(selection3[1])));
-        } else {
-            d3.select("#svgcontroller3").transition().duration(200).style("opacity", "0");
-            d3.select("#barchartDay3").transition().duration(200).style("opacity", "0");
-        }
-        // EVENT LISTENER SLIDER 4 DATA 7/7/2017
-        if (checkedValue.includes("7/7/2017")) {
-            d3.select("#svgcontroller4").transition().duration(200).style("opacity", "1");
-            d3.select("#barchartDay4").transition().duration(200).style("opacity", "1");
-            selection4 = d3.brushSelection(d3.select(".brush4").node());
-            if (selection4 == null)
-                selection4 = [0, widthSlider - 0.2];
-            handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
-            text7.text(formatDate(timeScale4.invert(selection4[0])));
-            handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
-            text8.text(formatDate(timeScale4.invert(selection4[1])));
-        } else {
-            d3.select("#svgcontroller4").transition().duration(200).style("opacity", "0");
-            d3.select("#barchartDay4").transition().duration(200).style("opacity", "0");
-        }
 
         // se non è lo step iniziale eseguo queste funzioni
         if (step === 1) {
@@ -670,13 +635,13 @@ function drawData() {
                 .attr("r", (d => (d.id === '205.174.165.73sx') ? 30 : 14))
                 .style("fill", function (d) {
                     if (d.group === "1")
-                        if (colorScalePackets(NumberSentPackets[d.id]) != null)
-                            return colorScalePackets(NumberSentPackets[d.id]);
+                        if (colorScalePackets(NumberSentPackets.get(d.id)) != null)
+                            return colorScalePackets(NumberSentPackets.get(d.id));
                         else
                             return colorScalePackets(0);
                     if (d.group === "2")
-                        if (colorScalePackets(NumberDeliveredPackets[d.id]) != null)
-                            return colorScalePackets(NumberDeliveredPackets[d.id]);
+                        if (colorScalePackets(NumberDeliveredPackets.get(d.id)) != null)
+                            return colorScalePackets(NumberDeliveredPackets.get(d.id));
                         else
                             return colorScalePackets(0);
                 }).on("click", function () {
@@ -736,10 +701,10 @@ function drawData() {
                         brush_parallel_chart()
                 })
                 .attr("stroke-width", function (d) {
-                    return scalePackets(transferPackets[d.source.id + d.target.id]);
+                    return scalePackets(transferPackets.get(d.source.id + d.target.id));
                 })
                 .attr("display", function (d) {
-                    if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+                    if (edges.findIndex(x => (x.source === d.source && x.target === d.target)) <= -1) {
                         edges.push(d);
                         return "block";
                     } else {
@@ -852,6 +817,7 @@ function drawData() {
                 .append("g")
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
+            // prendere i dati da un json senza duplicati
             var SourcePort = [];
             var TargetPort = [];
             var SourceIP = [];
@@ -1060,12 +1026,12 @@ function drawData() {
         function updateChartDay1() {
             d3.selectAll(".barday1").remove();
             var chartDay1;
-            bindedDay1 = d3.entries(attackDay1);
-            xScaleDay1 = d3.scaleLinear().domain([0, day1.length]).range([0, widthBar]);
+            bindedDay1 = Array.from(attackDay1);
+            xScaleDay1 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay1.values())))]).range([0, widthBar]);
             yScaleDay1 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay1.map(function (d) {
-                    return d.key;
+                    return d[0];
                 }))
                 .padding(0.2);
             // SVG
@@ -1097,21 +1063,21 @@ function drawData() {
             // ENTER
             chartDay1.enter().append('rect')
                 .attr("width", function (d) {
-                    return xScaleDay1(d.value);
+                    return xScaleDay1(d[1]);
                 })
                 .attr("height", 10)
                 .attr('x', 20).attr('y', function (d) {
-                return yScaleDay1(d.key) + 25;
+                return yScaleDay1(d[0]) + 25;
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
-                    return xScaleDay1(d.value)
+                    return xScaleDay1(d[1])
                 })
                 .on('mousemove', function (d) {
                     tooltipBar.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html((d.key) + ": " + (d.value));
+                        .html((d[0]) + ": " + (d[1]));
                 })
                 .on('mouseout', function () {
                     tooltipBar.style('display', "none");
@@ -1123,17 +1089,17 @@ function drawData() {
             keyDay1.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay1(d.key) + 20;
+                    return yScaleDay1(d[0]) + 20;
                 })
                 .attr('dy', 16)
                 .attr("text-anchor", "end")
                 .text(function (d) {
-                    return d.key;
+                    return d[0];
                 });
 
             // UPDATE
             keyDay1.text(function (d) {
-                return d.key
+                return d[0]
             });
 
         }
@@ -1141,12 +1107,12 @@ function drawData() {
         function updateChartDay2() {
             d3.selectAll(".barday2").remove();
             var chartDay2;
-            var bindedDay2 = d3.entries(attackDay2);
-            var xScaleDay2 = d3.scaleLinear().domain([0, day2.length]).range([0, widthBar]);
+            bindedDay2 = Array.from(attackDay2);
+            xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
             var yScaleDay2 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay2.map(function (d) {
-                    return d.key;
+                    return d[0];
                 }))
                 .padding(0.2);
             // SVG
@@ -1179,20 +1145,20 @@ function drawData() {
             // ENTER
             chartDay2.enter().append('rect')
                 .attr("width", function (d) {
-                    return xScaleDay2(d.value);
+                    return xScaleDay2(d[1]);
                 })
                 .attr("height", 10)
                 .attr('x', 20).attr('y', function (d) {
-                return yScaleDay2(d.key) + 20;
+                return yScaleDay2(d[0]) + 20;
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
-                    return xScaleDay2(d.value)
+                    return xScaleDay2(d[1])
                 }).on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html((d.key) + ": " + (d.value));
+                    .html((d[0]) + ": " + (d[1]));
             })
                 .on('mouseout', function () {
                     tooltipBar.style('display', "none");
@@ -1204,17 +1170,17 @@ function drawData() {
             keyDay2.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay2(d.key) + 20;
+                    return yScaleDay2(d[0]) + 20;
                 })
                 .attr('dy', 16)
                 .attr("text-anchor", "end")
                 .text(function (d) {
-                    return d.key;
+                    return d[0];
                 });
 
             // UPDATE
             keyDay1.text(function (d) {
-                return d.key
+                return d[0]
             });
 
         }
@@ -1222,12 +1188,12 @@ function drawData() {
         function updateChartDay3() {
             d3.selectAll(".barday3").remove();
             var chartDay3;
-            var bindedDay3 = d3.entries(attackDay3);
-            var xScaleDay3 = d3.scaleLinear().domain([0, day3.length]).range([0, widthBar]);
+            bindedDay3 = Array.from(attackDay3);
+            xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
             var yScaleDay3 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay3.map(function (d) {
-                    return d.key;
+                    return d[0];
                 }))
                 .padding(0.2);
             // SVG
@@ -1258,21 +1224,21 @@ function drawData() {
             // ENTER
             chartDay3.enter().append('rect')
                 .attr("width", function (d) {
-                    return xScaleDay3(d.value);
+                    return xScaleDay3(d[1]);
                 })
                 .attr("height", 20)
                 .attr('x', 10).attr('y', function (d) {
-                return yScaleDay3(d.key) + 20;
+                return yScaleDay3(d[0]) + 20;
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
-                    return xScaleDay3(d.value)
+                    return xScaleDay3(d[1])
                 })
                 .on('mousemove', function (d) {
                     tooltipBar.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html((d.key) + ": " + (d.value));
+                        .html((d[0]) + ": " + (d[1]));
                 })
                 .on('mouseout', function () {
                     tooltipBar.style('display', "none");
@@ -1284,29 +1250,29 @@ function drawData() {
             keyDay3.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay3(d.key) + 20;
+                    return yScaleDay3(d[0]) + 20;
                 })
                 .attr('dy', 16)
                 .attr("text-anchor", "end")
                 .text(function (d) {
-                    return d.key;
+                    return d[0];
                 });
 
             // UPDATE
             keyDay3.text(function (d) {
-                return d.key
+                return d[0]
             });
 
         }
 
         function updateChartDay4() {
             d3.selectAll(".barday4").remove();
-            var bindedDay4 = d3.entries(attackDay4);
-            var xScaleDay4 = d3.scaleLinear().domain([0, day4.length]).range([0, widthBar]);
+            bindedDay4 = Array.from(attackDay4);
+            xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
             var yScaleDay4 = d3.scaleBand()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay4.map(function (d) {
-                    return d.key;
+                    return d[0];
                 }))
                 .padding(0.2);
             // SVG
@@ -1338,22 +1304,22 @@ function drawData() {
             // ENTER
             chartDay4.enter().append('rect')
                 .attr("width", function (d) {
-                    return xScaleDay4(d.value);
+                    return xScaleDay4(d[1]);
                 })
                 .attr("height", 10)
                 .attr('x', 20).attr('y', function (d) {
-                return yScaleDay4(d.key) + 20;
+                return yScaleDay4(d[0]) + 20;
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
-                    return xScaleDay4(d.value)
+                    return xScaleDay4(d[1])
                 })
 
                 .on('mousemove', function (d) {
                     tooltipBar.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html((d.key) + ": " + (d.value));
+                        .html((d[0]) + ": " + (d[1]));
                 })
                 .on('mouseout', function () {
                     tooltipBar.style('display', "none");
@@ -1365,17 +1331,17 @@ function drawData() {
             keyDay4.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay4(d.key) + 20;
+                    return yScaleDay4(d[0]) + 20;
                 })
                 .attr('dy', 16)
                 .attr("text-anchor", "end")
                 .text(function (d) {
-                    return d.key;
+                    return d[0];
                 });
 
             // UPDATE
             keyDay4.text(function (d) {
-                return d.key
+                return d[0]
             });
 
         }
@@ -1792,16 +1758,17 @@ function drawData() {
         var content = "<h5 align='center'>LINK</h5>";
         content += " <table align='center' id='tooltip'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
             "<tr><td> IP address Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            "<tr><th>Tot N° of packets:</th> <td>" + transferPackets[d.source.id + d.target.id] + "</td></tr></table>";
+            "<tr><th>Tot N° of packets:</th> <td>" + transferPackets.get(d.source.id + d.target.id) + "</td></tr></table>";
         return content;
     }
 
+// content of the windows on node mouse over
     function contentNodeTip(d) {
         var value = 0;
-        if (NumberSentPackets[d.id] != null && d.group === "1")
-            value = NumberSentPackets[d.id];
-        if (NumberDeliveredPackets[d.id] != null && d.group === "2")
-            value = NumberDeliveredPackets[d.id];
+        if (NumberSentPackets.has(d.id) !== false && d.group === "1")
+            value = NumberSentPackets.get(d.id);
+        if (NumberDeliveredPackets.has(d.id) !== false && d.group === "2")
+            value = NumberDeliveredPackets.get(d.id);
         var content = "<h5 align='center'>NODE</h5>";
         if (d.group === "1")
             content += " <table align='center' id='tooltip'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
@@ -1817,7 +1784,7 @@ function drawData() {
         selectionLegend1 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
         selectionLegend2 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
         for (var i = 0; i < data.nodes.length; i++) {
-            if ((NumberSentPackets[data.nodes[i]["id"]] >= selectionLegend1 && NumberSentPackets[data.nodes[i]["id"]] <= selectionLegend2) || (NumberDeliveredPackets[data.nodes[i]["id"]] >= selectionLegend1 && NumberDeliveredPackets[data.nodes[i]["id"]] <= selectionLegend2) || (selectionLegend1 < 1 && (NumberDeliveredPackets[data.nodes[i]["id"]] == null || NumberSentPackets[data.nodes[i]["id"]] == null)))
+            if ((NumberSentPackets.get(data.nodes[i]["id"]) >= selectionLegend1 && NumberSentPackets.get(data.nodes[i]["id"]) <= selectionLegend2) || (NumberDeliveredPackets.get(data.nodes[i]["id"]) >= selectionLegend1 && NumberDeliveredPackets.get(data.nodes[i]["id"]) <= selectionLegend2) || (selectionLegend1 < 1 && (NumberDeliveredPackets.has(data.nodes[i]["id"]) !== false || NumberSentPackets.has(data.nodes[i]["id"]) !== false)))
                 displayElements.push(data.nodes[i]["id"]);
         }
         handleFilterLegend(displayElements);
@@ -2028,138 +1995,85 @@ function handleOutFocusStroke() {
 }
 
 function buildMapPacket(data) {
-    NumberDeliveredPackets = [];
-    NumberSentPackets = [];
-    transferPackets = [];
+    NumberDeliveredPackets = new Map();
+    NumberSentPackets = new Map();
+    transferPackets = new Map();
     if (step === 1) {
         for (var i = 0; i < data.length; i++) {
-            if (getAttackPackets(data[i].source.id) == null)
-                NumberSentPackets[data[i].source.id] = parseInt(data[i].TotalFwdPackets);
+            if (NumberSentPackets.has(data[i].source.id) === false)
+                NumberSentPackets.set(data[i].source.id, parseInt(data[i].TotalFwdPackets));
             else
-                NumberSentPackets[data[i].source.id] += parseInt(data[i].TotalFwdPackets);
-            if (getTargetPackets(data[i].target.id) == null)
-                NumberDeliveredPackets[data[i].target.id] = parseInt(data[i].TotalFwdPackets);
+                NumberSentPackets.set(data[i].source.id, NumberSentPackets.get(data[i].source.id) + parseInt(data[i].TotalFwdPackets));
+            if (NumberDeliveredPackets.has(data[i].target.id) === false)
+                NumberDeliveredPackets.set(data[i].target.id, parseInt(data[i].TotalFwdPackets));
             else
-                NumberDeliveredPackets[data[i].target.id] += parseInt(data[i].TotalFwdPackets);
-            if (getTransferedPackets(data[i].source.id + data[i].target.id) == null)
-                transferPackets[data[i].source.id + data[i].target.id] = parseInt(data[i].TotalFwdPackets);
+                NumberDeliveredPackets.set(data[i].target.id, NumberDeliveredPackets.get(data[i].target.id) + parseInt(data[i].TotalFwdPackets));
+            if (transferPackets.has(data[i].source.id + data[i].target.id) === false)
+                transferPackets.set(data[i].source.id + data[i].target.id, parseInt(data[i].TotalFwdPackets));
             else
-                transferPackets[data[i].source.id + data[i].target.id] += parseInt(data[i].TotalFwdPackets);
+                transferPackets.set(data[i].source.id + data[i].target.id, transferPackets.get(data[i].source.id + data[i].target.id) + parseInt(data[i].TotalFwdPackets));
         }
     }
     if (step === 0) {
         for (var i = 0; i < data.length; i++) {
-            if (getAttackPackets(data[i].source) == null)
-                NumberSentPackets[data[i].source] = parseInt(data[i].TotalFwdPackets);
+            if (NumberSentPackets.has(data[i].source) === false)
+                NumberSentPackets.set(data[i].source, parseInt(data[i].TotalFwdPackets));
             else
-                NumberSentPackets[data[i].source] += parseInt(data[i].TotalFwdPackets);
-            if (getTargetPackets(data[i].target) == null)
-                NumberDeliveredPackets[data[i].target] = parseInt(data[i].TotalFwdPackets);
+                NumberSentPackets.set(data[i].source, NumberSentPackets.get(data[i].source) + parseInt(data[i].TotalFwdPackets));
+            if (NumberDeliveredPackets.has(data[i].target) === false)
+                NumberDeliveredPackets.set(data[i].target, parseInt(data[i].TotalFwdPackets));
             else
-                NumberDeliveredPackets[data[i].target] += parseInt(data[i].TotalFwdPackets);
-            if (getTransferedPackets(data[i].source + data[i].target) == null)
-                transferPackets[data[i].source + data[i].target] = parseInt(data[i].TotalFwdPackets);
+                NumberDeliveredPackets.set(data[i].target, NumberDeliveredPackets.get(data[i].target) + parseInt(data[i].TotalFwdPackets));
+            if (transferPackets.has(data[i].source + data[i].target) === false)
+                transferPackets.set(data[i].source + data[i].target, parseInt(data[i].TotalFwdPackets));
             else
-                transferPackets[data[i].source + data[i].target] += parseInt(data[i].TotalFwdPackets);
+                transferPackets.set(data[i].source + data[i].target, transferPackets.get(data[i].source + data[i].target) + parseInt(data[i].TotalFwdPackets));
         }
     }
 }
 
 function attackPackets(data) {
-    attackDay1 = {};
-    attackDay2 = {};
-    attackDay3 = {};
-    attackDay4 = {};
+    attackDay1 = new Map();
+    attackDay2 = new Map();
+    attackDay3 = new Map();
+    attackDay4 = new Map();
     for (var i = 0; i < data.length; i++) {
-        if (data[i].Timestamp.slice(0, -6) === "4/7/2017") {
-            if (getPackDay1(data[i].Label) == null) {
-                attackDay1[data[i].Label] = 1;
-            } else {
-                attackDay1[data[i].Label] += 1;
-            }
+        switch (data[i].Timestamp.slice(0, -6)) {
+            case "4/7/2017":
+                if (attackDay1.has(data[i].Label) == false)
+                    attackDay1.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                else
+                    attackDay1.set(data[i].Label, attackDay1.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                break;
+            case "5/7/2017":
+                if (attackDay2.has(data[i].Label) == false)
+                    attackDay2.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                else
+                    attackDay2.set(data[i].Label, attackDay2.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                break;
+            case "6/7/2017":
+                if (attackDay3.has(data[i].Label) == false)
+                    attackDay3.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                else
+                    attackDay3.set(data[i].Label, attackDay3.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                break;
+            case "7/7/2017":
+                if (attackDay4.has(data[i].Label) == false)
+                    attackDay4.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                else
+                    attackDay4.set(data[i].Label, attackDay4.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                break;
         }
-        if (data[i].Timestamp.slice(0, -6) === "5/7/2017") {
-            if (getPackDay2(data[i].Label) == null) {
-                attackDay2[data[i].Label] = 1;
-            } else {
-                attackDay2[data[i].Label] += 1;
-            }
-        }
-        if (data[i].Timestamp.slice(0, -6) === "6/7/2017") {
-            if (getPackDay3(data[i].Label) == null) {
-                attackDay3[data[i].Label] = 1;
-            } else {
-                attackDay3[data[i].Label] += 1;
-            }
-        }
-        if (data[i].Timestamp.slice(0, -6) === "7/7/2017") {
-            if (getPackDay4(data[i].Label) == null) {
-                attackDay4[data[i].Label] = 1;
-            } else {
-                attackDay4[data[i].Label] += 1;
-            }
-        }
-
-
     }
 }
 
 // built the scale for the packets
 function scalePacket() {
-    max = -Infinity;
-    Object.keys(NumberSentPackets).forEach(function (key) {
-        if (NumberSentPackets[key] > max)
-            max = NumberSentPackets[key];
-
-    });
-    Object.keys(NumberDeliveredPackets).forEach(function (key) {
-        if (NumberDeliveredPackets[key] > max)
-            max = NumberDeliveredPackets[key];
-    });
-    if (max == -Infinity)
-        colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, 0]);
-    else
-        colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
-
-    max = -Infinity;
-    min = +Infinity;
-    Object.keys(transferPackets).forEach(function (key) {
-        if (transferPackets[key] > max)
-            max = transferPackets[key];
-        if (transferPackets[key] < min)
-            min = transferPackets[key];
-    });
-
+    max = d3.max(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
+    colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
+    max = d3.max(Array.from(transferPackets.values()));
+    min = d3.min(Array.from(transferPackets.values()));
     scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
-}
-
-// return the value of the map with key k
-function getAttackPackets(k) {
-    return NumberSentPackets[k];
-}
-
-function getTargetPackets(k) {
-    return NumberDeliveredPackets[k];
-}
-
-function getPackDay1(k) {
-    return attackDay1[k];
-}
-
-function getPackDay2(k) {
-    return attackDay2[k];
-}
-
-function getPackDay3(k) {
-    return attackDay3[k];
-}
-
-function getPackDay4(k) {
-    return attackDay4[k];
-}
-
-function getTransferedPackets(k) {
-    return transferPackets[k];
 }
 
 function brushEmpty() {
