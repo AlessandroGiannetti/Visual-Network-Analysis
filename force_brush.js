@@ -21,17 +21,17 @@ var attackDay4 = new Map();
 var extents;
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
-d3.json("miserables.json", function (error, datas) {
+d3.json("miserables.json", function (error, JsonData) {
     if (error) throw error;
-    data = datas;
-    // building the map packet
-    buildMapPacket(data.links);
-    // building the scale packet
-    scalePacket();
+    data = JsonData;
     drawData();
 });
 
 function drawData() {
+    // building the map packet
+    buildMapPacket(data.links);
+    // building the scale packet
+    scalePacket();
 
     // ========================= SLIDERS ===================================
     var marginSlider = {top: 0, right: 30, bottom: 0, left: 30},
@@ -311,26 +311,20 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 200;
-    var heightBar = 20;
-    var svgWidthBar = 300;
-    var svgHeightBar = 100;
-    var tooltipBar;
+    var widthBar = 200, heightBar = 20, svgWidthBar = 300, svgHeightBar = 100, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
-    var edges = [],
-        nodeSelected = new Set();
-    var widthGRAPH = 730,
-        heightGRAPH = 500;
+    var edges = [], nodeSelected = new Set();
+    var widthGRAPH = 730, heightGRAPH = 500;
     // create the svg on
     var svgGRAPH = d3.select("#graph").append("svg")
         .attr("width", widthGRAPH)
         .attr("height", heightGRAPH);
     var tooltipLink,  // FINESTRA SU LINK
         tooltipNode,  // FINESTRA SU NODI
-        node,
-        link,
-        textElements;
+        node, link, textElements;
+
+    // GRAPH SIMULATION
     var simulation = d3.forceSimulation(data.nodes)
         .force('forceX', d3.forceX(function (d) {
             if (d.id === "205.174.165.73sx")
@@ -357,14 +351,7 @@ function drawData() {
     var heightLegend = 500,
         widthLegend = 80,
         marginLegend = {top: 20, right: 60, bottom: 20, left: 2},
-        canvas,
-        ctx,
-        legendscale,
-        image,
-        legendaxis,
-        svgLegend,
-        c,
-        brushLegend;
+        canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
@@ -513,15 +500,14 @@ function drawData() {
         widthScatterPlot = 1185 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 450 - marginScatterPlot.top - marginScatterPlot.bottom,
         PortsSource = new Map(),
-        PortsDestination = new Map(),
-        xScatterPlot,
-        yScatterPlot,
-        xAxisScatterPlot,
-        yAxisScatterPlot,
-        svgScatterPlot,
-        legendScatterPlot,
+        PortsDestination = new Map(), xScatterPlot, yScatterPlot,
+        xAxisScatterPlot, yAxisScatterPlot,
+        svgScatterPlot, legendScatterPlot,
         IPAddress = new Set();
-    // ============================= Fine DICHIARAZIONE SCATTERPLOT =========
+
+    // =============== Fine DICHIARAZIONE SCATTERPLOT =====================
+
+    // =============================== TRIGGER UPDATE =======================
     d3.selectAll(".custom-control-input").on("change", update);
     update();
 
@@ -807,7 +793,7 @@ function drawData() {
 
         function updateCPA() {
             //===== remove the previous data=========
-            d3.selectAll(".cpa").remove();
+            d3.selectAll(".cpa ").remove();
             // =============== update the cpa ==================
 
             svgCPA = d3.select("#PCA").append("svg")
@@ -1347,11 +1333,13 @@ function drawData() {
         }
 
         function updateScatterPlot(data) {
+            //==================================== INIT SCATTERPLOT
             d3.selectAll(".scatterPlot").remove();
-
             PortsSource.clear();
             PortsDestination.clear();
             IPAddress.clear();
+            // ===================================
+
             for (var i = 0; i < data.length; i++) {
                 if (!PortsSource.has(data[i].SourcePort))
                     PortsSource.set(data[i].SourcePort, parseInt(data[i].TotalFwdPackets));
@@ -1769,7 +1757,7 @@ function drawData() {
             value = NumberSentPackets.get(d.id);
         if (NumberDeliveredPackets.has(d.id) !== false && d.group === "2")
             value = NumberDeliveredPackets.get(d.id);
-        var content = "<h5 align='center'>NODE</h5>";
+        var content = "<h5 align ='center'>NODE</h5>";
         if (d.group === "1")
             content += " <table align='center' id='tooltip'><tr><td>IP address:</td> <td>" + d.id.slice(0, -2) + "</td></tr>" +
                 "<tr><td>N° malicious packages sent: </td><td align='left'>" + value + "</td></tr></table>";
@@ -1802,7 +1790,7 @@ function drawData() {
         d3.select("#graph").selectAll("line")
             .style("display", function (d) {
                 if (nodes.includes(d.source.id) && nodes.includes(d.target.id)) {
-                    if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+                    if (edges.findIndex(x => (x.source === d.source && x.target === d.target)) <= -1) {
                         edges.push(d);
                         return "block";
                     }
@@ -1841,248 +1829,248 @@ function drawData() {
                     return "none"
             });
     }
-}
 
+    function showAllGraph() {
+        d3.select("#graph").selectAll("line").style("display", "block");
+        d3.select("#graph").selectAll("circle").style("display", "block");
+        d3.select("#graph").selectAll("text").style("display", "block");
+    }
 
-function showAllGraph() {
-    d3.select("#graph").selectAll("line").style("display", "block");
-    d3.select("#graph").selectAll("circle").style("display", "block");
-    d3.select("#graph").selectAll("text").style("display", "block");
-}
+    function handleMouseOverNode(circle) {
+        var nodes = [];
+        nodes.push(circle._groups[0][0].__data__.id);
+        d3.select("#graph").selectAll("line").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
+                    nodes.push(d.target.id);
+                    nodes.push(d.source.id);
+                    return "1";
+                }
+                if ((d.source.id !== circle._groups[0][0].__data__.id) || (d.target.id !== circle._groups[0][0].__data__.id))
+                    return "0.1";
+            });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if (nodes.indexOf(d.id) > -1)
+                    return "1";
+                else
+                    return "0.1"
+            });
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id))
+                    return "1";
+                else
+                    return "0"
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+    }
 
-function handleMouseOverNode(circle) {
-    var nodes = [];
-    nodes.push(circle._groups[0][0].__data__.id);
-    d3.select("#graph").selectAll("line").transition().duration(200)
-        .style("opacity", function (d) {
-            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
-                nodes.push(d.target.id);
-                nodes.push(d.source.id);
+    function handleMouseOutNode() {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
+        d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
+    }
+
+    function handleMouseMoveEdge(edge) {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+            if (d.source.id === edge.source.id && d.target.id === edge.target.id)
                 return "1";
+            else
+                return "0.1";
+        });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.id === edge.source.id) || (d.id === edge.target.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
+        d3.select("#scatterPlot").selectAll("circle")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                    return "1";
+                else
+                    return "0"
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+    }
+
+    function handleMouseOutEdge() {
+        d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
+        d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
+    }
+
+    function handleFocusStroke(stroke) {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+            if (d.source.id === stroke.source.id && d.target.id === stroke.target.id)
+                return "1";
+            else
+                return "0.1";
+        });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.id === stroke.source.id) || (d.id === stroke.target.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if (d == stroke)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if (d == stroke)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#scatterPlot").selectAll("circle")
+            .style("opacity", function (d) {
+                if (d == stroke)
+                    return "1";
+                else
+                    return "0"
+            });
+    }
+
+    function handleOutFocusStroke() {
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", "1")
+            .style("stroke-width", "1px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", "1")
+            .style("stroke-width", "1px");
+    }
+
+    function buildMapPacket(data) {
+        NumberDeliveredPackets = new Map();
+        NumberSentPackets = new Map();
+        transferPackets = new Map();
+        if (step === 1) {
+            for (var i = 0; i < data.length; i++) {
+                if (NumberSentPackets.has(data[i].source.id) === false)
+                    NumberSentPackets.set(data[i].source.id, parseInt(data[i].TotalFwdPackets));
+                else
+                    NumberSentPackets.set(data[i].source.id, NumberSentPackets.get(data[i].source.id) + parseInt(data[i].TotalFwdPackets));
+                if (NumberDeliveredPackets.has(data[i].target.id) === false)
+                    NumberDeliveredPackets.set(data[i].target.id, parseInt(data[i].TotalFwdPackets));
+                else
+                    NumberDeliveredPackets.set(data[i].target.id, NumberDeliveredPackets.get(data[i].target.id) + parseInt(data[i].TotalFwdPackets));
+                if (transferPackets.has(data[i].source.id + data[i].target.id) === false)
+                    transferPackets.set(data[i].source.id + data[i].target.id, parseInt(data[i].TotalFwdPackets));
+                else
+                    transferPackets.set(data[i].source.id + data[i].target.id, transferPackets.get(data[i].source.id + data[i].target.id) + parseInt(data[i].TotalFwdPackets));
             }
-            if ((d.source.id !== circle._groups[0][0].__data__.id) || (d.target.id !== circle._groups[0][0].__data__.id))
-                return "0.1";
-        });
-    d3.select("#graph").selectAll("circle").transition().duration(200)
-        .style("opacity", function (d) {
-            if (nodes.indexOf(d.id) > -1)
-                return "1";
-            else
-                return "0.1"
-        });
-    d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
-        .style("opacity", function (d) {
-            if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id))
-                return "1";
-            else
-                return "0"
-        });
-    d3.select("#PCA").selectAll(".notSelected")
-        .style("opacity", function (d) {
-            if (d.source.id == circle._groups[0][0].__data__.id || d.target.id == circle._groups[0][0].__data__.id)
-                return "1";
-            else
-                return "0";
-        })
-        .style("stroke-width", "3px");
-    d3.select("#PCA").selectAll(".selected")
-        .style("opacity", function (d) {
-            if (d.source.id == circle._groups[0][0].__data__.id || d.target.id == circle._groups[0][0].__data__.id)
-                return "1";
-            else
-                return "0";
-        })
-        .style("stroke-width", "3px");
-}
+        }
+        if (step === 0) {
+            for (var i = 0; i < data.length; i++) {
+                if (NumberSentPackets.has(data[i].source) === false)
+                    NumberSentPackets.set(data[i].source, parseInt(data[i].TotalFwdPackets));
+                else
+                    NumberSentPackets.set(data[i].source, NumberSentPackets.get(data[i].source) + parseInt(data[i].TotalFwdPackets));
+                if (NumberDeliveredPackets.has(data[i].target) === false)
+                    NumberDeliveredPackets.set(data[i].target, parseInt(data[i].TotalFwdPackets));
+                else
+                    NumberDeliveredPackets.set(data[i].target, NumberDeliveredPackets.get(data[i].target) + parseInt(data[i].TotalFwdPackets));
+                if (transferPackets.has(data[i].source + data[i].target) === false)
+                    transferPackets.set(data[i].source + data[i].target, parseInt(data[i].TotalFwdPackets));
+                else
+                    transferPackets.set(data[i].source + data[i].target, transferPackets.get(data[i].source + data[i].target) + parseInt(data[i].TotalFwdPackets));
+            }
+        }
+    }
 
-function handleMouseOutNode() {
-    d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
-    d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
-    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
-}
-
-function handleMouseMoveEdge(edge) {
-    d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
-        if (d.source.id === edge.source.id && d.target.id === edge.target.id)
-            return "1";
-        else
-            return "0.1";
-    });
-    d3.select("#graph").selectAll("circle").transition().duration(200)
-        .style("opacity", function (d) {
-            if ((d.id === edge.source.id) || (d.id === edge.target.id))
-                return "1";
-            else
-                return "0.1";
-        });
-    d3.select("#scatterPlot").selectAll("circle")
-        .style("opacity", function (d) {
-            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                return "1";
-            else
-                return "0"
-        });
-    d3.select("#PCA").selectAll(".notSelected")
-        .style("opacity", function (d) {
-            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                return "1";
-            else
-                return "0";
-        })
-        .style("stroke-width", "3px");
-    d3.select("#PCA").selectAll(".selected")
-        .style("opacity", function (d) {
-            if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                return "1";
-            else
-                return "0";
-        })
-        .style("stroke-width", "3px");
-}
-
-function handleMouseOutEdge() {
-    d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
-    d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
-    d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
-}
-
-function handleFocusStroke(stroke) {
-    d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
-        if (d.source.id === stroke.source.id && d.target.id === stroke.target.id)
-            return "1";
-        else
-            return "0.1";
-    });
-    d3.select("#graph").selectAll("circle").transition().duration(200)
-        .style("opacity", function (d) {
-            if ((d.id === stroke.source.id) || (d.id === stroke.target.id))
-                return "1";
-            else
-                return "0.1";
-        });
-    d3.select("#PCA").selectAll(".notSelected")
-        .style("opacity", function (d) {
-            if (d == stroke)
-                return "1";
-            else
-                return "0";
-        })
-        .style("stroke-width", "3px");
-    d3.select("#PCA").selectAll(".selected")
-        .style("opacity", function (d) {
-            if (d == stroke)
-                return "1";
-            else
-                return "0";
-        })
-        .style("stroke-width", "3px");
-    d3.select("#scatterPlot").selectAll("circle")
-        .style("opacity", function (d) {
-            if (d == stroke)
-                return "1";
-            else
-                return "0"
-        });
-}
-
-function handleOutFocusStroke() {
-    d3.select("#PCA").selectAll(".notSelected")
-        .style("opacity", "1")
-        .style("stroke-width", "1px");
-    d3.select("#PCA").selectAll(".selected")
-        .style("opacity", "1")
-        .style("stroke-width", "1px");
-}
-
-function buildMapPacket(data) {
-    NumberDeliveredPackets = new Map();
-    NumberSentPackets = new Map();
-    transferPackets = new Map();
-    if (step === 1) {
+    function attackPackets(data) {
+        attackDay1 = new Map();
+        attackDay2 = new Map();
+        attackDay3 = new Map();
+        attackDay4 = new Map();
         for (var i = 0; i < data.length; i++) {
-            if (NumberSentPackets.has(data[i].source.id) === false)
-                NumberSentPackets.set(data[i].source.id, parseInt(data[i].TotalFwdPackets));
-            else
-                NumberSentPackets.set(data[i].source.id, NumberSentPackets.get(data[i].source.id) + parseInt(data[i].TotalFwdPackets));
-            if (NumberDeliveredPackets.has(data[i].target.id) === false)
-                NumberDeliveredPackets.set(data[i].target.id, parseInt(data[i].TotalFwdPackets));
-            else
-                NumberDeliveredPackets.set(data[i].target.id, NumberDeliveredPackets.get(data[i].target.id) + parseInt(data[i].TotalFwdPackets));
-            if (transferPackets.has(data[i].source.id + data[i].target.id) === false)
-                transferPackets.set(data[i].source.id + data[i].target.id, parseInt(data[i].TotalFwdPackets));
-            else
-                transferPackets.set(data[i].source.id + data[i].target.id, transferPackets.get(data[i].source.id + data[i].target.id) + parseInt(data[i].TotalFwdPackets));
+            switch (data[i].Timestamp.slice(0, -6)) {
+                case "4/7/2017":
+                    if (attackDay1.has(data[i].Label) === false)
+                        attackDay1.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                    else
+                        attackDay1.set(data[i].Label, attackDay1.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                    break;
+                case "5/7/2017":
+                    if (attackDay2.has(data[i].Label) === false)
+                        attackDay2.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                    else
+                        attackDay2.set(data[i].Label, attackDay2.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                    break;
+                case "6/7/2017":
+                    if (attackDay3.has(data[i].Label) === false)
+                        attackDay3.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                    else
+                        attackDay3.set(data[i].Label, attackDay3.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                    break;
+                case "7/7/2017":
+                    if (attackDay4.has(data[i].Label) === false)
+                        attackDay4.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
+                    else
+                        attackDay4.set(data[i].Label, attackDay4.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
+                    break;
+            }
         }
     }
-    if (step === 0) {
-        for (var i = 0; i < data.length; i++) {
-            if (NumberSentPackets.has(data[i].source) === false)
-                NumberSentPackets.set(data[i].source, parseInt(data[i].TotalFwdPackets));
-            else
-                NumberSentPackets.set(data[i].source, NumberSentPackets.get(data[i].source) + parseInt(data[i].TotalFwdPackets));
-            if (NumberDeliveredPackets.has(data[i].target) === false)
-                NumberDeliveredPackets.set(data[i].target, parseInt(data[i].TotalFwdPackets));
-            else
-                NumberDeliveredPackets.set(data[i].target, NumberDeliveredPackets.get(data[i].target) + parseInt(data[i].TotalFwdPackets));
-            if (transferPackets.has(data[i].source + data[i].target) === false)
-                transferPackets.set(data[i].source + data[i].target, parseInt(data[i].TotalFwdPackets));
-            else
-                transferPackets.set(data[i].source + data[i].target, transferPackets.get(data[i].source + data[i].target) + parseInt(data[i].TotalFwdPackets));
-        }
-    }
-}
-
-function attackPackets(data) {
-    attackDay1 = new Map();
-    attackDay2 = new Map();
-    attackDay3 = new Map();
-    attackDay4 = new Map();
-    for (var i = 0; i < data.length; i++) {
-        switch (data[i].Timestamp.slice(0, -6)) {
-            case "4/7/2017":
-                if (attackDay1.has(data[i].Label) == false)
-                    attackDay1.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
-                else
-                    attackDay1.set(data[i].Label, attackDay1.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
-                break;
-            case "5/7/2017":
-                if (attackDay2.has(data[i].Label) == false)
-                    attackDay2.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
-                else
-                    attackDay2.set(data[i].Label, attackDay2.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
-                break;
-            case "6/7/2017":
-                if (attackDay3.has(data[i].Label) == false)
-                    attackDay3.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
-                else
-                    attackDay3.set(data[i].Label, attackDay3.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
-                break;
-            case "7/7/2017":
-                if (attackDay4.has(data[i].Label) == false)
-                    attackDay4.set(data[i].Label, parseInt(data[i].TotalFwdPackets));
-                else
-                    attackDay4.set(data[i].Label, attackDay4.get(data[i].Label) + parseInt(data[i].TotalFwdPackets));
-                break;
-        }
-    }
-}
 
 // built the scale for the packets
-function scalePacket() {
-    max = d3.max(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
-    colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
-    max = d3.max(Array.from(transferPackets.values()));
-    min = d3.min(Array.from(transferPackets.values()));
-    scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
+    function scalePacket() {
+        max = d3.max(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
+        colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
+        max = d3.max(Array.from(transferPackets.values()));
+        min = d3.min(Array.from(transferPackets.values()));
+        scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
+    }
+
+    function brushEmpty() {
+        var empty = true;
+        for (var i = 0; i < extents.length; i++) {
+            for (var j = 0; j < 2; j++) {
+                if (extents[i][j] !== 0)
+                    return false;
+            }
+        }
+        return empty
+    }
 }
 
-function brushEmpty() {
-    var empty = true;
-    for (var i = 0; i < extents.length; i++) {
-        for (var j = 0; j < 2; j++) {
-            if (extents[i][j] != 0)
-                return false;
-        }
-    }
-    return empty
-}
