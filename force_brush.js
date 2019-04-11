@@ -28,15 +28,20 @@ d3.json("miserables.json", function (error, JsonData) {
 });
 
 function drawData() {
+    // Node scatterplot without duplicates
+    DOTdestination = new Map();
+    DOTsource = new Map();
+    SourceTarget = new Map();
+
     // building the map packet
     buildMapPacket(data.links);
     // building the scale packet
     scalePacket();
 
     // ========================= SLIDERS ===================================
-    var marginSlider = {top: 0, right: 30, bottom: 0, left: 30},
-        widthSlider = 302 - marginSlider.left - marginSlider.right,
-        heightSlider = 65 - marginSlider.bottom - marginSlider.top;
+    var marginSlider = {top: 0, right: 18, bottom: 0, left: 18},
+        widthSlider = 275 - marginSlider.left - marginSlider.right,
+        heightSlider = 95 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
@@ -311,7 +316,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 200, heightBar = 20, svgWidthBar = 300, svgHeightBar = 100, tooltipBar;
+    var widthBar = 215, heightBar = 20, svgWidthBar = 295, svgHeightBar = 110, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -369,6 +374,19 @@ function drawData() {
 
     // ================= FINE DICHIARAZIONI CPA ==================================
 
+    var LinkGraph = data.links.filter(function (d) {
+        return LinkGraphPlot(d) === true
+    });
+
+    function LinkGraphPlot(d) {
+        if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+            edges.push(d);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function initGraph() {
 
         //declaration of the tooltipLink (extra info on over)
@@ -384,7 +402,7 @@ function drawData() {
         link = svgGRAPH.append("g")
             .attr("class", "links")
             .selectAll("line")
-            .data(data.links)
+            .data(LinkGraph)
             .enter().append("line")
             .on('mousemove', function (d) {
                 tooltipLink.transition().duration(150)
@@ -402,15 +420,10 @@ function drawData() {
                 handleOutFocusStroke();
             })
             .attr("stroke-width", function (d) {
-                return scalePackets(transferPackets.get(d.source + d.target));
-            })
-            .attr("display", function (d) {
-                if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
-                    edges.push(d);
-                    return "block";
-                } else {
-                    return "none";
-                }
+                if (transferPackets.get(d.source + d.target) == null)
+                    return 0;
+                else
+                    return scalePackets(transferPackets.get(d.source + d.target));
             });
 
         // declaration of the node of the network
@@ -495,12 +508,21 @@ function drawData() {
 
     initGraph();
 
+    // filtraggio punti scatterplot
+    var SourceScatterplot = data.links.filter(function (d) {
+        return AddSourcePort(d) === true
+    });
+    var DestinationScatterplot = data.links.filter(function (d) {
+        return AddTargetPort(d) === true
+    });
+
     // ======================== SCATTERPLOT ===============================
-    var marginScatterPlot = {top: 20, right: 20, bottom: 20, left: 70},
-        widthScatterPlot = 1185 - marginScatterPlot.left - marginScatterPlot.right,
-        heightScatterPlot = 450 - marginScatterPlot.top - marginScatterPlot.bottom,
+    var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 90},
+        widthScatterPlot = 1220 - marginScatterPlot.left - marginScatterPlot.right,
+        heightScatterPlot = 460 - marginScatterPlot.top - marginScatterPlot.bottom,
         PortsSource = new Map(),
-        PortsDestination = new Map(), xScatterPlot, yScatterPlot,
+        PortsDestination = new Map(),
+        xScatterPlot, yScatterPlot,
         xAxisScatterPlot, yAxisScatterPlot,
         svgScatterPlot, legendScatterPlot,
         IPAddress = new Set();
@@ -519,9 +541,6 @@ function drawData() {
                 checkedValue.push(cb.property("value"));
             }
         });
-        if (checkedValue.length === 0) {
-            newData = data.links;
-        }
 
         selection1 = d3.brushSelection(d3.select(".brush1").node());
         if (selection1 == null)
@@ -572,6 +591,18 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
         });
+        SourceScatterplotNew = SourceScatterplot.filter(function (d) {
+            return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
+        });
+        DestinationScatterplotNew = DestinationScatterplot.filter(function (d) {
+            return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
+        });
 
 
         // se non è lo step iniziale eseguo queste funzioni
@@ -596,8 +627,6 @@ function drawData() {
         FocusDotScatterPlot(nodeSelected);
 
         function updateGraph(newData) {
-            var edges = [];
-
             d3.selectAll(".d3-tip").remove();
 
             //declaration of the tooltipLink (extra info on over)
@@ -665,14 +694,14 @@ function drawData() {
             textElements.exit().remove();
             textElements = textElements.enter().append("text").merge(textElements);
 
-            link = link.data(newData, function (d) {
+            link = link.data(LinkGraph, function (d) {
                 return d.source.id + "-" + d.target.id;
             });
             link.exit().remove();
             link = link.enter().append("line").merge(link)
                 .on('mousemove', function (d) {
                     tooltipLink.transition().duration(150)
-                        .style('opacity', 1);
+                        .style('display', "block");
                     tooltipLink.html(contentLinkTip(d))
                         .style('left', (d3.event.pageX + 50) + 'px')
                         .style('top', (d3.event.pageY) + 'px');
@@ -680,27 +709,22 @@ function drawData() {
                 })
                 .on('mouseout', function () {
                     tooltipLink.transition().duration(150)
-                        .style('opacity', 0);
+                        .style('display', "none");
                     handleMouseOutEdge();
                     handleOutFocusStroke();
                     if (!brushEmpty())
                         brush_parallel_chart()
                 })
                 .attr("stroke-width", function (d) {
-                    return scalePackets(transferPackets.get(d.source.id + d.target.id));
-                })
-                .attr("display", function (d) {
-                    if (edges.findIndex(x => (x.source === d.source && x.target === d.target)) <= -1) {
-                        edges.push(d);
-                        return "block";
-                    } else {
-                        return "none";
-                    }
+                    if (transferPackets.get(d.source.id + d.target.id) == null)
+                        return 0;
+                    else
+                        return scalePackets(transferPackets.get(d.source.id + d.target.id));
                 });
 
             // starting the simulation
             simulation.nodes(data.nodes);
-            simulation.force("link").links(newData);
+            simulation.force("link").links(LinkGraph);
             simulation.alpha(0).restart();
         }
 
@@ -804,44 +828,44 @@ function drawData() {
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
             // prendere i dati da un json senza duplicati
-            var SourcePort = [];
-            var TargetPort = [];
-            var SourceIP = [];
-            var TargetIP = [];
-            var TotalFwdPackets = [];
-            var TotalLenghtOfFwdPackets = [];
-            var Label = [];
+            var SourcePort = new Set();
+            var TargetPort = new Set();
+            var SourceIP = new Set();
+            var TargetIP = new Set();
+            var TotalFwdPackets = new Set();
+            var TotalLenghtOfFwdPackets = new Set();
+            var Label = new Set();
             for (var i = 0; i < newData.length; i++) {
-                SourceIP.push(newData[i].source.id.slice(0, -2));
-                TargetIP.push(newData[i].target.id.slice(0, -2));
-                SourcePort.push(newData[i].SourcePort);
-                SourcePort.push(newData[i].SourcePort);
-                TargetPort.push(newData[i].DestinationPort);
-                TotalFwdPackets.push(newData[i].TotalFwdPackets);
-                TotalLenghtOfFwdPackets.push(newData[i].TotalLenghtOfFwdPackets);
-                Label.push(newData[i].Label);
+                SourceIP.add(newData[i].source.id.slice(0, -2));
+                TargetIP.add(newData[i].target.id.slice(0, -2));
+                SourcePort.add(newData[i].SourcePort);
+                SourcePort.add(newData[i].SourcePort);
+                TargetPort.add(newData[i].DestinationPort);
+                TotalFwdPackets.add(newData[i].TotalFwdPackets);
+                TotalLenghtOfFwdPackets.add(newData[i].TotalLenghtOfFwdPackets);
+                Label.add(newData[i].Label);
             }
-            SourceIP.sort(function (a, b) {
-                return a - b;
-            });
-            SourcePort.sort(function (a, b) {
-                return a - b;
-            });
-            TargetIP.sort(function (a, b) {
-                return a - b;
-            });
-            TargetPort.sort(function (a, b) {
-                return a - b;
-            });
-            TotalFwdPackets.sort(function (a, b) {
-                return a - b;
-            });
-            TotalLenghtOfFwdPackets.sort(function (a, b) {
-                return a - b;
-            });
-            Label.sort(function (a, b) {
-                return a - b;
-            });
+            /* SourceIP.sort(function (a, b) {
+                 return a - b;
+             });
+             SourcePort.sort(function (a, b) {
+                 return a - b;
+             });
+             TargetIP.sort(function (a, b) {
+                 return a - b;
+             });
+             TargetPort.sort(function (a, b) {
+                 return a - b;
+             });
+             TotalFwdPackets.sort(function (a, b) {
+                 return a - b;
+             });
+             TotalLenghtOfFwdPackets.sort(function (a, b) {
+                 return a - b;
+             });
+             Label.sort(function (a, b) {
+                 return a - b;
+             });*/
 
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
                 if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
@@ -857,19 +881,19 @@ function drawData() {
             function value(d) {
                 switch (d) {
                     case "source":
-                        return SourceIP;
+                        return Array.from(SourceIP);
                     case "SourcePort":
-                        return SourcePort;
+                        return Array.from(SourcePort);
                     case "target":
-                        return TargetIP;
+                        return Array.from(TargetIP);
                     case "DestinationPort":
-                        return TargetPort;
+                        return Array.from(TargetPort);
                     case "TotalFwdPackets":
-                        return TotalFwdPackets;
+                        return Array.from(TotalFwdPackets);
                     case "TotalLenghtOfFwdPackets":
-                        return TotalLenghtOfFwdPackets;
+                        return Array.from(TotalLenghtOfFwdPackets);
                     case "Label":
-                        return Label;
+                        return Array.from(Label);
                 }
             }
 
@@ -1014,30 +1038,31 @@ function drawData() {
             var chartDay1;
             bindedDay1 = Array.from(attackDay1);
             xScaleDay1 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay1.values())))]).range([0, widthBar]);
-            yScaleDay1 = d3.scaleBand()
+            var yScaleDay1 = d3.scalePoint()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay1.map(function (d) {
                     return d[0];
                 }))
-                .padding(0.2);
+                .padding(1);
             // SVG
-            barDay1 = d3.select('#barchartDay1').append('svg')
+            var barDay1 = d3.select('#barchartDay1').append('svg')
                 .attr("width", svgWidthBar).attr('height', svgHeightBar)
                 .attr("class", "barday1");
 
-            barLegenday1 = d3.axisTop()
+            var barLegenday1 = d3.axisTop()
                 .scale(xScaleDay1)
-                .tickPadding(8)
-                .tickSize(5)
-                .ticks(3);
+                .tickPadding(2)
+                .tickSize(3)
+                .ticks(6);
 
             barDay1.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday1)
-                .attr('transform', 'translate(80,30)');
+                .attr('transform', 'translate(75,25)');
+
 
             // CHART AREA
-            valsDay1 = barDay1.append('g').attr('transform', 'translate(60,0)')
+            var valsDay1 = barDay1.append('g').attr('transform', 'translate(75,10)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
@@ -1052,32 +1077,31 @@ function drawData() {
                     return xScaleDay1(d[1]);
                 })
                 .attr("height", 10)
-                .attr('x', 20).attr('y', function (d) {
-                return yScaleDay1(d[0]) + 25;
+                .attr('x', 5).attr('y', function (d) {
+                return yScaleDay1(d[0]);
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
                     return xScaleDay1(d[1])
-                })
-                .on('mousemove', function (d) {
-                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
-                        .style('display', "block")
-                        .html((d[0]) + ": " + (d[1]));
-                })
+                }).on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html((d[0]) + ": " + (d[1]));
+            })
                 .on('mouseout', function () {
                     tooltipBar.style('display', "none");
                 });
 
             // DATA BIND
-            keyDay1 = valsDay1.selectAll('text.key').data(bindedDay1);
+            var keyDay1 = valsDay1.selectAll('text.key').data(bindedDay1);
             // ENTER
             keyDay1.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay1(d[0]) + 20;
+                    return yScaleDay1(d[0]);
                 })
-                .attr('dy', 16)
+                .attr('dy', 8)
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
@@ -1095,12 +1119,12 @@ function drawData() {
             var chartDay2;
             bindedDay2 = Array.from(attackDay2);
             xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
-            var yScaleDay2 = d3.scaleBand()
+            var yScaleDay2 = d3.scalePoint()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay2.map(function (d) {
                     return d[0];
                 }))
-                .padding(0.2);
+                .padding(1);
             // SVG
             var barDay2 = d3.select('#barchartDay2').append('svg')
                 .attr("width", svgWidthBar).attr('height', svgHeightBar)
@@ -1108,18 +1132,18 @@ function drawData() {
 
             var barLegenday2 = d3.axisTop()
                 .scale(xScaleDay2)
-                .tickPadding(8)
-                .tickSize(5)
-                .ticks(3);
+                .tickPadding(2)
+                .tickSize(3)
+                .ticks(6);
 
             barDay2.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday2)
-                .attr('transform', 'translate(80,30)');
+                .attr('transform', 'translate(75,25)');
 
 
             // CHART AREA
-            var valsDay2 = barDay2.append('g').attr('transform', 'translate(60,0)')
+            var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
@@ -1134,8 +1158,8 @@ function drawData() {
                     return xScaleDay2(d[1]);
                 })
                 .attr("height", 10)
-                .attr('x', 20).attr('y', function (d) {
-                return yScaleDay2(d[0]) + 20;
+                .attr('x', 5).attr('y', function (d) {
+                return yScaleDay2(d[0]);
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
@@ -1156,16 +1180,16 @@ function drawData() {
             keyDay2.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay2(d[0]) + 20;
+                    return yScaleDay2(d[0]);
                 })
-                .attr('dy', 16)
+                .attr('dy', 8)
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
                 });
 
             // UPDATE
-            keyDay1.text(function (d) {
+            keyDay2.text(function (d) {
                 return d[0]
             });
 
@@ -1176,12 +1200,12 @@ function drawData() {
             var chartDay3;
             bindedDay3 = Array.from(attackDay3);
             xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
-            var yScaleDay3 = d3.scaleBand()
+            var yScaleDay3 = d3.scalePoint()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay3.map(function (d) {
                     return d[0];
                 }))
-                .padding(0.2);
+                .padding(1);
             // SVG
             var barDay3 = d3.select('#barchartDay3').append('svg')
                 .attr("width", svgWidthBar).attr('height', svgHeightBar)
@@ -1189,17 +1213,17 @@ function drawData() {
 
             barLegenday3 = d3.axisTop()
                 .scale(xScaleDay3)
-                .tickPadding(8)
-                .tickSize(5)
-                .ticks(3);
+                .tickPadding(2)
+                .tickSize(3)
+                .ticks(6);
 
             barDay3.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday3)
-                .attr('transform', 'translate(80,30)');
+                .attr('transform', 'translate(75,25)');
 
             // CHART AREA
-            valsDay3 = barDay3.append('g').attr('transform', 'translate(60,0)')
+            valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
@@ -1212,9 +1236,9 @@ function drawData() {
                 .attr("width", function (d) {
                     return xScaleDay3(d[1]);
                 })
-                .attr("height", 20)
-                .attr('x', 10).attr('y', function (d) {
-                return yScaleDay3(d[0]) + 20;
+                .attr("height", 10)
+                .attr('x', 5).attr('y', function (d) {
+                return yScaleDay3(d[0]);
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
@@ -1236,9 +1260,9 @@ function drawData() {
             keyDay3.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay3(d[0]) + 20;
+                    return yScaleDay3(d[0]);
                 })
-                .attr('dy', 16)
+                .attr('dy', 8)
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
@@ -1255,12 +1279,12 @@ function drawData() {
             d3.selectAll(".barday4").remove();
             bindedDay4 = Array.from(attackDay4);
             xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
-            var yScaleDay4 = d3.scaleBand()
+            var yScaleDay4 = d3.scalePoint()
                 .range([svgHeightBar, 0])
                 .domain(bindedDay4.map(function (d) {
                     return d[0];
                 }))
-                .padding(0.2);
+                .padding(1);
             // SVG
             var barDay4 = d3.select('#barchartDay4').append('svg')
                 .attr("width", svgWidthBar).attr('height', svgHeightBar)
@@ -1268,17 +1292,17 @@ function drawData() {
 
             var barLegenday4 = d3.axisTop()
                 .scale(xScaleDay4)
-                .tickPadding(8)
-                .tickSize(5)
-                .ticks(3);
+                .tickPadding(2)
+                .tickSize(3)
+                .ticks(6);
 
             barDay4.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday4)
-                .attr('transform', 'translate(80,30)');
+                .attr('transform', 'translate(75,25)');
 
             // CHART AREA
-            var valsDay4 = barDay4.append('g').attr('transform', 'translate(60,0)')
+            var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')
                 .attr('width', widthBar).attr("height", heightBar);
 
             tooltipBar = d3.select('body').append('div')
@@ -1293,8 +1317,8 @@ function drawData() {
                     return xScaleDay4(d[1]);
                 })
                 .attr("height", 10)
-                .attr('x', 20).attr('y', function (d) {
-                return yScaleDay4(d[0]) + 20;
+                .attr('x', 5).attr('y', function (d) {
+                return yScaleDay4(d[0]);
             })
                 .attr("fill", "#007BBF")
                 .attr("width", function (d) {
@@ -1317,9 +1341,9 @@ function drawData() {
             keyDay4.enter().append("text").attr("class", "key")
                 .attr("x", 0)
                 .attr("y", function (d) {
-                    return yScaleDay4(d[0]) + 20;
+                    return yScaleDay4(d[0]);
                 })
-                .attr('dy', 16)
+                .attr('dy', 8)
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
@@ -1332,32 +1356,35 @@ function drawData() {
 
         }
 
-        function updateScatterPlot(data) {
+        function updateScatterPlot(newData) {
             //==================================== INIT SCATTERPLOT
             d3.selectAll(".scatterPlot").remove();
             PortsSource.clear();
             PortsDestination.clear();
             IPAddress.clear();
+            DOTdestination.clear();
+            DOTsource.clear();
             // ===================================
 
-            for (var i = 0; i < data.length; i++) {
-                if (!PortsSource.has(data[i].SourcePort))
-                    PortsSource.set(data[i].SourcePort, parseInt(data[i].TotalFwdPackets));
+            for (var i = 0; i < newData.length; i++) {
+                if (!PortsSource.has(newData[i].SourcePort))
+                    PortsSource.set(newData[i].SourcePort, parseInt(newData[i].TotalFwdPackets));
                 else
-                    PortsSource.set(data[i].SourcePort, PortsSource.get(data[i].SourcePort) + parseInt(data[i].TotalFwdPackets));
+                    PortsSource.set(newData[i].SourcePort, PortsSource.get(newData[i].SourcePort) + parseInt(newData[i].TotalFwdPackets));
 
-                if (!PortsDestination.has(data[i].DestinationPort))
-                    PortsDestination.set(data[i].DestinationPort, parseInt(data[i].TotalFwdPackets));
+                if (!PortsDestination.has(newData[i].DestinationPort))
+                    PortsDestination.set(newData[i].DestinationPort, parseInt(newData[i].TotalFwdPackets));
                 else
-                    PortsDestination.set(data[i].DestinationPort, PortsDestination.get(data[i].DestinationPort) + parseInt(data[i].TotalFwdPackets));
+                    PortsDestination.set(newData[i].DestinationPort, PortsDestination.get(newData[i].DestinationPort) + parseInt(newData[i].TotalFwdPackets));
 
-                IPAddress.add(data[i].source.id.slice(0, -2));
-                IPAddress.add(data[i].target.id.slice(0, -2));
+                IPAddress.add(newData[i].source.id.slice(0, -2));
+                IPAddress.add(newData[i].target.id.slice(0, -2));
             }
 
+            PacketsPort = Array.from(PortsSource.values()).concat(Array.from(PortsDestination.values()));
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
-            ScalePackPort = d3.scaleLinear().domain([0, Math.max(...Array.from(PortsSource.values()).concat(Array.from(PortsDestination.values())))]).range([5, 12]);
+            ScalePackPort = d3.scaleLinear().domain([d3.min(PacketsPort), d3.max(PacketsPort)]).range([3, 12]);
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
             yAxisScatterPlot = d3.axisLeft(yScatterPlot);
 
@@ -1409,10 +1436,18 @@ function drawData() {
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + heightScatterPlot + ")")
                 .call(xAxisScatterPlot.tickSize(8).tickSizeOuter(0))
+                .selectAll("text")
+                .attr("y", 0)
+                .attr("x", 9)
+                .attr("dy", ".35em")
+                .attr("transform", "rotate(90)")
+                .style("text-anchor", "start");
+
+            svgScatterPlot.append("g")
                 .append("text")
                 .attr("class", "label")
                 .attr("x", widthScatterPlot)
-                .attr("y", -6)
+                .attr("y", 392)
                 .style("text-anchor", "end")
                 .text("Port");
 
@@ -1428,10 +1463,11 @@ function drawData() {
                 .text("IP Address");
 
             svgScatterPlot.selectAll(".dot")
-                .data(data)
+                .data(DestinationScatterplot)
                 .enter().append("circle")
                 .attr("class", "dotDestination")
                 .attr("r", function (d) {
+                    console.log(d.DestinationPort, PortsDestination.get(d.DestinationPort), ScalePackPort(PortsDestination.get(d.DestinationPort)));
                     return ScalePackPort(PortsDestination.get(d.DestinationPort))
                 })
                 .attr("cx", function (d) {
@@ -1454,8 +1490,9 @@ function drawData() {
                     handleOutFocusStroke();
                 });
 
+
             svgScatterPlot.selectAll(".dot")
-                .data(data)
+                .data(SourceScatterplot)
                 .enter().append("circle")
                 .attr("class", "dotSource")
                 .attr("r", function (d) {
@@ -1563,7 +1600,7 @@ function drawData() {
             }
             filteredData = newData.filter(function (d) {
                 return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0)) && (extents[1].includes(d.SourcePort) || extents[1].includes(parseInt(d.SourcePort)) || (extents[1][0] === 0 && extents[1][1] === 0)) &&
-                    (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0)) && (extents[3].includes(d.DestinationPort) || extents[3].includes(parseInt(d.DestinationPort)) || (extents[3][0] === 0 && extents[3][1] === 0)) &&
+                    (extents[3].includes(d.target.id.slice(0, -2)) || (extents[3][0] === 0 && extents[3][1] === 0)) && (extents[2].includes(d.DestinationPort) || extents[2].includes(parseInt(d.DestinationPort)) || (extents[2][0] === 0 && extents[2][1] === 0)) &&
                     (extents[4].includes(d.TotalFwdPackets) || extents[4].includes(parseInt(d.TotalFwdPackets)) || (extents[4][0] === 0 && extents[4][1] === 0)) &&
                     (extents[5].includes(d.TotalLenghtOfFwdPackets) || extents[5].includes(parseInt(d.TotalLenghtOfFwdPackets)) || (extents[5][0] === 0 && extents[6][1] === 0)) && (extents[6].includes(d.Label) || (extents[6][0] === 0 && extents[6][1] === 0));
             });
@@ -1572,7 +1609,7 @@ function drawData() {
             buildMapPacket(filteredData);
             scalePacket(NumberDeliveredPackets);
             updateGraph(filteredData);
-            updateScatterPlot(filteredData);
+
             attackPackets(filteredData);
             updateLegend();
             FocusDotScatterPlot(nodeSelected);
@@ -1581,6 +1618,7 @@ function drawData() {
             updateChartDay2();
             updateChartDay3();
             updateChartDay4();
+            updateScatterPlot(filteredData);
         }
     }
 
@@ -1962,13 +2000,13 @@ function drawData() {
                     return "0";
             })
             .style("stroke-width", "3px");
-        d3.select("#scatterPlot").selectAll("circle")
+        /*d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
                 if (d == stroke)
                     return "1";
                 else
                     return "0"
-            });
+            });*/
     }
 
     function handleOutFocusStroke() {
@@ -2056,10 +2094,15 @@ function drawData() {
 // built the scale for the packets
     function scalePacket() {
         max = d3.max(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
+        min = d3.min(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
         colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
         max = d3.max(Array.from(transferPackets.values()));
         min = d3.min(Array.from(transferPackets.values()));
-        scalePackets = d3.scaleLinear().domain([min, max]).range([3, 27]);
+        if (min == null)
+            min = 0;
+        if (max == null)
+            max = 0;
+        scalePackets = d3.scaleLinear().domain([0, max]).range([3, 27]);
     }
 
     function brushEmpty() {
@@ -2071,6 +2114,39 @@ function drawData() {
             }
         }
         return empty
+    }
+
+    function AddTargetPort(d) {
+        if (DOTdestination.has(d.target.id.slice(0, -2)) == false) {
+            DOTdestination.set(d.target.id.slice(0, -2), new Set());
+            DOTdestination.get(d.target.id.slice(0, -2)).add(d.DestinationPort);
+            return true;
+        } else {
+            if (DOTdestination.has(d.target.id.slice(0, -2))) {
+                if (DOTdestination.get(d.target.id.slice(0, -2)).has(d.DestinationPort) == false) {
+                    DOTdestination.get(d.target.id.slice(0, -2)).add(d.DestinationPort);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    function AddSourcePort(d) {
+        if (DOTsource.has(d.source.id.slice(0, -2)) === false) {
+            DOTsource.set(d.source.id.slice(0, -2), new Set());
+            DOTsource.get(d.source.id.slice(0, -2)).add(d.SourcePort);
+            return true;
+        } else {
+            if (DOTsource.has(d.source.id.slice(0, -2))) {
+                if (DOTsource.get(d.source.id.slice(0, -2)).has(d.SourcePort) === false) {
+                    DOTsource.get(d.source.id.slice(0, -2)).add(d.SourcePort);
+                    return true;
+                } else
+                    return false;
+            }
+        }
     }
 }
 
