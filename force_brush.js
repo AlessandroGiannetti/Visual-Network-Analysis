@@ -359,7 +359,7 @@ function drawData() {
         canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
-    var marginCPA = {top: 30, right: 0, bottom: 10, left: 0},
+    var marginCPA = {top: 25, right: 0, bottom: 10, left: 0},
         widthCPA = 1090 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
     var x = d3.scaleBand().rangeRound([-10, widthCPA + 80]).padding(.1),
@@ -520,8 +520,8 @@ function drawData() {
     var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 90},
         widthScatterPlot = 1220 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 460 - marginScatterPlot.top - marginScatterPlot.bottom,
-        PortsSource = new Map(),
-        PortsDestination = new Map(),
+        ip_sourcePorts_packets = new Map(),
+        ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
         xAxisScatterPlot, yAxisScatterPlot,
         svgScatterPlot, legendScatterPlot,
@@ -534,6 +534,16 @@ function drawData() {
     update();
 
     function update() {
+        var SourcePort = new Set();
+        var TargetPort = new Set();
+        var SourceIP = new Set();
+        var TargetIP = new Set();
+        var TotalFwdPackets = new Set();
+        var TotalLenghtOfFwdPackets = new Set();
+        var Label = new Set();
+
+        showAllGraph();
+
         var checkedValue = [];
         d3.selectAll('.custom-control-input').each(function () {
             cb = d3.select(this);
@@ -626,7 +636,7 @@ function drawData() {
         handleSelectedNode(nodeSelected);
         FocusDotScatterPlot(nodeSelected);
 
-        function updateGraph(newData) {
+        function updateGraph() {
             d3.selectAll(".d3-tip").remove();
 
             //declaration of the tooltipLink (extra info on over)
@@ -828,13 +838,14 @@ function drawData() {
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
             // prendere i dati da un json senza duplicati
-            var SourcePort = new Set();
-            var TargetPort = new Set();
-            var SourceIP = new Set();
-            var TargetIP = new Set();
-            var TotalFwdPackets = new Set();
-            var TotalLenghtOfFwdPackets = new Set();
-            var Label = new Set();
+            SourcePort.clear();
+            TargetPort.clear();
+            SourceIP.clear();
+            TargetIP.clear();
+            TotalFwdPackets.clear();
+            TotalLenghtOfFwdPackets.clear();
+            Label.clear();
+
             for (var i = 0; i < newData.length; i++) {
                 SourceIP.add(newData[i].source.id.slice(0, -2));
                 TargetIP.add(newData[i].target.id.slice(0, -2));
@@ -1357,34 +1368,62 @@ function drawData() {
         }
 
         function updateScatterPlot(newData) {
-            //==================================== INIT SCATTERPLOT
+            //==================================== INIT SCATTERPLOT =========================================
             d3.selectAll(".scatterPlot").remove();
-            PortsSource.clear();
-            PortsDestination.clear();
+            ip_sourcePorts_packets.clear();
+            ip_destinationPorts_packets.clear();
             IPAddress.clear();
             DOTdestination.clear();
             DOTsource.clear();
-            // ===================================
+            Ports = [];
+
+            // ==============================================================================================
 
             for (var i = 0; i < newData.length; i++) {
-                if (!PortsSource.has(newData[i].SourcePort))
-                    PortsSource.set(newData[i].SourcePort, parseInt(newData[i].TotalFwdPackets));
-                else
-                    PortsSource.set(newData[i].SourcePort, PortsSource.get(newData[i].SourcePort) + parseInt(newData[i].TotalFwdPackets));
+                if (ip_sourcePorts_packets.has(newData[i].source.id) === true) {
+                    if (ip_sourcePorts_packets.get(newData[i].source.id).has(newData[i].SourcePort) === true) {
+                        value = ip_sourcePorts_packets.get(newData[i].source.id).get(newData[i].SourcePort);
+                        ip_sourcePorts_packets.get(newData[i].source.id).set(newData[i].SourcePort, value + parseInt(newData[i].TotalFwdPackets));
+                    } else {
+                        ip_sourcePorts_packets.get(newData[i].source.id).set(newData[i].SourcePort, parseInt(newData[i].TotalFwdPackets));
+                    }
+                } else {
+                    ip_sourcePorts_packets.set(newData[i].source.id, new Map());
+                    ip_sourcePorts_packets.get(newData[i].source.id).set(newData[i].SourcePort, parseInt(newData[i].TotalFwdPackets));
+                }
 
-                if (!PortsDestination.has(newData[i].DestinationPort))
-                    PortsDestination.set(newData[i].DestinationPort, parseInt(newData[i].TotalFwdPackets));
-                else
-                    PortsDestination.set(newData[i].DestinationPort, PortsDestination.get(newData[i].DestinationPort) + parseInt(newData[i].TotalFwdPackets));
+                if (ip_destinationPorts_packets.has(newData[i].target.id) === true) {
+                    if (ip_destinationPorts_packets.get(newData[i].target.id).has(newData[i].DestinationPort) === true) {
+                        value = ip_destinationPorts_packets.get(newData[i].target.id).get(newData[i].DestinationPort);
+                        ip_destinationPorts_packets.get(newData[i].target.id).set(newData[i].DestinationPort, value + parseInt(newData[i].TotalFwdPackets));
+                    } else {
+                        ip_destinationPorts_packets.get(newData[i].target.id).set(newData[i].DestinationPort, parseInt(newData[i].TotalFwdPackets));
+                    }
+                } else {
+                    ip_destinationPorts_packets.set(newData[i].target.id, new Map());
+                    ip_destinationPorts_packets.get(newData[i].target.id).set(newData[i].DestinationPort, parseInt(newData[i].TotalFwdPackets));
+                }
 
                 IPAddress.add(newData[i].source.id.slice(0, -2));
                 IPAddress.add(newData[i].target.id.slice(0, -2));
+
+                Ports.push(newData[i].SourcePort);
+                Ports.push(newData[i].DestinationPort)
             }
 
-            PacketsPort = Array.from(PortsSource.values()).concat(Array.from(PortsDestination.values()));
+            var numberOfPacketsForPort = [];
+            for (var [key, value] of ip_sourcePorts_packets) {
+                numberOfPacketsForPort.push(d3.max(Array.from(value.values())));
+            }
+            for (var [key, value] of ip_destinationPorts_packets) {
+                numberOfPacketsForPort.push(d3.max(Array.from(value.values())));
+            }
+
+            // ==============================================================================================
+
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
-            ScalePackPort = d3.scaleLinear().domain([d3.min(PacketsPort), d3.max(PacketsPort)]).range([3, 12]);
+            ScalePackPort = d3.scaleLinear().domain([d3.min(numberOfPacketsForPort), d3.max(numberOfPacketsForPort)]).range([4, 11]);
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
             yAxisScatterPlot = d3.axisLeft(yScatterPlot);
 
@@ -1399,7 +1438,7 @@ function drawData() {
                 .style('display', "none")
                 .attr('class', 'd3-tip');
 
-            xScatterPlot.domain(Array.from(PortsSource.keys()).concat(Array.from(PortsDestination.keys())).sort(function (a, b) {
+            xScatterPlot.domain(Ports.sort(function (a, b) {
                 return a - b;
             })).range([0, widthScatterPlot]).padding(0.4);
             yScatterPlot.domain(Array.from(IPAddress).sort(function (a, b) {
@@ -1462,13 +1501,16 @@ function drawData() {
                 .style("text-anchor", "end")
                 .text("IP Address");
 
+            // draw point DESTINATION PORT
             svgScatterPlot.selectAll(".dot")
                 .data(DestinationScatterplot)
                 .enter().append("circle")
                 .attr("class", "dotDestination")
                 .attr("r", function (d) {
-                    console.log(d.DestinationPort, PortsDestination.get(d.DestinationPort), ScalePackPort(PortsDestination.get(d.DestinationPort)));
-                    return ScalePackPort(PortsDestination.get(d.DestinationPort))
+                    if (ip_destinationPorts_packets.has(d.target.id) === false || ip_destinationPorts_packets.get(d.target.id).has(d.DestinationPort) == false)
+                        return 0;
+                    else
+                        return ScalePackPort(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort))
                 })
                 .attr("cx", function (d) {
                     return xScatterPlot(d.DestinationPort);
@@ -1481,7 +1523,7 @@ function drawData() {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html("<h6>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</h6> <h6>Packets: " + (PortsDestination.get(d.DestinationPort)) + "</h6>");
+                        .html("<h6>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</h6> <h6>Packets: " + ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort) + "</h6>");
                     handleFocusDotDestination(d);
                 })
                 .on("mouseout", function () {
@@ -1490,13 +1532,16 @@ function drawData() {
                     handleOutFocusStroke();
                 });
 
-
+            // draw point SOURCE PORT
             svgScatterPlot.selectAll(".dot")
                 .data(SourceScatterplot)
                 .enter().append("circle")
                 .attr("class", "dotSource")
                 .attr("r", function (d) {
-                    return ScalePackPort(PortsSource.get(d.SourcePort));
+                    if (ip_sourcePorts_packets.has(d.source.id) === false || ip_sourcePorts_packets.get(d.source.id).has(d.SourcePort) === false)
+                        return 0;
+                    else
+                        return ScalePackPort(ip_sourcePorts_packets.get(d.source.id).get(d.SourcePort));
                 })
                 .attr("cx", function (d) {
                     return xScatterPlot(d.SourcePort);
@@ -1509,7 +1554,7 @@ function drawData() {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html("<h6>" + (d.source.id.slice(0, -2)) + ": " + (d.SourcePort) + "</h6> <h6>Packets: " + PortsSource.get(d.SourcePort) + "</h6>");
+                        .html("<h6>" + (d.source.id.slice(0, -2)) + ": " + (d.SourcePort) + "</h6> <h6>Packets: " + ip_sourcePorts_packets.get(d.source.id).get(d.SourcePort) + "</h6>");
                     handleFocusDotSource(d);
                 })
                 .on("mouseout", function () {
@@ -1612,13 +1657,14 @@ function drawData() {
 
             attackPackets(filteredData);
             updateLegend();
-            FocusDotScatterPlot(nodeSelected);
             updateNumberOfAttack(filteredData);
             updateChartDay1();
             updateChartDay2();
             updateChartDay3();
             updateChartDay4();
+
             updateScatterPlot(filteredData);
+            FocusDotScatterPlot(nodeSelected);
         }
     }
 
@@ -1665,7 +1711,7 @@ function drawData() {
             });
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort == d.DestinationPort)
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort === d.DestinationPort)
                     return "1";
                 else
                     return "0";
@@ -1673,7 +1719,7 @@ function drawData() {
             .style("stroke-width", "3px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort == d.DestinationPort)
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort === d.DestinationPort)
                     return "1";
                 else
                     return "0";
@@ -1807,39 +1853,24 @@ function drawData() {
 
     function filterView() {
         displayElements = [];
-        selectionLegend1 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
-        selectionLegend2 = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
+        selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
+        selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
         for (var i = 0; i < data.nodes.length; i++) {
-            if ((NumberSentPackets.get(data.nodes[i]["id"]) >= selectionLegend1 && NumberSentPackets.get(data.nodes[i]["id"]) <= selectionLegend2) || (NumberDeliveredPackets.get(data.nodes[i]["id"]) >= selectionLegend1 && NumberDeliveredPackets.get(data.nodes[i]["id"]) <= selectionLegend2) || (selectionLegend1 < 1 && (NumberDeliveredPackets.has(data.nodes[i]["id"]) !== false || NumberSentPackets.has(data.nodes[i]["id"]) !== false)))
+
+            if ((NumberSentPackets.get(data.nodes[i]["id"]) >= selectionLegendBegin && NumberSentPackets.get(data.nodes[i]["id"]) <= selectionLegendEnd))
                 displayElements.push(data.nodes[i]["id"]);
+            if (NumberDeliveredPackets.get(data.nodes[i]["id"]) >= selectionLegendBegin && NumberDeliveredPackets.get(data.nodes[i]["id"]) <= selectionLegendEnd)
+                displayElements.push(data.nodes[i]["id"]);
+
+
         }
         handleFilterLegend(displayElements);
     }
 
     function handleFilterLegend(nodes) {
-        d3.select("#graph").selectAll("circle")
-            .style("display", function (d) {
-                if (nodes.includes(d["id"]) !== false)
-                    return "block";
-                else
-                    return "none"
-            });
-        edges = [];
         d3.select("#graph").selectAll("line")
             .style("display", function (d) {
-                if (nodes.includes(d.source.id) && nodes.includes(d.target.id)) {
-                    if (edges.findIndex(x => (x.source === d.source && x.target === d.target)) <= -1) {
-                        edges.push(d);
-                        return "block";
-                    }
-                } else {
-                    return "none";
-                }
-            });
-
-        d3.select("#graph").selectAll("text")
-            .style("display", function (d) {
-                if (nodes.includes(d.id))
+                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
                     return "block";
                 else
                     return "none";
@@ -2117,13 +2148,13 @@ function drawData() {
     }
 
     function AddTargetPort(d) {
-        if (DOTdestination.has(d.target.id.slice(0, -2)) == false) {
+        if (DOTdestination.has(d.target.id.slice(0, -2)) === false) {
             DOTdestination.set(d.target.id.slice(0, -2), new Set());
             DOTdestination.get(d.target.id.slice(0, -2)).add(d.DestinationPort);
             return true;
         } else {
             if (DOTdestination.has(d.target.id.slice(0, -2))) {
-                if (DOTdestination.get(d.target.id.slice(0, -2)).has(d.DestinationPort) == false) {
+                if (DOTdestination.get(d.target.id.slice(0, -2)).has(d.DestinationPort) === false) {
                     DOTdestination.get(d.target.id.slice(0, -2)).add(d.DestinationPort);
                     return true;
                 } else {
