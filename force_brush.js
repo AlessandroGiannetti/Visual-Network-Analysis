@@ -19,6 +19,9 @@ var attackDay2 = new Map();
 var attackDay3 = new Map();
 var attackDay4 = new Map();
 var extents;
+var setPorts = new Set();
+var Ports = [];
+var PortSelected = [];
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, JsonData) {
@@ -28,20 +31,51 @@ d3.json("miserables.json", function (error, JsonData) {
 });
 
 function drawData() {
+    for (var i = 0; i < data.links.length; i++) {
+        setPorts.add(data.links[i].DestinationPort)
+    }
+    Ports = Array.from(setPorts).sort(function (a, b) {
+        return a - b;
+    });
+
+    var select = d3.select('#portController')
+        .append('select')
+        .attr('class', 'selectpicker')
+        .attr('multiple', 'true')
+        .attr('data-live-search', 'true')
+        .attr('data-live-search-placeholder', 'Search')
+        .attr('data-actions-box', 'true')
+        .attr('data-width', "385")
+        .on('change', FilterPorts);
+
+    select
+        .selectAll('option')
+        .data(Ports).enter()
+        .append('option')
+        .text(function (d) {
+            return d;
+        });
+
+    function FilterPorts() {
+        PortSelected = [];
+        raw = this.selectedOptions;
+        for (var i = 0; i < raw.length; i++) {
+            PortSelected.push(raw[i].__data__)
+        }
+        update()
+    }
+
+
+
     // Node scatterplot without duplicates
     DOTdestination = new Map();
     DOTsource = new Map();
     SourceTarget = new Map();
 
-    // building the map packet
-    buildMapPacket(data.links);
-    // building the scale packet
-    scalePacket();
-
     // ========================= SLIDERS ===================================
     var marginSlider = {top: 0, right: 18, bottom: 0, left: 18},
         widthSlider = 275 - marginSlider.left - marginSlider.right,
-        heightSlider = 95 - marginSlider.bottom - marginSlider.top;
+        heightSlider = 80 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
@@ -83,7 +117,8 @@ function drawData() {
         .attr("class", "halo");
     var brush1 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
-        .on("start brush end", update);
+        .on("brush", upgradeDay1)
+        .on("end", update);
     svgSlider1.append("g")
         .attr("class", "brush1")
         .style("opacity", "0")
@@ -106,7 +141,19 @@ function drawData() {
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
+
+    function upgradeDay1() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection1 = d3.brushSelection(d3.select(".brush1").node());
+        if (selection1 == null)
+            selection1 = [0, widthSlider - 0.2];
+        handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
+        text1.text(formatDate(timeScale1.invert(selection1[0])));
+        handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
+        text2.text(formatDate(timeScale1.invert(selection1[1])));
+    }
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
+
     // ====================== SLIDER GIORNO 5/7/2017 =========================
     var timeScale2 = d3.scaleTime()
         .domain([new Date(moment("07/05/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/05/2017 23:59", 'MMDDYYYY HH:mm'))])
@@ -146,7 +193,8 @@ function drawData() {
         .attr("class", "halo");
     var brush2 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
-        .on("start brush end", update);
+        .on("brush", upgradeDay2)
+        .on("end", update);
     svgSlider2.append("g")
         .attr("class", "brush2")
         .style("opacity", "0")
@@ -169,6 +217,17 @@ function drawData() {
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
+
+    function upgradeDay2() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection2 = d3.brushSelection(d3.select(".brush2").node());
+        if (selection2 == null)
+            selection2 = [0, widthSlider - 0.2];
+        handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
+        text3.text(formatDate(timeScale1.invert(selection2[0])));
+        handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
+        text4.text(formatDate(timeScale1.invert(selection2[1])));
+    }
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
@@ -209,7 +268,8 @@ function drawData() {
         .attr("class", "halo");
     var brush3 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
-        .on("start brush end", update);
+        .on("brush", upgradeDay3)
+        .on("end", update);
     svgSlider3.append("g")
         .attr("class", "brush3")
         .style("opacity", "0")
@@ -232,6 +292,17 @@ function drawData() {
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
+
+    function upgradeDay3() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection3 = d3.brushSelection(d3.select(".brush3").node());
+        if (selection3 == null)
+            selection3 = [0, widthSlider - 0.2];
+        handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
+        text5.text(formatDate(timeScale1.invert(selection3[0])));
+        handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
+        text6.text(formatDate(timeScale1.invert(selection3[1])));
+    }
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
     // ====================== SLIDER GIORNO 7/7/2017 =========================
     var timeScale4 = d3.scaleTime()
@@ -272,7 +343,8 @@ function drawData() {
         .attr("class", "halo");
     var brush4 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
-        .on("start brush end", update);
+        .on("brush", upgradeDay4)
+        .on("end", update);
     svgSlider4.append("g")
         .attr("class", "brush4")
         .style("opacity", "0")
@@ -295,6 +367,17 @@ function drawData() {
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
+
+    function upgradeDay4() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection4 = d3.brushSelection(d3.select(".brush4").node());
+        if (selection4 == null)
+            selection4 = [0, widthSlider - 0.2];
+        handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
+        text7.text(formatDate(timeScale1.invert(selection4[0])));
+        handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
+        text8.text(formatDate(timeScale1.invert(selection4[1])));
+    }
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
     // =============================INIT INFO N ATTACK ============================
@@ -348,7 +431,7 @@ function drawData() {
         .force("link", d3.forceLink().distance(800).strength(0).id(function (d) {
             return d.id;
         }))
-        .alphaTarget(0).on("tick", ticked);
+        .alphaTarget(0);
 
     simulation.nodes(data.nodes).on("tick", ticked);
     // ==================FINE DICHIARAZIONI GRAPH =============================
@@ -362,7 +445,7 @@ function drawData() {
     var marginCPA = {top: 25, right: 0, bottom: 10, left: 0},
         widthCPA = 1090 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-10, widthCPA + 80]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-10, widthCPA + 160]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -375,9 +458,9 @@ function drawData() {
     // ================= FINE DICHIARAZIONI CPA ==================================
 
     var LinkGraph = data.links.filter(function (d) {
-        return LinkGraphPlot(d) === true
+        return LinkGraphPlot(d) === true && PortSelected.includes(d.DestinationPort)
     });
-
+    edges = [];
     function LinkGraphPlot(d) {
         if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
             edges.push(d);
@@ -386,6 +469,11 @@ function drawData() {
             return false;
         }
     }
+
+    // building the map packet
+    buildMapPacket(LinkGraph);
+    // building the scale packet
+    scalePacket();
 
     function initGraph() {
 
@@ -509,22 +597,17 @@ function drawData() {
     initGraph();
 
     // filtraggio punti scatterplot
-    var SourceScatterplot = data.links.filter(function (d) {
-        return AddSourcePort(d) === true
-    });
     var DestinationScatterplot = data.links.filter(function (d) {
         return AddTargetPort(d) === true
     });
 
     // ======================== SCATTERPLOT ===============================
     var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 90},
-        widthScatterPlot = 1220 - marginScatterPlot.left - marginScatterPlot.right,
-        heightScatterPlot = 460 - marginScatterPlot.top - marginScatterPlot.bottom,
-        ip_sourcePorts_packets = new Map(),
+        widthScatterPlot = 1215 - marginScatterPlot.left - marginScatterPlot.right,
+        heightScatterPlot = 455 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
         xAxisScatterPlot, yAxisScatterPlot,
-        svgScatterPlot, legendScatterPlot,
         IPAddress = new Set();
 
     // =============== Fine DICHIARAZIONE SCATTERPLOT =====================
@@ -534,13 +617,11 @@ function drawData() {
     update();
 
     function update() {
-        var SourcePort = new Set();
-        var TargetPort = new Set();
-        var SourceIP = new Set();
-        var TargetIP = new Set();
-        var TotalFwdPackets = new Set();
-        var TotalLenghtOfFwdPackets = new Set();
-        var Label = new Set();
+        var TargetPort = [];
+        var SourceIP = [];
+        var TargetIP = [];
+        var TotalFwdPackets = [];
+        var Label = [];
 
         showAllGraph();
 
@@ -565,53 +646,13 @@ function drawData() {
         if (selection4 == null)
             selection4 = [0, widthSlider - 0.2];
 
-        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
-        if (checkedValue.includes("4/7/2017")) {
-            handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
-            text1.text(formatDate(timeScale1.invert(selection1[0])));
-            handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
-            text2.text(formatDate(timeScale1.invert(selection1[1])));
-        }
-        // EVENT LISTENER SLIDER 2 DATA 5/7/2017
-        if (checkedValue.includes("5/7/2017")) {
-            handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
-            text3.text(formatDate(timeScale1.invert(selection2[0])));
-            handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
-            text4.text(formatDate(timeScale1.invert(selection2[1])));
-        }
-        // EVENT LISTENER SLIDER 3 DATA 5/7/2017
-        if (checkedValue.includes("6/7/2017")) {
-            handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
-            text5.text(formatDate(timeScale1.invert(selection3[0])));
-            handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
-            text6.text(formatDate(timeScale1.invert(selection3[1])));
-        }
-        // EVENT LISTENER SLIDER 4 DATA 7/7/2017
-        if (checkedValue.includes("7/7/2017")) {
-            handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
-            text7.text(formatDate(timeScale4.invert(selection4[0])));
-            handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
-            text8.text(formatDate(timeScale4.invert(selection4[1])));
-        }
-
-        // filtraggio dei dati in base ai giorno e all'ora
+        // filtraggio dei dati in base ai giorno e all'ora e alle porte selezionate
         newData = data.links.filter(function (d) {
-            return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
+            return (checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
-        });
-        SourceScatterplotNew = SourceScatterplot.filter(function (d) {
-            return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
-        });
-        DestinationScatterplotNew = DestinationScatterplot.filter(function (d) {
-            return checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
-                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))));
+                || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))))
+            ) && PortSelected.includes(d.DestinationPort);
         });
 
 
@@ -637,6 +678,12 @@ function drawData() {
         FocusDotScatterPlot(nodeSelected);
 
         function updateGraph() {
+
+            LinkGraph = newData.filter(function (d) {
+                return LinkGraphPlot(d) === true && PortSelected.includes(d.DestinationPort)
+            });
+            edges = [];
+
             d3.selectAll(".d3-tip").remove();
 
             //declaration of the tooltipLink (extra info on over)
@@ -827,7 +874,7 @@ function drawData() {
 
         function updateCPA() {
             //===== remove the previous data=========
-            d3.selectAll(".cpa ").remove();
+            d3.selectAll(".cpa").remove();
             // =============== update the cpa ==================
 
             svgCPA = d3.select("#PCA").append("svg")
@@ -838,48 +885,39 @@ function drawData() {
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
             // prendere i dati da un json senza duplicati
-            SourcePort.clear();
-            TargetPort.clear();
-            SourceIP.clear();
-            TargetIP.clear();
-            TotalFwdPackets.clear();
-            TotalLenghtOfFwdPackets.clear();
-            Label.clear();
+            TargetPort = [];
+            SourceIP = [];
+            TargetIP = [];
+            TotalFwdPackets = [];
+            Label = [];
 
             for (var i = 0; i < newData.length; i++) {
-                SourceIP.add(newData[i].source.id.slice(0, -2));
-                TargetIP.add(newData[i].target.id.slice(0, -2));
-                SourcePort.add(newData[i].SourcePort);
-                SourcePort.add(newData[i].SourcePort);
-                TargetPort.add(newData[i].DestinationPort);
-                TotalFwdPackets.add(newData[i].TotalFwdPackets);
-                TotalLenghtOfFwdPackets.add(newData[i].TotalLenghtOfFwdPackets);
-                Label.add(newData[i].Label);
+                SourceIP.push(newData[i].source.id.slice(0, -2));
+                TargetIP.push(newData[i].target.id.slice(0, -2));
+                TargetPort.push(newData[i].DestinationPort);
+                TotalFwdPackets.push(newData[i].TotalFwdPackets);
+                Label.push(newData[i].Label);
             }
-            /* SourceIP.sort(function (a, b) {
+
+            SourceIP = SourceIP.sort(function (a, b) {
                  return a - b;
              });
-             SourcePort.sort(function (a, b) {
-                 return a - b;
-             });
-             TargetIP.sort(function (a, b) {
-                 return a - b;
-             });
-             TargetPort.sort(function (a, b) {
-                 return a - b;
-             });
-             TotalFwdPackets.sort(function (a, b) {
-                 return a - b;
-             });
-             TotalLenghtOfFwdPackets.sort(function (a, b) {
-                 return a - b;
-             });
-             Label.sort(function (a, b) {
-                 return a - b;
-             });*/
+
+            TargetIP = TargetIP.sort(function (a, b) {
+                return a - b;
+            });
+            TargetPort = TargetPort.sort(function (a, b) {
+                return a - b;
+            });
+            TotalFwdPackets = TotalFwdPackets.sort(function (a, b) {
+                return a - b;
+            });
+            Label = Label.sort(function (a, b) {
+                return a - b;
+            });
 
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
-                if ((d == "id") || (d == "index") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfBwdPackets")) {
+                if ((d == "id") || (d == "index") || (d == "SourcePort") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfFwdPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
                 }
                 return y[d] = d3.scalePoint().domain(value(d)).range([0, heightCPA]);
@@ -893,16 +931,12 @@ function drawData() {
                 switch (d) {
                     case "source":
                         return Array.from(SourceIP);
-                    case "SourcePort":
-                        return Array.from(SourcePort);
                     case "target":
                         return Array.from(TargetIP);
                     case "DestinationPort":
                         return Array.from(TargetPort);
                     case "TotalFwdPackets":
                         return Array.from(TotalFwdPackets);
-                    case "TotalLenghtOfFwdPackets":
-                        return Array.from(TotalLenghtOfFwdPackets);
                     case "Label":
                         return Array.from(Label);
                 }
@@ -1370,28 +1404,14 @@ function drawData() {
         function updateScatterPlot(newData) {
             //==================================== INIT SCATTERPLOT =========================================
             d3.selectAll(".scatterPlot").remove();
-            ip_sourcePorts_packets.clear();
             ip_destinationPorts_packets.clear();
             IPAddress.clear();
             DOTdestination.clear();
-            DOTsource.clear();
-            Ports = [];
+            FilteredPorts = [];
 
             // ==============================================================================================
 
             for (var i = 0; i < newData.length; i++) {
-                if (ip_sourcePorts_packets.has(newData[i].source.id) === true) {
-                    if (ip_sourcePorts_packets.get(newData[i].source.id).has(newData[i].SourcePort) === true) {
-                        value = ip_sourcePorts_packets.get(newData[i].source.id).get(newData[i].SourcePort);
-                        ip_sourcePorts_packets.get(newData[i].source.id).set(newData[i].SourcePort, value + parseInt(newData[i].TotalFwdPackets));
-                    } else {
-                        ip_sourcePorts_packets.get(newData[i].source.id).set(newData[i].SourcePort, parseInt(newData[i].TotalFwdPackets));
-                    }
-                } else {
-                    ip_sourcePorts_packets.set(newData[i].source.id, new Map());
-                    ip_sourcePorts_packets.get(newData[i].source.id).set(newData[i].SourcePort, parseInt(newData[i].TotalFwdPackets));
-                }
-
                 if (ip_destinationPorts_packets.has(newData[i].target.id) === true) {
                     if (ip_destinationPorts_packets.get(newData[i].target.id).has(newData[i].DestinationPort) === true) {
                         value = ip_destinationPorts_packets.get(newData[i].target.id).get(newData[i].DestinationPort);
@@ -1403,18 +1423,12 @@ function drawData() {
                     ip_destinationPorts_packets.set(newData[i].target.id, new Map());
                     ip_destinationPorts_packets.get(newData[i].target.id).set(newData[i].DestinationPort, parseInt(newData[i].TotalFwdPackets));
                 }
+                FilteredPorts.push(newData[i].DestinationPort);
 
-                IPAddress.add(newData[i].source.id.slice(0, -2));
                 IPAddress.add(newData[i].target.id.slice(0, -2));
-
-                Ports.push(newData[i].SourcePort);
-                Ports.push(newData[i].DestinationPort)
             }
 
             var numberOfPacketsForPort = [];
-            for (var [key, value] of ip_sourcePorts_packets) {
-                numberOfPacketsForPort.push(d3.max(Array.from(value.values())));
-            }
             for (var [key, value] of ip_destinationPorts_packets) {
                 numberOfPacketsForPort.push(d3.max(Array.from(value.values())));
             }
@@ -1438,7 +1452,7 @@ function drawData() {
                 .style('display', "none")
                 .attr('class', 'd3-tip');
 
-            xScatterPlot.domain(Ports.sort(function (a, b) {
+            xScatterPlot.domain(FilteredPorts.sort(function (a, b) {
                 return a - b;
             })).range([0, widthScatterPlot]).padding(0.4);
             yScatterPlot.domain(Array.from(IPAddress).sort(function (a, b) {
@@ -1488,7 +1502,7 @@ function drawData() {
                 .attr("x", widthScatterPlot)
                 .attr("y", 392)
                 .style("text-anchor", "end")
-                .text("Port");
+                .text("Attacked Ports");
 
             svgScatterPlot.append("g")
                 .attr("class", "y axis")
@@ -1518,7 +1532,7 @@ function drawData() {
                 .attr("cy", function (d) {
                     return yScatterPlot(d.target.id.slice(0, -2));
                 })
-                .style("fill", "green")
+                .style("fill", "#007bbf")
                 .on("mouseover", function (d) {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
@@ -1531,82 +1545,6 @@ function drawData() {
                     handleMouseOutEdge();
                     handleOutFocusStroke();
                 });
-
-            // draw point SOURCE PORT
-            svgScatterPlot.selectAll(".dot")
-                .data(SourceScatterplot)
-                .enter().append("circle")
-                .attr("class", "dotSource")
-                .attr("r", function (d) {
-                    if (ip_sourcePorts_packets.has(d.source.id) === false || ip_sourcePorts_packets.get(d.source.id).has(d.SourcePort) === false)
-                        return 0;
-                    else
-                        return ScalePackPort(ip_sourcePorts_packets.get(d.source.id).get(d.SourcePort));
-                })
-                .attr("cx", function (d) {
-                    return xScatterPlot(d.SourcePort);
-                })
-                .attr("cy", function (d) {
-                    return yScatterPlot(d.source.id.slice(0, -2));
-                })
-                .style("fill", "#3398cc")
-                .on("mouseover", function (d) {
-                    tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
-                        .style('display', "block")
-                        .html("<h6>" + (d.source.id.slice(0, -2)) + ": " + (d.SourcePort) + "</h6> <h6>Packets: " + ip_sourcePorts_packets.get(d.source.id).get(d.SourcePort) + "</h6>");
-                    handleFocusDotSource(d);
-                })
-                .on("mouseout", function () {
-                    tooltipScatterPlot.style('display', "none");
-                    handleMouseOutEdge();
-                    handleOutFocusStroke();
-                });
-
-            legendScatterPlot = svgScatterPlot.selectAll(".legend")
-                .data(["Source", "Target"])
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function (d, i) {
-                    return "translate(20," + i * 16 + ")";
-                });
-
-            legendScatterPlot.append("rect")
-                .attr("y", -20)
-                .attr("x", widthScatterPlot - 20)
-                .attr("width", 13)
-                .attr("height", 13)
-                .style("fill", function (d) {
-                    if (d === "Source")
-                        return "#3398cc";
-                    else
-                        return "green";
-                })
-                .on("click", function (d) {
-                    d3.select(this).transition().duration(200).style("stroke", "red");
-                    if (d === "Source")
-                        d3.selectAll(".dotDestination").style("display", "none");
-                    else
-                        d3.selectAll(".dotSource").style("display", "none");
-                })
-                .on("dblclick", function (d) {
-                    d3.select(this).transition().duration(200).style("stroke", "none");
-                    if (d === "Source")
-                        d3.selectAll(".dotDestination").style("display", "block");
-                    else
-                        d3.selectAll(".dotSource").style("display", "block");
-                });
-
-            legendScatterPlot.append("text")
-                .attr("x", widthScatterPlot - 25)
-                .attr("y", -14)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
-                .style("font-size", "10px")
-                .text(function (d) {
-                    return d;
-                });
-
         }
 
         function brush_parallel_chart() {
@@ -1644,10 +1582,11 @@ function drawData() {
                 });
             }
             filteredData = newData.filter(function (d) {
-                return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0)) && (extents[1].includes(d.SourcePort) || extents[1].includes(parseInt(d.SourcePort)) || (extents[1][0] === 0 && extents[1][1] === 0)) &&
-                    (extents[3].includes(d.target.id.slice(0, -2)) || (extents[3][0] === 0 && extents[3][1] === 0)) && (extents[2].includes(d.DestinationPort) || extents[2].includes(parseInt(d.DestinationPort)) || (extents[2][0] === 0 && extents[2][1] === 0)) &&
-                    (extents[4].includes(d.TotalFwdPackets) || extents[4].includes(parseInt(d.TotalFwdPackets)) || (extents[4][0] === 0 && extents[4][1] === 0)) &&
-                    (extents[5].includes(d.TotalLenghtOfFwdPackets) || extents[5].includes(parseInt(d.TotalLenghtOfFwdPackets)) || (extents[5][0] === 0 && extents[6][1] === 0)) && (extents[6].includes(d.Label) || (extents[6][0] === 0 && extents[6][1] === 0));
+                return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0))
+                    && (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0))
+                    && (extents[1].includes(d.DestinationPort) || extents[1].includes(parseInt(d.DestinationPort)) || (extents[1][0] === 0 && extents[1][1] === 0))
+                    && (extents[3].includes(d.TotalFwdPackets) || extents[3].includes(parseInt(d.TotalFwdPackets)) || (extents[3][0] === 0 && extents[3][1] === 0))
+                    && (extents[4].includes(d.Label) || (extents[4][0] === 0 && extents[4][1] === 0));
             });
 
             showAllGraph();
@@ -1751,7 +1690,7 @@ function drawData() {
             });
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.SourcePort == d.SourcePort)
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
                     return "1";
                 else
                     return "0";
@@ -1759,7 +1698,7 @@ function drawData() {
             .style("stroke-width", "3px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.SourcePort == d.SourcePort)
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
                     return "1";
                 else
                     return "0";
@@ -1768,7 +1707,7 @@ function drawData() {
 
         d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.SourcePort === edge.SourcePort))
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
                     return "1";
                 else
                     return "0"
@@ -2031,13 +1970,13 @@ function drawData() {
                     return "0";
             })
             .style("stroke-width", "3px");
-        /*d3.select("#scatterPlot").selectAll("circle")
+        d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
-                if (d == stroke)
+                if ((d.source.id === stroke.source.id) || (d.source.id === stroke.target.id))
                     return "1";
                 else
                     return "0"
-            });*/
+            });
     }
 
     function handleOutFocusStroke() {
@@ -2160,22 +2099,6 @@ function drawData() {
                 } else {
                     return false;
                 }
-            }
-        }
-    }
-
-    function AddSourcePort(d) {
-        if (DOTsource.has(d.source.id.slice(0, -2)) === false) {
-            DOTsource.set(d.source.id.slice(0, -2), new Set());
-            DOTsource.get(d.source.id.slice(0, -2)).add(d.SourcePort);
-            return true;
-        } else {
-            if (DOTsource.has(d.source.id.slice(0, -2))) {
-                if (DOTsource.get(d.source.id.slice(0, -2)).has(d.SourcePort) === false) {
-                    DOTsource.get(d.source.id.slice(0, -2)).add(d.SourcePort);
-                    return true;
-                } else
-                    return false;
             }
         }
     }

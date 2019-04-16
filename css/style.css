@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700|Raleway:200|Ubuntu:300,400,500);
-
 html, body {
     background-color: #393939;
     font-size: 11px;
@@ -225,3 +224,50 @@ p {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show > .btn-light.dropdown-toggle {
+    background: rgba(35, 35, 35, 0.8);
+    color: #fff;
+    border-color: #808080;
+    font-size: 13px;
+}
+
+.btn-light:hover {
+    background: rgba(35, 35, 35, 0.8);
+    color: #fff;
+    border-color: #808080;
+    font-size: 13px;
+}
+
+.btn {
+    background: rgba(35, 35, 35, 0.8);
+    color: #fff;
+    border-color: #808080;
+    font-size: 13px;
+}
+
+.actions-btn {
+    background: #393939;
+    border-color: #393939;
+    font-size: 13px;
+    color: white;
+}
+
+.dropdown-item {
+    font-size: 13px;
+    color: white;
+}
+
+.dropdown-menu {
+    background: rgba(35, 35, 35, 0.8);
+    color: #fff;
+}
+
+.form-control:focus, .form-control, .bootstrap-select .no-results {
+    color: white;
+    font-size: 13px;
+    background: rgba(35, 35, 35, 0.8);
+    border-color: rgba(35, 35, 35, 0.8);
+
+}
+
