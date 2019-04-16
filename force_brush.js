@@ -399,7 +399,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 215, heightBar = 20, svgWidthBar = 295, svgHeightBar = 110, tooltipBar;
+    var widthBar = 215, heightBar = 20, svgWidthBar = 300, svgHeightBar = 110, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -602,8 +602,8 @@ function drawData() {
     });
 
     // ======================== SCATTERPLOT ===============================
-    var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 90},
-        widthScatterPlot = 1215 - marginScatterPlot.left - marginScatterPlot.right,
+    var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 95},
+        widthScatterPlot = 1210 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 455 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
@@ -1103,7 +1103,7 @@ function drawData() {
             barDay1.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday1)
-                .attr('transform', 'translate(75,25)');
+                .attr('transform', 'translate(80,25)');
 
 
             // CHART AREA
@@ -1184,7 +1184,7 @@ function drawData() {
             barDay2.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday2)
-                .attr('transform', 'translate(75,25)');
+                .attr('transform', 'translate(80,25)');
 
 
             // CHART AREA
@@ -1265,7 +1265,7 @@ function drawData() {
             barDay3.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday3)
-                .attr('transform', 'translate(75,25)');
+                .attr('transform', 'translate(80,25)');
 
             // CHART AREA
             valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
@@ -1344,7 +1344,7 @@ function drawData() {
             barDay4.append("g")
                 .attr("class", "x axis")
                 .call(barLegenday4)
-                .attr('transform', 'translate(75,25)');
+                .attr('transform', 'translate(80,25)');
 
             // CHART AREA
             var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')

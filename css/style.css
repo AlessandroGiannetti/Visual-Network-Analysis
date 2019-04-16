@@ -43,6 +43,10 @@ svg {
     position: relative;
 }
 
+.key {
+    font-size: 9.5px;
+}
+
 .evidence path {
     fill: none;
     stroke: red;
