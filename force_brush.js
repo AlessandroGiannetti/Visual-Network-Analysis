@@ -1125,7 +1125,7 @@ function drawData() {
                 .attr('x', 5).attr('y', function (d) {
                 return yScaleDay1(d[0]);
             })
-                .attr("fill", "#007BBF")
+                .attr("fill", "#007bff")
                 .attr("width", function (d) {
                     return xScaleDay1(d[1])
                 }).on('mousemove', function (d) {
@@ -1206,7 +1206,7 @@ function drawData() {
                 .attr('x', 5).attr('y', function (d) {
                 return yScaleDay2(d[0]);
             })
-                .attr("fill", "#007BBF")
+                .attr("fill", "#007bff")
                 .attr("width", function (d) {
                     return xScaleDay2(d[1])
                 }).on('mousemove', function (d) {
@@ -1285,7 +1285,7 @@ function drawData() {
                 .attr('x', 5).attr('y', function (d) {
                 return yScaleDay3(d[0]);
             })
-                .attr("fill", "#007BBF")
+                .attr("fill", "#007bff")
                 .attr("width", function (d) {
                     return xScaleDay3(d[1])
                 })
@@ -1365,7 +1365,7 @@ function drawData() {
                 .attr('x', 5).attr('y', function (d) {
                 return yScaleDay4(d[0]);
             })
-                .attr("fill", "#007BBF")
+                .attr("fill", "#007bff")
                 .attr("width", function (d) {
                     return xScaleDay4(d[1])
                 })
@@ -1532,7 +1532,7 @@ function drawData() {
                 .attr("cy", function (d) {
                     return yScatterPlot(d.target.id.slice(0, -2));
                 })
-                .style("fill", "#007bbf")
+                .style("fill", "#007bff")
                 .on("mouseover", function (d) {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
