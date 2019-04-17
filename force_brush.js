@@ -19,7 +19,7 @@ var attackDay2 = new Map();
 var attackDay3 = new Map();
 var attackDay4 = new Map();
 var extents;
-var setPorts = new Set();
+var MapPorts = new Map();
 var Ports = [];
 var PortSelected = [];
 // ======= Fine Global variable declaration=======
@@ -29,15 +29,23 @@ d3.json("miserables.json", function (error, JsonData) {
     data = JsonData;
     drawData();
 });
-
+totPackets = 0;
 function drawData() {
-    for (var i = 0; i < data.links.length; i++) {
-        setPorts.add(data.links[i].DestinationPort)
-    }
-    Ports = Array.from(setPorts).sort(function (a, b) {
-        return a - b;
-    });
 
+    // Mappa con chiave le porte di destinazione e valore il totale dei pacchetti ricevuti
+    for (var i = 0; i < data.links.length; i++) {
+        totPackets += parseInt(data.links[i].TotalFwdPackets);
+        if (MapPorts.has(data.links[i].DestinationPort) === false)
+            MapPorts.set(data.links[i].DestinationPort, parseInt(data.links[i].TotalFwdPackets));
+        else
+            MapPorts.set(data.links[i].DestinationPort, MapPorts.get(data.links[i].DestinationPort) + parseInt(data.links[i].TotalFwdPackets));
+    }
+    // ordinamento della mappa in base al valore dei pacchetti
+    MapPorts = new Map([...MapPorts.entries()].sort((a, b) => b[1] - a[1]));
+    // array di tutte le porte di destinazione
+    Ports = Array.from(MapPorts.keys());
+
+    // ===================================== select multiplo sulle porte di destinazione ===========================
     var select = d3.select('#portController')
         .append('select')
         .attr('class', 'selectpicker')
@@ -45,6 +53,7 @@ function drawData() {
         .attr('data-live-search', 'true')
         .attr('data-live-search-placeholder', 'Search')
         .attr('data-actions-box', 'true')
+        .attr('title', "Filter Destination ports")
         .attr('data-width', "385")
         .on('change', FilterPorts);
 
@@ -54,28 +63,24 @@ function drawData() {
         .append('option')
         .text(function (d) {
             return d;
+        })
+        .attr('data-subtext', function (d) {
+            return ((MapPorts.get(d) / totPackets) * 100).toFixed(2) + '%';
+        })
+        .attr("selected", function (d) {
+            PortSelected.push(d);
+            return "true";
         });
 
-    function FilterPorts() {
-        PortSelected = [];
-        raw = this.selectedOptions;
-        for (var i = 0; i < raw.length; i++) {
-            PortSelected.push(raw[i].__data__)
-        }
-        update()
-    }
-
-
-
+    // ========================================== Fine selezione multipla =====================
     // Node scatterplot without duplicates
     DOTdestination = new Map();
-    DOTsource = new Map();
     SourceTarget = new Map();
 
     // ========================= SLIDERS ===================================
     var marginSlider = {top: 0, right: 18, bottom: 0, left: 18},
         widthSlider = 275 - marginSlider.left - marginSlider.right,
-        heightSlider = 80 - marginSlider.bottom - marginSlider.top;
+        heightSlider = 75 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
@@ -866,10 +871,13 @@ function drawData() {
             });
 
             // UPDATE number of attack per day
+
+            d3.select("#day").html((UPday1.length + UPday2.length + UPday3.length + UPday4.length) + " / <b>" + (day1.length + day2.length + day3.length + day4.length) + "</b>");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
             d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
             d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+
         }
 
         function updateCPA() {
@@ -1674,47 +1682,6 @@ function drawData() {
             })
     }
 
-    function handleFocusDotSource(edge) {
-        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
-            if (d.source.id === edge.source.id && d.target.id === edge.target.id)
-                return "1";
-            else
-                return "0.1";
-        });
-        d3.select("#graph").selectAll("circle").transition().duration(200)
-            .style("opacity", function (d) {
-                if ((d.id === edge.source.id) || (d.id === edge.target.id))
-                    return "1";
-                else
-                    return "0.1";
-            });
-        d3.select("#PCA").selectAll(".notSelected")
-            .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "3px");
-        d3.select("#PCA").selectAll(".selected")
-            .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "3px");
-
-        d3.select("#scatterPlot").selectAll("circle")
-            .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                    return "1";
-                else
-                    return "0"
-            })
-
-    }
-
     function handleFocusStrokeOnEdge(edge) {
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
@@ -1764,7 +1731,7 @@ function drawData() {
             });
     }
 
-// content of the windows on link mouse over
+// content of the windows on link mouse over su grafo
     function contentLinkTip(d) {
         var content = "<h5 align='center'>LINK</h5>";
         content += " <table align='center' id='tooltip'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
@@ -1773,7 +1740,7 @@ function drawData() {
         return content;
     }
 
-// content of the windows on node mouse over
+// content of the windows on node mouse over su grafo
     function contentNodeTip(d) {
         var value = 0;
         if (NumberSentPackets.has(d.id) !== false && d.group === "1")
@@ -2084,6 +2051,15 @@ function drawData() {
             }
         }
         return empty
+    }
+
+    function FilterPorts() {
+        PortSelected = [];
+        raw = this.selectedOptions;
+        for (var i = 0; i < raw.length; i++) {
+            PortSelected.push(raw[i].__data__)
+        }
+        update()
     }
 
     function AddTargetPort(d) {

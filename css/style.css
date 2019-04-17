@@ -4,6 +4,8 @@ html, body {
     font-size: 11px;
     font-family: 'Raleway', sans-serif;
     color: rgba(255, 255, 255, 0.8);
+    scrollbar-color: #393939 #242424;
+    scrollbar-width: thin;
 }
 
 text {
@@ -127,10 +129,6 @@ svg {
     font-size: 14px;
 }
 
-p {
-    display: block;
-}
-
 .barchart {
     display: inline;
     clear: both;
@@ -138,11 +136,16 @@ p {
 }
 
 #day1, #day2, #day3, #day4 {
+    display: block;
     font-size: 16px;
     position: relative;
     top: -30px;
 }
 
+#day, #label {
+    display: inline;
+    font-size: 16px;
+}
 .dotSource {
     opacity: 1;
 }
@@ -240,7 +243,7 @@ p {
     background: rgba(35, 35, 35, 0.8);
     color: #fff;
     border-color: #808080;
-    font-size: 13px;
+    border-color: rgba(35, 35, 35, 0.8);
 }
 
 .btn {
@@ -258,7 +261,7 @@ p {
 }
 
 .dropdown-item {
-    font-size: 13px;
+    font-size: 14px;
     color: white;
 }
 
@@ -272,6 +275,40 @@ p {
     font-size: 13px;
     background: rgba(35, 35, 35, 0.8);
     border-color: rgba(35, 35, 35, 0.8);
+}
 
+.dropdown-item:focus, .dropdown-item:hover {
+    background: #393939;
+    color: white;
+}
+
+.text-muted {
+    font-size: 12px;
+}
+
+
+scrollbar {
+    /*  clear useragent default style*/
+    -moz-appearance: none !important;
+}
+
+/* buttons at two ends */
+scrollbarbutton {
+    -moz-appearance: none !important;
+}
+
+/* the sliding part*/
+thumb {
+    -moz-appearance: none !important;
+}
+
+scrollcorner {
+    -moz-appearance: none !important;
+    resize: both;
+}
+
+/* vertical or horizontal */
+scrollbar[orient="vertical"] {
+    color: silver;
 }
 
