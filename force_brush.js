@@ -72,6 +72,7 @@ function drawData() {
             return "true";
         });
 
+
     // ========================================== Fine selezione multipla =====================
     // Node scatterplot without duplicates
     DOTdestination = new Map();
@@ -462,6 +463,11 @@ function drawData() {
 
     // ================= FINE DICHIARAZIONI CPA ==================================
 
+    // building the map packet
+    buildMapPacket(data.links);
+    // building the scale packet
+    scalePacket();
+
     var LinkGraph = data.links.filter(function (d) {
         return LinkGraphPlot(d) === true && PortSelected.includes(d.DestinationPort)
     });
@@ -475,10 +481,6 @@ function drawData() {
         }
     }
 
-    // building the map packet
-    buildMapPacket(LinkGraph);
-    // building the scale packet
-    scalePacket();
 
     function initGraph() {
 
@@ -650,7 +652,6 @@ function drawData() {
         selection4 = d3.brushSelection(d3.select(".brush4").node());
         if (selection4 == null)
             selection4 = [0, widthSlider - 0.2];
-
         // filtraggio dei dati in base ai giorno e all'ora e alle porte selezionate
         newData = data.links.filter(function (d) {
             return (checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
@@ -827,8 +828,7 @@ function drawData() {
 
             legendaxis = d3.axisRight()
                 .scale(legendscale)
-                .tickSize(5)
-                .ticks(15);
+                .tickValues(legendscale.ticks(7).concat(legendscale.domain()));
 
             svgLegend = d3.select("#legend")
                 .append("svg")
