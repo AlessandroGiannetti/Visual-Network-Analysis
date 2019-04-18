@@ -57,6 +57,8 @@ function drawData() {
         .attr('data-width', "385")
         .on('change', FilterPorts);
 
+    var InsertedPort = 0;
+
     select
         .selectAll('option')
         .data(Ports).enter()
@@ -67,9 +69,12 @@ function drawData() {
         .attr('data-subtext', function (d) {
             return ((MapPorts.get(d) / totPackets) * 100).toFixed(2) + '%';
         })
-        .attr("selected", function (d) {
-            PortSelected.push(d);
-            return "true";
+        .each(function (d) {
+            InsertedPort += 1;
+            if (InsertedPort <= 10) {
+                PortSelected.push(d);
+                d3.select(this).attr("selected", "")
+            }
         });
 
 
@@ -856,23 +861,23 @@ function drawData() {
                 .call(legendaxis);
         }
 
-        function updateNumberOfAttack(data) {
-            UPday1 = data.filter(function (d) {
+        function updateNumberOfAttack(newData) {
+            UPday1 = newData.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "4/7/2017"
             });
-            UPday2 = data.filter(function (d) {
+            UPday2 = newData.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "5/7/2017"
             });
-            UPday3 = data.filter(function (d) {
+            UPday3 = newData.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "6/7/2017"
             });
-            UPday4 = data.filter(function (d) {
+            UPday4 = newData.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "7/7/2017"
             });
 
             // UPDATE number of attack per day
 
-            d3.select("#day").html((UPday1.length + UPday2.length + UPday3.length + UPday4.length) + " / <b>" + (day1.length + day2.length + day3.length + day4.length) + "</b>");
+            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
             d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
