@@ -762,11 +762,8 @@ function drawData() {
             textElements.exit().remove();
             textElements = textElements.enter().append("text").merge(textElements);
 
-            link = link.data(LinkGraph, function (d) {
-                return d.source.id + "-" + d.target.id;
-            });
-            link.exit().remove();
-            link = link.enter().append("line").merge(link)
+            link.remove();
+            link = link.data(LinkGraph).enter().append("line").merge(link)
                 .on('mousemove', function (d) {
                     tooltipLink.transition().duration(150)
                         .style('display', "block");
@@ -1163,6 +1160,14 @@ function drawData() {
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
+                }).on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html((d[0]) + ": " + (d[1]));
+            })
+                .on('mouseout', function () {
+                    tooltipBar.style('display', "none");
                 });
 
             // UPDATE
@@ -1244,6 +1249,14 @@ function drawData() {
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
+                }).on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html((d[0]) + ": " + (d[1]));
+            })
+                .on('mouseout', function () {
+                    tooltipBar.style('display', "none");
                 });
 
             // UPDATE
@@ -1324,6 +1337,14 @@ function drawData() {
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
+                }).on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html((d[0]) + ": " + (d[1]));
+            })
+                .on('mouseout', function () {
+                    tooltipBar.style('display', "none");
                 });
 
             // UPDATE
@@ -1405,6 +1426,14 @@ function drawData() {
                 .attr("text-anchor", "end")
                 .text(function (d) {
                     return d[0];
+                }).on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html((d[0]) + ": " + (d[1]));
+            })
+                .on('mouseout', function () {
+                    tooltipBar.style('display', "none");
                 });
 
             // UPDATE
