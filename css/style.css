@@ -1,15 +1,15 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700|Raleway:200|Ubuntu:300,400,500);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
 html, body {
     background-color: #393939;
     font-size: 11px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Open sans Condensed', sans-serif;
     color: rgba(255, 255, 255, 0.8);
     scrollbar-color: #393939 #242424;
     scrollbar-width: thin;
 }
 
 text {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Open sans Condensed', sans-serif;
     font-size: 11px;
     fill: white;
 }
@@ -311,4 +311,3 @@ scrollcorner {
 scrollbar[orient="vertical"] {
     color: silver;
 }
-
