@@ -52,8 +52,9 @@ function drawData() {
         .attr('multiple', 'true')
         .attr('data-live-search', 'true')
         .attr('data-live-search-placeholder', 'Search')
-        .attr('data-actions-box', 'true')
         .attr('title', "Filter Destination ports")
+        .attr("data-header", "select the destination ports")
+        .attr("data-max-options", "20")
         .attr('data-width', "385")
         .on('change', FilterPorts);
 
@@ -67,7 +68,7 @@ function drawData() {
             return d;
         })
         .attr('data-subtext', function (d) {
-            return ((MapPorts.get(d) / totPackets) * 100).toFixed(2) + '%';
+            return ((MapPorts.get(d) / totPackets) * 100).toFixed(4) + '%';
         })
         .each(function (d) {
             InsertedPort += 1;
@@ -76,6 +77,8 @@ function drawData() {
                 d3.select(this).attr("selected", "")
             }
         });
+
+    d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
 
 
     // ========================================== Fine selezione multipla =====================
@@ -148,7 +151,7 @@ function drawData() {
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
         .attr("d", "M 0 -20 V 20");
     var text2 = handle2.append('text')
-        .text(formatDate(timeScale1.domain()[0]))
+        .text(formatDate(timeScale1.domain()[0] - 0.2))
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
@@ -156,12 +159,10 @@ function drawData() {
     function upgradeDay1() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection1 = d3.brushSelection(d3.select(".brush1").node());
-        if (selection1 == null)
-            selection1 = [0, widthSlider - 0.2];
         handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
         text1.text(formatDate(timeScale1.invert(selection1[0])));
         handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
-        text2.text(formatDate(timeScale1.invert(selection1[1])));
+        text2.text(formatDate(timeScale1.invert(selection1[1] - 0.1)));
     }
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
 
@@ -224,7 +225,7 @@ function drawData() {
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
         .attr("d", "M 0 -20 V 20");
     var text4 = handle4.append('text')
-        .text(formatDate(timeScale2.domain()[0]))
+        .text(formatDate(timeScale2.domain()[0] - 0.2))
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
@@ -232,12 +233,10 @@ function drawData() {
     function upgradeDay2() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection2 = d3.brushSelection(d3.select(".brush2").node());
-        if (selection2 == null)
-            selection2 = [0, widthSlider - 0.2];
         handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
         text3.text(formatDate(timeScale1.invert(selection2[0])));
         handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
-        text4.text(formatDate(timeScale1.invert(selection2[1])));
+        text4.text(formatDate(timeScale1.invert(selection2[1] - 0.1)));
     }
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
@@ -299,7 +298,7 @@ function drawData() {
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
         .attr("d", "M 0 -20 V 20");
     var text6 = handle6.append('text')
-        .text(formatDate(timeScale3.domain()[0]))
+        .text(formatDate(timeScale3.domain()[0] - 0.2))
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
@@ -307,12 +306,10 @@ function drawData() {
     function upgradeDay3() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection3 = d3.brushSelection(d3.select(".brush3").node());
-        if (selection3 == null)
-            selection3 = [0, widthSlider - 0.2];
         handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
         text5.text(formatDate(timeScale1.invert(selection3[0])));
         handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
-        text6.text(formatDate(timeScale1.invert(selection3[1])));
+        text6.text(formatDate(timeScale1.invert(selection3[1] - 0.1)));
     }
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
     // ====================== SLIDER GIORNO 7/7/2017 =========================
@@ -374,7 +371,7 @@ function drawData() {
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
         .attr("d", "M 0 -20 V 20");
     var text8 = handle8.append('text')
-        .text(formatDate(timeScale4.domain()[0]))
+        .text(formatDate(timeScale4.domain()[0] - 0.2))
         .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
@@ -382,12 +379,10 @@ function drawData() {
     function upgradeDay4() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection4 = d3.brushSelection(d3.select(".brush4").node());
-        if (selection4 == null)
-            selection4 = [0, widthSlider - 0.2];
         handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
         text7.text(formatDate(timeScale1.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
-        text8.text(formatDate(timeScale1.invert(selection4[1])));
+        text8.text(formatDate(timeScale1.invert(selection4[1] - 0.1)));
     }
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
@@ -647,16 +642,16 @@ function drawData() {
 
         selection1 = d3.brushSelection(d3.select(".brush1").node());
         if (selection1 == null)
-            selection1 = [0, widthSlider - 0.2];
+            selection1 = [0, widthSlider];
         selection2 = d3.brushSelection(d3.select(".brush2").node());
         if (selection2 == null)
-            selection2 = [0, widthSlider - 0.2];
+            selection2 = [0, widthSlider];
         selection3 = d3.brushSelection(d3.select(".brush3").node());
         if (selection3 == null)
-            selection3 = [0, widthSlider - 0.2];
+            selection3 = [0, widthSlider];
         selection4 = d3.brushSelection(d3.select(".brush4").node());
         if (selection4 == null)
-            selection4 = [0, widthSlider - 0.2];
+            selection4 = [0, widthSlider];
         // filtraggio dei dati in base ai giorno e all'ora e alle porte selezionate
         newData = data.links.filter(function (d) {
             return (checkedValue.includes(d.Timestamp.slice(0, -6)) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(selection1[0]) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(selection1[1]))
@@ -762,8 +757,9 @@ function drawData() {
             textElements.exit().remove();
             textElements = textElements.enter().append("text").merge(textElements);
 
-            link.remove();
-            link = link.data(LinkGraph).enter().append("line").merge(link)
+            link = link.data(LinkGraph);
+            link.exit().remove();
+            link = link.enter().append("line").merge(link)
                 .on('mousemove', function (d) {
                     tooltipLink.transition().duration(150)
                         .style('display', "block");
@@ -874,7 +870,7 @@ function drawData() {
 
             // UPDATE number of attack per day
 
-            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>");
+            d3.select("#day").html("Total Attack: " + (newData.length) + " / <b>" + (data.links.length) + "</b>");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
             d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");

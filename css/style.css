@@ -15,7 +15,7 @@ html, body {
 
 text {
     font-family: 'Open sans Condensed', sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     fill: white;
 }
 
@@ -51,7 +51,7 @@ svg {
 }
 
 .key {
-    font-size: 9.5px;
+    font-size: 12px;
 }
 
 .evidence path {
@@ -150,6 +150,13 @@ svg {
 #day, #label {
     display: inline;
     font-size: 16px;
+}
+
+#port {
+    display: inline;
+    font-size: 16px;
+    position: absolute;
+    left: 273px;
 }
 .dotSource {
     opacity: 1;
@@ -270,12 +277,13 @@ svg {
     color: white;
 }
 
-.dropdown-menu {
+.dropdown-menu, dropdown-menu.show {
     background: rgba(35, 35, 35, 0.8);
     color: #fff;
 }
 
-.form-control:focus, .form-control, .bootstrap-select .no-results {
+
+.form-control:focus, .form-control, .bootstrap-select .no-results, .popover-header {
     color: white;
     font-size: 13px;
     background: rgba(35, 35, 35, 0.8);
@@ -283,8 +291,13 @@ svg {
 }
 
 .dropdown-item:focus, .dropdown-item:hover {
-    background: #393939;
+    background-color: #393939;
     color: white;
+}
+
+.notify {
+    font-size: 13px;
+    color: black;
 }
 
 .text-muted {
