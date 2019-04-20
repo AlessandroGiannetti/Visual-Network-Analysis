@@ -469,18 +469,17 @@ function drawData() {
     scalePacket();
 
     var LinkGraph = data.links.filter(function (d) {
-        return LinkGraphPlot(d) === true && PortSelected.includes(d.DestinationPort)
+        return LinkGraphPlot(d) === true
     });
     edges = [];
     function LinkGraphPlot(d) {
-        if (edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) {
+        if ((edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) && PortSelected.includes(d.DestinationPort) == true) {
             edges.push(d);
             return true;
         } else {
             return false;
         }
     }
-
 
     function initGraph() {
 
