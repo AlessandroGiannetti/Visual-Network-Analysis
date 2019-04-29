@@ -17042,7 +17042,7 @@
                 p = mouse(this);
 
             // If the mouse is in the same location as before, reuse it.
-            // If there were recent wheel events, reset the wheel idle timeout.
+            // If there were recent wheel events, resetCPA the wheel idle timeout.
             if (g.wheel) {
                 if (g.mouse[0][0] !== p[0] || g.mouse[0][1] !== p[1]) {
                     g.mouse[1] = t.invert(g.mouse[0] = p);

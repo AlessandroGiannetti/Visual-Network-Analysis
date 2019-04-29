@@ -22,6 +22,7 @@ var extents;
 var MapPorts = new Map();
 var Ports = [];
 var PortSelected = [];
+var resetCPA = false;
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, JsonData) {
@@ -31,7 +32,7 @@ d3.json("miserables.json", function (error, JsonData) {
 });
 totPackets = 0;
 function drawData() {
-
+    d3.selectAll().remove();
     // Mappa con chiave le porte di destinazione e valore il totale dei pacchetti ricevuti
     for (var i = 0; i < data.links.length; i++) {
         totPackets += parseInt(data.links[i].TotalFwdPackets);
@@ -136,6 +137,7 @@ function drawData() {
     svgSlider1.append("g")
         .attr("class", "brush1")
         .style("opacity", "0")
+        .on('dblclick', resetDay1)
         .call(brush1);
     var handle1 = svgSlider1.append("g")
         .attr("class", "handle");
@@ -162,7 +164,16 @@ function drawData() {
         handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
         text1.text(formatDate(timeScale1.invert(selection1[0])));
         handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
-        text2.text(formatDate(timeScale1.invert(selection1[1] - 0.1)));
+        text2.text(formatDate(timeScale1.invert(selection1[1])));
+    }
+
+    function resetDay1() {
+        selection1[0] = 0;
+        selection1[1] = widthSlider - 0.1;
+        handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
+        text1.text(formatDate(timeScale1.invert(selection1[0])));
+        handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
+        text2.text(formatDate(timeScale1.invert(selection1[1])));
     }
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
 
@@ -177,6 +188,7 @@ function drawData() {
         .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
         .attr("id", "svgcontroller2")
         .append("g")
+        .on('dblclick', resetDay2)
         // classic transform to position g
         .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
     svgSlider2.append("rect")
@@ -238,6 +250,15 @@ function drawData() {
         handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
         text4.text(formatDate(timeScale1.invert(selection2[1] - 0.1)));
     }
+
+    function resetDay2() {
+        selection2[0] = 0;
+        selection2[1] = widthSlider - 0.1;
+        handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
+        text3.text(formatDate(timeScale1.invert(selection2[0])));
+        handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
+        text4.text(formatDate(timeScale1.invert(selection2[1])));
+    }
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
@@ -250,6 +271,7 @@ function drawData() {
         .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
         .attr("id", "svgcontroller3")
         .append("g")
+        .on('dblclick', resetDay3)
         // classic transform to position g
         .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
     svgSlider3.append("rect")
@@ -311,6 +333,15 @@ function drawData() {
         handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
         text6.text(formatDate(timeScale1.invert(selection3[1] - 0.1)));
     }
+
+    function resetDay3() {
+        selection3[0] = 0;
+        selection3[1] = widthSlider - 0.1;
+        handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
+        text5.text(formatDate(timeScale1.invert(selection3[0])));
+        handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
+        text6.text(formatDate(timeScale1.invert(selection3[1])));
+    }
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
     // ====================== SLIDER GIORNO 7/7/2017 =========================
     var timeScale4 = d3.scaleTime()
@@ -323,6 +354,7 @@ function drawData() {
         .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
         .attr("id", "svgcontroller4")
         .append("g")
+        .on('dblclick', resetDay4)
         // classic transform to position g
         .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
     svgSlider4.append("rect")
@@ -383,6 +415,15 @@ function drawData() {
         text7.text(formatDate(timeScale1.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
         text8.text(formatDate(timeScale1.invert(selection4[1] - 0.1)));
+    }
+
+    function resetDay4() {
+        selection4[0] = 0;
+        selection4[1] = widthSlider - 0.1;
+        handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
+        text7.text(formatDate(timeScale1.invert(selection4[0])));
+        handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
+        text8.text(formatDate(timeScale1.invert(selection4[1])));
     }
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
@@ -449,9 +490,9 @@ function drawData() {
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 25, right: 0, bottom: 10, left: 0},
-        widthCPA = 1090 - marginCPA.left - marginCPA.right,
+        widthCPA = 1100 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-10, widthCPA + 160]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-10, widthCPA + 260]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -539,7 +580,7 @@ function drawData() {
                     else
                         return colorScalePackets(0);
             }).on("click", function () {
-                d3.select(this).transition().duration(200).style("stroke", "red");
+                d3.select(this).transition().duration(200).style("stroke", "orangered");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
                 FocusDotScatterPlot(nodeSelected);
@@ -722,7 +763,7 @@ function drawData() {
                         else
                             return colorScalePackets(0);
                 }).on("click", function () {
-                    d3.select(this).transition().duration(200).style("stroke", "red");
+                    d3.select(this).transition().duration(200).style("stroke", "orangered");
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
                     FocusDotScatterPlot(nodeSelected);
@@ -834,8 +875,11 @@ function drawData() {
                 .attr("width", (widthLegend) + "px")
                 .style("position", "absolute")
                 .style("left", "30px")
-                .style("top", "0px");
-
+                .style("top", "0px")
+                .on("dblclick", function () {
+                    ResetFilter = true;
+                    filterView
+                });
 
             brushLegend = d3.brushY()
                 .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend - marginLegend.top - 20]])
@@ -922,7 +966,7 @@ function drawData() {
             });
 
             x.domain(dimensions = d3.keys(newData[0]).filter(function (d) {
-                if ((d == "id") || (d == "index") || (d == "SourcePort") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfFwdPackets") || (d == "TotalLenghtOfBwdPackets")) {
+                if ((d == "id") || (d == "index") || (d == "SourcePort") || (d == "TotalFwdPackets") || (d == "Timestamp") || (d == "Protocol") || (d == "FlowDuration") || (d == "TotalBackwardPackets") || (d == "TotalLenghtOfFwdPackets") || (d == "TotalLenghtOfBwdPackets")) {
                     return false;
                 }
                 return y[d] = d3.scalePoint().domain(value(d)).range([0, heightCPA]);
@@ -940,8 +984,6 @@ function drawData() {
                         return Array.from(TargetIP);
                     case "DestinationPort":
                         return Array.from(TargetPort);
-                    case "TotalFwdPackets":
-                        return Array.from(TotalFwdPackets);
                     case "Label":
                         return Array.from(Label);
                 }
@@ -997,6 +1039,10 @@ function drawData() {
                 .data(dimensions)
                 .enter().append("g")
                 .attr("class", "dimension")
+                .on("dblclick", function () {
+                    resetCPA = true;
+                    brush_parallel_chart()
+                })
                 .attr("transform", function (d) {
                     return "translate(" + x(d) + ")";
                 })
@@ -1198,7 +1244,6 @@ function drawData() {
                 .attr("class", "x axis")
                 .call(barLegenday2)
                 .attr('transform', 'translate(80,25)');
-
 
             // CHART AREA
             var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
@@ -1474,7 +1519,7 @@ function drawData() {
 
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
-            ScalePackPort = d3.scaleLinear().domain([d3.min(numberOfPacketsForPort), d3.max(numberOfPacketsForPort)]).range([4, 11]);
+            ScalePackPort = d3.scaleLinear().domain([d3.min(numberOfPacketsForPort), d3.max(numberOfPacketsForPort)]).range([6, 11]);
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
             yAxisScatterPlot = d3.axisLeft(yScatterPlot);
 
@@ -1585,6 +1630,7 @@ function drawData() {
         }
 
         function brush_parallel_chart() {
+            console.log(resetCPA);
             for (var i = 0; i < dimensions.length; ++i) {
                 if (d3.event.target == y[dimensions[i]].brush) {
                     min = d3.event.selection[0];
@@ -1593,6 +1639,12 @@ function drawData() {
                         return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
                     });
                 }
+                }
+
+            if (resetCPA == true) {
+                resetCPA = false;
+                for (var i = 0; i < dimensions.length; ++i)
+                    extents[i] = [0, 0];
             }
             notSelected.style("display", function (d) {
                 return dimensions.every(function (p, i) {
@@ -1622,8 +1674,7 @@ function drawData() {
                 return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0))
                     && (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0))
                     && (extents[1].includes(d.DestinationPort) || extents[1].includes(parseInt(d.DestinationPort)) || (extents[1][0] === 0 && extents[1][1] === 0))
-                    && (extents[3].includes(d.TotalFwdPackets) || extents[3].includes(parseInt(d.TotalFwdPackets)) || (extents[3][0] === 0 && extents[3][1] === 0))
-                    && (extents[4].includes(d.Label) || (extents[4][0] === 0 && extents[4][1] === 0));
+                    && (extents[3].includes(d.Label) || (extents[3][0] === 0 && extents[3][1] === 0));
             });
 
             showAllGraph();
@@ -1665,7 +1716,7 @@ function drawData() {
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
             .style("stroke", function (d) {
                 if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                    return "red";
+                    return "orangered";
                 else
                     return "none"
             });
@@ -1790,6 +1841,7 @@ function drawData() {
         displayElements = [];
         selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
         selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
+
         for (var i = 0; i < data.nodes.length; i++) {
 
             if ((NumberSentPackets.get(data.nodes[i]["id"]) >= selectionLegendBegin && NumberSentPackets.get(data.nodes[i]["id"]) <= selectionLegendEnd))

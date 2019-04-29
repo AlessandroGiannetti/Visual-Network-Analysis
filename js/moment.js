@@ -1147,7 +1147,7 @@
         var date;
         // the date constructor remaps years 0-99 to 1900-1999
         if (y < 100 && y >= 0) {
-            // preserve leap years using a full 400 year cycle, then reset
+            // preserve leap years using a full 400 year cycle, then resetCPA
             date = new Date(y + 400, m, d, h, M, s, ms);
             if (isFinite(date.getFullYear())) {
                 date.setFullYear(y);
@@ -1164,7 +1164,7 @@
         // the Date.UTC function remaps years 0-99 to 1900-1999
         if (y < 100 && y >= 0) {
             var args = Array.prototype.slice.call(arguments);
-            // preserve leap years using a full 400 year cycle, then reset
+            // preserve leap years using a full 400 year cycle, then resetCPA
             args[0] = y + 400;
             date = new Date(Date.UTC.apply(null, args));
             if (isFinite(date.getUTCFullYear())) {
@@ -3476,7 +3476,7 @@
     function localStartOfDate(y, m, d) {
         // the date constructor remaps years 0-99 to 1900-1999
         if (y < 100 && y >= 0) {
-            // preserve leap years using a full 400 year cycle, then reset
+            // preserve leap years using a full 400 year cycle, then resetCPA
             return new Date(y + 400, m, d) - MS_PER_400_YEARS;
         } else {
             return new Date(y, m, d).valueOf();
@@ -3486,7 +3486,7 @@
     function utcStartOfDate(y, m, d) {
         // Date.UTC remaps years 0-99 to 1900-1999
         if (y < 100 && y >= 0) {
-            // preserve leap years using a full 400 year cycle, then reset
+            // preserve leap years using a full 400 year cycle, then resetCPA
             return Date.UTC(y + 400, m, d) - MS_PER_400_YEARS;
         } else {
             return Date.UTC(y, m, d);

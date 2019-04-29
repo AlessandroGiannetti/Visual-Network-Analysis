@@ -56,7 +56,7 @@ svg {
 
 .evidence path {
     fill: none;
-    stroke: red;
+    stroke: orangered;
     shape-rendering: geometricPrecision;
     position: relative;
 }
@@ -158,12 +158,10 @@ svg {
     position: absolute;
     left: 273px;
 }
-.dotSource {
-    opacity: 1;
-}
 
 .dotDestination {
     opacity: 1;
+    stroke-width: 3px
 }
 
 .grid line {
