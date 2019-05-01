@@ -1358,6 +1358,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "4/7/2017")
         });
         var valueAttackSelectedDay1 = new Map();
+        attackDay1 = new Map([...attackDay1.entries()].sort((a, b) => b[1] - a[1]));
         bindedDay1 = Array.from(attackDay1);
         for (var i = 0; i < bindedDay1.length; i++) {
             valueAttackSelectedDay1.set(bindedDay1[i][0], 0);
@@ -1475,6 +1476,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "5/7/2017")
         });
         var valueAttackSelectedDay2 = new Map();
+        attackDay2 = new Map([...attackDay2.entries()].sort((a, b) => b[1] - a[1]));
         bindedDay2 = Array.from(attackDay2);
         xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
         for (var i = 0; i < bindedDay2.length; i++) {
@@ -1591,6 +1593,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "6/7/2017")
         });
         var valueAttackSelectedDay3 = new Map();
+        attackDay3 = new Map([...attackDay3.entries()].sort((a, b) => b[1] - a[1]));
         bindedDay3 = Array.from(attackDay3);
         xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
         for (var i = 0; i < bindedDay3.length; i++) {
@@ -1708,6 +1711,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "7/7/2017")
         });
         var valueAttackSelectedDay4 = new Map();
+        attackDay4 = new Map([...attackDay4.entries()].sort((a, b) => b[1] - a[1]));
         bindedDay4 = Array.from(attackDay4);
         xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
         for (var i = 0; i < bindedDay4.length; i++) {
