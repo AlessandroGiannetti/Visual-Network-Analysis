@@ -24095,8 +24095,8 @@
       "DestinationPort": "7201",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24104,8 +24104,8 @@
       "DestinationPort": "50000",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 15:22",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24113,8 +24113,8 @@
       "DestinationPort": "1054",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24122,8 +24122,8 @@
       "DestinationPort": "1053",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:51",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24131,8 +24131,8 @@
       "DestinationPort": "7676",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24140,8 +24140,8 @@
       "DestinationPort": "1123",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24149,8 +24149,8 @@
       "DestinationPort": "163",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24158,8 +24158,8 @@
       "DestinationPort": "8600",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:51",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24167,8 +24167,8 @@
       "DestinationPort": "5033",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:56",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24176,8 +24176,8 @@
       "DestinationPort": "1166",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24185,8 +24185,8 @@
       "DestinationPort": "7",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 15:08",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "20",
       "Label": "PortScan"
     },
     {
@@ -24194,8 +24194,8 @@
       "DestinationPort": "1862",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24203,8 +24203,8 @@
       "DestinationPort": "1089",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24212,8 +24212,8 @@
       "DestinationPort": "3031",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24221,8 +24221,8 @@
       "DestinationPort": "16012",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:51",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "20",
       "Label": "PortScan"
     },
     {
@@ -24230,8 +24230,8 @@
       "DestinationPort": "2042",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24239,7 +24239,7 @@
       "DestinationPort": "999",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24248,7 +24248,7 @@
       "DestinationPort": "20828",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24257,7 +24257,7 @@
       "DestinationPort": "8652",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24266,8 +24266,8 @@
       "DestinationPort": "1062",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:51",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24275,7 +24275,7 @@
       "DestinationPort": "720",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24284,8 +24284,8 @@
       "DestinationPort": "1132",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "2",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "29",
       "Label": "PortScan"
     },
     {
@@ -24293,7 +24293,7 @@
       "DestinationPort": "4125",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "2",
       "Label": "PortScan"
     },
@@ -24302,7 +24302,7 @@
       "DestinationPort": "100",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24311,7 +24311,7 @@
       "DestinationPort": "9001",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:51",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "2",
       "Label": "PortScan"
     },
@@ -24320,7 +24320,7 @@
       "DestinationPort": "110",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24329,7 +24329,7 @@
       "DestinationPort": "3017",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24338,7 +24338,7 @@
       "DestinationPort": "50000",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24347,8 +24347,8 @@
       "DestinationPort": "3869",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24356,7 +24356,7 @@
       "DestinationPort": "5850",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 15:22",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "2",
       "Label": "PortScan"
     },
@@ -24365,7 +24365,7 @@
       "DestinationPort": "6788",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24374,7 +24374,7 @@
       "DestinationPort": "5903",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24383,7 +24383,7 @@
       "DestinationPort": "12345",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:52",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "2",
       "Label": "PortScan"
     },
@@ -24392,7 +24392,7 @@
       "DestinationPort": "42510",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "19",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "PortScan"
     },
@@ -24401,8 +24401,8 @@
       "DestinationPort": "9290",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24410,8 +24410,8 @@
       "DestinationPort": "2718",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "19",
+      "TotalLenghtOfFwdPackets": "10",
       "Label": "PortScan"
     },
     {
@@ -24419,8 +24419,8 @@
       "DestinationPort": "445",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:55",
-      "TotalFwdPackets": "3",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "39",
+      "TotalLenghtOfFwdPackets": "50",
       "Label": "PortScan"
     },
     {
@@ -24428,8 +24428,8 @@
       "DestinationPort": "1099",
       "target": "192.168.10.50dx",
       "Timestamp": "7/7/2017 14:54",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "104",
+      "TotalLenghtOfFwdPackets": "500",
       "Label": "PortScan"
     },
     {
@@ -30413,7 +30413,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:12",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "38",
       "TotalLenghtOfFwdPackets": "348",
       "Label": "DoS GoldenEye"
     },
@@ -30431,8 +30431,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:09",
-      "TotalFwdPackets": "2",
-      "TotalLenghtOfFwdPackets": "8",
+      "TotalFwdPackets": "22",
+      "TotalLenghtOfFwdPackets": "28",
       "Label": "DoS slowloris"
     },
     {
@@ -30467,7 +30467,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:10",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "15",
       "TotalLenghtOfFwdPackets": "516",
       "Label": "DoS GoldenEye"
     },
@@ -30494,8 +30494,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:04",
-      "TotalFwdPackets": "3",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "103",
+      "TotalLenghtOfFwdPackets": "100",
       "Label": "DoS slowloris"
     },
     {
@@ -30980,8 +30980,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:58",
-      "TotalFwdPackets": "3",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "34",
+      "TotalLenghtOfFwdPackets": "34",
       "Label": "DoS slowloris"
     },
     {
@@ -31043,7 +31043,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:48",
-      "TotalFwdPackets": "4",
+      "TotalFwdPackets": "94",
       "TotalLenghtOfFwdPackets": "239",
       "Label": "DoS slowloris"
     },
@@ -31070,7 +31070,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:18",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "12",
       "TotalLenghtOfFwdPackets": "422",
       "Label": "DoS GoldenEye"
     },
@@ -31214,7 +31214,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "7",
+      "TotalFwdPackets": "17",
       "TotalLenghtOfFwdPackets": "410",
       "Label": "DoS GoldenEye"
     },
@@ -31304,7 +31304,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:14",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "18",
       "TotalLenghtOfFwdPackets": "356",
       "Label": "DoS GoldenEye"
     },
@@ -31682,8 +31682,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:04",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "8",
+      "TotalFwdPackets": "100",
+      "TotalLenghtOfFwdPackets": "245",
       "Label": "DoS slowloris"
     },
     {
@@ -31691,7 +31691,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:25",
-      "TotalFwdPackets": "4",
+      "TotalFwdPackets": "49",
       "TotalLenghtOfFwdPackets": "361",
       "Label": "DoS Slowhttptest"
     },
@@ -31763,7 +31763,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:03",
-      "TotalFwdPackets": "16",
+      "TotalFwdPackets": "109",
       "TotalLenghtOfFwdPackets": "2541",
       "Label": "DoS slowloris"
     },
@@ -31817,7 +31817,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:51",
-      "TotalFwdPackets": "14",
+      "TotalFwdPackets": "104",
       "TotalLenghtOfFwdPackets": "2541",
       "Label": "DoS slowloris"
     },
@@ -31826,7 +31826,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:52",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "20",
       "TotalLenghtOfFwdPackets": "16",
       "Label": "DoS slowloris"
     },
@@ -31943,7 +31943,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:11",
-      "TotalFwdPackets": "9",
+      "TotalFwdPackets": "39",
       "TotalLenghtOfFwdPackets": "1362",
       "Label": "DoS GoldenEye"
     },
@@ -32141,7 +32141,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:18",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "25",
       "TotalLenghtOfFwdPackets": "442",
       "Label": "DoS GoldenEye"
     },
@@ -32276,7 +32276,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:15",
-      "TotalFwdPackets": "4",
+      "TotalFwdPackets": "92",
       "TotalLenghtOfFwdPackets": "530",
       "Label": "DoS Slowhttptest"
     },
@@ -32411,7 +32411,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:57",
-      "TotalFwdPackets": "14",
+      "TotalFwdPackets": "140",
       "TotalLenghtOfFwdPackets": "2541",
       "Label": "DoS slowloris"
     },
@@ -32420,7 +32420,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "15",
       "TotalLenghtOfFwdPackets": "415",
       "Label": "DoS GoldenEye"
     },
@@ -32501,7 +32501,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:12",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "18",
       "TotalLenghtOfFwdPackets": "364",
       "Label": "DoS GoldenEye"
     },
@@ -32519,7 +32519,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:17",
-      "TotalFwdPackets": "11",
+      "TotalFwdPackets": "31",
       "TotalLenghtOfFwdPackets": "1784",
       "Label": "DoS GoldenEye"
     },
@@ -32807,7 +32807,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:55",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "21",
       "TotalLenghtOfFwdPackets": "16",
       "Label": "DoS slowloris"
     },
@@ -33059,7 +33059,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 09:50",
-      "TotalFwdPackets": "16",
+      "TotalFwdPackets": "160",
       "TotalLenghtOfFwdPackets": "2541",
       "Label": "DoS slowloris"
     },
@@ -33131,8 +33131,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:26",
-      "TotalFwdPackets": "7",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "70",
+      "TotalLenghtOfFwdPackets": "90",
       "Label": "DoS Slowhttptest"
     },
     {
@@ -33248,7 +33248,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:19",
-      "TotalFwdPackets": "7",
+      "TotalFwdPackets": "17",
       "TotalLenghtOfFwdPackets": "336",
       "Label": "DoS GoldenEye"
     },
@@ -33257,7 +33257,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:19",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "15",
       "TotalLenghtOfFwdPackets": "431",
       "Label": "DoS GoldenEye"
     },
@@ -33266,7 +33266,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:58",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "25",
       "TotalLenghtOfFwdPackets": "385",
       "Label": "DoS Hulk"
     },
@@ -33275,7 +33275,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:10",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "28",
       "TotalLenghtOfFwdPackets": "361",
       "Label": "DoS GoldenEye"
     },
@@ -33401,7 +33401,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:17",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "12",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "DoS GoldenEye"
     },
@@ -33437,7 +33437,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:12",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "102",
       "TotalLenghtOfFwdPackets": "421",
       "Label": "DoS GoldenEye"
     },
@@ -33491,7 +33491,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "102",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "DoS GoldenEye"
     },
@@ -33563,7 +33563,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:22",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "80",
       "TotalLenghtOfFwdPackets": "524",
       "Label": "DoS Slowhttptest"
     },
@@ -33689,7 +33689,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:10",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "108",
       "TotalLenghtOfFwdPackets": "349",
       "Label": "DoS GoldenEye"
     },
@@ -34058,7 +34058,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:11",
-      "TotalFwdPackets": "6",
+      "TotalFwdPackets": "60",
       "TotalLenghtOfFwdPackets": "368",
       "Label": "DoS GoldenEye"
     },
@@ -34301,7 +34301,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:11",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "85",
       "TotalLenghtOfFwdPackets": "364",
       "Label": "DoS GoldenEye"
     },
@@ -34553,7 +34553,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:18",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "88",
       "TotalLenghtOfFwdPackets": "282",
       "Label": "DoS GoldenEye"
     },
@@ -34697,7 +34697,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "42",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "DoS GoldenEye"
     },
@@ -35147,7 +35147,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "42",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "DoS GoldenEye"
     },
@@ -35165,7 +35165,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:12",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "23",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "DoS GoldenEye"
     },
@@ -35273,7 +35273,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:18",
-      "TotalFwdPackets": "12",
+      "TotalFwdPackets": "52",
       "TotalLenghtOfFwdPackets": "1910",
       "Label": "DoS GoldenEye"
     },
@@ -35327,7 +35327,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:18",
-      "TotalFwdPackets": "7",
+      "TotalFwdPackets": "78",
       "TotalLenghtOfFwdPackets": "443",
       "Label": "DoS GoldenEye"
     },
@@ -35498,7 +35498,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "84",
       "TotalLenghtOfFwdPackets": "462",
       "Label": "DoS GoldenEye"
     },
@@ -35741,7 +35741,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:12",
-      "TotalFwdPackets": "9",
+      "TotalFwdPackets": "92",
       "TotalLenghtOfFwdPackets": "562",
       "Label": "DoS GoldenEye"
     },
@@ -36101,7 +36101,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:10",
-      "TotalFwdPackets": "7",
+      "TotalFwdPackets": "71",
       "TotalLenghtOfFwdPackets": "448",
       "Label": "DoS GoldenEye"
     },
@@ -36209,7 +36209,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 10:32",
-      "TotalFwdPackets": "1",
+      "TotalFwdPackets": "100",
       "TotalLenghtOfFwdPackets": "1983",
       "Label": "DoS Slowhttptest"
     },
@@ -36245,7 +36245,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:13",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "28",
       "TotalLenghtOfFwdPackets": "430",
       "Label": "DoS GoldenEye"
     },
@@ -36299,7 +36299,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:18",
-      "TotalFwdPackets": "8",
+      "TotalFwdPackets": "28",
       "TotalLenghtOfFwdPackets": "296",
       "Label": "DoS GoldenEye"
     },
@@ -36335,7 +36335,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "5/7/2017 11:17",
-      "TotalFwdPackets": "2",
+      "TotalFwdPackets": "21",
       "TotalLenghtOfFwdPackets": "0",
       "Label": "DoS GoldenEye"
     },
@@ -43688,7 +43688,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:41",
-      "TotalFwdPackets": "6",
+      "TotalFwdPackets": "160",
       "TotalLenghtOfFwdPackets": "600",
       "Label": "WA - Sql Injection"
     },
@@ -45713,7 +45713,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:41",
-      "TotalFwdPackets": "4",
+      "TotalFwdPackets": "40",
       "TotalLenghtOfFwdPackets": "536",
       "Label": "WA - Sql Injection"
     },
@@ -46505,8 +46505,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:40",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "134",
+      "TotalLenghtOfFwdPackets": "872",
       "Label": "WA - Sql Injection"
     },
     {
@@ -46523,7 +46523,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:40",
-      "TotalFwdPackets": "5",
+      "TotalFwdPackets": "100",
       "TotalLenghtOfFwdPackets": "600",
       "Label": "WA - Sql Injection"
     },
@@ -47279,8 +47279,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:41",
-      "TotalFwdPackets": "1",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "180",
+      "TotalLenghtOfFwdPackets": "540",
       "Label": "WA - Sql Injection"
     },
     {
@@ -48233,7 +48233,7 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:41",
-      "TotalFwdPackets": "4",
+      "TotalFwdPackets": "124",
       "TotalLenghtOfFwdPackets": "523",
       "Label": "WA - Sql Injection"
     },
@@ -49664,8 +49664,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 10:40",
-      "TotalFwdPackets": "2",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "190",
+      "TotalLenghtOfFwdPackets": "4620",
       "Label": "WA - Sql Injection"
     },
     {
@@ -49673,8 +49673,8 @@
       "DestinationPort": "80",
       "target": "192.168.10.50dx",
       "Timestamp": "6/7/2017 09:58",
-      "TotalFwdPackets": "3",
-      "TotalLenghtOfFwdPackets": "0",
+      "TotalFwdPackets": "81",
+      "TotalLenghtOfFwdPackets": "600",
       "Label": "WA - Brute Force"
     }
   ]

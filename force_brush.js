@@ -31,6 +31,7 @@ d3.json("miserables.json", function (error, JsonData) {
     drawData();
 });
 totPackets = 0;
+
 function drawData() {
     d3.selectAll().remove();
     // Mappa con chiave le porte di destinazione e valore il totale dei pacchetti ricevuti
@@ -55,7 +56,7 @@ function drawData() {
         .attr('data-live-search-placeholder', 'Search')
         .attr('title', "Filter Destination ports")
         .attr("data-header", "select the destination ports")
-        .attr("data-max-options", "20")
+        .attr("data-max-options", "50")
         .attr('data-width', "385")
         .on('change', FilterPorts);
 
@@ -73,7 +74,7 @@ function drawData() {
         })
         .each(function (d) {
             InsertedPort += 1;
-            if (InsertedPort <= 10) {
+            if (InsertedPort <= 50) {
                 PortSelected.push(d);
                 d3.select(this).attr("selected", "")
             }
@@ -446,7 +447,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 215, heightBar = 20, svgWidthBar = 300, svgHeightBar = 110, tooltipBar;
+    var widthBar = 215, heightBar = 20, svgWidthBar = 310, svgHeightBar = 110, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -489,10 +490,10 @@ function drawData() {
         canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
-    var marginCPA = {top: 25, right: 0, bottom: 10, left: 0},
+    var marginCPA = {top: 25, right: 0, bottom: 8, left: 0},
         widthCPA = 1140 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-25, widthCPA + 260]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-37, widthCPA + 262]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -657,8 +658,8 @@ function drawData() {
     });
 
     // ======================== SCATTERPLOT ===============================
-    var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 95},
-        widthScatterPlot = 1210 - marginScatterPlot.left - marginScatterPlot.right,
+    var marginScatterPlot = {top: 20, right: 5, bottom: 35, left: 80},
+        widthScatterPlot = 1200 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 465 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
@@ -945,6 +946,11 @@ function drawData() {
                 .attr("class", "cpa")
                 .attr("width", widthCPA)
                 .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
+                .call(d3.zoom().scaleExtent([1, 10]).on("zoom", function () {
+                    d3.event.transform.x = Math.min(70, Math.max(d3.event.transform.x, widthCPA - widthCPA * d3.event.transform.k) + 70);
+                    d3.event.transform.y = Math.min(28, Math.max(d3.event.transform.y, heightCPA - heightCPA * d3.event.transform.k) + 30);
+                    svgCPA.attr("transform", d3.event.transform);
+                }))
                 .append("g")
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
@@ -1098,7 +1104,7 @@ function drawData() {
                 .each(function (d) {
                     d3.select(this).call(d3.axisLeft(y[d])
                         .ticks(12)
-                        .tickSize(9)
+                        .tickSize(7)
                         .tickPadding(7));
                 })
                 //text does not show up because previous line breaks somehow
@@ -1114,7 +1120,7 @@ function drawData() {
             g.append("g")
                 .attr("class", "brush")
                 .each(function (d) {
-                    d3.select(this).call(y[d].brush = d3.brushY().extent([[-8, 0], [8, height]]).on("brush start", brushstart).on("brush", brush_parallel_chart));
+                    d3.select(this).call(y[d].brush = d3.brushY().extent([[-8, 0], [8, heightCPA]]).on("brush start", brushstart).on("brush", brush_parallel_chart));
                 })
                 .selectAll("rect")
                 .attr("x", -8)
@@ -1231,25 +1237,29 @@ function drawData() {
             svgScatterPlot.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + heightScatterPlot + ")")
-                .call(xAxisScatterPlot.tickSize(8).tickSizeOuter(0))
+                .call(xAxisScatterPlot.tickSize(7).tickSizeOuter(0))
                 .selectAll("text")
-                .style("text-anchor", "middle");
+                .attr("y", 0)
+                .attr("x", 9)
+                .attr("dy", ".35em")
+                .attr("transform", "rotate(90)")
+                .style("text-anchor", "start");
 
             svgScatterPlot.append("g")
                 .append("text")
                 .attr("class", "label")
                 .attr("x", widthScatterPlot)
-                .attr("y", 392)
+                .attr("y", 407)
                 .style("text-anchor", "end")
                 .text("Attacked Ports");
 
             svgScatterPlot.append("g")
                 .attr("class", "y axis")
-                .call(yAxisScatterPlot.tickSize(6).tickSizeOuter(0))
+                .call(yAxisScatterPlot.tickSize(7).tickSizeOuter(0))
                 .append("text")
                 .attr("class", "label")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 4)
+                .attr("y", -12)
+                .attr("x", 14)
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
                 .text("IP Address");
@@ -1358,7 +1368,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "4/7/2017")
         });
         var valueAttackSelectedDay1 = new Map();
-        attackDay1 = new Map([...attackDay1.entries()].sort((a, b) => b[1] - a[1]));
+        attackDay1 = new Map([...attackDay1.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay1 = Array.from(attackDay1);
         for (var i = 0; i < bindedDay1.length; i++) {
             valueAttackSelectedDay1.set(bindedDay1[i][0], 0);
@@ -1380,19 +1390,30 @@ function drawData() {
 
         var barLegenday1 = d3.axisTop()
             .scale(xScaleDay1)
-            .tickPadding(2)
-            .tickSize(3)
-            .ticks(6)
-            .tickSizeOuter(0);
+            .tickValues(xScaleDay1.ticks(4).concat(xScaleDay1.domain()));
+
+        // gridlines in x axis function
+        function make_x_gridlines() {
+            return d3.axisBottom(xScaleDay1)
+        }
+
+        // add the X gridlines
+        barDay1.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .call(make_x_gridlines()
+                .tickValues(xScaleDay1.ticks(4).concat(xScaleDay1.domain()))
+                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+            );
 
         barDay1.append("g")
             .attr("class", "x axis")
             .call(barLegenday1)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(70,25)');
 
 
         // CHART AREA
-        var valsDay1 = barDay1.append('g').attr('transform', 'translate(75,10)')
+        var valsDay1 = barDay1.append('g').attr('transform', 'translate(65,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1420,6 +1441,17 @@ function drawData() {
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
             });
+        chartDay1.enter().append('text')
+            .text(function (d) {
+                return d[1]
+            })
+            .attr('x', function (d) {
+                return xScaleDay1((d[1])) + 8;
+            })
+            .attr('y', function (d) {
+                return yScaleDay1(d[0]) + 8;
+            })
+            .style("font-size", "11px");
 
         chartDay1.enter().append('rect')
             .attr("width", function (d) {
@@ -1476,7 +1508,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "5/7/2017")
         });
         var valueAttackSelectedDay2 = new Map();
-        attackDay2 = new Map([...attackDay2.entries()].sort((a, b) => b[1] - a[1]));
+        attackDay2 = new Map([...attackDay2.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay2 = Array.from(attackDay2);
         xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
         for (var i = 0; i < bindedDay2.length; i++) {
@@ -1498,18 +1530,29 @@ function drawData() {
 
         var barLegenday2 = d3.axisTop()
             .scale(xScaleDay2)
-            .tickPadding(2)
-            .tickSize(3)
-            .ticks(6)
-            .tickSizeOuter(0);
+            .tickValues(xScaleDay2.ticks(5).concat(xScaleDay2.domain()));
+
+        // gridlines in x axis function
+        function make_x_gridlines() {
+            return d3.axisBottom(xScaleDay2)
+        }
+
+        // add the X gridlines
+        barDay2.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .call(make_x_gridlines()
+                .tickValues(xScaleDay2.ticks(5).concat(xScaleDay2.domain()))
+                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+            );
 
         barDay2.append("g")
             .attr("class", "x axis")
             .call(barLegenday2)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(70,25)');
 
         // CHART AREA
-        var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
+        var valsDay2 = barDay2.append('g').attr('transform', 'translate(65,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1537,6 +1580,18 @@ function drawData() {
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
             });
+
+        chartDay2.enter().append('text')
+            .text(function (d) {
+                return d[1]
+            })
+            .attr('x', function (d) {
+                return xScaleDay2((d[1])) + 8;
+            })
+            .attr('y', function (d) {
+                return yScaleDay2(d[0]) + 8;
+            })
+            .style("font-size", "11px");
 
         chartDay2.enter().append('rect')
             .attr("width", function (d) {
@@ -1593,7 +1648,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "6/7/2017")
         });
         var valueAttackSelectedDay3 = new Map();
-        attackDay3 = new Map([...attackDay3.entries()].sort((a, b) => b[1] - a[1]));
+        attackDay3 = new Map([...attackDay3.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay3 = Array.from(attackDay3);
         xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
         for (var i = 0; i < bindedDay3.length; i++) {
@@ -1615,18 +1670,29 @@ function drawData() {
 
         barLegenday3 = d3.axisTop()
             .scale(xScaleDay3)
-            .tickPadding(2)
-            .tickSize(3)
-            .ticks(6)
-            .tickSizeOuter(0);
+            .tickValues(xScaleDay3.ticks(5).concat(xScaleDay3.domain()));
+
+        // gridlines in x axis function
+        function make_x_gridlines() {
+            return d3.axisBottom(xScaleDay3)
+        }
+
+        // add the X gridlines
+        barDay3.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .call(make_x_gridlines()
+                .tickValues(xScaleDay3.ticks(5).concat(xScaleDay3.domain()))
+                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+            );
 
         barDay3.append("g")
             .attr("class", "x axis")
             .call(barLegenday3)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(70,25)');
 
         // CHART AREA
-        valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
+        valsDay3 = barDay3.append('g').attr('transform', 'translate(65,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1656,6 +1722,18 @@ function drawData() {
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
             });
+
+        chartDay3.enter().append('text')
+            .text(function (d) {
+                return d[1]
+            })
+            .attr('x', function (d) {
+                return xScaleDay3((d[1])) + 8;
+            })
+            .attr('y', function (d) {
+                return yScaleDay3(d[0]) + 8;
+            })
+            .style("font-size", "11px");
 
         chartDay3.enter().append('rect')
             .attr("width", function (d) {
@@ -1711,7 +1789,7 @@ function drawData() {
             return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "7/7/2017")
         });
         var valueAttackSelectedDay4 = new Map();
-        attackDay4 = new Map([...attackDay4.entries()].sort((a, b) => b[1] - a[1]));
+        attackDay4 = new Map([...attackDay4.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay4 = Array.from(attackDay4);
         xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
         for (var i = 0; i < bindedDay4.length; i++) {
@@ -1733,18 +1811,29 @@ function drawData() {
 
         var barLegenday4 = d3.axisTop()
             .scale(xScaleDay4)
-            .tickPadding(2)
-            .tickSize(3)
-            .ticks(6)
-            .tickSizeOuter(0);
+            .tickValues(xScaleDay4.ticks(5).concat(xScaleDay4.domain()));
+
+        // gridlines in x axis function
+        function make_x_gridlines() {
+            return d3.axisBottom(xScaleDay4)
+        }
+
+        // add the X gridlines
+        barDay4.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .call(make_x_gridlines()
+                .tickValues(xScaleDay4.ticks(5).concat(xScaleDay4.domain()))
+                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+            );
 
         barDay4.append("g")
             .attr("class", "x axis")
             .call(barLegenday4)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(70,25)');
 
         // CHART AREA
-        var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')
+        var valsDay4 = barDay4.append('g').attr('transform', 'translate(65,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1772,6 +1861,18 @@ function drawData() {
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
             });
+
+        chartDay4.enter().append('text')
+            .text(function (d) {
+                return d[1]
+            })
+            .attr('x', function (d) {
+                return xScaleDay4((d[1])) + 8;
+            })
+            .attr('y', function (d) {
+                return yScaleDay4(d[0]) + 8;
+            })
+            .style("font-size", "11px");
 
         chartDay4.enter().append('rect')
             .attr("width", function (d) {
