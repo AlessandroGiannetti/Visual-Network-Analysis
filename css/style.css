@@ -35,6 +35,7 @@ h4 {
 
 .dot circle {
     stroke: none;
+    shape-rendering: crispEdges;
     stroke-width: 3px;
 }
 
@@ -46,7 +47,7 @@ svg {
 .background path {
     fill: none;
     stroke: #444444;
-    shape-rendering: geometricPrecision;
+    shape-rendering: crispEdges;
     position: relative;
 }
 
@@ -57,14 +58,14 @@ svg {
 .evidence path {
     fill: none;
     stroke: orangered;
-    shape-rendering: geometricPrecision;
+    shape-rendering: crispEdges;
     position: relative;
 }
 
 .notEvidence path {
     fill: none;
     stroke: #007bff;
-    shape-rendering: geometricPrecision;
+    shape-rendering: crispEdges;
     position: relative;
 }
 .axis line,

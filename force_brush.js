@@ -490,9 +490,9 @@ function drawData() {
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 25, right: 0, bottom: 10, left: 0},
-        widthCPA = 1100 - marginCPA.left - marginCPA.right,
+        widthCPA = 1095 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-10, widthCPA + 260]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-10, widthCPA + 250]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -558,7 +558,7 @@ function drawData() {
                 if (transferPackets.get(d.source + d.target) == null)
                     return 0;
                 else
-                    return scalePackets(transferPackets.get(d.source + d.target));
+                    return scalePackets(transferPackets.get(d.source + d.target)[0]);
             });
 
         // declaration of the node of the network
@@ -579,17 +579,25 @@ function drawData() {
                         return colorScalePackets(NumberDeliveredPackets.get(d.id));
                     else
                         return colorScalePackets(0);
-            }).on("click", function () {
+            }).on("click", function (d) {
                 d3.select(this).transition().duration(200).style("stroke", "orangered");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
                 FocusDotScatterPlot(nodeSelected);
+                updateChartDay1();
+                updateChartDay2();
+                updateChartDay3();
+                updateChartDay4();
             })
             .on('dblclick', function () {
                 d3.select(this).transition().duration(200).style("stroke", "none");
                 nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
-                FocusDotScatterPlot(nodeSelected);
+                UnfocusDotScatterPlot(nodeSelected);
+                updateChartDay1();
+                updateChartDay2();
+                updateChartDay3();
+                updateChartDay4();
             })
             .on('mouseover', function (d) {
                 handleMouseOverNode(d3.select(this));
@@ -651,7 +659,7 @@ function drawData() {
     // ======================== SCATTERPLOT ===============================
     var marginScatterPlot = {top: 20, right: 15, bottom: 43, left: 95},
         widthScatterPlot = 1210 - marginScatterPlot.left - marginScatterPlot.right,
-        heightScatterPlot = 455 - marginScatterPlot.top - marginScatterPlot.bottom,
+        heightScatterPlot = 465 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
         xAxisScatterPlot, yAxisScatterPlot,
@@ -708,7 +716,6 @@ function drawData() {
             scalePacket(NumberDeliveredPackets);
             updateGraph(newData);
         }
-
         step = 1;
         updateNumberOfAttack(newData);
         updateLegend();
@@ -767,12 +774,20 @@ function drawData() {
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
                     FocusDotScatterPlot(nodeSelected);
+                    updateChartDay1();
+                    updateChartDay2();
+                    updateChartDay3();
+                    updateChartDay4();
                 })
                 .on('dblclick', function () {
                     d3.select(this).transition().duration(200).style("stroke", "none");
                     nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
-                    FocusDotScatterPlot(nodeSelected);
+                    UnfocusDotScatterPlot(nodeSelected);
+                    updateChartDay1();
+                    updateChartDay2();
+                    updateChartDay3();
+                    updateChartDay4();
                 })
                 .on('mouseover', function (d) {
                     handleMouseOverNode(d3.select(this));
@@ -820,7 +835,7 @@ function drawData() {
                     if (transferPackets.get(d.source.id + d.target.id) == null)
                         return 0;
                     else
-                        return scalePackets(transferPackets.get(d.source.id + d.target.id));
+                        return scalePackets(transferPackets.get(d.source.id + d.target.id)[0]);
                 });
 
             // starting the simulation
@@ -1016,7 +1031,6 @@ function drawData() {
                     if (!brushEmpty())
                         brush_parallel_chart()
                 });
-            //add red selected lines for focus
             selected = svgCPA.append("g")
                 .attr("class", "evidence")
                 .selectAll("path")
@@ -1129,359 +1143,6 @@ function drawData() {
             }
         }
 
-        function updateChartDay1() {
-            d3.selectAll(".barday1").remove();
-            var chartDay1;
-            bindedDay1 = Array.from(attackDay1);
-            xScaleDay1 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay1.values())))]).range([0, widthBar]);
-            var yScaleDay1 = d3.scalePoint()
-                .range([svgHeightBar, 0])
-                .domain(bindedDay1.map(function (d) {
-                    return d[0];
-                }))
-                .padding(1);
-            // SVG
-            var barDay1 = d3.select('#barchartDay1').append('svg')
-                .attr("width", svgWidthBar).attr('height', svgHeightBar)
-                .attr("class", "barday1");
-
-            var barLegenday1 = d3.axisTop()
-                .scale(xScaleDay1)
-                .tickPadding(2)
-                .tickSize(3)
-                .ticks(6);
-
-            barDay1.append("g")
-                .attr("class", "x axis")
-                .call(barLegenday1)
-                .attr('transform', 'translate(80,25)');
-
-
-            // CHART AREA
-            var valsDay1 = barDay1.append('g').attr('transform', 'translate(75,10)')
-                .attr('width', widthBar).attr("height", heightBar);
-
-            tooltipBar = d3.select('body').append('div')
-                .style('display', "none")
-                .attr('class', 'd3-tip');
-
-            // DATA BIND
-            chartDay1 = valsDay1.selectAll('rect').data(bindedDay1);
-            // ENTER
-            chartDay1.enter().append('rect')
-                .attr("width", function (d) {
-                    return xScaleDay1(d[1]);
-                })
-                .attr("height", 10)
-                .attr('x', 5).attr('y', function (d) {
-                return yScaleDay1(d[0]);
-            })
-                .attr("fill", "#007bff")
-                .attr("width", function (d) {
-                    return xScaleDay1(d[1])
-                }).on('mousemove', function (d) {
-                tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 70 + "px")
-                    .style('display', "block")
-                    .html((d[0]) + ": " + (d[1]));
-            })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // DATA BIND
-            var keyDay1 = valsDay1.selectAll('text.key').data(bindedDay1);
-            // ENTER
-            keyDay1.enter().append("text").attr("class", "key")
-                .attr("x", 0)
-                .attr("y", function (d) {
-                    return yScaleDay1(d[0]);
-                })
-                .attr('dy', 8)
-                .attr("text-anchor", "end")
-                .text(function (d) {
-                    return d[0];
-                }).on('mousemove', function (d) {
-                tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 70 + "px")
-                    .style('display', "block")
-                    .html((d[0]) + ": " + (d[1]));
-            })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // UPDATE
-            keyDay1.text(function (d) {
-                return d[0]
-            });
-
-        }
-
-        function updateChartDay2() {
-            d3.selectAll(".barday2").remove();
-            var chartDay2;
-            bindedDay2 = Array.from(attackDay2);
-            xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
-            var yScaleDay2 = d3.scalePoint()
-                .range([svgHeightBar, 0])
-                .domain(bindedDay2.map(function (d) {
-                    return d[0];
-                }))
-                .padding(1);
-            // SVG
-            var barDay2 = d3.select('#barchartDay2').append('svg')
-                .attr("width", svgWidthBar).attr('height', svgHeightBar)
-                .attr("class", "barday2");
-
-            var barLegenday2 = d3.axisTop()
-                .scale(xScaleDay2)
-                .tickPadding(2)
-                .tickSize(3)
-                .ticks(6);
-
-            barDay2.append("g")
-                .attr("class", "x axis")
-                .call(barLegenday2)
-                .attr('transform', 'translate(80,25)');
-
-            // CHART AREA
-            var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
-                .attr('width', widthBar).attr("height", heightBar);
-
-            tooltipBar = d3.select('body').append('div')
-                .style('display', "none")
-                .attr('class', 'd3-tip');
-
-            // DATA BIND
-            chartDay2 = valsDay2.selectAll('rect').data(bindedDay2);
-            // ENTER
-            chartDay2.enter().append('rect')
-                .attr("width", function (d) {
-                    return xScaleDay2(d[1]);
-                })
-                .attr("height", 10)
-                .attr('x', 5).attr('y', function (d) {
-                return yScaleDay2(d[0]);
-            })
-                .attr("fill", "#007bff")
-                .attr("width", function (d) {
-                    return xScaleDay2(d[1])
-                }).on('mousemove', function (d) {
-                tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 70 + "px")
-                    .style('display', "block")
-                    .html((d[0]) + ": " + (d[1]));
-            })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // DATA BIND
-            var keyDay2 = valsDay2.selectAll('text.key').data(bindedDay2);
-            // ENTER
-            keyDay2.enter().append("text").attr("class", "key")
-                .attr("x", 0)
-                .attr("y", function (d) {
-                    return yScaleDay2(d[0]);
-                })
-                .attr('dy', 8)
-                .attr("text-anchor", "end")
-                .text(function (d) {
-                    return d[0];
-                }).on('mousemove', function (d) {
-                tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 70 + "px")
-                    .style('display', "block")
-                    .html((d[0]) + ": " + (d[1]));
-            })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // UPDATE
-            keyDay2.text(function (d) {
-                return d[0]
-            });
-
-        }
-
-        function updateChartDay3() {
-            d3.selectAll(".barday3").remove();
-            var chartDay3;
-            bindedDay3 = Array.from(attackDay3);
-            xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
-            var yScaleDay3 = d3.scalePoint()
-                .range([svgHeightBar, 0])
-                .domain(bindedDay3.map(function (d) {
-                    return d[0];
-                }))
-                .padding(1);
-            // SVG
-            var barDay3 = d3.select('#barchartDay3').append('svg')
-                .attr("width", svgWidthBar).attr('height', svgHeightBar)
-                .attr("class", "barday2");//.style('border','1px solid')
-
-            barLegenday3 = d3.axisTop()
-                .scale(xScaleDay3)
-                .tickPadding(2)
-                .tickSize(3)
-                .ticks(6);
-
-            barDay3.append("g")
-                .attr("class", "x axis")
-                .call(barLegenday3)
-                .attr('transform', 'translate(80,25)');
-
-            // CHART AREA
-            valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
-                .attr('width', widthBar).attr("height", heightBar);
-
-            tooltipBar = d3.select('body').append('div')
-                .style('display', "none")
-                .attr('class', 'd3-tip');
-            // DATA BIND
-            chartDay3 = valsDay3.selectAll('rect').data(bindedDay3);
-            // ENTER
-            chartDay3.enter().append('rect')
-                .attr("width", function (d) {
-                    return xScaleDay3(d[1]);
-                })
-                .attr("height", 10)
-                .attr('x', 5).attr('y', function (d) {
-                return yScaleDay3(d[0]);
-            })
-                .attr("fill", "#007bff")
-                .attr("width", function (d) {
-                    return xScaleDay3(d[1])
-                })
-                .on('mousemove', function (d) {
-                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
-                        .style('display', "block")
-                        .html((d[0]) + ": " + (d[1]));
-                })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // DATA BIND
-            var keyDay3 = valsDay3.selectAll('text.key').data(bindedDay3);
-            // ENTER
-            keyDay3.enter().append("text").attr("class", "key")
-                .attr("x", 0)
-                .attr("y", function (d) {
-                    return yScaleDay3(d[0]);
-                })
-                .attr('dy', 8)
-                .attr("text-anchor", "end")
-                .text(function (d) {
-                    return d[0];
-                }).on('mousemove', function (d) {
-                tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 70 + "px")
-                    .style('display', "block")
-                    .html((d[0]) + ": " + (d[1]));
-            })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // UPDATE
-            keyDay3.text(function (d) {
-                return d[0]
-            });
-
-        }
-
-        function updateChartDay4() {
-            d3.selectAll(".barday4").remove();
-            bindedDay4 = Array.from(attackDay4);
-            xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
-            var yScaleDay4 = d3.scalePoint()
-                .range([svgHeightBar, 0])
-                .domain(bindedDay4.map(function (d) {
-                    return d[0];
-                }))
-                .padding(1);
-            // SVG
-            var barDay4 = d3.select('#barchartDay4').append('svg')
-                .attr("width", svgWidthBar).attr('height', svgHeightBar)
-                .attr("class", "barday4");
-
-            var barLegenday4 = d3.axisTop()
-                .scale(xScaleDay4)
-                .tickPadding(2)
-                .tickSize(3)
-                .ticks(6);
-
-            barDay4.append("g")
-                .attr("class", "x axis")
-                .call(barLegenday4)
-                .attr('transform', 'translate(80,25)');
-
-            // CHART AREA
-            var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')
-                .attr('width', widthBar).attr("height", heightBar);
-
-            tooltipBar = d3.select('body').append('div')
-                .style('display', "none")
-                .attr('class', 'd3-tip');
-
-            // DATA BIND
-            var chartDay4 = valsDay4.selectAll('rect').data(bindedDay4);
-            // ENTER
-            chartDay4.enter().append('rect')
-                .attr("width", function (d) {
-                    return xScaleDay4(d[1]);
-                })
-                .attr("height", 10)
-                .attr('x', 5).attr('y', function (d) {
-                return yScaleDay4(d[0]);
-            })
-                .attr("fill", "#007bff")
-                .attr("width", function (d) {
-                    return xScaleDay4(d[1])
-                })
-
-                .on('mousemove', function (d) {
-                    tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                        .style("top", d3.event.pageY - 70 + "px")
-                        .style('display', "block")
-                        .html((d[0]) + ": " + (d[1]));
-                })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // DATA BIND
-            var keyDay4 = valsDay4.selectAll('text.key').data(bindedDay4);
-            // ENTER
-            keyDay4.enter().append("text").attr("class", "key")
-                .attr("x", 0)
-                .attr("y", function (d) {
-                    return yScaleDay4(d[0]);
-                })
-                .attr('dy', 8)
-                .attr("text-anchor", "end")
-                .text(function (d) {
-                    return d[0];
-                }).on('mousemove', function (d) {
-                tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 70 + "px")
-                    .style('display', "block")
-                    .html((d[0]) + ": " + (d[1]));
-            })
-                .on('mouseout', function () {
-                    tooltipBar.style('display', "none");
-                });
-
-            // UPDATE
-            keyDay4.text(function (d) {
-                return d[0]
-            });
-
-        }
 
         function updateScatterPlot(newData) {
             //==================================== INIT SCATTERPLOT =========================================
@@ -1572,11 +1233,7 @@ function drawData() {
                 .attr("transform", "translate(0," + heightScatterPlot + ")")
                 .call(xAxisScatterPlot.tickSize(8).tickSizeOuter(0))
                 .selectAll("text")
-                .attr("y", 0)
-                .attr("x", 9)
-                .attr("dy", ".35em")
-                .attr("transform", "rotate(90)")
-                .style("text-anchor", "start");
+                .style("text-anchor", "middle");
 
             svgScatterPlot.append("g")
                 .append("text")
@@ -1600,6 +1257,7 @@ function drawData() {
             // draw point DESTINATION PORT
             svgScatterPlot.selectAll(".dot")
                 .data(DestinationScatterplot)
+                //.data(newData)
                 .enter().append("circle")
                 .attr("class", "dotDestination")
                 .attr("r", function (d) {
@@ -1630,7 +1288,6 @@ function drawData() {
         }
 
         function brush_parallel_chart() {
-            console.log(resetCPA);
             for (var i = 0; i < dimensions.length; ++i) {
                 if (d3.event.target == y[dimensions[i]].brush) {
                     min = d3.event.selection[0];
@@ -1641,10 +1298,23 @@ function drawData() {
                 }
                 }
 
-            if (resetCPA == true) {
+            if (resetCPA === true) {
                 resetCPA = false;
                 for (var i = 0; i < dimensions.length; ++i)
                     extents[i] = [0, 0];
+            }
+            if (nodeSelected.size !== 0) {
+                selected.style("display", function (d) {
+                    return dimensions.every(function (p, i) {
+                        if (extents[i][0] === 0 && extents[i][0] === 0)
+                            return (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        if (p === "source" || p === "target") {
+                            return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        } else {
+                            return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
+                        }
+                    }) ? "block" : "none";
+                });
             }
             notSelected.style("display", function (d) {
                 return dimensions.every(function (p, i) {
@@ -1657,19 +1327,6 @@ function drawData() {
                     }
                 }) ? "block" : "none";
             });
-            if (nodeSelected.size !== 0) {
-                selected.style("display", function (d) {
-                    return dimensions.every(function (p, i) {
-                        if (extents[i][0] === 0 && extents[i][0] === 0)
-                            return true;
-                        if (p === "source" || p === "target") {
-                            return extents[i].includes(d[p].id.slice(0, -2)) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
-                        } else {
-                            return (extents[i].includes(d[p]) || extents[i].includes(parseInt(d[p]))) && (nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)));
-                        }
-                    }) ? "block" : "none";
-                });
-            }
             filteredData = newData.filter(function (d) {
                 return (extents[0].includes(d.source.id.slice(0, -2)) || (extents[0][0] === 0 && extents[0][1] === 0))
                     && (extents[2].includes(d.target.id.slice(0, -2)) || (extents[2][0] === 0 && extents[2][1] === 0))
@@ -1681,7 +1338,6 @@ function drawData() {
             buildMapPacket(filteredData);
             scalePacket(NumberDeliveredPackets);
             updateGraph(filteredData);
-
             attackPackets(filteredData);
             updateLegend();
             updateNumberOfAttack(filteredData);
@@ -1693,6 +1349,472 @@ function drawData() {
             updateScatterPlot(filteredData);
             FocusDotScatterPlot(nodeSelected);
         }
+    }
+
+    function updateChartDay1() {
+        d3.selectAll(".barday1").remove();
+        var chartDay1;
+        var attackSelectedDay1 = newData.filter(function (d) {
+            return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "4/7/2017")
+        });
+        var valueAttackSelectedDay1 = new Map();
+        bindedDay1 = Array.from(attackDay1);
+        for (var i = 0; i < bindedDay1.length; i++) {
+            valueAttackSelectedDay1.set(bindedDay1[i][0], 0);
+        }
+        for (var j = 0; j < attackSelectedDay1.length; j++) {
+            valueAttackSelectedDay1.set(attackSelectedDay1[j].Label, valueAttackSelectedDay1.get(attackSelectedDay1[j].Label) + parseInt(attackSelectedDay1[j].TotalFwdPackets));
+        }
+        xScaleDay1 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay1.values())))]).range([0, widthBar]);
+        var yScaleDay1 = d3.scalePoint()
+            .range([svgHeightBar, 0])
+            .domain(bindedDay1.map(function (d) {
+                return d[0];
+            }))
+            .padding(1);
+        // SVG
+        var barDay1 = d3.select('#barchartDay1').append('svg')
+            .attr("width", svgWidthBar).attr('height', svgHeightBar)
+            .attr("class", "barday1");
+
+        var barLegenday1 = d3.axisTop()
+            .scale(xScaleDay1)
+            .tickPadding(2)
+            .tickSize(3)
+            .ticks(6)
+            .tickSizeOuter(0);
+
+        barDay1.append("g")
+            .attr("class", "x axis")
+            .call(barLegenday1)
+            .attr('transform', 'translate(80,25)');
+
+
+        // CHART AREA
+        var valsDay1 = barDay1.append('g').attr('transform', 'translate(75,10)')
+            .attr('width', widthBar).attr("height", heightBar);
+
+        tooltipBar = d3.select('body').append('div')
+            .style('display', "none")
+            .attr('class', 'd3-tip');
+
+        // DATA BIND
+        chartDay1 = valsDay1.selectAll('rect').data(bindedDay1);
+        // ENTER
+        chartDay1.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay1(d[1]);
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay1(d[0]);
+        })
+            .attr("fill", "#007bff")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay1.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay1.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        chartDay1.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay1(valueAttackSelectedDay1.get(d[0]));
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay1(d[0]);
+        })
+            .attr("fill", "orangered")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay1.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay1.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // DATA BIND
+        var keyDay1 = valsDay1.selectAll('text.key').data(bindedDay1);
+        // ENTER
+        keyDay1.enter().append("text").attr("class", "key")
+            .attr("x", 0)
+            .attr("y", function (d) {
+                return yScaleDay1(d[0]);
+            })
+            .attr('dy', 8)
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return d[0];
+            }).on('mousemove', function (d) {
+            tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                .style("top", d3.event.pageY - 70 + "px")
+                .style('display', "block")
+                .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
+        })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // UPDATE
+        keyDay1.text(function (d) {
+            return d[0]
+        });
+
+    }
+
+    function updateChartDay2() {
+        d3.selectAll(".barday2").remove();
+        var chartDay2;
+        var attackSelectedDay2 = newData.filter(function (d) {
+            return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "5/7/2017")
+        });
+        var valueAttackSelectedDay2 = new Map();
+        bindedDay2 = Array.from(attackDay2);
+        xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
+        for (var i = 0; i < bindedDay2.length; i++) {
+            valueAttackSelectedDay2.set(bindedDay2[i][0], 0);
+        }
+        for (var j = 0; j < attackSelectedDay2.length; j++) {
+            valueAttackSelectedDay2.set(attackSelectedDay2[j].Label, valueAttackSelectedDay2.get(attackSelectedDay2[j].Label) + parseInt(attackSelectedDay2[j].TotalFwdPackets));
+        }
+        var yScaleDay2 = d3.scalePoint()
+            .range([svgHeightBar, 0])
+            .domain(bindedDay2.map(function (d) {
+                return d[0];
+            }))
+            .padding(1);
+        // SVG
+        var barDay2 = d3.select('#barchartDay2').append('svg')
+            .attr("width", svgWidthBar).attr('height', svgHeightBar)
+            .attr("class", "barday2");
+
+        var barLegenday2 = d3.axisTop()
+            .scale(xScaleDay2)
+            .tickPadding(2)
+            .tickSize(3)
+            .ticks(6)
+            .tickSizeOuter(0);
+
+        barDay2.append("g")
+            .attr("class", "x axis")
+            .call(barLegenday2)
+            .attr('transform', 'translate(80,25)');
+
+        // CHART AREA
+        var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
+            .attr('width', widthBar).attr("height", heightBar);
+
+        tooltipBar = d3.select('body').append('div')
+            .style('display', "none")
+            .attr('class', 'd3-tip');
+
+        // DATA BIND
+        chartDay2 = valsDay2.selectAll('rect').data(bindedDay2);
+        // ENTER
+        chartDay2.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay2(d[1]);
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay2(d[0]);
+        })
+            .attr("fill", "#007bff")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay2.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay2.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        chartDay2.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay2(valueAttackSelectedDay2.get(d[0]));
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay2(d[0]);
+        })
+            .attr("fill", "orangered")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay2.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay2.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // DATA BIND
+        var keyDay2 = valsDay2.selectAll('text.key').data(bindedDay2);
+        // ENTER
+        keyDay2.enter().append("text").attr("class", "key")
+            .attr("x", 0)
+            .attr("y", function (d) {
+                return yScaleDay2(d[0]);
+            })
+            .attr('dy', 8)
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return d[0];
+            }).on('mousemove', function (d) {
+            tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                .style("top", d3.event.pageY - 70 + "px")
+                .style('display', "block")
+                .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
+        })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // UPDATE
+        keyDay2.text(function (d) {
+            return d[0]
+        });
+
+    }
+
+    function updateChartDay3() {
+        d3.selectAll(".barday3").remove();
+        var chartDay3;
+        var attackSelectedDay3 = newData.filter(function (d) {
+            return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "6/7/2017")
+        });
+        var valueAttackSelectedDay3 = new Map();
+        bindedDay3 = Array.from(attackDay3);
+        xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
+        for (var i = 0; i < bindedDay3.length; i++) {
+            valueAttackSelectedDay3.set(bindedDay3[i][0], 0);
+        }
+        for (var j = 0; j < attackSelectedDay3.length; j++) {
+            valueAttackSelectedDay3.set(attackSelectedDay3[j].Label, valueAttackSelectedDay3.get(attackSelectedDay3[j].Label) + parseInt(attackSelectedDay3[j].TotalFwdPackets));
+        }
+        var yScaleDay3 = d3.scalePoint()
+            .range([svgHeightBar, 0])
+            .domain(bindedDay3.map(function (d) {
+                return d[0];
+            }))
+            .padding(1);
+        // SVG
+        var barDay3 = d3.select('#barchartDay3').append('svg')
+            .attr("width", svgWidthBar).attr('height', svgHeightBar)
+            .attr("class", "barday2");//.style('border','1px solid')
+
+        barLegenday3 = d3.axisTop()
+            .scale(xScaleDay3)
+            .tickPadding(2)
+            .tickSize(3)
+            .ticks(6)
+            .tickSizeOuter(0);
+
+        barDay3.append("g")
+            .attr("class", "x axis")
+            .call(barLegenday3)
+            .attr('transform', 'translate(80,25)');
+
+        // CHART AREA
+        valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
+            .attr('width', widthBar).attr("height", heightBar);
+
+        tooltipBar = d3.select('body').append('div')
+            .style('display', "none")
+            .attr('class', 'd3-tip');
+        // DATA BIND
+        chartDay3 = valsDay3.selectAll('rect').data(bindedDay3);
+        // ENTER
+        chartDay3.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay3(d[1]);
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay3(d[0]);
+        })
+            .attr("fill", "#007bff")
+            .attr("width", function (d) {
+                return xScaleDay3(d[1])
+            })
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay3.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay3.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        chartDay3.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay3(valueAttackSelectedDay3.get(d[0]));
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay3(d[0]);
+        })
+            .attr("fill", "orangered")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay3.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay3.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // DATA BIND
+        var keyDay3 = valsDay3.selectAll('text.key').data(bindedDay3);
+        // ENTER
+        keyDay3.enter().append("text").attr("class", "key")
+            .attr("x", 0)
+            .attr("y", function (d) {
+                return yScaleDay3(d[0]);
+            })
+            .attr('dy', 8)
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return d[0];
+            }).on('mousemove', function (d) {
+            tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                .style("top", d3.event.pageY - 70 + "px")
+                .style('display', "block")
+                .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
+        })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // UPDATE
+        keyDay3.text(function (d) {
+            return d[0]
+        });
+
+    }
+
+    function updateChartDay4() {
+        d3.selectAll(".barday4").remove();
+        var attackSelectedDay4 = newData.filter(function (d) {
+            return ((nodeSelected.has(d.source.id) || nodeSelected.has(d.target.id)) && d.Timestamp.slice(0, -6) == "7/7/2017")
+        });
+        var valueAttackSelectedDay4 = new Map();
+        bindedDay4 = Array.from(attackDay4);
+        xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
+        for (var i = 0; i < bindedDay4.length; i++) {
+            valueAttackSelectedDay4.set(bindedDay4[i][0], 0);
+        }
+        for (var j = 0; j < attackSelectedDay4.length; j++) {
+            valueAttackSelectedDay4.set(attackSelectedDay4[j].Label, valueAttackSelectedDay4.get(attackSelectedDay4[j].Label) + parseInt(attackSelectedDay4[j].TotalFwdPackets));
+        }
+        var yScaleDay4 = d3.scalePoint()
+            .range([svgHeightBar, 0])
+            .domain(bindedDay4.map(function (d) {
+                return d[0];
+            }))
+            .padding(1);
+        // SVG
+        var barDay4 = d3.select('#barchartDay4').append('svg')
+            .attr("width", svgWidthBar).attr('height', svgHeightBar)
+            .attr("class", "barday4");
+
+        var barLegenday4 = d3.axisTop()
+            .scale(xScaleDay4)
+            .tickPadding(2)
+            .tickSize(3)
+            .ticks(6)
+            .tickSizeOuter(0);
+
+        barDay4.append("g")
+            .attr("class", "x axis")
+            .call(barLegenday4)
+            .attr('transform', 'translate(80,25)');
+
+        // CHART AREA
+        var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')
+            .attr('width', widthBar).attr("height", heightBar);
+
+        tooltipBar = d3.select('body').append('div')
+            .style('display', "none")
+            .attr('class', 'd3-tip');
+
+        // DATA BIND
+        var chartDay4 = valsDay4.selectAll('rect').data(bindedDay4);
+        // ENTER
+        chartDay4.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay4(d[1]);
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay4(d[0]);
+        })
+            .attr("fill", "#007bff")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay4.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay4.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        chartDay4.enter().append('rect')
+            .attr("width", function (d) {
+                return xScaleDay4(valueAttackSelectedDay4.get(d[0]));
+            })
+            .attr("height", 10)
+            .attr('x', 5).attr('y', function (d) {
+            return yScaleDay4(d[0]);
+        })
+            .attr("fill", "orangered")
+            .on('mousemove', function (d) {
+                tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 50 + "px")
+                    .style('display', "block")
+                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay4.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay4.get(d[0])) + "</b></span>");
+            })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // DATA BIND
+        var keyDay4 = valsDay4.selectAll('text.key').data(bindedDay4);
+        // ENTER
+        keyDay4.enter().append("text").attr("class", "key")
+            .attr("x", 0)
+            .attr("y", function (d) {
+                return yScaleDay4(d[0]);
+            })
+            .attr('dy', 8)
+            .attr("text-anchor", "end")
+            .text(function (d) {
+                return d[0];
+            }).on('mousemove', function (d) {
+            tooltipBar.style("left", d3.event.pageX - 50 + "px")
+                .style("top", d3.event.pageY - 70 + "px")
+                .style('display', "block")
+                .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
+        })
+            .on('mouseout', function () {
+                tooltipBar.style('display', "none");
+            });
+
+        // UPDATE
+        keyDay4.text(function (d) {
+            return d[0]
+        });
+
     }
 
     function handleSelectedNode(nodes) {
@@ -1713,13 +1835,30 @@ function drawData() {
     }
 
     function FocusDotScatterPlot(nodes) {
+        select = newData.filter(function (d) {
+            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
+        });
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
             .style("stroke", function (d) {
-                if (nodes.has(d.source.id) || (nodes.has(d.target.id)))
-                    return "orangered";
-                else
-                    return "none"
+                for (var i = 0; i < select.length; i++) {
+                    if (((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
+                        return "orangered";
+                }
             });
+    }
+
+    function UnfocusDotScatterPlot(nodes) {
+        select = newData.filter(function (d) {
+            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
+        });
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+            .style("stroke", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
+                        return "none";
+                }
+            });
+        FocusDotScatterPlot(nodes);
     }
 
     function handleFocusDotDestination(edge) {
@@ -1743,7 +1882,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && edge.DestinationPort === d.DestinationPort)
@@ -1751,7 +1890,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
 
         d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
@@ -1770,7 +1909,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
                 if (edge.source.id == d.source.id && edge.target.id == d.target.id)
@@ -1778,7 +1917,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
     }
 
     function ticked() {
@@ -1816,7 +1955,8 @@ function drawData() {
         var content = "<h5 align='center'>LINK</h5>";
         content += " <table align='center' id='tooltip'><tr><td>IP address Attacker:</td> <td>" + d.source.id.slice(0, -2) + "</td></tr>" +
             "<tr><td> IP address Target:</td><td align='left'>" + d.target.id.slice(0, -2) + "</td></tr>" +
-            "<tr><th>Tot N° of packets:</th> <td>" + transferPackets.get(d.source.id + d.target.id) + "</td></tr></table>";
+            "<tr><th>Tot N° of packets:</th> <td>" + transferPackets.get(d.source.id + d.target.id)[0] + "</td></tr>" +
+            "<tr><td> Tot Length Fwd Packets:</td><td align='left'>" + transferPackets.get(d.source.id + d.target.id)[1] + "<b> Byte</b>" + "</td></tr></table>";
         return content;
     }
 
@@ -1912,12 +2052,17 @@ function drawData() {
                 else
                     return "0.1"
             });
+        select = newData.filter(function (d) {
+            return d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id
+        });
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
             .style("opacity", function (d) {
-                if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id))
-                    return "1";
-                else
-                    return "0"
+                for (var i = 0; i < select.length; i++) {
+                    if ((nodes.indexOf(d.source.id) > -1) && (nodes.indexOf(d.target.id) > -1) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id))
+                        return "1";
+                    else
+                        return "0"
+                }
             });
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
@@ -1959,7 +2104,7 @@ function drawData() {
             });
         d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                if (((d.source.id === edge.source.id) && (d.target.id === edge.target.id)))
                     return "1";
                 else
                     return "0"
@@ -1971,7 +2116,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
@@ -1979,7 +2124,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
     }
 
     function handleMouseOutEdge() {
@@ -2009,7 +2154,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
                 if (d == stroke)
@@ -2017,7 +2162,7 @@ function drawData() {
                 else
                     return "0";
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
         d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
                 if ((d.source.id === stroke.source.id) || (d.source.id === stroke.target.id))
@@ -2051,9 +2196,11 @@ function drawData() {
                 else
                     NumberDeliveredPackets.set(data[i].target.id, NumberDeliveredPackets.get(data[i].target.id) + parseInt(data[i].TotalFwdPackets));
                 if (transferPackets.has(data[i].source.id + data[i].target.id) === false)
-                    transferPackets.set(data[i].source.id + data[i].target.id, parseInt(data[i].TotalFwdPackets));
-                else
-                    transferPackets.set(data[i].source.id + data[i].target.id, transferPackets.get(data[i].source.id + data[i].target.id) + parseInt(data[i].TotalFwdPackets));
+                    transferPackets.set(data[i].source.id + data[i].target.id, [parseInt(data[i].TotalFwdPackets), parseInt(data[i].TotalLenghtOfFwdPackets)]);
+                else {
+                    transferPackets.get(data[i].source.id + data[i].target.id)[0] = transferPackets.get(data[i].source.id + data[i].target.id)[0] + parseInt(data[i].TotalFwdPackets);
+                    transferPackets.get(data[i].source.id + data[i].target.id)[1] = transferPackets.get(data[i].source.id + data[i].target.id)[1] + parseInt(data[i].TotalLenghtOfFwdPackets);
+                }
             }
         }
         if (step === 0) {
@@ -2067,9 +2214,11 @@ function drawData() {
                 else
                     NumberDeliveredPackets.set(data[i].target, NumberDeliveredPackets.get(data[i].target) + parseInt(data[i].TotalFwdPackets));
                 if (transferPackets.has(data[i].source + data[i].target) === false)
-                    transferPackets.set(data[i].source + data[i].target, parseInt(data[i].TotalFwdPackets));
-                else
-                    transferPackets.set(data[i].source + data[i].target, transferPackets.get(data[i].source + data[i].target) + parseInt(data[i].TotalFwdPackets));
+                    transferPackets.set(data[i].source + data[i].target, [parseInt(data[i].TotalFwdPackets), parseInt(data[i].TotalLenghtOfFwdPackets)]);
+                else {
+                    transferPackets.get(data[i].source + data[i].target)[0] = transferPackets.get(data[i].source + data[i].target)[0] + parseInt(data[i].TotalFwdPackets);
+                    transferPackets.get(data[i].source + data[i].target)[1] = transferPackets.get(data[i].source + data[i].target)[1] + parseInt(data[i].TotalLenghtOfFwdPackets);
+                }
             }
         }
     }
@@ -2111,11 +2260,16 @@ function drawData() {
 
 // built the scale for the packets
     function scalePacket() {
+        var packets = [];
         max = d3.max(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
         min = d3.min(Array.from(NumberSentPackets.values()).concat(Array.from(NumberDeliveredPackets.values())));
         colorScalePackets = d3.scaleSequential(d3.interpolateViridis).domain([0, max]);
-        max = d3.max(Array.from(transferPackets.values()));
-        min = d3.min(Array.from(transferPackets.values()));
+        values = Array.from(transferPackets.values());
+        for (var i = 0; i < values.length; i++) {
+            packets.push(values[i][0]);
+        }
+        max = d3.max(packets);
+        min = d3.min(packets);
         if (min == null)
             min = 0;
         if (max == null)
