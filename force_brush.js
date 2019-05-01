@@ -450,7 +450,7 @@ function drawData() {
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
-    var widthGRAPH = 730, heightGRAPH = 500;
+    var widthGRAPH = 670, heightGRAPH = 500;
     // create the svg on
     var svgGRAPH = d3.select("#graph").append("svg")
         .attr("width", widthGRAPH)
@@ -463,13 +463,13 @@ function drawData() {
     var simulation = d3.forceSimulation(data.nodes)
         .force('forceX', d3.forceX(function (d) {
             if (d.id === "205.174.165.73sx")
-                return 500;
+                return 600;
             if (d.id === "205.174.165.73dx")
-                return 500;
+                return 600;
             if (d.group === '1')
-                return 250;
+                return 350;
             if (d.group === '2')
-                return 750;
+                return 840;
         }).strength(1))
         .force("forceY", d3.forceY((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 1 : 0)).strength(0.0011))
         .force('collision', d3.forceCollide().radius((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 0 : 21)))
@@ -484,15 +484,15 @@ function drawData() {
     // ==================FINE DICHIARAZIONI GRAPH =============================
     // ===================== DICHIARAZIONI LEGEND =============================
     var heightLegend = 500,
-        widthLegend = 80,
-        marginLegend = {top: 20, right: 60, bottom: 20, left: 2},
+        widthLegend = 100,
+        marginLegend = {top: 20, right: 80, bottom: 20, left: 2},
         canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 25, right: 0, bottom: 10, left: 0},
-        widthCPA = 1095 - marginCPA.left - marginCPA.right,
+        widthCPA = 1140 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-10, widthCPA + 250]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-25, widthCPA + 260]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -635,7 +635,7 @@ function drawData() {
             })
             // riflette gli indirizzi IP a destra e sinistra
             .attr("dx", function (d) {
-                if (d.group == "1") return -25; else return 25;
+                if (d.group == "1") return -20; else return 20;
             })
             .attr("dy", function (d) {
                 if (d.id === "205.174.165.73dx") return -38; else return 5;
@@ -1277,7 +1277,7 @@ function drawData() {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html("<h6>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</h6> <h6>Packets: " + ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort) + "</h6>");
+                        .html("<span>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</span><br> <span>Packets: " + ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort) + "</span>");
                     handleFocusDotDestination(d);
                 })
                 .on("mouseout", function () {
