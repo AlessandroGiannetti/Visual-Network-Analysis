@@ -950,7 +950,7 @@ function drawData() {
                     d3.event.transform.x = Math.min(70, Math.max(d3.event.transform.x, widthCPA - widthCPA * d3.event.transform.k) + 70);
                     d3.event.transform.y = Math.min(28, Math.max(d3.event.transform.y, heightCPA - heightCPA * d3.event.transform.k) + 30);
                     svgCPA.attr("transform", d3.event.transform);
-                }))
+                })).on("dblclick.zoom", null)
                 .append("g")
                 .attr("transform", "translate(" + 70 + "," + 28 + ")");
 
@@ -1120,7 +1120,7 @@ function drawData() {
             g.append("g")
                 .attr("class", "brush")
                 .each(function (d) {
-                    d3.select(this).call(y[d].brush = d3.brushY().extent([[-8, 0], [8, heightCPA]]).on("brush start", brushstart).on("brush", brush_parallel_chart));
+                    d3.select(this).call(y[d].brushCPA = d3.brushY().extent([[-8, 0], [8, heightCPA]]).on("brush start end", brushstart).on("brush", brush_parallel_chart));
                 })
                 .selectAll("rect")
                 .attr("x", -8)
@@ -1299,7 +1299,7 @@ function drawData() {
 
         function brush_parallel_chart() {
             for (var i = 0; i < dimensions.length; ++i) {
-                if (d3.event.target == y[dimensions[i]].brush) {
+                if (d3.event.target == y[dimensions[i]].brushCPA) {
                     min = d3.event.selection[0];
                     max = d3.event.selection[1];
                     extents[i] = y[dimensions[i]].domain().filter(function (d) {
