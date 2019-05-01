@@ -123,8 +123,8 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(8)
-            .tickPadding(13))
+            .tickSize(10)
+            .tickPadding(15))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -146,7 +146,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text1 = handle1.append('text')
         .text(formatDate(timeScale1.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     var handle2 = svgSlider1.append("g")
         .attr("class", "handle");
     handle2.append("path")
@@ -154,7 +154,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text2 = handle2.append('text')
         .text(formatDate(timeScale1.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -208,8 +208,8 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(8)
-            .tickPadding(13))
+            .tickSize(10)
+            .tickPadding(15))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -230,7 +230,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text3 = handle3.append('text')
         .text(formatDate(timeScale2.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     var handle4 = svgSlider2.append("g")
         .attr("class", "handle");
     handle4.append("path")
@@ -238,7 +238,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text4 = handle4.append('text')
         .text(formatDate(timeScale2.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -291,8 +291,8 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(8)
-            .tickPadding(13))
+            .tickSize(10)
+            .tickPadding(15))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -313,7 +313,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text5 = handle5.append('text')
         .text(formatDate(timeScale3.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     var handle6 = svgSlider3.append("g")
         .attr("class", "handle");
     handle6.append("path")
@@ -321,7 +321,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text6 = handle6.append('text')
         .text(formatDate(timeScale3.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -374,8 +374,8 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(8)
-            .tickPadding(13))
+            .tickSize(10)
+            .tickPadding(15))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -396,7 +396,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text7 = handle7.append('text')
         .text(formatDate(timeScale4.domain()[0]))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     var handle8 = svgSlider4.append("g")
         .attr("class", "handle");
     handle8.append("path")
@@ -404,7 +404,7 @@ function drawData() {
         .attr("d", "M 0 -20 V 20");
     var text8 = handle8.append('text')
         .text(formatDate(timeScale4.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-18) + " ," + (heightSlider / 2 - 22) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
 
