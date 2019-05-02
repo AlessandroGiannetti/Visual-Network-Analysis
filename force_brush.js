@@ -1545,7 +1545,6 @@ function drawData() {
         keyDay1.text(function (d) {
             return d[0]
         });
-
     }
 
     function updateChartDay2() {
