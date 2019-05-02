@@ -444,7 +444,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 255, heightBar = 20, svgWidthBar = 357, svgHeightBar = 110, tooltipBar;
+    var widthBar = 235, heightBar = 20, svgWidthBar = 357, svgHeightBar = 110, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -1487,7 +1487,10 @@ function drawData() {
             });
         chartDay1.enter().append('text')
             .text(function (d) {
-                return d[1]
+                value = "";
+                if ((valueAttackSelectedDay1.get(d[0])) !== 0)
+                    value += (valueAttackSelectedDay1.get(d[0])) + " | ";
+                return value += (d[1] - valueAttackSelectedDay1.get(d[0]));
             })
             .attr('x', function (d) {
                 return xScaleDay1((d[1])) + 8;
@@ -1627,7 +1630,10 @@ function drawData() {
 
         chartDay2.enter().append('text')
             .text(function (d) {
-                return d[1]
+                value = "";
+                if ((valueAttackSelectedDay2.get(d[0])) !== 0)
+                    value += (valueAttackSelectedDay2.get(d[0])) + " | ";
+                return value += (d[1] - valueAttackSelectedDay2.get(d[0]));
             })
             .attr('x', function (d) {
                 return xScaleDay2((d[1])) + 8;
@@ -1769,7 +1775,10 @@ function drawData() {
 
         chartDay3.enter().append('text')
             .text(function (d) {
-                return d[1]
+                value = "";
+                if ((valueAttackSelectedDay3.get(d[0])) !== 0)
+                    value += (valueAttackSelectedDay3.get(d[0])) + " | ";
+                return value += (d[1] - valueAttackSelectedDay3.get(d[0]));
             })
             .attr('x', function (d) {
                 return xScaleDay3((d[1])) + 8;
@@ -1908,7 +1917,10 @@ function drawData() {
 
         chartDay4.enter().append('text')
             .text(function (d) {
-                return d[1]
+                value = "";
+                if ((valueAttackSelectedDay4.get(d[0])) !== 0)
+                    value += (valueAttackSelectedDay4.get(d[0])) + " | ";
+                return value += (d[1] - valueAttackSelectedDay4.get(d[0]));
             })
             .attr('x', function (d) {
                 return xScaleDay4((d[1])) + 8;
