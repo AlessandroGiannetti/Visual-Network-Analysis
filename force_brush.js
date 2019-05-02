@@ -57,7 +57,7 @@ function drawData() {
         .attr('title', "Filter Destination ports")
         .attr("data-header", "select the destination ports")
         .attr("data-max-options", "50")
-        .attr('data-width', "385")
+        .attr('data-width', "250")
         .on('change', FilterPorts);
 
     var InsertedPort = 0;
@@ -74,14 +74,11 @@ function drawData() {
         })
         .each(function (d) {
             InsertedPort += 1;
-            if (InsertedPort <= 50) {
+            if (InsertedPort <= 47) {
                 PortSelected.push(d);
                 d3.select(this).attr("selected", "")
             }
         });
-
-    d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
-
 
     // ========================================== Fine selezione multipla =====================
     // Node scatterplot without duplicates
@@ -89,8 +86,8 @@ function drawData() {
     SourceTarget = new Map();
 
     // ========================= SLIDERS ===================================
-    var marginSlider = {top: 0, right: 18, bottom: 0, left: 18},
-        widthSlider = 275 - marginSlider.left - marginSlider.right,
+    var marginSlider = {top: 0, right: 20, bottom: 0, left: 12},
+        widthSlider = 285 - marginSlider.left - marginSlider.right,
         heightSlider = 75 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
@@ -447,7 +444,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 215, heightBar = 20, svgWidthBar = 310, svgHeightBar = 110, tooltipBar;
+    var widthBar = 255, heightBar = 20, svgWidthBar = 357, svgHeightBar = 110, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -493,7 +490,7 @@ function drawData() {
     var marginCPA = {top: 25, right: 0, bottom: 8, left: 0},
         widthCPA = 1140 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-37, widthCPA + 262]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-37, widthCPA + 286]).padding(.1),
         y = {},
         dragging = {},
         line = d3.line(),
@@ -615,6 +612,32 @@ function drawData() {
                 handleOutFocusStroke();
             });
 
+        svgGRAPH.append("g")
+            .append("text")
+            .attr("class", "label")
+            .attr("x", widthGRAPH / 4 - 73)
+            .attr("y", 17)
+            .style("text-anchor", "end")
+            .style("font-size", "13px")
+            .text("Sources");
+        svgGRAPH.append("g")
+            .append("text")
+            .attr("class", "label")
+            .attr("x", widthGRAPH / 2 + 8)
+            .attr("y", 17)
+            .style("text-anchor", "end")
+            .style("font-size", "13px")
+
+            .text("Firewall");
+        svgGRAPH.append("g")
+            .append("text")
+            .attr("class", "label")
+            .attr("x", widthGRAPH - 90)
+            .attr("y", 17)
+            .style("text-anchor", "end")
+            .style("font-size", "13px")
+            .text("Target");
+
         //declaration of the text (ip) of the node
         textElements = svgGRAPH.append("g")
             .attr("class", "texts")
@@ -629,7 +652,7 @@ function drawData() {
             .attr("font-size", 15)
             .attr("text-anchor", function (d) {
                 if (d.id === "205.174.165.73dx")
-                    return "middle";
+                    return "begin";
                 else {
                     if (d.group == "1") return "end"; else return "start";
                 }
@@ -658,8 +681,8 @@ function drawData() {
     });
 
     // ======================== SCATTERPLOT ===============================
-    var marginScatterPlot = {top: 20, right: 5, bottom: 35, left: 80},
-        widthScatterPlot = 1200 - marginScatterPlot.left - marginScatterPlot.right,
+    var marginScatterPlot = {top: 12, right: 3, bottom: 35, left: 65},
+        widthScatterPlot = 1145 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 465 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
@@ -861,7 +884,7 @@ function drawData() {
                 .style("width", (widthLegend - marginLegend.left - marginLegend.right) + "px")
                 .style("border", "1px solid #000")
                 .style("position", "absolute")
-                .style("top", "20px")
+                .style("top", "25px")
                 .style("left", "30px")
                 .node();
 
@@ -884,6 +907,7 @@ function drawData() {
                 .scale(legendscale)
                 .tickValues(legendscale.ticks(7).concat(legendscale.domain()));
 
+
             svgLegend = d3.select("#legend")
                 .append("svg")
                 .attr("class", "legendScale")
@@ -891,7 +915,7 @@ function drawData() {
                 .attr("width", (widthLegend) + "px")
                 .style("position", "absolute")
                 .style("left", "30px")
-                .style("top", "0px")
+                .style("top", "5px")
                 .on("dblclick", function () {
                     ResetFilter = true;
                     filterView
@@ -913,6 +937,15 @@ function drawData() {
                 .call(legendaxis);
         }
 
+        svgLegend.append("g")
+            .append("text")
+            .attr("class", "label")
+            .attr("x", widthLegend / 2 + 44)
+            .attr("y", 12)
+            .style("text-anchor", "end")
+            .style("font-size", "13px")
+            .text("N° Malicious Packages");
+
         function updateNumberOfAttack(newData) {
             UPday1 = newData.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "4/7/2017"
@@ -928,7 +961,7 @@ function drawData() {
             });
 
             // UPDATE number of attack per day
-
+            d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
             d3.select("#day").html("Total Attack: " + (newData.length) + " / <b>" + (data.links.length) + "</b>");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
@@ -1109,10 +1142,19 @@ function drawData() {
                 })
                 //text does not show up because previous line breaks somehow
                 .append("text")
-                .style("text-anchor", "middle")
+                .style("text-anchor", function (d) {
+                    if (d === "Label")
+                        return "begin";
+                    else
+                        return "middle";
+                })
                 .attr("y", -12)
                 .style("font-size", "13px")
                 .text(function (d) {
+                    if (d === "source")
+                        return "Source";
+                    if (d === "target")
+                        return "Target";
                     return d;
                 });
 
@@ -1251,6 +1293,7 @@ function drawData() {
                 .attr("x", widthScatterPlot)
                 .attr("y", 407)
                 .style("text-anchor", "end")
+                .style("font-size", "13px")
                 .text("Attacked Ports");
 
             svgScatterPlot.append("g")
@@ -1259,9 +1302,10 @@ function drawData() {
                 .append("text")
                 .attr("class", "label")
                 .attr("y", -12)
-                .attr("x", 14)
+                .attr("x", 17)
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
+                .style("font-size", "13px")
                 .text("IP Address");
 
             // draw point DESTINATION PORT
@@ -1287,7 +1331,7 @@ function drawData() {
                     tooltipScatterPlot.style("left", d3.event.pageX - 50 + "px")
                         .style("top", d3.event.pageY - 70 + "px")
                         .style('display', "block")
-                        .html("<span>" + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</span><br> <span>Packets: " + ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort) + "</span>");
+                        .html("<span><b>IP:Port: </b> " + (d.target.id.slice(0, -2)) + ": " + (d.DestinationPort) + "</span><br> <span><b>Packets: </b>" + ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort) + "</span>");
                     handleFocusDotDestination(d);
                 })
                 .on("mouseout", function () {
@@ -1411,14 +1455,14 @@ function drawData() {
             .call(barLegenday1)
             .attr('transform', 'translate(70,25)');
 
-
         // CHART AREA
         var valsDay1 = barDay1.append('g').attr('transform', 'translate(65,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
-            .style('display', "none")
-            .attr('class', 'd3-tip');
+            .attr('class', 'd3-tip')
+            .style('display', "none");
+
 
         // DATA BIND
         chartDay1 = valsDay1.selectAll('rect').data(bindedDay1);

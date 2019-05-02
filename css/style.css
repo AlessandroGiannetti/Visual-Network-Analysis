@@ -77,7 +77,7 @@ svg {
 }
 
 .axis text {
-    font-size: 11px;
+    font-size: 12px;
     fill: white;
     cursor: move;
 }
@@ -86,7 +86,7 @@ svg {
     line-height: 1;
     padding: 12px;
     position: absolute;
-    background: rgba(35, 35, 35, 0.8);
+    background: rgba(35, 35, 35, 0.91);
     color: #fff;
     border-radius: 4px;
     font-size: 14px;
@@ -281,7 +281,6 @@ svg {
     color: #fff;
 }
 
-
 .form-control:focus, .form-control, .bootstrap-select .no-results, .popover-header {
     color: white;
     font-size: 13px;
@@ -302,7 +301,6 @@ svg {
 .text-muted {
     font-size: 12px;
 }
-
 
 scrollbar {
     /*  clear useragent default style*/
