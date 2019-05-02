@@ -151,6 +151,7 @@ svg {
 #day, #label {
     display: inline;
     font-size: 16px;
+    border-top: 1px solid #808080;
 }
 
 #port {

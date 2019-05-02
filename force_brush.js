@@ -121,7 +121,7 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(10)
+            .tickSize(12)
             .tickPadding(15))
         .select(".domain")
         .select(function () {
@@ -206,7 +206,7 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(10)
+            .tickSize(12)
             .tickPadding(15))
         .select(".domain")
         .select(function () {
@@ -289,7 +289,7 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(10)
+            .tickSize(12)
             .tickPadding(15))
         .select(".domain")
         .select(function () {
@@ -372,7 +372,7 @@ function drawData() {
                 return formatDate(d);
             })
             .ticks(12)
-            .tickSize(10)
+            .tickSize(12)
             .tickPadding(15))
         .select(".domain")
         .select(function () {
@@ -683,7 +683,7 @@ function drawData() {
     // ======================== SCATTERPLOT ===============================
     var marginScatterPlot = {top: 12, right: 3, bottom: 35, left: 65},
         widthScatterPlot = 1145 - marginScatterPlot.left - marginScatterPlot.right,
-        heightScatterPlot = 465 - marginScatterPlot.top - marginScatterPlot.bottom,
+        heightScatterPlot = 470 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
         xAxisScatterPlot, yAxisScatterPlot,
@@ -962,7 +962,7 @@ function drawData() {
 
             // UPDATE number of attack per day
             d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
-            d3.select("#day").html("Total Attack: " + (newData.length) + " / <b>" + (data.links.length) + "</b>");
+            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>" + " (Total Attack)");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
             d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
@@ -1279,10 +1279,10 @@ function drawData() {
             svgScatterPlot.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + heightScatterPlot + ")")
-                .call(xAxisScatterPlot.tickSize(7).tickSizeOuter(0))
+                .call(xAxisScatterPlot.tickSize(0).tickSizeOuter(0))
                 .selectAll("text")
-                .attr("y", 0)
-                .attr("x", 9)
+                .attr("y", -1)
+                .attr("x", 4)
                 .attr("dy", ".35em")
                 .attr("transform", "rotate(90)")
                 .style("text-anchor", "start");
@@ -1291,14 +1291,14 @@ function drawData() {
                 .append("text")
                 .attr("class", "label")
                 .attr("x", widthScatterPlot)
-                .attr("y", 407)
+                .attr("y", 419)
                 .style("text-anchor", "end")
                 .style("font-size", "13px")
                 .text("Attacked Ports");
 
             svgScatterPlot.append("g")
                 .attr("class", "y axis")
-                .call(yAxisScatterPlot.tickSize(7).tickSizeOuter(0))
+                .call(yAxisScatterPlot.tickSize(0).tickSizeOuter(0))
                 .append("text")
                 .attr("class", "label")
                 .attr("y", -12)
@@ -1317,8 +1317,9 @@ function drawData() {
                 .attr("r", function (d) {
                     if (ip_destinationPorts_packets.has(d.target.id) === false || ip_destinationPorts_packets.get(d.target.id).has(d.DestinationPort) == false)
                         return 0;
-                    else
-                        return ScalePackPort(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort))
+                    else {
+                        return Math.abs(ScalePackPort(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort)));
+                    }
                 })
                 .attr("cx", function (d) {
                     return xScatterPlot(d.DestinationPort);
@@ -1434,7 +1435,8 @@ function drawData() {
 
         var barLegenday1 = d3.axisTop()
             .scale(xScaleDay1)
-            .tickValues(xScaleDay1.ticks(4).concat(xScaleDay1.domain()));
+            .ticks(5)
+            .tickSizeOuter(0);
 
         // gridlines in x axis function
         function make_x_gridlines() {
@@ -1446,8 +1448,8 @@ function drawData() {
             .attr("class", "grid")
             .attr("transform", "translate(70," + svgHeightBar + ")")
             .call(make_x_gridlines()
-                .tickValues(xScaleDay1.ticks(4).concat(xScaleDay1.domain()))
-                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+                .tickValues(xScaleDay1.ticks(5).concat(xScaleDay1.domain()))
+                .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
             );
 
         barDay1.append("g")
@@ -1576,7 +1578,8 @@ function drawData() {
 
         var barLegenday2 = d3.axisTop()
             .scale(xScaleDay2)
-            .tickValues(xScaleDay2.ticks(5).concat(xScaleDay2.domain()));
+            .ticks(5)
+            .tickSizeOuter(0);
 
         // gridlines in x axis function
         function make_x_gridlines() {
@@ -1589,8 +1592,7 @@ function drawData() {
             .attr("transform", "translate(70," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay2.ticks(5).concat(xScaleDay2.domain()))
-                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
-            );
+                .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0));
 
         barDay2.append("g")
             .attr("class", "x axis")
@@ -1719,7 +1721,8 @@ function drawData() {
 
         barLegenday3 = d3.axisTop()
             .scale(xScaleDay3)
-            .tickValues(xScaleDay3.ticks(5).concat(xScaleDay3.domain()));
+            .ticks(5)
+            .tickSizeOuter(0);
 
         // gridlines in x axis function
         function make_x_gridlines() {
@@ -1732,7 +1735,7 @@ function drawData() {
             .attr("transform", "translate(70," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay3.ticks(5).concat(xScaleDay3.domain()))
-                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+                .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
             );
 
         barDay3.append("g")
@@ -1863,7 +1866,8 @@ function drawData() {
 
         var barLegenday4 = d3.axisTop()
             .scale(xScaleDay4)
-            .tickValues(xScaleDay4.ticks(5).concat(xScaleDay4.domain()));
+            .ticks(5)
+            .tickSizeOuter(0);
 
         // gridlines in x axis function
         function make_x_gridlines() {
@@ -1876,7 +1880,7 @@ function drawData() {
             .attr("transform", "translate(70," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay4.ticks(5).concat(xScaleDay4.domain()))
-                .tickSize(-svgHeightBar + 20).tickFormat("").tickSizeOuter(0)
+                .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
             );
 
         barDay4.append("g")
