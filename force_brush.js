@@ -55,7 +55,7 @@ function drawData() {
         .attr('data-live-search', 'true')
         .attr('data-live-search-placeholder', 'Search')
         .attr('title', "Filter Destination ports")
-        .attr("data-header", "select the destination ports")
+        .attr("data-header", "SELECT THE DESTINATION PORTS")
         .attr("data-max-options", "50")
         .attr('data-width', "250")
         .on('change', FilterPorts);
