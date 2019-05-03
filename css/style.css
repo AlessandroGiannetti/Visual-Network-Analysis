@@ -299,6 +299,10 @@ svg {
     color: black;
 }
 
+.domain {
+    stroke: #393939;
+}
+
 .text-muted {
     font-size: 12px;
 }

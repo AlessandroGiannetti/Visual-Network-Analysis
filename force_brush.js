@@ -35,6 +35,8 @@ totPackets = 0;
 
 function drawData() {
     d3.selectAll().remove();
+
+    drawSelect(data.links);
     // Node scatterplot without duplicates
     DOTdestination = new Map();
     SourceTarget = new Map();
@@ -686,8 +688,8 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))))
             );
         });
-
-        drawSelect(newData);
+        if (step === 1)
+            drawSelect(newData);
 
         newData = newData.filter(function (d) {
             return PortSelected.includes(d.DestinationPort)
