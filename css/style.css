@@ -327,3 +327,7 @@ scrollcorner {
 scrollbar[orient="vertical"] {
     color: silver;
 }
+
+select {
+    -webkit-appearance: menulist;
+}

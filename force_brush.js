@@ -23,6 +23,7 @@ var MapPorts = new Map();
 var Ports = [];
 var PortSelected = [];
 var resetCPA = false;
+var select;
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, JsonData) {
@@ -34,53 +35,6 @@ totPackets = 0;
 
 function drawData() {
     d3.selectAll().remove();
-    // Mappa con chiave le porte di destinazione e valore il totale dei pacchetti ricevuti
-    for (var i = 0; i < data.links.length; i++) {
-        totPackets += parseInt(data.links[i].TotalFwdPackets);
-        if (MapPorts.has(data.links[i].DestinationPort) === false)
-            MapPorts.set(data.links[i].DestinationPort, parseInt(data.links[i].TotalFwdPackets));
-        else
-            MapPorts.set(data.links[i].DestinationPort, MapPorts.get(data.links[i].DestinationPort) + parseInt(data.links[i].TotalFwdPackets));
-    }
-    // ordinamento della mappa in base al valore dei pacchetti
-    MapPorts = new Map([...MapPorts.entries()].sort((a, b) => b[1] - a[1]));
-    // array di tutte le porte di destinazione
-    Ports = Array.from(MapPorts.keys());
-
-    // ===================================== select multiplo sulle porte di destinazione ===========================
-    var select = d3.select('#portController')
-        .append('select')
-        .attr('class', 'selectpicker')
-        .attr('multiple', 'true')
-        .attr('data-live-search', 'true')
-        .attr('data-live-search-placeholder', 'Search')
-        .attr('title', "Filter Destination ports")
-        .attr("data-header", "SELECT THE DESTINATION PORTS")
-        .attr("data-max-options", "50")
-        .attr('data-width', "250")
-        .on('change', FilterPorts);
-
-    var InsertedPort = 0;
-
-    select
-        .selectAll('option')
-        .data(Ports).enter()
-        .append('option')
-        .text(function (d) {
-            return d;
-        })
-        .attr('data-subtext', function (d) {
-            return ((MapPorts.get(d) / totPackets) * 100).toFixed(4) + '%';
-        })
-        .each(function (d) {
-            InsertedPort += 1;
-            if (InsertedPort <= 47) {
-                PortSelected.push(d);
-                d3.select(this).attr("selected", "")
-            }
-        });
-
-    // ========================================== Fine selezione multipla =====================
     // Node scatterplot without duplicates
     DOTdestination = new Map();
     SourceTarget = new Map();
@@ -730,7 +684,13 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale2.invert(selection2[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale2.invert(selection2[1]))))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale3.invert(selection3[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale3.invert(selection3[1]))))
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))))
-            ) && PortSelected.includes(d.DestinationPort);
+            );
+        });
+
+        drawSelect(newData);
+
+        newData = newData.filter(function (d) {
+            return PortSelected.includes(d.DestinationPort)
         });
 
 
@@ -923,7 +883,7 @@ function drawData() {
 
             brushLegend = d3.brushY()
                 .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend - marginLegend.top - 20]])
-                .on("start brush end", filterView);
+                .on("brush", filterView);
 
             svgLegend.append("g")
                 .attr("class", "brushLegend")
@@ -1404,6 +1364,63 @@ function drawData() {
             updateScatterPlot(filteredData);
             FocusDotScatterPlot(nodeSelected);
         }
+    }
+
+    function drawSelect(data) {
+        d3.selectAll(".dropdown.bootstrap-select.show-tick").remove();
+        MapPorts = new Map();
+        Ports = [];
+        totPackets = 0;
+        InsertedPort = 0;
+        PortSelected = [];
+        // Mappa con chiave le porte di destinazione e valore il totale dei pacchetti ricevuti
+        for (var i = 0; i < data.length; i++) {
+            totPackets += parseInt(data[i].TotalFwdPackets);
+            if (MapPorts.has(data[i].DestinationPort) === false)
+                MapPorts.set(data[i].DestinationPort, parseInt(data[i].TotalFwdPackets));
+            else
+                MapPorts.set(data[i].DestinationPort, MapPorts.get(data[i].DestinationPort) + parseInt(data[i].TotalFwdPackets));
+        }
+        // ordinamento della mappa in base al valore dei pacchetti
+        MapPorts = new Map([...MapPorts.entries()].sort((a, b) => b[1] - a[1]));
+        // array di tutte le porte di destinazione
+        Ports = Array.from(MapPorts.keys());
+
+        // ===================================== select multiplo sulle porte di destinazione ===========================
+
+        select = d3.select('#portController')
+            .append('select')
+            .attr('class', 'selectpicker')
+            .attr('multiple', 'true')
+            .attr('data-live-search', 'true')
+            .attr('data-live-search-placeholder', 'Search')
+            .attr('title', "Filter Destination ports")
+            .attr("data-header", "SELECT THE DESTINATION PORTS")
+            .attr("data-max-options", "50")
+            .attr('data-width', "250")
+            .on('change', FilterPorts);
+
+        console.log(Ports);
+        select
+            .selectAll('option')
+            .data(Ports).enter()
+            .append('option')
+            .text(function (d) {
+                return d;
+            })
+            .attr('data-subtext', function (d) {
+                return ((MapPorts.get(d) / totPackets) * 100).toFixed(4) + '%';
+            })
+            .each(function (d) {
+                InsertedPort += 1;
+                if (InsertedPort <= 47) {
+                    PortSelected.push(d);
+                    d3.select(this).attr("selected", "")
+                }
+            });
+        $('.selectpicker').selectpicker('refresh');
+
+        // ========================================== Fine selezione multipla =====================
     }
 
     function updateChartDay1() {
