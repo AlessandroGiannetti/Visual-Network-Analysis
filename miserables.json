@@ -43384,7 +43384,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43393,7 +43393,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43402,7 +43402,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43411,7 +43411,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43420,7 +43420,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43429,7 +43429,7 @@
       "Timestamp": "6/7/2017 10:35",
       "TotalFwdPackets": "7",
       "TotalLenghtOfFwdPackets": "740",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43438,7 +43438,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43447,7 +43447,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43456,7 +43456,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43465,7 +43465,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43474,7 +43474,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43483,7 +43483,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43492,7 +43492,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43501,7 +43501,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43510,7 +43510,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43519,7 +43519,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43528,7 +43528,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43537,7 +43537,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43546,7 +43546,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43555,7 +43555,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43564,7 +43564,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43573,7 +43573,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43582,7 +43582,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43591,7 +43591,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43600,7 +43600,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43609,7 +43609,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43618,7 +43618,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43627,7 +43627,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43636,7 +43636,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43645,7 +43645,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43654,7 +43654,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43663,7 +43663,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43672,7 +43672,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43681,7 +43681,7 @@
       "Timestamp": "6/7/2017 10:41",
       "TotalFwdPackets": "160",
       "TotalLenghtOfFwdPackets": "600",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -43690,7 +43690,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43699,7 +43699,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43708,7 +43708,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43717,7 +43717,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43726,7 +43726,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43735,7 +43735,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43744,7 +43744,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43753,7 +43753,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43762,7 +43762,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43771,7 +43771,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43780,7 +43780,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43789,7 +43789,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43798,7 +43798,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43807,7 +43807,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43816,7 +43816,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43825,7 +43825,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43834,7 +43834,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43843,7 +43843,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43852,7 +43852,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43861,7 +43861,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43870,7 +43870,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43879,7 +43879,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43888,7 +43888,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43897,7 +43897,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43906,7 +43906,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43915,7 +43915,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43924,7 +43924,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43933,7 +43933,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43942,7 +43942,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43951,7 +43951,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43960,7 +43960,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43969,7 +43969,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43978,7 +43978,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -43987,7 +43987,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -43996,7 +43996,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44005,7 +44005,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44014,7 +44014,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44023,7 +44023,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44032,7 +44032,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44041,7 +44041,7 @@
       "Timestamp": "6/7/2017 09:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44050,7 +44050,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44059,7 +44059,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44068,7 +44068,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44077,7 +44077,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44086,7 +44086,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44095,7 +44095,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44104,7 +44104,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44113,7 +44113,7 @@
       "Timestamp": "6/7/2017 10:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44122,7 +44122,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44131,7 +44131,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44140,7 +44140,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44149,7 +44149,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44158,7 +44158,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44167,7 +44167,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44176,7 +44176,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44185,7 +44185,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44194,7 +44194,7 @@
       "Timestamp": "6/7/2017 09:19",
       "TotalFwdPackets": "27",
       "TotalLenghtOfFwdPackets": "4801",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44203,7 +44203,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "2",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44212,7 +44212,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44221,7 +44221,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44230,7 +44230,7 @@
       "Timestamp": "6/7/2017 10:00",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44239,7 +44239,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44248,7 +44248,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44257,7 +44257,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44266,7 +44266,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44275,7 +44275,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44284,7 +44284,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44293,7 +44293,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44302,7 +44302,7 @@
       "Timestamp": "6/7/2017 10:00",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44311,7 +44311,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44320,7 +44320,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44329,7 +44329,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44338,7 +44338,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44347,7 +44347,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44356,7 +44356,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44365,7 +44365,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44374,7 +44374,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44383,7 +44383,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44392,7 +44392,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44401,7 +44401,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44410,7 +44410,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44419,7 +44419,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44428,7 +44428,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44437,7 +44437,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44446,7 +44446,7 @@
       "Timestamp": "6/7/2017 10:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44455,7 +44455,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44464,7 +44464,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44473,7 +44473,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44482,7 +44482,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44491,7 +44491,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44500,7 +44500,7 @@
       "Timestamp": "6/7/2017 10:35",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44509,7 +44509,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44518,7 +44518,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44527,7 +44527,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44536,7 +44536,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44545,7 +44545,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44554,7 +44554,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44563,7 +44563,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44572,7 +44572,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44581,7 +44581,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "208",
       "TotalLenghtOfFwdPackets": "48985",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44590,7 +44590,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44599,7 +44599,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44608,7 +44608,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44617,7 +44617,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44626,7 +44626,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44635,7 +44635,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44644,7 +44644,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44653,7 +44653,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44662,7 +44662,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44671,7 +44671,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44680,7 +44680,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44689,7 +44689,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44698,7 +44698,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44707,7 +44707,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44716,7 +44716,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44725,7 +44725,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44734,7 +44734,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44743,7 +44743,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44752,7 +44752,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44761,7 +44761,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44770,7 +44770,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44779,7 +44779,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44788,7 +44788,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44797,7 +44797,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44806,7 +44806,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44815,7 +44815,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44824,7 +44824,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44833,7 +44833,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44842,7 +44842,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44851,7 +44851,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44860,7 +44860,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44869,7 +44869,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44878,7 +44878,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44887,7 +44887,7 @@
       "Timestamp": "6/7/2017 10:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44896,7 +44896,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44905,7 +44905,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44914,7 +44914,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44923,7 +44923,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44932,7 +44932,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44941,7 +44941,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44950,7 +44950,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44959,7 +44959,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44968,7 +44968,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -44977,7 +44977,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44986,7 +44986,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -44995,7 +44995,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45004,7 +45004,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45013,7 +45013,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45022,7 +45022,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45031,7 +45031,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45040,7 +45040,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45049,7 +45049,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45058,7 +45058,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45067,7 +45067,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45076,7 +45076,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45085,7 +45085,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45094,7 +45094,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45103,7 +45103,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45112,7 +45112,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45121,7 +45121,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45130,7 +45130,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45139,7 +45139,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45148,7 +45148,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45157,7 +45157,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45166,7 +45166,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45175,7 +45175,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45184,7 +45184,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45193,7 +45193,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45202,7 +45202,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45211,7 +45211,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "48985",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45220,7 +45220,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45229,7 +45229,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45238,7 +45238,7 @@
       "Timestamp": "6/7/2017 09:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45247,7 +45247,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45256,7 +45256,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45265,7 +45265,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45274,7 +45274,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45283,7 +45283,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45292,7 +45292,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45301,7 +45301,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45310,7 +45310,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45319,7 +45319,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45328,7 +45328,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45337,7 +45337,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45346,7 +45346,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45355,7 +45355,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45364,7 +45364,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45373,7 +45373,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45382,7 +45382,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45391,7 +45391,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45400,7 +45400,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45409,7 +45409,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45418,7 +45418,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45427,7 +45427,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45436,7 +45436,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45445,7 +45445,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45454,7 +45454,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45463,7 +45463,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45472,7 +45472,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45481,7 +45481,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45490,7 +45490,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45499,7 +45499,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45508,7 +45508,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45517,7 +45517,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45526,7 +45526,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45535,7 +45535,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45544,7 +45544,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45553,7 +45553,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45562,7 +45562,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45571,7 +45571,7 @@
       "Timestamp": "6/7/2017 10:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45580,7 +45580,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45589,7 +45589,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45598,7 +45598,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45607,7 +45607,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45616,7 +45616,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45625,7 +45625,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45634,7 +45634,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45643,7 +45643,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45652,7 +45652,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45661,7 +45661,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45670,7 +45670,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45679,7 +45679,7 @@
       "Timestamp": "6/7/2017 10:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45688,7 +45688,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45697,7 +45697,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45706,7 +45706,7 @@
       "Timestamp": "6/7/2017 10:41",
       "TotalFwdPackets": "40",
       "TotalLenghtOfFwdPackets": "536",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -45715,7 +45715,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45724,7 +45724,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45733,7 +45733,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45742,7 +45742,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45751,7 +45751,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45760,7 +45760,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45769,7 +45769,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45778,7 +45778,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45787,7 +45787,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45796,7 +45796,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45805,7 +45805,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45814,7 +45814,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45823,7 +45823,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45832,7 +45832,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45841,7 +45841,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45850,7 +45850,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45859,7 +45859,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45868,7 +45868,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45877,7 +45877,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "2",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45886,7 +45886,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45895,7 +45895,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45904,7 +45904,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45913,7 +45913,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45922,7 +45922,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45931,7 +45931,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45940,7 +45940,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45949,7 +45949,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45958,7 +45958,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -45967,7 +45967,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45976,7 +45976,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45985,7 +45985,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -45994,7 +45994,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46003,7 +46003,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46012,7 +46012,7 @@
       "Timestamp": "6/7/2017 10:17",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46021,7 +46021,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46030,7 +46030,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46039,7 +46039,7 @@
       "Timestamp": "6/7/2017 09:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46048,7 +46048,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46057,7 +46057,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46066,7 +46066,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46075,7 +46075,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46084,7 +46084,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46093,7 +46093,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46102,7 +46102,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46111,7 +46111,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46120,7 +46120,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46129,7 +46129,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46138,7 +46138,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46147,7 +46147,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46156,7 +46156,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46165,7 +46165,7 @@
       "Timestamp": "6/7/2017 10:15",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46174,7 +46174,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46183,7 +46183,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46192,7 +46192,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46201,7 +46201,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46210,7 +46210,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46219,7 +46219,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46228,7 +46228,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46237,7 +46237,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46246,7 +46246,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46255,7 +46255,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46264,7 +46264,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46273,7 +46273,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46282,7 +46282,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46291,7 +46291,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46300,7 +46300,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46309,7 +46309,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46318,7 +46318,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46327,7 +46327,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46336,7 +46336,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46345,7 +46345,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46354,7 +46354,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46363,7 +46363,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46372,7 +46372,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46381,7 +46381,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46390,7 +46390,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46399,7 +46399,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46408,7 +46408,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "2",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46417,7 +46417,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46426,7 +46426,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "48985",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46435,7 +46435,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46444,7 +46444,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46453,7 +46453,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46462,7 +46462,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46471,7 +46471,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46480,7 +46480,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46489,7 +46489,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46498,7 +46498,7 @@
       "Timestamp": "6/7/2017 10:40",
       "TotalFwdPackets": "134",
       "TotalLenghtOfFwdPackets": "872",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -46507,7 +46507,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46516,7 +46516,7 @@
       "Timestamp": "6/7/2017 10:40",
       "TotalFwdPackets": "100",
       "TotalLenghtOfFwdPackets": "600",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -46525,7 +46525,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46534,7 +46534,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46543,7 +46543,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46552,7 +46552,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "2",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46561,7 +46561,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46570,7 +46570,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46579,7 +46579,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46588,7 +46588,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46597,7 +46597,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46606,7 +46606,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46615,7 +46615,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46624,7 +46624,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46633,7 +46633,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46642,7 +46642,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46651,7 +46651,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46660,7 +46660,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46669,7 +46669,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46678,7 +46678,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46687,7 +46687,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46696,7 +46696,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46705,7 +46705,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46714,7 +46714,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46723,7 +46723,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46732,7 +46732,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46741,7 +46741,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46750,7 +46750,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46759,7 +46759,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46768,7 +46768,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46777,7 +46777,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46786,7 +46786,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46795,7 +46795,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46804,7 +46804,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46813,7 +46813,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46822,7 +46822,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46831,7 +46831,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46840,7 +46840,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46849,7 +46849,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46858,7 +46858,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46867,7 +46867,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46876,7 +46876,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46885,7 +46885,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46894,7 +46894,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46903,7 +46903,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46912,7 +46912,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46921,7 +46921,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46930,7 +46930,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46939,7 +46939,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -46948,7 +46948,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46957,7 +46957,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46966,7 +46966,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46975,7 +46975,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46984,7 +46984,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -46993,7 +46993,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47002,7 +47002,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47011,7 +47011,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47020,7 +47020,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47029,7 +47029,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47038,7 +47038,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47047,7 +47047,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47056,7 +47056,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47065,7 +47065,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47074,7 +47074,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47083,7 +47083,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47092,7 +47092,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47101,7 +47101,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47110,7 +47110,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47119,7 +47119,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47128,7 +47128,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47137,7 +47137,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47146,7 +47146,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47155,7 +47155,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47164,7 +47164,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47173,7 +47173,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47182,7 +47182,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47191,7 +47191,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "2",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47200,7 +47200,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47209,7 +47209,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47218,7 +47218,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47227,7 +47227,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47236,7 +47236,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47245,7 +47245,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47254,7 +47254,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47263,7 +47263,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47272,7 +47272,7 @@
       "Timestamp": "6/7/2017 10:41",
       "TotalFwdPackets": "180",
       "TotalLenghtOfFwdPackets": "540",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -47281,7 +47281,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47290,7 +47290,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47299,7 +47299,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47308,7 +47308,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47317,7 +47317,7 @@
       "Timestamp": "6/7/2017 10:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47326,7 +47326,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47335,7 +47335,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47344,7 +47344,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47353,7 +47353,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47362,7 +47362,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47371,7 +47371,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47380,7 +47380,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47389,7 +47389,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47398,7 +47398,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47407,7 +47407,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47416,7 +47416,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47425,7 +47425,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47434,7 +47434,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47443,7 +47443,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47452,7 +47452,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47461,7 +47461,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47470,7 +47470,7 @@
       "Timestamp": "6/7/2017 10:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47479,7 +47479,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47488,7 +47488,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47497,7 +47497,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47506,7 +47506,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47515,7 +47515,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47524,7 +47524,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47533,7 +47533,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47542,7 +47542,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47551,7 +47551,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47560,7 +47560,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47569,7 +47569,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47578,7 +47578,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47587,7 +47587,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47596,7 +47596,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47605,7 +47605,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47614,7 +47614,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47623,7 +47623,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47632,7 +47632,7 @@
       "Timestamp": "6/7/2017 09:18",
       "TotalFwdPackets": "28",
       "TotalLenghtOfFwdPackets": "5927",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47641,7 +47641,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47650,7 +47650,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47659,7 +47659,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47668,7 +47668,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "204",
       "TotalLenghtOfFwdPackets": "48695",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47677,7 +47677,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47686,7 +47686,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47695,7 +47695,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47704,7 +47704,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47713,7 +47713,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47722,7 +47722,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47731,7 +47731,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47740,7 +47740,7 @@
       "Timestamp": "6/7/2017 10:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47749,7 +47749,7 @@
       "Timestamp": "6/7/2017 10:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47758,7 +47758,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47767,7 +47767,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47776,7 +47776,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47785,7 +47785,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47794,7 +47794,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47803,7 +47803,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47812,7 +47812,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47821,7 +47821,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47830,7 +47830,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47839,7 +47839,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47848,7 +47848,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47857,7 +47857,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47866,7 +47866,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47875,7 +47875,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47884,7 +47884,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47893,7 +47893,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47902,7 +47902,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47911,7 +47911,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47920,7 +47920,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47929,7 +47929,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47938,7 +47938,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47947,7 +47947,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47956,7 +47956,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47965,7 +47965,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -47974,7 +47974,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47983,7 +47983,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -47992,7 +47992,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48001,7 +48001,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48010,7 +48010,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48019,7 +48019,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48028,7 +48028,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48037,7 +48037,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48046,7 +48046,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48055,7 +48055,7 @@
       "Timestamp": "6/7/2017 10:16",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48064,7 +48064,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48073,7 +48073,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48082,7 +48082,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48091,7 +48091,7 @@
       "Timestamp": "6/7/2017 10:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48100,7 +48100,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48109,7 +48109,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48118,7 +48118,7 @@
       "Timestamp": "6/7/2017 10:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48127,7 +48127,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48136,7 +48136,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48145,7 +48145,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48154,7 +48154,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48163,7 +48163,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48172,7 +48172,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48181,7 +48181,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48190,7 +48190,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48199,7 +48199,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48208,7 +48208,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48217,7 +48217,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48226,7 +48226,7 @@
       "Timestamp": "6/7/2017 10:41",
       "TotalFwdPackets": "124",
       "TotalLenghtOfFwdPackets": "523",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -48235,7 +48235,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48244,7 +48244,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48253,7 +48253,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48262,7 +48262,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48271,7 +48271,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48280,7 +48280,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48289,7 +48289,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48298,7 +48298,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48307,7 +48307,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48316,7 +48316,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48325,7 +48325,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48334,7 +48334,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48343,7 +48343,7 @@
       "Timestamp": "6/7/2017 10:15",
       "TotalFwdPackets": "20",
       "TotalLenghtOfFwdPackets": "2972",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48352,7 +48352,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48361,7 +48361,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48370,7 +48370,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48379,7 +48379,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48388,7 +48388,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48397,7 +48397,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48406,7 +48406,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48415,7 +48415,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48424,7 +48424,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48433,7 +48433,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48442,7 +48442,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48451,7 +48451,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48460,7 +48460,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48469,7 +48469,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48478,7 +48478,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48487,7 +48487,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48496,7 +48496,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48505,7 +48505,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48514,7 +48514,7 @@
       "Timestamp": "6/7/2017 09:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48523,7 +48523,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48532,7 +48532,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48541,7 +48541,7 @@
       "Timestamp": "6/7/2017 09:25",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48550,7 +48550,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48559,7 +48559,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48568,7 +48568,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48577,7 +48577,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48586,7 +48586,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48595,7 +48595,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48604,7 +48604,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48613,7 +48613,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48622,7 +48622,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48631,7 +48631,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48640,7 +48640,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48649,7 +48649,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48658,7 +48658,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48667,7 +48667,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48676,7 +48676,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48685,7 +48685,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48694,7 +48694,7 @@
       "Timestamp": "6/7/2017 10:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48703,7 +48703,7 @@
       "Timestamp": "6/7/2017 10:18",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48712,7 +48712,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48721,7 +48721,7 @@
       "Timestamp": "6/7/2017 10:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48730,7 +48730,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48739,7 +48739,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48748,7 +48748,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48757,7 +48757,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48766,7 +48766,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48775,7 +48775,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48784,7 +48784,7 @@
       "Timestamp": "6/7/2017 09:56",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48793,7 +48793,7 @@
       "Timestamp": "6/7/2017 09:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48802,7 +48802,7 @@
       "Timestamp": "6/7/2017 10:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48811,7 +48811,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48820,7 +48820,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48829,7 +48829,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48838,7 +48838,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48847,7 +48847,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48856,7 +48856,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48865,7 +48865,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48874,7 +48874,7 @@
       "Timestamp": "6/7/2017 09:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48883,7 +48883,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48892,7 +48892,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48901,7 +48901,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48910,7 +48910,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48919,7 +48919,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48928,7 +48928,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48937,7 +48937,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48946,7 +48946,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "48783",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48955,7 +48955,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48964,7 +48964,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48973,7 +48973,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -48982,7 +48982,7 @@
       "Timestamp": "6/7/2017 10:23",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -48991,7 +48991,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49000,7 +49000,7 @@
       "Timestamp": "6/7/2017 09:35",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49009,7 +49009,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49018,7 +49018,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49027,7 +49027,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49036,7 +49036,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49045,7 +49045,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49054,7 +49054,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49063,7 +49063,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49072,7 +49072,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49081,7 +49081,7 @@
       "Timestamp": "6/7/2017 09:49",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49090,7 +49090,7 @@
       "Timestamp": "6/7/2017 09:44",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49099,7 +49099,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49108,7 +49108,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49117,7 +49117,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49126,7 +49126,7 @@
       "Timestamp": "6/7/2017 10:31",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49135,7 +49135,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49144,7 +49144,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49153,7 +49153,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49162,7 +49162,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49171,7 +49171,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49180,7 +49180,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49189,7 +49189,7 @@
       "Timestamp": "6/7/2017 09:19",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49198,7 +49198,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49207,7 +49207,7 @@
       "Timestamp": "6/7/2017 10:00",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49216,7 +49216,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49225,7 +49225,7 @@
       "Timestamp": "6/7/2017 10:27",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49234,7 +49234,7 @@
       "Timestamp": "6/7/2017 09:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49243,7 +49243,7 @@
       "Timestamp": "6/7/2017 09:41",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49252,7 +49252,7 @@
       "Timestamp": "6/7/2017 09:31",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49261,7 +49261,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49270,7 +49270,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49279,7 +49279,7 @@
       "Timestamp": "6/7/2017 09:55",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49288,7 +49288,7 @@
       "Timestamp": "6/7/2017 09:51",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49297,7 +49297,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49306,7 +49306,7 @@
       "Timestamp": "6/7/2017 09:52",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49315,7 +49315,7 @@
       "Timestamp": "6/7/2017 09:29",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49324,7 +49324,7 @@
       "Timestamp": "6/7/2017 09:21",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49333,7 +49333,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49342,7 +49342,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49351,7 +49351,7 @@
       "Timestamp": "6/7/2017 10:20",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49360,7 +49360,7 @@
       "Timestamp": "6/7/2017 09:32",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "383",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49369,7 +49369,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49378,7 +49378,7 @@
       "Timestamp": "6/7/2017 09:50",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49387,7 +49387,7 @@
       "Timestamp": "6/7/2017 09:54",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49396,7 +49396,7 @@
       "Timestamp": "6/7/2017 09:36",
       "TotalFwdPackets": "4",
       "TotalLenghtOfFwdPackets": "602",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49405,7 +49405,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49414,7 +49414,7 @@
       "Timestamp": "6/7/2017 10:32",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49423,7 +49423,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49432,7 +49432,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49441,7 +49441,7 @@
       "Timestamp": "6/7/2017 09:30",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49450,7 +49450,7 @@
       "Timestamp": "6/7/2017 09:57",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49459,7 +49459,7 @@
       "Timestamp": "6/7/2017 09:45",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49468,7 +49468,7 @@
       "Timestamp": "6/7/2017 09:46",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49477,7 +49477,7 @@
       "Timestamp": "6/7/2017 09:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49486,7 +49486,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49495,7 +49495,7 @@
       "Timestamp": "6/7/2017 09:42",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49504,7 +49504,7 @@
       "Timestamp": "6/7/2017 09:37",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43906",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49513,7 +49513,7 @@
       "Timestamp": "6/7/2017 09:43",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49522,7 +49522,7 @@
       "Timestamp": "6/7/2017 09:47",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49531,7 +49531,7 @@
       "Timestamp": "6/7/2017 09:38",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49540,7 +49540,7 @@
       "Timestamp": "6/7/2017 09:48",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49549,7 +49549,7 @@
       "Timestamp": "6/7/2017 10:24",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49558,7 +49558,7 @@
       "Timestamp": "6/7/2017 09:26",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49567,7 +49567,7 @@
       "Timestamp": "6/7/2017 10:28",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49576,7 +49576,7 @@
       "Timestamp": "6/7/2017 10:22",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49585,7 +49585,7 @@
       "Timestamp": "6/7/2017 09:53",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49594,7 +49594,7 @@
       "Timestamp": "6/7/2017 09:15",
       "TotalFwdPackets": "7",
       "TotalLenghtOfFwdPackets": "1022",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49603,7 +49603,7 @@
       "Timestamp": "6/7/2017 09:33",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49612,7 +49612,7 @@
       "Timestamp": "6/7/2017 09:39",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49621,7 +49621,7 @@
       "Timestamp": "6/7/2017 10:25",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - XSS"
+      "Label": "XSS"
     },
     {
       "source": "172.16.0.1sx",
@@ -49630,7 +49630,7 @@
       "Timestamp": "6/7/2017 09:40",
       "TotalFwdPackets": "1",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49639,7 +49639,7 @@
       "Timestamp": "6/7/2017 09:59",
       "TotalFwdPackets": "203",
       "TotalLenghtOfFwdPackets": "43951",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49648,7 +49648,7 @@
       "Timestamp": "6/7/2017 09:34",
       "TotalFwdPackets": "3",
       "TotalLenghtOfFwdPackets": "0",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     },
     {
       "source": "172.16.0.1sx",
@@ -49657,7 +49657,7 @@
       "Timestamp": "6/7/2017 10:40",
       "TotalFwdPackets": "190",
       "TotalLenghtOfFwdPackets": "4620",
-      "Label": "WA - Sql Injection"
+      "Label": "Sql Injection"
     },
     {
       "source": "172.16.0.1sx",
@@ -49666,7 +49666,7 @@
       "Timestamp": "6/7/2017 09:58",
       "TotalFwdPackets": "81",
       "TotalLenghtOfFwdPackets": "600",
-      "Label": "WA - Brute Force"
+      "Label": "Brute Force"
     }
   ]
 }

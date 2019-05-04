@@ -42,16 +42,15 @@ function drawData() {
     SourceTarget = new Map();
 
     // ========================= SLIDERS ===================================
-    var marginSlider = {top: 5, right: 20, bottom: 0, left: 12},
+    var marginSlider = {top: 0, right: 13, bottom: 0, left: 12},
         widthSlider = 285 - marginSlider.left - marginSlider.right,
-        heightSlider = 75 - marginSlider.bottom - marginSlider.top;
+        heightSlider = 93 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
     var timeScale1 = d3.scaleTime()
-        .domain([new Date(moment("07/04/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/04/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .domain([new Date(moment("07/04/2017 01:00", 'MMDDYYYY HH:mm')), new Date(moment("07/04/2017 11:00", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
-        .nice(d3.timeDay)
         .clamp(true);
 
     var svgSlider1 = d3.select("#controller1").append("svg")
@@ -78,14 +77,24 @@ function drawData() {
             .tickFormat(function (d) {
                 return formatDate(d);
             })
-            .ticks(12)
-            .tickSize(12)
-            .tickPadding(15))
+            .ticks(6)
+            .tickSize(0)
+            .tickPadding(38))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+
+    // add the X gridlines
+    svgSlider1.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + heightSlider + ")")
+        .call(make_x_gridlines(timeScale1)
+            .tickSize(-heightSlider + 4)
+            .tickFormat("").tickSizeOuter(0)
+        );
+
     drawBoxPlotDay1();
     var brush1 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
@@ -100,87 +109,27 @@ function drawData() {
         .attr("class", "handle");
     handle1.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text1 = handle1.append('text')
         .text(formatDate(timeScale1.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     var handle2 = svgSlider1.append("g")
         .attr("class", "handle");
     handle2.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text2 = handle2.append('text')
-        .text(formatDate(timeScale1.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .text(formatDate(timeScale1.domain()[1]))
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
 
-
-    function upgradeDay1() {
-        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
-        selection1 = d3.brushSelection(d3.select(".brush1").node());
-        handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
-        text1.text(formatDate(timeScale1.invert(selection1[0])));
-        handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
-        text2.text(formatDate(timeScale1.invert(selection1[1])));
-    }
-
-    function resetDay1() {
-        selection1[0] = 0;
-        selection1[1] = widthSlider - 0.1;
-        handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
-        text1.text(formatDate(timeScale1.invert(selection1[0])));
-        handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
-        text2.text(formatDate(timeScale1.invert(selection1[1])));
-    }
-
-    function drawBoxPlotDay1() {
-
-        // Compute summary statistics used for the box:
-        var outlier = data.links.filter(function (d) {
-            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(widthSlider))
-        });
-
-        g2 = new Map();
-        for (var i = 0; i < outlier.length; i++) {
-            if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
-            else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
-        }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day1Dot = Array.from(g2.keys());
-        colorScaleDay1 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
-
-        svgSlider1.selectAll(".dot")
-            .data(day1Dot)
-            //.data(newData)
-            .enter().append("circle")
-            .attr("class", "dotDestination")
-            .attr("r", 2.2)
-            .attr("cy", function (d) {
-                return (Math.floor(Math.random() * 47))
-            })
-            .attr("cx", function (d) {
-                return (timeScale1(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
-            })
-            .style("fill", function (d) {
-                return colorScaleDay1(g2.get(d))
-            })
-            .style("opacity", "0.8")
-            .style("stroke", "black")
-            .style("stroke-width", "0.4")
-            .style("stroke-opacity", "0.5");
-
-
-    }
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
 
     // ====================== SLIDER GIORNO 5/7/2017 =========================
     var timeScale2 = d3.scaleTime()
-        .domain([new Date(moment("07/05/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/05/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .domain([new Date(moment("07/05/2017 02:00", 'MMDDYYYY HH:mm')), new Date(moment("07/05/2017 12:00", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
-        .nice(d3.timeDay)
         .clamp(true);
     var svgSlider2 = d3.select("#controller2").append("svg")
         .attr("width", widthSlider + marginSlider.left + marginSlider.right)
@@ -206,14 +155,22 @@ function drawData() {
             .tickFormat(function (d) {
                 return formatDate(d);
             })
-            .ticks(12)
-            .tickSize(12)
-            .tickPadding(15))
+            .ticks(6)
+            .tickSize(0)
+            .tickPadding(38))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    // add the X gridlines
+    svgSlider2.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + heightSlider + ")")
+        .call(make_x_gridlines(timeScale2)
+            .tickSize(-heightSlider + 4)
+            .tickFormat("").tickSizeOuter(0)
+        );
     drawBoxPlotDay2();
     var brush2 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
@@ -227,83 +184,28 @@ function drawData() {
         .attr("class", "handle");
     handle3.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text3 = handle3.append('text')
         .text(formatDate(timeScale2.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     var handle4 = svgSlider2.append("g")
         .attr("class", "handle");
     handle4.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text4 = handle4.append('text')
-        .text(formatDate(timeScale2.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .text(formatDate(timeScale2.domain()[1]))
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
 
-    function upgradeDay2() {
-        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
-        selection2 = d3.brushSelection(d3.select(".brush2").node());
-        handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
-        text3.text(formatDate(timeScale1.invert(selection2[0])));
-        handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
-        text4.text(formatDate(timeScale1.invert(selection2[1] - 0.1)));
-    }
 
-    function resetDay2() {
-        selection2[0] = 0;
-        selection2[1] = widthSlider - 0.1;
-        handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
-        text3.text(formatDate(timeScale1.invert(selection2[0])));
-        handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
-        text4.text(formatDate(timeScale1.invert(selection2[1])));
-    }
 
-    function drawBoxPlotDay2() {
-
-// Compute summary statistics used for the box:
-        var outlier = data.links.filter(function (d) {
-            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale2.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale2.invert(widthSlider))
-        });
-
-        g2 = new Map();
-        for (var i = 0; i < outlier.length; i++) {
-            if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
-            else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
-        }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day2Dot = Array.from(g2.keys());
-        colorScaleDay2 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
-
-        svgSlider2.selectAll(".dot")
-            .data(day2Dot)
-            //.data(newData)
-            .enter().append("circle")
-            .attr("class", "dotDestination")
-            .attr("r", 2.2)
-            .attr("cy", function (d) {
-                return (Math.floor(Math.random() * 47))
-            })
-            .attr("cx", function (d) {
-                return (timeScale2(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
-            })
-            .style("fill", function (d) {
-                return colorScaleDay2(g2.get(d))
-            })
-            .style("opacity", "0.8")
-            .style("stroke", "black")
-            .style("stroke-width", "0.4")
-            .style("stroke-opacity", "0.5");
-    }
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
-        .domain([new Date(moment("07/06/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/06/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .domain([new Date(moment("07/06/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/06/2017 12:00", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
-        .nice(d3.timeDay)
         .clamp(true);
     var svgSlider3 = d3.select("#controller3").append("svg")
         .attr("width", widthSlider + marginSlider.left + marginSlider.right)
@@ -329,14 +231,22 @@ function drawData() {
             .tickFormat(function (d) {
                 return formatDate(d);
             })
-            .ticks(12)
-            .tickSize(12)
-            .tickPadding(15))
+            .ticks(5)
+            .tickSize(0)
+            .tickPadding(38))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    // add the X gridlines
+    svgSlider3.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + heightSlider + ")")
+        .call(make_x_gridlines(timeScale3)
+            .tickSize(-heightSlider + 4)
+            .tickFormat("").tickSizeOuter(0)
+        );
     drawBoxPlotDay3();
     var brush3 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
@@ -350,83 +260,32 @@ function drawData() {
         .attr("class", "handle");
     handle5.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text5 = handle5.append('text')
         .text(formatDate(timeScale3.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     var handle6 = svgSlider3.append("g")
         .attr("class", "handle");
     handle6.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text6 = handle6.append('text')
-        .text(formatDate(timeScale3.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .text(formatDate(timeScale3.domain()[1]))
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
 
-    function upgradeDay3() {
-        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
-        selection3 = d3.brushSelection(d3.select(".brush3").node());
-        handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
-        text5.text(formatDate(timeScale1.invert(selection3[0])));
-        handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
-        text6.text(formatDate(timeScale1.invert(selection3[1] - 0.1)));
-    }
 
-    function resetDay3() {
-        selection3[0] = 0;
-        selection3[1] = widthSlider - 0.1;
-        handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
-        text5.text(formatDate(timeScale1.invert(selection3[0])));
-        handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
-        text6.text(formatDate(timeScale1.invert(selection3[1])));
-    }
 
-    function drawBoxPlotDay3() {
-        // Compute summary statistics used for the box:
-        var outlier = data.links.filter(function (d) {
-            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale3.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale3.invert(widthSlider))
-        });
-
-        g2 = new Map();
-        for (var i = 0; i < outlier.length; i++) {
-            if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
-            else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
-        }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day3Dot = Array.from(g2.keys());
-        colorScaleDay3 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
-
-        svgSlider3.selectAll(".dot")
-            .data(day3Dot)
-            //.data(newData)
-            .enter().append("circle")
-            .attr("class", "dotDestination")
-            .attr("r", 2.2)
-            .attr("cy", function (d) {
-                return (Math.floor(Math.random() * 47))
-            })
-            .attr("cx", function (d) {
-                return (timeScale3(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
-            })
-            .style("fill", function (d) {
-                return colorScaleDay3(g2.get(d))
-            })
-            .style("opacity", "0.8")
-            .style("stroke", "black")
-            .style("stroke-width", "0.4")
-            .style("stroke-opacity", "0.5");
-    }
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
     // ====================== SLIDER GIORNO 7/7/2017 =========================
+
     var timeScale4 = d3.scaleTime()
-        .domain([new Date(moment("07/07/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 23:59", 'MMDDYYYY HH:mm'))])
+        .domain([new Date(moment("07/07/2017 09:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 16:30", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
-        .nice(d3.timeDay)
         .clamp(true);
+
+
     var svgSlider4 = d3.select("#controller4").append("svg")
         .attr("width", widthSlider + marginSlider.left + marginSlider.right)
         .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
@@ -451,14 +310,22 @@ function drawData() {
             .tickFormat(function (d) {
                 return formatDate(d);
             })
-            .ticks(12)
-            .tickSize(12)
-            .tickPadding(15))
+            .ticks(10)
+            .tickSize(0)
+            .tickPadding(38))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    // add the X gridlines
+    svgSlider4.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + heightSlider + ")")
+        .call(make_x_gridlines(timeScale4)
+            .tickSize(-heightSlider + 4)
+            .tickFormat("").tickSizeOuter(0)
+        );
     drawBoxPlotDay4();
     var brush4 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
@@ -472,38 +339,198 @@ function drawData() {
         .attr("class", "handle");
     handle7.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text7 = handle7.append('text')
         .text(formatDate(timeScale4.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     var handle8 = svgSlider4.append("g")
         .attr("class", "handle");
     handle8.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -20 V 20");
+        .attr("d", "M 0 -30 V 35");
     var text8 = handle8.append('text')
-        .text(formatDate(timeScale4.domain()[0] - 0.2))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
+        .text(formatDate(timeScale4.domain()[1]))
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
+
+
+    function upgradeDay1() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection1 = d3.brushSelection(d3.select(".brush1").node());
+        handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
+        text1.text(formatDate(timeScale1.invert(selection1[0])));
+        handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
+        text2.text(formatDate(timeScale1.invert(selection1[1])));
+    }
+
+    function upgradeDay2() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection2 = d3.brushSelection(d3.select(".brush2").node());
+        handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
+        text3.text(formatDate(timeScale2.invert(selection2[0])));
+        handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
+        text4.text(formatDate(timeScale2.invert(selection2[1])));
+    }
+
+    function upgradeDay3() {
+        // EVENT LISTENER SLIDER 1 DATA 4/7/2017
+        selection3 = d3.brushSelection(d3.select(".brush3").node());
+        handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
+        text5.text(formatDate(timeScale3.invert(selection3[0])));
+        handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
+        text6.text(formatDate(timeScale3.invert(selection3[1])));
+    }
+
     function upgradeDay4() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection4 = d3.brushSelection(d3.select(".brush4").node());
         handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
-        text7.text(formatDate(timeScale1.invert(selection4[0])));
+        text7.text(formatDate(timeScale4.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
-        text8.text(formatDate(timeScale1.invert(selection4[1] - 0.1)));
+        text8.text(formatDate(timeScale4.invert(selection4[1] - 0.1)));
     }
 
+    function resetDay1() {
+        selection1[0] = 0;
+        selection1[1] = widthSlider;
+        handle1.attr('transform', 'translate(' + selection1[0] + ",0)");
+        text1.text(formatDate(timeScale1.invert(selection1[0])));
+        handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
+        text2.text(formatDate(timeScale1.invert(selection1[1])));
+    }
+
+    function resetDay2() {
+        selection2[0] = 0;
+        selection2[1] = widthSlider;
+        handle3.attr('transform', 'translate(' + selection2[0] + ",0)");
+        text3.text(formatDate(timeScale2.invert(selection2[0])));
+        handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
+        text4.text(formatDate(timeScale2.invert(selection2[1])));
+    }
+
+    function resetDay3() {
+        selection3[0] = 0;
+        selection3[1] = widthSlider;
+        handle5.attr('transform', 'translate(' + selection3[0] + ",0)");
+        text5.text(formatDate(timeScale3.invert(selection3[0])));
+        handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
+        text6.text(formatDate(timeScale3.invert(selection3[1])));
+    }
     function resetDay4() {
         selection4[0] = 0;
-        selection4[1] = widthSlider - 0.1;
+        selection4[1] = widthSlider;
         handle7.attr('transform', 'translate(' + selection4[0] + ",0)");
-        text7.text(formatDate(timeScale1.invert(selection4[0])));
+        text7.text(formatDate(timeScale4.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
-        text8.text(formatDate(timeScale1.invert(selection4[1])));
+        text8.text(formatDate(timeScale4.invert(selection4[1])));
     }
 
+    function drawBoxPlotDay1() {
+
+        // Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day1Dot = Array.from(g2.keys());
+        colorScaleDay1 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider1.selectAll(".dot")
+            .data(day1Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDay")
+            .attr("r", 2.4)
+            .attr("cy", function () {
+                return (Math.floor(Math.random() * 72) + 8)
+            })
+            .attr("cx", function (d) {
+                return (timeScale1(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay1(g2.get(d))
+            });
+
+
+    }
+
+    function drawBoxPlotDay2() {
+
+// Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale2.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale2.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day2Dot = Array.from(g2.keys());
+        colorScaleDay2 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider2.selectAll(".dot")
+            .data(day2Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDay")
+            .attr("r", 2.4)
+            .attr("cy", function () {
+                return (Math.floor(Math.random() * 72) + 8)
+            })
+            .attr("cx", function (d) {
+                return (timeScale2(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay2(g2.get(d))
+            });
+    }
+
+    function drawBoxPlotDay3() {
+        // Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale3.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale3.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day3Dot = Array.from(g2.keys());
+        colorScaleDay3 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider3.selectAll(".dot")
+            .data(day3Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDay")
+            .attr("r", 2.4)
+            .attr("cy", function () {
+                return (Math.floor(Math.random() * 72) + 8)
+            })
+            .attr("cx", function (d) {
+                return (timeScale3(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay3(g2.get(d))
+            });
+    }
     function drawBoxPlotDay4() {
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
@@ -519,27 +546,28 @@ function drawData() {
         }
         g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
         day4Dot = Array.from(g2.keys());
-        colorScaleDay4 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay4 = d3.scaleSequential(d3.interpolateViridis).domain([d3.min(Array.from(g2.values())), d3.max(Array.from(g2.values()))]);
 
         svgSlider4.selectAll(".dot")
             .data(day4Dot)
             //.data(newData)
             .enter().append("circle")
-            .attr("class", "dotDestination")
-            .attr("r", 2.2)
-            .attr("cy", function (d) {
-                return (Math.floor(Math.random() * 47))
+            .attr("class", "dotDay")
+            .attr("r", 2.4)
+            .attr("cy", function () {
+                return (Math.floor(Math.random() * 72) + 8)
             })
             .attr("cx", function (d) {
                 return (timeScale4(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
             })
             .style("fill", function (d) {
                 return colorScaleDay4(g2.get(d))
-            })
-            .style("opacity", "0.8")
-            .style("stroke", "black")
-            .style("stroke-width", "0.4")
-            .style("stroke-opacity", "0.5");
+            });
+    }
+
+    // gridlines in x axis function
+    function make_x_gridlines(xAxis) {
+        return d3.axisBottom(xAxis)
     }
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
@@ -1086,7 +1114,7 @@ function drawData() {
 
             // UPDATE number of attack per day
             d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
-            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>" + " (Total Attack)");
+            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>" + " (Tot)");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
             d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
@@ -1562,6 +1590,7 @@ function drawData() {
             .attr("data-header", "SELECT THE DESTINATION PORTS")
             .attr("data-max-options", "50")
             .attr('data-width', "250")
+            .attr("height", "10")
             .on('change', FilterPorts);
 
         select
@@ -1615,7 +1644,7 @@ function drawData() {
 
         var barLegenday1 = d3.axisTop()
             .scale(xScaleDay1)
-            .ticks(5)
+            .ticks(6)
             .tickSizeOuter(0);
 
         // gridlines in x axis function
@@ -1626,7 +1655,7 @@ function drawData() {
         // add the X gridlines
         barDay1.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .attr("transform", "translate(79," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay1.ticks(5).concat(xScaleDay1.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
@@ -1635,10 +1664,10 @@ function drawData() {
         barDay1.append("g")
             .attr("class", "x axis")
             .call(barLegenday1)
-            .attr('transform', 'translate(70,25)');
+            .attr('transform', 'translate(80,25)');
 
         // CHART AREA
-        var valsDay1 = barDay1.append('g').attr('transform', 'translate(65,10)')
+        var valsDay1 = barDay1.append('g').attr('transform', 'translate(75,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1660,9 +1689,9 @@ function drawData() {
             .attr("fill", "#007bff")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay1.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay1.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -1693,9 +1722,9 @@ function drawData() {
             .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay1.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay1.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -1769,7 +1798,7 @@ function drawData() {
         // add the X gridlines
         barDay2.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .attr("transform", "translate(79," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay2.ticks(5).concat(xScaleDay2.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0));
@@ -1777,10 +1806,10 @@ function drawData() {
         barDay2.append("g")
             .attr("class", "x axis")
             .call(barLegenday2)
-            .attr('transform', 'translate(70,25)');
+            .attr('transform', 'translate(80,25)');
 
         // CHART AREA
-        var valsDay2 = barDay2.append('g').attr('transform', 'translate(65,10)')
+        var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1801,9 +1830,9 @@ function drawData() {
             .attr("fill", "#007bff")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay2.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay2.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -1835,9 +1864,9 @@ function drawData() {
             .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay2.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay2.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -1912,7 +1941,7 @@ function drawData() {
         // add the X gridlines
         barDay3.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .attr("transform", "translate(79," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay3.ticks(5).concat(xScaleDay3.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
@@ -1921,10 +1950,10 @@ function drawData() {
         barDay3.append("g")
             .attr("class", "x axis")
             .call(barLegenday3)
-            .attr('transform', 'translate(70,25)');
+            .attr('transform', 'translate(80,25)');
 
         // CHART AREA
-        valsDay3 = barDay3.append('g').attr('transform', 'translate(65,10)')
+        valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1947,9 +1976,9 @@ function drawData() {
             })
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay3.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay3.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -1981,9 +2010,9 @@ function drawData() {
             .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay3.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay3.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -2057,7 +2086,7 @@ function drawData() {
         // add the X gridlines
         barDay4.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(70," + svgHeightBar + ")")
+            .attr("transform", "translate(79," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay4.ticks(5).concat(xScaleDay4.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
@@ -2066,10 +2095,10 @@ function drawData() {
         barDay4.append("g")
             .attr("class", "x axis")
             .call(barLegenday4)
-            .attr('transform', 'translate(70,25)');
+            .attr('transform', 'translate(80,25)');
 
         // CHART AREA
-        var valsDay4 = barDay4.append('g').attr('transform', 'translate(65,10)')
+        var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -2090,9 +2119,9 @@ function drawData() {
             .attr("fill", "#007bff")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay4.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay4.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -2124,9 +2153,9 @@ function drawData() {
             .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
-                    .style("top", d3.event.pageY - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
                     .style('display', "block")
-                    .html("<span style='color: orangered;'>" + (d[0]) + ": <b>" + (valueAttackSelectedDay4.get(d[0])) + "</b></span>" + "<b>&nbsp;&nbsp; --- &nbsp;&nbsp;</b>" + "<span style='color: #007bff;'>" + (d[0]) + ": <b>" + (d[1] - valueAttackSelectedDay4.get(d[0])) + "</b></span>");
+                    .html("Total Packets" + "<b>&nbsp; --- &nbsp;</b>" + (d[0]) + ": " + "<b>" + (d[1]) + "</b>");
             })
             .on('mouseout', function () {
                 tooltipBar.style('display', "none");
@@ -2176,6 +2205,8 @@ function drawData() {
                 else
                     return "block";
             });
+
+
     }
 
     function FocusDotScatterPlot(nodes) {
@@ -2189,6 +2220,20 @@ function drawData() {
                         return "orangered";
                 }
             });
+        d3.selectAll(".dotDay")
+            .style("stroke-width", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1.3";
+                }
+            });
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "0.98";
+                }
+            });
     }
 
     function UnfocusDotScatterPlot(nodes) {
@@ -2200,6 +2245,20 @@ function drawData() {
                 for (var i = 0; i < select.length; i++) {
                     if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
                         return "none";
+                }
+            });
+        d3.selectAll(".dotDay")
+            .style("stroke-width", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d !== select[i].Timestamp))
+                        return "0.4";
+                }
+            });
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d !== select[i].Timestamp))
+                        return "0.6";
                 }
             });
         FocusDotScatterPlot(nodes);

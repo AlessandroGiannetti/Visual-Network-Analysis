@@ -142,6 +142,13 @@ svg {
     overflow: hidden;
 }
 
+.dotDay {
+    opacity: 0.6;
+    stroke: black;
+    stroke-width: 0.4px;
+    stroke-opacity: 0.5;
+}
+
 #day1, #day2, #day3, #day4 {
     display: block;
     font-size: 16px;
@@ -149,7 +156,15 @@ svg {
     top: -30px;
 }
 
-#day, #label {
+#day {
+    display: inline;
+    font-size: 16px;
+    border-top: 1px solid #808080;
+    position: relative;
+    bottom: 20px;
+}
+
+#label {
     display: inline;
     font-size: 16px;
     border-top: 1px solid #808080;
@@ -160,6 +175,7 @@ svg {
     font-size: 16px;
     position: absolute;
     left: 273px;
+    top: 503px;
 }
 
 .dotDestination {
