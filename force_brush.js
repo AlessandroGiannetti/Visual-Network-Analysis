@@ -42,7 +42,7 @@ function drawData() {
     SourceTarget = new Map();
 
     // ========================= SLIDERS ===================================
-    var marginSlider = {top: 0, right: 20, bottom: 0, left: 12},
+    var marginSlider = {top: 5, right: 20, bottom: 0, left: 12},
         widthSlider = 285 - marginSlider.left - marginSlider.right,
         heightSlider = 75 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
@@ -53,6 +53,7 @@ function drawData() {
         .range([0, widthSlider])
         .nice(d3.timeDay)
         .clamp(true);
+
     var svgSlider1 = d3.select("#controller1").append("svg")
         .attr("width", widthSlider + marginSlider.left + marginSlider.right)
         .attr("height", heightSlider + marginSlider.top + marginSlider.bottom)
@@ -60,6 +61,7 @@ function drawData() {
         .append("g")
         // classic transform to position g
         .attr("transform", "translate(" + marginSlider.left + "," + marginSlider.top + ")");
+
     svgSlider1.append("rect")
         .style("pointer-events", "all")
         .style("fill", "none")
@@ -84,6 +86,7 @@ function drawData() {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    drawBoxPlotDay1();
     var brush1 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay1)
@@ -112,6 +115,7 @@ function drawData() {
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
 
+
     function upgradeDay1() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection1 = d3.brushSelection(d3.select(".brush1").node());
@@ -128,6 +132,47 @@ function drawData() {
         text1.text(formatDate(timeScale1.invert(selection1[0])));
         handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
         text2.text(formatDate(timeScale1.invert(selection1[1])));
+    }
+
+    function drawBoxPlotDay1() {
+
+        // Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale1.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale1.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day1Dot = Array.from(g2.keys());
+        colorScaleDay1 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider1.selectAll(".dot")
+            .data(day1Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDestination")
+            .attr("r", 2.2)
+            .attr("cy", function (d) {
+                return (Math.floor(Math.random() * 47))
+            })
+            .attr("cx", function (d) {
+                return (timeScale1(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay1(g2.get(d))
+            })
+            .style("opacity", "0.8")
+            .style("stroke", "black")
+            .style("stroke-width", "0.4")
+            .style("stroke-opacity", "0.5");
+
+
     }
     // ================= FINE SLIDER GIORNO 4/7/2017 =========================
 
@@ -169,6 +214,7 @@ function drawData() {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    drawBoxPlotDay2();
     var brush2 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay2)
@@ -213,6 +259,45 @@ function drawData() {
         handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
         text4.text(formatDate(timeScale1.invert(selection2[1])));
     }
+
+    function drawBoxPlotDay2() {
+
+// Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale2.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale2.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day2Dot = Array.from(g2.keys());
+        colorScaleDay2 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider2.selectAll(".dot")
+            .data(day2Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDestination")
+            .attr("r", 2.2)
+            .attr("cy", function (d) {
+                return (Math.floor(Math.random() * 47))
+            })
+            .attr("cx", function (d) {
+                return (timeScale2(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay2(g2.get(d))
+            })
+            .style("opacity", "0.8")
+            .style("stroke", "black")
+            .style("stroke-width", "0.4")
+            .style("stroke-opacity", "0.5");
+    }
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
@@ -252,6 +337,7 @@ function drawData() {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    drawBoxPlotDay3();
     var brush3 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay3)
@@ -296,6 +382,44 @@ function drawData() {
         handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
         text6.text(formatDate(timeScale1.invert(selection3[1])));
     }
+
+    function drawBoxPlotDay3() {
+        // Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale3.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale3.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day3Dot = Array.from(g2.keys());
+        colorScaleDay3 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider3.selectAll(".dot")
+            .data(day3Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDestination")
+            .attr("r", 2.2)
+            .attr("cy", function (d) {
+                return (Math.floor(Math.random() * 47))
+            })
+            .attr("cx", function (d) {
+                return (timeScale3(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay3(g2.get(d))
+            })
+            .style("opacity", "0.8")
+            .style("stroke", "black")
+            .style("stroke-width", "0.4")
+            .style("stroke-opacity", "0.5");
+    }
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
     // ====================== SLIDER GIORNO 7/7/2017 =========================
     var timeScale4 = d3.scaleTime()
@@ -335,6 +459,7 @@ function drawData() {
             return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr("class", "halo");
+    drawBoxPlotDay4();
     var brush4 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay4)
@@ -361,7 +486,6 @@ function drawData() {
         .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 26) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
-
     function upgradeDay4() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection4 = d3.brushSelection(d3.select(".brush4").node());
@@ -378,6 +502,44 @@ function drawData() {
         text7.text(formatDate(timeScale1.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
         text8.text(formatDate(timeScale1.invert(selection4[1])));
+    }
+
+    function drawBoxPlotDay4() {
+        // Compute summary statistics used for the box:
+        var outlier = data.links.filter(function (d) {
+            return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale4.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale4.invert(widthSlider))
+        });
+
+        g2 = new Map();
+        for (var i = 0; i < outlier.length; i++) {
+            if (g2.has(outlier[i].Timestamp) === false)
+                g2.set(outlier[i].Timestamp, 1);
+            else
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+        }
+        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
+        day4Dot = Array.from(g2.keys());
+        colorScaleDay4 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+
+        svgSlider4.selectAll(".dot")
+            .data(day4Dot)
+            //.data(newData)
+            .enter().append("circle")
+            .attr("class", "dotDestination")
+            .attr("r", 2.2)
+            .attr("cy", function (d) {
+                return (Math.floor(Math.random() * 47))
+            })
+            .attr("cx", function (d) {
+                return (timeScale4(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
+            })
+            .style("fill", function (d) {
+                return colorScaleDay4(g2.get(d))
+            })
+            .style("opacity", "0.8")
+            .style("stroke", "black")
+            .style("stroke-width", "0.4")
+            .style("stroke-opacity", "0.5");
     }
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
@@ -1402,7 +1564,6 @@ function drawData() {
             .attr('data-width', "250")
             .on('change', FilterPorts);
 
-        console.log(Ports);
         select
             .selectAll('option')
             .data(Ports).enter()

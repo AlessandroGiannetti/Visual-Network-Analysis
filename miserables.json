@@ -37099,15 +37099,6 @@
       "source": "172.16.0.1sx",
       "DestinationPort": "21",
       "target": "192.168.10.50dx",
-      "Timestamp": "4/7/2017 09:33",
-      "TotalFwdPackets": "2",
-      "TotalLenghtOfFwdPackets": "14",
-      "Label": "FTP-Patator"
-    },
-    {
-      "source": "172.16.0.1sx",
-      "DestinationPort": "21",
-      "target": "192.168.10.50dx",
       "Timestamp": "4/7/2017 10:13",
       "TotalFwdPackets": "2",
       "TotalLenghtOfFwdPackets": "14",
