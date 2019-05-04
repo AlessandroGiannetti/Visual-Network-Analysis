@@ -1582,8 +1582,9 @@ function drawData() {
 
         select = d3.select('#portController')
             .append('select')
-            .attr('class', 'selectpicker')
+            .attr('class', 'selectpicker dropup')
             .attr('multiple', 'true')
+            .attr('data-dropup-auto', 'false')
             .attr('data-live-search', 'true')
             .attr('data-live-search-placeholder', 'Search')
             .attr('title', "Filter Destination ports")

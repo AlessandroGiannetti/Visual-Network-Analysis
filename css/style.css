@@ -11,6 +11,7 @@ html, body {
     color: rgba(255, 255, 255, 0.8);
     scrollbar-color: #393939 #242424;
     scrollbar-width: thin;
+    overflow: hidden;
 }
 
 text {
@@ -157,11 +158,12 @@ svg {
 }
 
 #day {
+    height: 20px;
     display: inline;
     font-size: 16px;
     border-top: 1px solid #808080;
     position: relative;
-    bottom: 20px;
+    bottom: 19px;
 }
 
 #label {
