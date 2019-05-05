@@ -2322,20 +2322,21 @@ function drawData() {
 
     function UnfocusDotScatterPlot(nodes) {
         select = newData.filter(function (d) {
-            return (nodes.has(d.source.id)) === true || (nodes.has(d.target.id)) === true
+            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
         });
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
             .style("stroke-width", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
-                        return "0";
+                        return "none";
                 }
             });
+        FocusDotScatterPlot(nodes);
     }
 
     function focusDotSelectedOnTime(nodes) {
         select = newData.filter(function (d) {
-            return (nodes.has(d.source.id)) === true || (nodes.has(d.target.id)) === true
+            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
         });
         d3.selectAll(".dotDay").style("opacity", "0.3");
         d3.selectAll(".dotDay")
