@@ -204,7 +204,7 @@ function drawData() {
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
-        .domain([new Date(moment("07/06/2017 00:00", 'MMDDYYYY HH:mm')), new Date(moment("07/06/2017 12:00", 'MMDDYYYY HH:mm'))])
+        .domain([new Date(moment("07/06/2017 02:00", 'MMDDYYYY HH:mm')), new Date(moment("07/06/2017 12:00", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
         .clamp(true);
     var svgSlider3 = d3.select("#controller3").append("svg")
@@ -231,7 +231,7 @@ function drawData() {
             .tickFormat(function (d) {
                 return formatDate(d);
             })
-            .ticks(5)
+            .ticks(7)
             .tickSize(0)
             .tickPadding(38))
         .select(".domain")
@@ -281,7 +281,7 @@ function drawData() {
     // ====================== SLIDER GIORNO 7/7/2017 =========================
 
     var timeScale4 = d3.scaleTime()
-        .domain([new Date(moment("07/07/2017 09:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 16:30", 'MMDDYYYY HH:mm'))])
+        .domain([new Date(moment("07/07/2017 09:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 17:00", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
         .clamp(true);
 
@@ -436,14 +436,17 @@ function drawData() {
         g2 = new Map();
         for (var i = 0; i < outlier.length; i++) {
             if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
+                g2.set(outlier[i].Timestamp, parseInt(outlier[i].TotalFwdPackets));
             else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + parseInt(outlier[i].TotalFwdPackets));
         }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day1Dot = Array.from(g2.keys());
-        colorScaleDay1 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+        g2 = new Map([...g2.entries()]);
+        day1Dot = Array.from(g2.keys()).sort(function (a, b) {
+            return new Date(a) - new Date(b);
+        });
+        colorScaleDay1 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
 
+        var i = 7;
         svgSlider1.selectAll(".dot")
             .data(day1Dot)
             //.data(newData)
@@ -451,7 +454,11 @@ function drawData() {
             .attr("class", "dotDay")
             .attr("r", 2.4)
             .attr("cy", function () {
-                return (Math.floor(Math.random() * 72) + 8)
+                if (i >= 73)
+                    i = 7;
+                else
+                    i += 7;
+                return i;
             })
             .attr("cx", function (d) {
                 return (timeScale1(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
@@ -460,9 +467,10 @@ function drawData() {
                 return colorScaleDay1(g2.get(d))
             });
 
+        continuous("#controller1", colorScaleDay1, 535, 415)
+
 
     }
-
     function drawBoxPlotDay2() {
 
 // Compute summary statistics used for the box:
@@ -473,14 +481,17 @@ function drawData() {
         g2 = new Map();
         for (var i = 0; i < outlier.length; i++) {
             if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
+                g2.set(outlier[i].Timestamp, parseInt(outlier[i].TotalFwdPackets));
             else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + parseInt(outlier[i].TotalFwdPackets));
         }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day2Dot = Array.from(g2.keys());
-        colorScaleDay2 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+        g2 = new Map([...g2.entries()]);
+        day2Dot = Array.from(g2.keys()).sort(function (a, b) {
+            return new Date(a) - new Date(b);
+        });
+        colorScaleDay2 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
 
+        var i = 7;
         svgSlider2.selectAll(".dot")
             .data(day2Dot)
             //.data(newData)
@@ -488,7 +499,11 @@ function drawData() {
             .attr("class", "dotDay")
             .attr("r", 2.4)
             .attr("cy", function () {
-                return (Math.floor(Math.random() * 72) + 8)
+                if (i >= 73)
+                    i = 7;
+                else
+                    i += 6;
+                return i;
             })
             .attr("cx", function (d) {
                 return (timeScale2(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
@@ -496,8 +511,9 @@ function drawData() {
             .style("fill", function (d) {
                 return colorScaleDay2(g2.get(d))
             });
-    }
 
+        continuous("#controller2", colorScaleDay2, 645, 415)
+    }
     function drawBoxPlotDay3() {
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
@@ -507,14 +523,17 @@ function drawData() {
         g2 = new Map();
         for (var i = 0; i < outlier.length; i++) {
             if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
+                g2.set(outlier[i].Timestamp, parseInt(outlier[i].TotalFwdPackets));
             else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + parseInt(outlier[i].TotalFwdPackets));
         }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day3Dot = Array.from(g2.keys());
-        colorScaleDay3 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
+        g2 = new Map([...g2.entries()]);
+        day3Dot = Array.from(g2.keys()).sort(function (a, b) {
+            return new Date(a) - new Date(b);
+        });
+        colorScaleDay3 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
 
+        var i = 7;
         svgSlider3.selectAll(".dot")
             .data(day3Dot)
             //.data(newData)
@@ -522,7 +541,11 @@ function drawData() {
             .attr("class", "dotDay")
             .attr("r", 2.4)
             .attr("cy", function () {
-                return (Math.floor(Math.random() * 72) + 8)
+                if (i >= 73)
+                    i = 7;
+                else
+                    i += 6;
+                return i;
             })
             .attr("cx", function (d) {
                 return (timeScale3(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
@@ -530,6 +553,8 @@ function drawData() {
             .style("fill", function (d) {
                 return colorScaleDay3(g2.get(d))
             });
+
+        continuous("#controller3", colorScaleDay3, 754, 415)
     }
     function drawBoxPlotDay4() {
         // Compute summary statistics used for the box:
@@ -540,14 +565,17 @@ function drawData() {
         g2 = new Map();
         for (var i = 0; i < outlier.length; i++) {
             if (g2.has(outlier[i].Timestamp) === false)
-                g2.set(outlier[i].Timestamp, 1);
+                g2.set(outlier[i].Timestamp, parseInt(outlier[i].TotalFwdPackets));
             else
-                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + 1);
+                g2.set(outlier[i].Timestamp, g2.get(outlier[i].Timestamp) + parseInt(outlier[i].TotalFwdPackets));
         }
-        g2 = new Map([...g2.entries()].sort((a, b) => a[1] - b[1]));
-        day4Dot = Array.from(g2.keys());
-        colorScaleDay4 = d3.scaleSequential(d3.interpolateViridis).domain([d3.min(Array.from(g2.values())), d3.max(Array.from(g2.values()))]);
+        g2 = new Map([...g2.entries()]);
+        day4Dot = Array.from(g2.keys()).sort(function (a, b) {
+            return new Date(a) - new Date(b);
+        });
+        colorScaleDay4 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
 
+        var i = 7;
         svgSlider4.selectAll(".dot")
             .data(day4Dot)
             //.data(newData)
@@ -555,7 +583,11 @@ function drawData() {
             .attr("class", "dotDay")
             .attr("r", 2.4)
             .attr("cy", function () {
-                return (Math.floor(Math.random() * 72) + 8)
+                if (i >= 73)
+                    i = 7;
+                else
+                    i += 7;
+                return i;
             })
             .attr("cx", function (d) {
                 return (timeScale4(new Date(moment(d, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))))
@@ -563,12 +595,69 @@ function drawData() {
             .style("fill", function (d) {
                 return colorScaleDay4(g2.get(d))
             });
-    }
 
-    // gridlines in x axis function
+        continuous("#controller3", colorScaleDay3, 863, 415)
+
+    }
     function make_x_gridlines(xAxis) {
         return d3.axisBottom(xAxis)
     }
+
+    function continuous(selector_id, colorscale, top, left) {
+        var legendheight = 110,
+            legendwidth = 80,
+            margin = {top: 10, right: 60, bottom: 10, left: 8};
+
+        var canvas = d3.select(selector_id)
+            .append("canvas")
+            .attr("height", legendheight - margin.top - margin.bottom)
+            .attr("width", 1)
+            .style("height", (legendheight - margin.top - margin.bottom) + "px")
+            .style("width", (legendwidth - margin.left - margin.right) + "px")
+            .style("border", "1px solid #000")
+            .style("position", "absolute")
+            .style("top", (top) + "px")
+            .style("left", (left) + "px")
+            .node();
+
+        var ctx = canvas.getContext("2d");
+
+        var legendscale = d3.scaleLinear()
+            .range([1, legendheight - margin.top - margin.bottom])
+            .domain(colorscale.domain());
+
+        // image data hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
+        var image = ctx.createImageData(1, legendheight);
+        d3.range(legendheight).forEach(function (i) {
+            var c = d3.rgb(colorscale(legendscale.invert(i)));
+            image.data[4 * i] = c.r;
+            image.data[4 * i + 1] = c.g;
+            image.data[4 * i + 2] = c.b;
+            image.data[4 * i + 3] = 255;
+        });
+        ctx.putImageData(image, 0, 0);
+
+        legendaxis = d3.axisRight()
+            .scale(legendscale)
+            .tickValues(legendscale.ticks(3).concat(legendscale.domain())).tickSize(4);
+
+        var svg = d3.select(selector_id)
+            .append("svg")
+            .attr("height", (legendheight) + "px")
+            .attr("width", (legendwidth) + "px")
+            .style("position", "absolute")
+            .style("left", (left - 2) + "px")
+            .style("top", (top - 11) + "px");
+
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + (legendwidth - margin.left - margin.right + 3) + "," + (margin.top) + ")")
+            .call(legendaxis);
+    }
+
+    // =============================== Legend Days =================================
+
+
     // ================= FINE SLIDER GIORNO 7/7/2017 =======================
     // =========================FINE SLIDERS ===================================
     // =============================INIT INFO N ATTACK ============================
@@ -590,7 +679,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 235, heightBar = 20, svgWidthBar = 357, svgHeightBar = 110, tooltipBar;
+    var widthBar = 235, heightBar = 20, svgWidthBar = 415, svgHeightBar = 110, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -633,18 +722,15 @@ function drawData() {
         canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
-    var marginCPA = {top: 25, right: 0, bottom: 8, left: 0},
-        widthCPA = 1140 - marginCPA.left - marginCPA.right,
+    var marginCPA = {top: 28, right: 0, bottom: 8, left: 148},
+        widthCPA = 1285 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-37, widthCPA + 286]).padding(.1),
+    var x = d3.scaleBand().rangeRound([-4, widthCPA + 175]),
         y = {},
         dragging = {},
-        line = d3.line(),
-        Range = [];
+        line = d3.line();
     var svgCPA;
-    for (var i = 0; i <= heightCPA * 20; i = i + 20) {
-        Range.push(i);
-    }
+
 
     // ================= FINE DICHIARAZIONI CPA ==================================
 
@@ -827,8 +913,8 @@ function drawData() {
     });
 
     // ======================== SCATTERPLOT ===============================
-    var marginScatterPlot = {top: 12, right: 3, bottom: 35, left: 65},
-        widthScatterPlot = 1145 - marginScatterPlot.left - marginScatterPlot.right,
+    var marginScatterPlot = {top: 12, right: 0, bottom: 35, left: 80},
+        widthScatterPlot = 1080 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 470 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
         xScatterPlot, yScatterPlot,
@@ -1087,16 +1173,16 @@ function drawData() {
                 .attr("transform", "translate(" + (widthLegend - marginLegend.left - marginLegend.right + 3) + "," + (marginLegend.top) + ")")
                 .attr("class", "y axis")
                 .call(legendaxis);
-        }
 
-        svgLegend.append("g")
-            .append("text")
-            .attr("class", "label")
-            .attr("x", widthLegend / 2 + 44)
-            .attr("y", 12)
-            .style("text-anchor", "end")
-            .style("font-size", "13px")
-            .text("N° Malicious Packages");
+            svgLegend.append("g")
+                .append("text")
+                .attr("class", "label")
+                .attr("x", widthLegend / 2 + 44)
+                .attr("y", 12)
+                .style("text-anchor", "end")
+                .style("font-size", "13px")
+                .text("N° Malicious Packages");
+        }
 
         function updateNumberOfAttack(newData) {
             UPday1 = newData.filter(function (d) {
@@ -1137,7 +1223,7 @@ function drawData() {
                     svgCPA.attr("transform", d3.event.transform);
                 })).on("dblclick.zoom", null)
                 .append("g")
-                .attr("transform", "translate(" + 70 + "," + 28 + ")");
+                .attr("transform", "translate(" + marginCPA.left + "," + marginCPA.top + ")");
 
             // prendere i dati da un json senza duplicati
             TargetPort = [];
@@ -1431,7 +1517,7 @@ function drawData() {
             svgScatterPlot.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + heightScatterPlot + ")")
-                .call(xAxisScatterPlot.tickSize(0).tickSizeOuter(0))
+                .call(xAxisScatterPlot.tickSize(7).tickSizeOuter(0))
                 .selectAll("text")
                 .attr("y", -1)
                 .attr("x", 4)
@@ -1450,7 +1536,7 @@ function drawData() {
 
             svgScatterPlot.append("g")
                 .attr("class", "y axis")
-                .call(yAxisScatterPlot.tickSize(0).tickSizeOuter(0))
+                .call(yAxisScatterPlot.tickSize(7).tickSizeOuter(0))
                 .append("text")
                 .attr("class", "label")
                 .attr("y", -12)
@@ -1656,7 +1742,7 @@ function drawData() {
         // add the X gridlines
         barDay1.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(79," + svgHeightBar + ")")
+            .attr("transform", "translate(129," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay1.ticks(5).concat(xScaleDay1.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
@@ -1665,10 +1751,10 @@ function drawData() {
         barDay1.append("g")
             .attr("class", "x axis")
             .call(barLegenday1)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(130,25)');
 
         // CHART AREA
-        var valsDay1 = barDay1.append('g').attr('transform', 'translate(75,10)')
+        var valsDay1 = barDay1.append('g').attr('transform', 'translate(125,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1799,7 +1885,7 @@ function drawData() {
         // add the X gridlines
         barDay2.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(79," + svgHeightBar + ")")
+            .attr("transform", "translate(129," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay2.ticks(5).concat(xScaleDay2.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0));
@@ -1807,10 +1893,10 @@ function drawData() {
         barDay2.append("g")
             .attr("class", "x axis")
             .call(barLegenday2)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(130,25)');
 
         // CHART AREA
-        var valsDay2 = barDay2.append('g').attr('transform', 'translate(75,10)')
+        var valsDay2 = barDay2.append('g').attr('transform', 'translate(125,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -1942,7 +2028,7 @@ function drawData() {
         // add the X gridlines
         barDay3.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(79," + svgHeightBar + ")")
+            .attr("transform", "translate(129," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay3.ticks(5).concat(xScaleDay3.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
@@ -1951,10 +2037,10 @@ function drawData() {
         barDay3.append("g")
             .attr("class", "x axis")
             .call(barLegenday3)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(130,25)');
 
         // CHART AREA
-        valsDay3 = barDay3.append('g').attr('transform', 'translate(75,10)')
+        valsDay3 = barDay3.append('g').attr('transform', 'translate(125,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -2087,7 +2173,7 @@ function drawData() {
         // add the X gridlines
         barDay4.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(79," + svgHeightBar + ")")
+            .attr("transform", "translate(129," + svgHeightBar + ")")
             .call(make_x_gridlines()
                 .tickValues(xScaleDay4.ticks(5).concat(xScaleDay4.domain()))
                 .tickSize(-svgHeightBar + 24).tickFormat("").tickSizeOuter(0)
@@ -2096,10 +2182,10 @@ function drawData() {
         barDay4.append("g")
             .attr("class", "x axis")
             .call(barLegenday4)
-            .attr('transform', 'translate(80,25)');
+            .attr('transform', 'translate(130,25)');
 
         // CHART AREA
-        var valsDay4 = barDay4.append('g').attr('transform', 'translate(75,10)')
+        var valsDay4 = barDay4.append('g').attr('transform', 'translate(125,10)')
             .attr('width', widthBar).attr("height", heightBar);
 
         tooltipBar = d3.select('body').append('div')
@@ -2221,18 +2307,12 @@ function drawData() {
                         return "orangered";
                 }
             });
-        d3.selectAll(".dotDay")
-            .style("stroke-width", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if ((d === select[i].Timestamp))
-                        return "1.3";
-                }
-            });
+
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if ((d === select[i].Timestamp))
-                        return "0.98";
+                        return "1";
                 }
             });
     }
@@ -2242,24 +2322,18 @@ function drawData() {
             return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
         });
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
-            .style("stroke", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
-                        return "none";
-                }
-            });
-        d3.selectAll(".dotDay")
             .style("stroke-width", function (d) {
                 for (var i = 0; i < select.length; i++) {
-                    if ((d !== select[i].Timestamp))
-                        return "0.4";
+                    if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
+                        return "0";
                 }
             });
+
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if ((d !== select[i].Timestamp))
-                        return "0.6";
+                        return "0.3";
                 }
             });
         FocusDotScatterPlot(nodes);
@@ -2302,7 +2376,18 @@ function drawData() {
                     return "1";
                 else
                     return "0"
-            })
+            });
+
+        select = newData.filter(function (d) {
+            return ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.DestinationPort === edge.DestinationPort));
+        });
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
+            });
     }
 
     function handleFocusStrokeOnEdge(edge) {
@@ -2322,6 +2407,17 @@ function drawData() {
                     return "0";
             })
             .style("stroke-width", "2px");
+
+        select = newData.filter(function (d) {
+            return (edge.source.id == d.source.id && edge.target.id == d.target.id);
+        });
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
+            });
     }
 
     function ticked() {
@@ -2480,16 +2576,23 @@ function drawData() {
             .style("opacity", function (d) {
                 if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
                     return "1";
-                else
-                    return "0";
             })
             .style("stroke-width", "3px");
+
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
+            });
     }
 
     function handleMouseOutNode() {
         d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
         d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
+        d3.selectAll(".dotDay").style("opacity", "0.4");
     }
 
     function handleMouseMoveEdge(edge) {
@@ -2535,6 +2638,7 @@ function drawData() {
         d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
         d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
         d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
+        d3.selectAll(".dotDay").style("opacity", "0.3");
     }
 
     function handleFocusStroke(stroke) {
@@ -2573,6 +2677,17 @@ function drawData() {
                     return "1";
                 else
                     return "0"
+            });
+
+        select = newData.filter(function (d) {
+            return ((d.source.id === stroke.source.id && d.target.id === stroke.target.id));
+        });
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
             });
     }
 
