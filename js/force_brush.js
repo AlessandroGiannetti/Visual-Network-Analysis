@@ -2466,7 +2466,7 @@ function drawData() {
                     if ((nodes.indexOf(d.source.id) > -1) && (nodes.indexOf(d.target.id) > -1) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id))
                         return "1";
                     else
-                        return "0"
+                        return "0.2"
                 }
             });
         d3.select("#PCA").selectAll(".notSelected")
@@ -2522,7 +2522,7 @@ function drawData() {
                 if (((d.source.id === edge.source.id) && (d.target.id === edge.target.id)))
                     return "1";
                 else
-                    return "0"
+                    return "0.2"
             });
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
@@ -2595,7 +2595,7 @@ function drawData() {
                 if ((d.source.id === stroke.source.id) || (d.source.id === stroke.target.id))
                     return "1";
                 else
-                    return "0"
+                    return "0.2"
             });
         select = newData.filter(function (d) {
             return (d.source.id === stroke.source.id) || (d.source.id === stroke.target.id)
@@ -2709,13 +2709,6 @@ function drawData() {
                     return "1";
                 else
                     return "0";
-            });
-        d3.select("#scatterPlot").selectAll(".dotSource")
-            .style("display", function (d) {
-                if (nodes.includes(d.source.id))
-                    return "block";
-                else
-                    return "none"
             });
         d3.select("#scatterPlot").selectAll(".dotDestination")
             .style("display", function (d) {
