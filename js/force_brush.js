@@ -444,7 +444,7 @@ function drawData() {
         day1Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay1 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay1 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 7;
         svgSlider1.selectAll(".dot")
@@ -489,7 +489,7 @@ function drawData() {
         day2Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay2 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay2 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 7;
         svgSlider2.selectAll(".dot")
@@ -531,7 +531,7 @@ function drawData() {
         day3Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay3 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay3 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 7;
         svgSlider3.selectAll(".dot")
@@ -573,7 +573,7 @@ function drawData() {
         day4Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay4 = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay4 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 7;
         svgSlider4.selectAll(".dot")
@@ -782,6 +782,7 @@ function drawData() {
                 tooltipLink.transition().duration(150)
                     .style('display', "none");
                 handleMouseOutEdge();
+                focusDotSelectedOnTime(nodeSelected);
                 handleOutFocusStroke();
             })
             .attr("stroke-width", function (d) {
@@ -813,6 +814,7 @@ function drawData() {
                 d3.select(this).transition().duration(200).style("stroke", "orangered");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                focusDotSelectedOnTime(nodeSelected);
                 FocusDotScatterPlot(nodeSelected);
                 updateChartDay1();
                 updateChartDay2();
@@ -823,6 +825,7 @@ function drawData() {
                 d3.select(this).transition().duration(200).style("stroke", "none");
                 nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                focusDotSelectedOnTime(nodeSelected);
                 UnfocusDotScatterPlot(nodeSelected);
                 updateChartDay1();
                 updateChartDay2();
@@ -841,6 +844,7 @@ function drawData() {
                 tooltipNode.transition().duration(150)
                     .style('display', "none");
                 handleMouseOutNode();
+                focusDotSelectedOnTime(nodeSelected);
                 handleOutFocusStroke();
             });
 
@@ -1035,6 +1039,7 @@ function drawData() {
                     d3.select(this).transition().duration(200).style("stroke", "orangered");
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
+                    focusDotSelectedOnTime(nodeSelected);
                     FocusDotScatterPlot(nodeSelected);
                     updateChartDay1();
                     updateChartDay2();
@@ -1045,6 +1050,7 @@ function drawData() {
                     d3.select(this).transition().duration(200).style("stroke", "none");
                     nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
+                    focusDotSelectedOnTime(nodeSelected);
                     UnfocusDotScatterPlot(nodeSelected);
                     updateChartDay1();
                     updateChartDay2();
@@ -1063,6 +1069,7 @@ function drawData() {
                     tooltipNode.transition().duration(150)
                         .style('display', "none");
                     handleMouseOutNode();
+                    focusDotSelectedOnTime(nodeSelected);
                     handleOutFocusStroke();
                     if (!brushEmpty())
                         brush_parallel_chart();
@@ -1089,6 +1096,7 @@ function drawData() {
                     tooltipLink.transition().duration(150)
                         .style('display', "none");
                     handleMouseOutEdge();
+                    focusDotSelectedOnTime(nodeSelected);
                     handleOutFocusStroke();
                     if (!brushEmpty())
                         brush_parallel_chart()
@@ -1304,6 +1312,7 @@ function drawData() {
                 .on('mouseout', function () {
                     d3.select(this).transition().duration(100).style("stroke-width", "1px");
                     handleOutFocusStroke();
+                    focusDotSelectedOnTime(nodeSelected);
                     handleMouseOutEdge();
                     if (!brushEmpty())
                         brush_parallel_chart()
@@ -1320,6 +1329,7 @@ function drawData() {
                 })
                 .on('mouseout', function () {
                     handleOutFocusStroke();
+                    focusDotSelectedOnTime(nodeSelected);
                     handleMouseOutEdge();
                     if (!brushEmpty())
                         brush_parallel_chart()
@@ -1576,6 +1586,7 @@ function drawData() {
                 .on("mouseout", function () {
                     tooltipScatterPlot.style('display', "none");
                     handleMouseOutEdge();
+                    focusDotSelectedOnTime(nodeSelected);
                     handleOutFocusStroke();
                 });
         }
@@ -2307,7 +2318,26 @@ function drawData() {
                         return "orangered";
                 }
             });
+    }
 
+    function UnfocusDotScatterPlot(nodes) {
+        select = newData.filter(function (d) {
+            return (nodes.has(d.source.id)) === true || (nodes.has(d.target.id)) === true
+        });
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+            .style("stroke-width", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
+                        return "0";
+                }
+            });
+    }
+
+    function focusDotSelectedOnTime(nodes) {
+        select = newData.filter(function (d) {
+            return (nodes.has(d.source.id)) === true || (nodes.has(d.target.id)) === true
+        });
+        d3.selectAll(".dotDay").style("opacity", "0.3");
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
                 for (var i = 0; i < select.length; i++) {
@@ -2317,26 +2347,18 @@ function drawData() {
             });
     }
 
-    function UnfocusDotScatterPlot(nodes) {
+    function focusDotonOverOnTime(nodes) {
         select = newData.filter(function (d) {
-            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
+            return ((nodes.source.id) == true || (nodes.has(d.target.id)) == true);
         });
-        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
-            .style("stroke-width", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if (!((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
-                        return "0";
-                }
-            });
 
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if ((d !== select[i].Timestamp))
-                        return "0.3";
+                        return "1";
                 }
             });
-        FocusDotScatterPlot(nodes);
     }
 
     function handleFocusDotDestination(edge) {
@@ -2379,8 +2401,10 @@ function drawData() {
             });
 
         select = newData.filter(function (d) {
-            return ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.DestinationPort === edge.DestinationPort));
+            return ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.DestinationPort === edge.DestinationPort))
         });
+
+        d3.selectAll(".dotDay").style("opacity", "0.3");
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
                 for (var i = 0; i < select.length; i++) {
@@ -2408,9 +2432,61 @@ function drawData() {
             })
             .style("stroke-width", "2px");
 
+    }
+
+
+
+    function handleMouseOverNode(circle) {
+        var nodes = [];
+        nodes.push(circle._groups[0][0].__data__.id);
+        d3.select("#graph").selectAll("line").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
+                    nodes.push(d.target.id);
+                    nodes.push(d.source.id);
+                    return "1";
+                }
+                if ((d.source.id !== circle._groups[0][0].__data__.id) || (d.target.id !== circle._groups[0][0].__data__.id))
+                    return "0.1";
+            });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if (nodes.indexOf(d.id) > -1)
+                    return "1";
+                else
+                    return "0.1"
+            });
         select = newData.filter(function (d) {
-            return (edge.source.id == d.source.id && edge.target.id == d.target.id);
+            return d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id
         });
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((nodes.indexOf(d.source.id) > -1) && (nodes.indexOf(d.target.id) > -1) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id))
+                        return "1";
+                    else
+                        return "0"
+                }
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "3px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
+                    return "1";
+            })
+            .style("stroke-width", "3px");
+        select = newData.filter(function (d) {
+            return (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
+        });
+
+        d3.selectAll(".dotDay").style("opacity", "0.3");
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
                 for (var i = 0; i < select.length; i++) {
@@ -2418,6 +2494,129 @@ function drawData() {
                         return "1";
                 }
             });
+    }
+
+    function handleMouseOutNode() {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
+        d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
+    }
+
+    function handleMouseMoveEdge(edge) {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+            if (d.source.id === edge.source.id && d.target.id === edge.target.id)
+                return "1";
+            else
+                return "0.1";
+        });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.id === edge.source.id) || (d.id === edge.target.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
+        d3.select("#scatterPlot").selectAll("circle")
+            .style("opacity", function (d) {
+                if (((d.source.id === edge.source.id) && (d.target.id === edge.target.id)))
+                    return "1";
+                else
+                    return "0"
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "2px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "2px");
+        select = newData.filter(function (d) {
+            return (d.source.id === edge.source.id) && (d.target.id === edge.target.id)
+        });
+
+        d3.selectAll(".dotDay").style("opacity", "0.3");
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
+            });
+    }
+
+    function handleMouseOutEdge() {
+        d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
+        d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
+        d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
+    }
+
+    function handleFocusStroke(stroke) {
+        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
+            if (d.source.id === stroke.source.id && d.target.id === stroke.target.id)
+                return "1";
+            else
+                return "0.1";
+        });
+        d3.select("#graph").selectAll("circle").transition().duration(200)
+            .style("opacity", function (d) {
+                if ((d.id === stroke.source.id) || (d.id === stroke.target.id))
+                    return "1";
+                else
+                    return "0.1";
+            });
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", function (d) {
+                if (d == stroke)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "2px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", function (d) {
+                if (d == stroke)
+                    return "1";
+                else
+                    return "0";
+            })
+            .style("stroke-width", "2px");
+        d3.select("#scatterPlot").selectAll("circle")
+            .style("opacity", function (d) {
+                if ((d.source.id === stroke.source.id) || (d.source.id === stroke.target.id))
+                    return "1";
+                else
+                    return "0"
+            });
+        select = newData.filter(function (d) {
+            return (d.source.id === stroke.source.id) || (d.source.id === stroke.target.id)
+        });
+
+        d3.selectAll(".dotDay").style("opacity", "0.3");
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
+            });
+    }
+
+    function handleOutFocusStroke() {
+        d3.select("#PCA").selectAll(".notSelected")
+            .style("opacity", "1")
+            .style("stroke-width", "1px");
+        d3.select("#PCA").selectAll(".selected")
+            .style("opacity", "1")
+            .style("stroke-width", "1px");
     }
 
     function ticked() {
@@ -2530,174 +2729,6 @@ function drawData() {
         d3.select("#graph").selectAll("line").style("display", "block");
         d3.select("#graph").selectAll("circle").style("display", "block");
         d3.select("#graph").selectAll("text").style("display", "block");
-    }
-
-    function handleMouseOverNode(circle) {
-        var nodes = [];
-        nodes.push(circle._groups[0][0].__data__.id);
-        d3.select("#graph").selectAll("line").transition().duration(200)
-            .style("opacity", function (d) {
-                if ((d.source.id === circle._groups[0][0].__data__.id) || (d.target.id === circle._groups[0][0].__data__.id)) {
-                    nodes.push(d.target.id);
-                    nodes.push(d.source.id);
-                    return "1";
-                }
-                if ((d.source.id !== circle._groups[0][0].__data__.id) || (d.target.id !== circle._groups[0][0].__data__.id))
-                    return "0.1";
-            });
-        d3.select("#graph").selectAll("circle").transition().duration(200)
-            .style("opacity", function (d) {
-                if (nodes.indexOf(d.id) > -1)
-                    return "1";
-                else
-                    return "0.1"
-            });
-        select = newData.filter(function (d) {
-            return d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id
-        });
-        d3.select("#scatterPlot").selectAll("circle").transition().duration(200)
-            .style("opacity", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if ((nodes.indexOf(d.source.id) > -1) && (nodes.indexOf(d.target.id) > -1) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id))
-                        return "1";
-                    else
-                        return "0"
-                }
-            });
-        d3.select("#PCA").selectAll(".notSelected")
-            .style("opacity", function (d) {
-                if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "3px");
-        d3.select("#PCA").selectAll(".selected")
-            .style("opacity", function (d) {
-                if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
-                    return "1";
-            })
-            .style("stroke-width", "3px");
-
-        d3.selectAll(".dotDay")
-            .style("opacity", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if ((d === select[i].Timestamp))
-                        return "1";
-                }
-            });
-    }
-
-    function handleMouseOutNode() {
-        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", "1");
-        d3.select("#graph").selectAll("circle").transition().duration(200).style("opacity", "1");
-        d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
-        d3.selectAll(".dotDay").style("opacity", "0.4");
-    }
-
-    function handleMouseMoveEdge(edge) {
-        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
-            if (d.source.id === edge.source.id && d.target.id === edge.target.id)
-                return "1";
-            else
-                return "0.1";
-        });
-        d3.select("#graph").selectAll("circle").transition().duration(200)
-            .style("opacity", function (d) {
-                if ((d.id === edge.source.id) || (d.id === edge.target.id))
-                    return "1";
-                else
-                    return "0.1";
-            });
-        d3.select("#scatterPlot").selectAll("circle")
-            .style("opacity", function (d) {
-                if (((d.source.id === edge.source.id) && (d.target.id === edge.target.id)))
-                    return "1";
-                else
-                    return "0"
-            });
-        d3.select("#PCA").selectAll(".notSelected")
-            .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "2px");
-        d3.select("#PCA").selectAll(".selected")
-            .style("opacity", function (d) {
-                if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id))
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "2px");
-    }
-
-    function handleMouseOutEdge() {
-        d3.select("#graph").selectAll("line").transition().duration(150).style("opacity", "1");
-        d3.select("#graph").selectAll("circle").transition().duration(150).style("opacity", "1");
-        d3.select("#scatterPlot").selectAll("circle").transition().duration(200).style("opacity", "1");
-        d3.selectAll(".dotDay").style("opacity", "0.3");
-    }
-
-    function handleFocusStroke(stroke) {
-        d3.select("#graph").selectAll("line").transition().duration(200).style("opacity", function (d) {
-            if (d.source.id === stroke.source.id && d.target.id === stroke.target.id)
-                return "1";
-            else
-                return "0.1";
-        });
-        d3.select("#graph").selectAll("circle").transition().duration(200)
-            .style("opacity", function (d) {
-                if ((d.id === stroke.source.id) || (d.id === stroke.target.id))
-                    return "1";
-                else
-                    return "0.1";
-            });
-        d3.select("#PCA").selectAll(".notSelected")
-            .style("opacity", function (d) {
-                if (d == stroke)
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "2px");
-        d3.select("#PCA").selectAll(".selected")
-            .style("opacity", function (d) {
-                if (d == stroke)
-                    return "1";
-                else
-                    return "0";
-            })
-            .style("stroke-width", "2px");
-        d3.select("#scatterPlot").selectAll("circle")
-            .style("opacity", function (d) {
-                if ((d.source.id === stroke.source.id) || (d.source.id === stroke.target.id))
-                    return "1";
-                else
-                    return "0"
-            });
-
-        select = newData.filter(function (d) {
-            return ((d.source.id === stroke.source.id && d.target.id === stroke.target.id));
-        });
-        d3.selectAll(".dotDay")
-            .style("opacity", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if ((d === select[i].Timestamp))
-                        return "1";
-                }
-            });
-    }
-
-    function handleOutFocusStroke() {
-        d3.select("#PCA").selectAll(".notSelected")
-            .style("opacity", "1")
-            .style("stroke-width", "1px");
-        d3.select("#PCA").selectAll(".selected")
-            .style("opacity", "1")
-            .style("stroke-width", "1px");
     }
 
     function buildMapPacket(data) {
