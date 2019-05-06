@@ -24,6 +24,7 @@ var Ports = [];
 var PortSelected = [];
 var resetCPA = false;
 var select;
+var resetLegend = false;
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, JsonData) {
@@ -36,7 +37,8 @@ totPackets = 0;
 function drawData() {
     d3.selectAll().remove();
 
-    drawSelect(data.links);
+    drawSelect(true, data.links);
+
     // Node scatterplot without duplicates
     DOTdestination = new Map();
     SourceTarget = new Map();
@@ -969,7 +971,7 @@ function drawData() {
             );
         });
         if (step === 1)
-            drawSelect(newData);
+            drawSelect(false, newData);
 
         newData = newData.filter(function (d) {
             return PortSelected.includes(d.DestinationPort)
@@ -1163,8 +1165,8 @@ function drawData() {
                 .style("left", "30px")
                 .style("top", "5px")
                 .on("dblclick", function () {
-                    ResetFilter = true;
-                    filterView
+                    resetLegend = true;
+                    filterView();
                 });
 
             brushLegend = d3.brushY()
@@ -1207,7 +1209,6 @@ function drawData() {
             });
 
             // UPDATE number of attack per day
-            d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
             d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>" + " (Tot)");
             d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
             d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
@@ -1226,7 +1227,7 @@ function drawData() {
                 .attr("width", widthCPA)
                 .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
                 .call(d3.zoom().scaleExtent([1, 10]).on("zoom", function () {
-                    d3.event.transform.x = Math.min(70, Math.max(d3.event.transform.x, widthCPA - widthCPA * d3.event.transform.k) + 70);
+                    d3.event.transform.x = Math.min(150, Math.max(d3.event.transform.x, widthCPA - widthCPA * d3.event.transform.k) + 130);
                     d3.event.transform.y = Math.min(28, Math.max(d3.event.transform.y, heightCPA - heightCPA * d3.event.transform.k) + 30);
                     svgCPA.attr("transform", d3.event.transform);
                 })).on("dblclick.zoom", null)
@@ -1476,7 +1477,7 @@ function drawData() {
 
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
-            ScalePackPort = d3.scaleLinear().domain([d3.min(numberOfPacketsForPort), d3.max(numberOfPacketsForPort)]).range([6, 11]);
+            ScalePackPort = d3.scaleLinear().domain([d3.min(numberOfPacketsForPort), d3.max(numberOfPacketsForPort)]).range([8, 11]);
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
             yAxisScatterPlot = d3.axisLeft(yScatterPlot);
 
@@ -1655,13 +1656,12 @@ function drawData() {
         }
     }
 
-    function drawSelect(data) {
+    function drawSelect(init, data) {
         d3.selectAll(".dropdown.bootstrap-select.show-tick").remove();
         MapPorts = new Map();
         Ports = [];
         totPackets = 0;
         InsertedPort = 0;
-        PortSelected = [];
         // Mappa con chiave le porte di destinazione e valore il totale dei pacchetti ricevuti
         for (var i = 0; i < data.length; i++) {
             totPackets += parseInt(data[i].TotalFwdPackets);
@@ -1690,7 +1690,7 @@ function drawData() {
             .attr('data-width', "250")
             .attr("height", "10")
             .on('change', FilterPorts);
-
+        FilteredPort = [];
         select
             .selectAll('option')
             .data(Ports).enter()
@@ -1702,13 +1702,25 @@ function drawData() {
                 return ((MapPorts.get(d) / totPackets) * 100).toFixed(4) + '%';
             })
             .each(function (d) {
-                InsertedPort += 1;
-                if (InsertedPort <= 47) {
-                    PortSelected.push(d);
-                    d3.select(this).attr("selected", "")
+                if (init == true) {
+                    InsertedPort += 1;
+                    if (InsertedPort <= 47) {
+                        PortSelected.push(d);
+                        d3.select(this).attr("selected", "")
+                    }
+                } else {
+
+                    if (PortSelected.includes(d) == true && Ports.includes(d)) {
+                        d3.select(this).attr("selected", "");
+                        FilteredPort.push(d)
+                    }
                 }
             });
+        if (init == false) {
+            PortSelected = (FilteredPort);
+        }
         $('.selectpicker').selectpicker('refresh');
+        d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
 
         // ========================================== Fine selezione multipla =====================
     }
@@ -2679,8 +2691,17 @@ function drawData() {
 
     function filterView() {
         displayElements = [];
-        selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
-        selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
+        if (resetLegend == true) {
+            selectionLegendBegin = parseInt(legendscale.invert(-121));
+            selectionLegendEnd = parseInt(legendscale.invert(55795));
+            resetLegend = false;
+        } else {
+            selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
+            selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
+        }
+
+
+        console.log(selectionLegendBegin, selectionLegendEnd);
 
         for (var i = 0; i < data.nodes.length; i++) {
 
@@ -2688,8 +2709,6 @@ function drawData() {
                 displayElements.push(data.nodes[i]["id"]);
             if (NumberDeliveredPackets.get(data.nodes[i]["id"]) >= selectionLegendBegin && NumberDeliveredPackets.get(data.nodes[i]["id"]) <= selectionLegendEnd)
                 displayElements.push(data.nodes[i]["id"]);
-
-
         }
         handleFilterLegend(displayElements);
     }
