@@ -1716,6 +1716,7 @@ function drawData() {
                     }
                 }
             });
+
         if (init == false) {
             PortSelected = (FilteredPort);
         }
