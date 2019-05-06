@@ -1477,7 +1477,7 @@ function drawData() {
 
             xScatterPlot = d3.scalePoint();
             yScatterPlot = d3.scalePoint();
-            ScalePackPort = d3.scaleLinear().domain([d3.min(numberOfPacketsForPort), d3.max(numberOfPacketsForPort)]).range([8, 11]);
+            ScalePackPort = d3.scaleLinear().domain([0, d3.max(numberOfPacketsForPort)]).range([4, 11]);
             xAxisScatterPlot = d3.axisBottom(xScatterPlot);
             yAxisScatterPlot = d3.axisLeft(yScatterPlot);
 
@@ -1567,6 +1567,7 @@ function drawData() {
                     if (ip_destinationPorts_packets.has(d.target.id) === false || ip_destinationPorts_packets.get(d.target.id).has(d.DestinationPort) == false)
                         return 0;
                     else {
+                        console.log(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort));
                         return Math.abs(ScalePackPort(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort)));
                     }
                 })
