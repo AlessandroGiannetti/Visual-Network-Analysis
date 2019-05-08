@@ -970,9 +970,13 @@ function drawData() {
                 || checkedValue.includes(d.Timestamp.slice(0, -6)) && (((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= (timeScale4.invert(selection4[0]))) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) <= (timeScale4.invert(selection4[1]))))
             );
         });
-        if (step === 1)
+        if (step === 1) {
             drawSelect(false, newData);
-
+            d3.select("#port").on("dblclick", function () {
+                drawSelect(true, data.links);
+                update()
+            });
+        }
         newData = newData.filter(function (d) {
             return PortSelected.includes(d.DestinationPort)
         });
@@ -1567,7 +1571,6 @@ function drawData() {
                     if (ip_destinationPorts_packets.has(d.target.id) === false || ip_destinationPorts_packets.get(d.target.id).has(d.DestinationPort) == false)
                         return 0;
                     else {
-                        console.log(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort));
                         return Math.abs(ScalePackPort(ip_destinationPorts_packets.get(d.target.id).get(d.DestinationPort)));
                     }
                 })
@@ -1710,7 +1713,6 @@ function drawData() {
                         d3.select(this).attr("selected", "")
                     }
                 } else {
-
                     if (PortSelected.includes(d) == true && Ports.includes(d)) {
                         d3.select(this).attr("selected", "");
                         FilteredPort.push(d)
@@ -1721,8 +1723,8 @@ function drawData() {
         if (init == false) {
             PortSelected = (FilteredPort);
         }
-        $('.selectpicker').selectpicker('refresh');
         d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
+        $('.selectpicker').selectpicker('refresh');
 
         // ========================================== Fine selezione multipla =====================
     }
@@ -2701,9 +2703,6 @@ function drawData() {
             selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
             selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
         }
-
-
-        console.log(selectionLegendBegin, selectionLegendEnd);
 
         for (var i = 0; i < data.nodes.length; i++) {
 
