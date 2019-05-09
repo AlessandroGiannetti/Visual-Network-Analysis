@@ -9,6 +9,7 @@ html, body {
     font-size: 11px;
     font-family: 'Open sans Condensed', sans-serif;
     color: rgba(255, 255, 255, 0.8);
+    overflow-y: scroll;
     scrollbar-color: #393939 #242424;
     scrollbar-width: thin;
     overflow: hidden;
@@ -31,13 +32,13 @@ h4 {
 
 .nodes circle {
     stroke: none;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 
 .dot circle {
     stroke: none;
     shape-rendering: crispEdges;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 
 svg {
@@ -160,7 +161,7 @@ svg {
     font-size: 16px;
     border-top: 1px solid #808080;
     position: relative;
-    bottom: 25px;
+    bottom: 2px;
 }
 
 #label {
@@ -173,13 +174,18 @@ svg {
     display: inline;
     font-size: 16px;
     position: absolute;
-    left: 273px;
-    top: 503px;
+    left: 455px;
+    top: 463px;
+}
+
+#portController {
+    position: absolute;
+    top: 460px;
 }
 
 .dotDestination {
     opacity: 1;
-    stroke-width: 3px
+    stroke-width: 2px
 }
 
 .grid line {
@@ -216,8 +222,8 @@ svg {
     position: absolute;
     top: 3px;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
     background-color: #eee;
 }
 
@@ -249,10 +255,10 @@ svg {
 /* Style the checkmark/indicator */
 .container .checkmark:after {
     position: absolute;
-    left: 9px;
+    left: 5px;
     top: 5px;
     width: 8px;
-    height: 12px;
+    height: 10px;
     border: solid white;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
@@ -323,31 +329,25 @@ svg {
     font-size: 12px;
 }
 
-scrollbar {
-    /*  clear useragent default style*/
-    -moz-appearance: none !important;
+/* Scroll style firefox*/
+
+
+/* Scroll style chrome*/
+::-webkit-scrollbar {
+    width: 20px;
 }
 
-/* buttons at two ends */
-scrollbarbutton {
-    -moz-appearance: none !important;
+::-webkit-scrollbar-thumb {
+    background: #393939;
+    border-radius: 20px;
 }
 
-/* the sliding part*/
-thumb {
-    -moz-appearance: none !important;
+::-webkit-scrollbar-track {
+    background: #242424;
+    border-radius: 20px;
 }
 
-scrollcorner {
-    -moz-appearance: none !important;
-    resize: both;
-}
-
-/* vertical or horizontal */
-scrollbar[orient="vertical"] {
-    color: silver;
-}
-
+/* chrome display menulist boostrap select*/
 select {
     -webkit-appearance: menulist;
 }

@@ -44,9 +44,9 @@ function drawData() {
     SourceTarget = new Map();
 
     // ========================= SLIDERS ===================================
-    var marginSlider = {top: 0, right: 13, bottom: 0, left: 12},
-        widthSlider = 285 - marginSlider.left - marginSlider.right,
-        heightSlider = 93 - marginSlider.bottom - marginSlider.top;
+    var marginSlider = {top: 0, right: 13, bottom: 0, left: 112},
+        widthSlider = 430 - marginSlider.left - marginSlider.right,
+        heightSlider = 110 - marginSlider.bottom - marginSlider.top;
     var formatDate = d3.timeFormat('%H:%M');
 
     // ================= SLIDER 1 GIORNO 4/7/2017 =========================
@@ -81,7 +81,7 @@ function drawData() {
             })
             .ticks(6)
             .tickSize(0)
-            .tickPadding(38))
+            .tickPadding(45))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -111,18 +111,18 @@ function drawData() {
         .attr("class", "handle");
     handle1.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text1 = handle1.append('text')
         .text(formatDate(timeScale1.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     var handle2 = svgSlider1.append("g")
         .attr("class", "handle");
     handle2.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text2 = handle2.append('text')
         .text(formatDate(timeScale1.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -159,7 +159,7 @@ function drawData() {
             })
             .ticks(6)
             .tickSize(0)
-            .tickPadding(38))
+            .tickPadding(45))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -186,21 +186,20 @@ function drawData() {
         .attr("class", "handle");
     handle3.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text3 = handle3.append('text')
         .text(formatDate(timeScale2.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     var handle4 = svgSlider2.append("g")
         .attr("class", "handle");
     handle4.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text4 = handle4.append('text')
         .text(formatDate(timeScale2.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
-
 
 
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
@@ -235,7 +234,7 @@ function drawData() {
             })
             .ticks(7)
             .tickSize(0)
-            .tickPadding(38))
+            .tickPadding(45))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -262,21 +261,20 @@ function drawData() {
         .attr("class", "handle");
     handle5.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text5 = handle5.append('text')
         .text(formatDate(timeScale3.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     var handle6 = svgSlider3.append("g")
         .attr("class", "handle");
     handle6.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text6 = handle6.append('text')
         .text(formatDate(timeScale3.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
-
 
 
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
@@ -314,7 +312,7 @@ function drawData() {
             })
             .ticks(10)
             .tickSize(0)
-            .tickPadding(38))
+            .tickPadding(45))
         .select(".domain")
         .select(function () {
             return this.parentNode.appendChild(this.cloneNode(true));
@@ -341,18 +339,18 @@ function drawData() {
         .attr("class", "handle");
     handle7.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text7 = handle7.append('text')
         .text(formatDate(timeScale4.domain()[0]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     var handle8 = svgSlider4.append("g")
         .attr("class", "handle");
     handle8.append("path")
         .attr("transform", "translate(0," + heightSlider / 2 + ")")
-        .attr("d", "M 0 -30 V 35");
+        .attr("d", "M 0 -40 V 35");
     var text8 = handle8.append('text')
         .text(formatDate(timeScale4.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 34) + ")");
+        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -419,6 +417,7 @@ function drawData() {
         handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
         text6.text(formatDate(timeScale3.invert(selection3[1])));
     }
+
     function resetDay4() {
         selection4[0] = 0;
         selection4[1] = widthSlider;
@@ -448,16 +447,16 @@ function drawData() {
         });
         colorScaleDay1 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
-        var i = 7;
+        var i = 15;
         svgSlider1.selectAll(".dot")
             .data(day1Dot)
             //.data(newData)
             .enter().append("circle")
             .attr("class", "dotDay")
-            .attr("r", 2.4)
+            .attr("r", 2.6)
             .attr("cy", function () {
-                if (i >= 73)
-                    i = 7;
+                if (i >= 87)
+                    i = 15;
                 else
                     i += 7;
                 return i;
@@ -469,10 +468,11 @@ function drawData() {
                 return colorScaleDay1(g2.get(d))
             });
 
-        continuous("#controller1", colorScaleDay1, 535, 415)
+        continuous("#controller1", colorScaleDay1, 505, 427)
 
 
     }
+
     function drawBoxPlotDay2() {
 
 // Compute summary statistics used for the box:
@@ -493,16 +493,16 @@ function drawData() {
         });
         colorScaleDay2 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
-        var i = 7;
+        var i = 15;
         svgSlider2.selectAll(".dot")
             .data(day2Dot)
             //.data(newData)
             .enter().append("circle")
             .attr("class", "dotDay")
-            .attr("r", 2.4)
+            .attr("r", 2.6)
             .attr("cy", function () {
-                if (i >= 73)
-                    i = 7;
+                if (i >= 87)
+                    i = 15;
                 else
                     i += 6;
                 return i;
@@ -514,8 +514,9 @@ function drawData() {
                 return colorScaleDay2(g2.get(d))
             });
 
-        continuous("#controller2", colorScaleDay2, 645, 415)
+        continuous("#controller2", colorScaleDay2, 620, 427)
     }
+
     function drawBoxPlotDay3() {
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
@@ -535,16 +536,16 @@ function drawData() {
         });
         colorScaleDay3 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
-        var i = 7;
+        var i = 15;
         svgSlider3.selectAll(".dot")
             .data(day3Dot)
             //.data(newData)
             .enter().append("circle")
             .attr("class", "dotDay")
-            .attr("r", 2.4)
+            .attr("r", 2.6)
             .attr("cy", function () {
-                if (i >= 73)
-                    i = 7;
+                if (i >= 87)
+                    i = 15;
                 else
                     i += 6;
                 return i;
@@ -556,8 +557,9 @@ function drawData() {
                 return colorScaleDay3(g2.get(d))
             });
 
-        continuous("#controller3", colorScaleDay3, 754, 415)
+        continuous("#controller3", colorScaleDay3, 735, 427)
     }
+
     function drawBoxPlotDay4() {
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
@@ -577,16 +579,16 @@ function drawData() {
         });
         colorScaleDay4 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
 
-        var i = 7;
+        var i = 15;
         svgSlider4.selectAll(".dot")
             .data(day4Dot)
             //.data(newData)
             .enter().append("circle")
             .attr("class", "dotDay")
-            .attr("r", 2.4)
+            .attr("r", 2.6)
             .attr("cy", function () {
-                if (i >= 73)
-                    i = 7;
+                if (i >= 87)
+                    i = 15;
                 else
                     i += 7;
                 return i;
@@ -598,15 +600,16 @@ function drawData() {
                 return colorScaleDay4(g2.get(d))
             });
 
-        continuous("#controller3", colorScaleDay3, 863, 415)
+        continuous("#controller3", colorScaleDay3, 850, 427)
 
     }
+
     function make_x_gridlines(xAxis) {
         return d3.axisBottom(xAxis)
     }
 
     function continuous(selector_id, colorscale, top, left) {
-        var legendheight = 110,
+        var legendheight = 120,
             legendwidth = 80,
             margin = {top: 10, right: 60, bottom: 10, left: 8};
 
@@ -681,7 +684,7 @@ function drawData() {
     d3.select("#day3").html(day3.length + " / <b>" + day3.length + "</b>");
     d3.select("#day4").html(day4.length + " / <b>" + day4.length + "</b>");
     //====================================== BAR CHART =============================
-    var widthBar = 235, heightBar = 20, svgWidthBar = 415, svgHeightBar = 110, tooltipBar;
+    var widthBar = 235, heightBar = 20, svgWidthBar = 415, svgHeightBar = 115, tooltipBar;
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
@@ -698,19 +701,18 @@ function drawData() {
     var simulation = d3.forceSimulation(data.nodes)
         .force('forceX', d3.forceX(function (d) {
             if (d.id === "205.174.165.73sx")
-                return 600;
+                return 660;
             if (d.id === "205.174.165.73dx")
-                return 600;
+                return 660;
             if (d.group === '1')
-                return 350;
+                return 410;
             if (d.group === '2')
-                return 840;
+                return 900;
         }).strength(1))
-        .force("forceY", d3.forceY((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 1 : 0)).strength(0.0011))
-        .force('collision', d3.forceCollide().radius((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 0 : 21)))
-        .force("charge", d3.forceManyBody().strength((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 5 : 0)).distanceMin(1).distanceMax(800))
-        .force('center', d3.forceCenter(widthGRAPH / 2, heightGRAPH / 2))
-        .force("link", d3.forceLink().distance(800).strength(0).id(function (d) {
+        .force('collision', d3.forceCollide().radius((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 0 : 22)))
+        .force("charge", d3.forceManyBody().strength((d => (d.id === '205.174.165.73sx' || d.id === '205.174.165.73dx') ? 5 : 0)).distanceMin(1).distanceMax(2000))
+        .force('center', d3.forceCenter(widthGRAPH / 2 + 20, heightGRAPH / 2))
+        .force("link", d3.forceLink().distance(900).strength(0).id(function (d) {
             return d.id;
         }))
         .alphaTarget(0);
@@ -720,14 +722,14 @@ function drawData() {
     // ===================== DICHIARAZIONI LEGEND =============================
     var heightLegend = 500,
         widthLegend = 100,
-        marginLegend = {top: 20, right: 80, bottom: 20, left: 2},
+        marginLegend = {top: 20, right: 80, bottom: 60, left: 2},
         canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
     var marginCPA = {top: 28, right: 0, bottom: 8, left: 148},
-        widthCPA = 1285 - marginCPA.left - marginCPA.right,
+        widthCPA = 1287 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([-4, widthCPA + 175]),
+    var x = d3.scaleBand().rangeRound([0, widthCPA + 180]),
         y = {},
         dragging = {},
         line = d3.line();
@@ -745,6 +747,7 @@ function drawData() {
         return LinkGraphPlot(d) === true
     });
     edges = [];
+
     function LinkGraphPlot(d) {
         if ((edges.findIndex(x => (x.source == d.source && x.target == d.target)) <= -1) && PortSelected.includes(d.DestinationPort) == true) {
             edges.push(d);
@@ -784,8 +787,8 @@ function drawData() {
                 tooltipLink.transition().duration(150)
                     .style('display', "none");
                 handleMouseOutEdge();
-                focusDotSelectedOnTime(nodeSelected);
                 handleOutFocusStroke();
+                focusDotOnTime(data.links);
             })
             .attr("stroke-width", function (d) {
                 if (transferPackets.get(d.source + d.target) == null)
@@ -816,23 +819,23 @@ function drawData() {
                 d3.select(this).transition().duration(200).style("stroke", "orangered");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
-                focusDotSelectedOnTime(nodeSelected);
                 FocusDotScatterPlot(nodeSelected);
                 updateChartDay1();
                 updateChartDay2();
                 updateChartDay3();
                 updateChartDay4();
+                filterView();
             })
             .on('dblclick', function () {
                 d3.select(this).transition().duration(200).style("stroke", "none");
                 nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
-                focusDotSelectedOnTime(nodeSelected);
                 UnfocusDotScatterPlot(nodeSelected);
                 updateChartDay1();
                 updateChartDay2();
                 updateChartDay3();
                 updateChartDay4();
+                filterView();
             })
             .on('mouseover', function (d) {
                 handleMouseOverNode(d3.select(this));
@@ -846,31 +849,32 @@ function drawData() {
                 tooltipNode.transition().duration(150)
                     .style('display', "none");
                 handleMouseOutNode();
-                focusDotSelectedOnTime(nodeSelected);
                 handleOutFocusStroke();
+                focusDotOnTime(data.links);
             });
 
         svgGRAPH.append("g")
             .append("text")
             .attr("class", "label")
-            .attr("x", widthGRAPH / 4 - 73)
+            .attr("x", widthGRAPH / 4 - 53)
             .attr("y", 17)
             .style("text-anchor", "end")
             .style("font-size", "13px")
             .text("Sources");
+
         svgGRAPH.append("g")
             .append("text")
             .attr("class", "label")
-            .attr("x", widthGRAPH / 2 + 8)
+            .attr("x", widthGRAPH / 2 + 28)
             .attr("y", 17)
             .style("text-anchor", "end")
             .style("font-size", "13px")
-
             .text("Firewall");
+
         svgGRAPH.append("g")
             .append("text")
             .attr("class", "label")
-            .attr("x", widthGRAPH - 90)
+            .attr("x", widthGRAPH - 70)
             .attr("y", 17)
             .style("text-anchor", "end")
             .style("font-size", "13px")
@@ -919,7 +923,7 @@ function drawData() {
     });
 
     // ======================== SCATTERPLOT ===============================
-    var marginScatterPlot = {top: 12, right: 0, bottom: 35, left: 80},
+    var marginScatterPlot = {top: 12, right: 0, bottom: 35, left: 70},
         widthScatterPlot = 1080 - marginScatterPlot.left - marginScatterPlot.right,
         heightScatterPlot = 470 - marginScatterPlot.top - marginScatterPlot.bottom,
         ip_destinationPorts_packets = new Map(),
@@ -1001,6 +1005,7 @@ function drawData() {
 
         handleSelectedNode(nodeSelected);
         FocusDotScatterPlot(nodeSelected);
+        focusDotOnTime(newData);
 
         function updateGraph() {
 
@@ -1045,8 +1050,8 @@ function drawData() {
                     d3.select(this).transition().duration(200).style("stroke", "orangered");
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
-                    focusDotSelectedOnTime(nodeSelected);
                     FocusDotScatterPlot(nodeSelected);
+                    filterView();
                     updateChartDay1();
                     updateChartDay2();
                     updateChartDay3();
@@ -1056,8 +1061,8 @@ function drawData() {
                     d3.select(this).transition().duration(200).style("stroke", "none");
                     nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
-                    focusDotSelectedOnTime(nodeSelected);
                     UnfocusDotScatterPlot(nodeSelected);
+                    filterView();
                     updateChartDay1();
                     updateChartDay2();
                     updateChartDay3();
@@ -1075,8 +1080,8 @@ function drawData() {
                     tooltipNode.transition().duration(150)
                         .style('display', "none");
                     handleMouseOutNode();
-                    focusDotSelectedOnTime(nodeSelected);
                     handleOutFocusStroke();
+                    focusDotOnTime(newData);
                     if (!brushEmpty())
                         brush_parallel_chart();
                 });
@@ -1102,8 +1107,8 @@ function drawData() {
                     tooltipLink.transition().duration(150)
                         .style('display', "none");
                     handleMouseOutEdge();
-                    focusDotSelectedOnTime(nodeSelected);
                     handleOutFocusStroke();
+                    focusDotOnTime(newData);
                     if (!brushEmpty())
                         brush_parallel_chart()
                 })
@@ -1254,8 +1259,8 @@ function drawData() {
             }
 
             SourceIP = SourceIP.sort(function (a, b) {
-                 return a - b;
-             });
+                return a - b;
+            });
 
             TargetIP = TargetIP.sort(function (a, b) {
                 return a - b;
@@ -1317,7 +1322,7 @@ function drawData() {
                 .on('mouseout', function () {
                     d3.select(this).transition().duration(100).style("stroke-width", "1px");
                     handleOutFocusStroke();
-                    focusDotSelectedOnTime(nodeSelected);
+                    focusDotOnTime(newData);
                     handleMouseOutEdge();
                     if (!brushEmpty())
                         brush_parallel_chart()
@@ -1334,7 +1339,7 @@ function drawData() {
                 })
                 .on('mouseout', function () {
                     handleOutFocusStroke();
-                    focusDotSelectedOnTime(nodeSelected);
+                    focusDotOnTime(newData);
                     handleMouseOutEdge();
                     if (!brushEmpty())
                         brush_parallel_chart()
@@ -1591,7 +1596,7 @@ function drawData() {
                 .on("mouseout", function () {
                     tooltipScatterPlot.style('display', "none");
                     handleMouseOutEdge();
-                    focusDotSelectedOnTime(nodeSelected);
+                    focusDotOnTime(newData);
                     handleOutFocusStroke();
                 });
         }
@@ -1605,7 +1610,7 @@ function drawData() {
                         return (min <= y[dimensions[i]](d)) && (y[dimensions[i]](d) <= max)
                     });
                 }
-                }
+            }
 
             if (resetCPA === true) {
                 resetCPA = false;
@@ -1657,6 +1662,7 @@ function drawData() {
 
             updateScatterPlot(filteredData);
             FocusDotScatterPlot(nodeSelected);
+            focusDotOnTime(filteredData);
         }
     }
 
@@ -1691,7 +1697,7 @@ function drawData() {
             .attr('title', "Filter Destination ports")
             .attr("data-header", "SELECT THE DESTINATION PORTS")
             .attr("data-max-options", "50")
-            .attr('data-width', "250")
+            .attr('data-width', "424")
             .attr("height", "10")
             .on('change', FilterPorts);
         FilteredPort = [];
@@ -2364,15 +2370,12 @@ function drawData() {
             });
     }
 
-    function focusDotonOverOnTime(nodes) {
-        select = newData.filter(function (d) {
-            return ((nodes.source.id) == true || (nodes.has(d.target.id)) == true);
-        });
-
+    function focusDotOnTime(nodes) {
+        d3.selectAll(".dotDay").style("opacity", "0.3");
         d3.selectAll(".dotDay")
             .style("opacity", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if ((d !== select[i].Timestamp))
+                for (var i = 0; i < nodes.length; i++) {
+                    if ((d === nodes[i].Timestamp))
                         return "1";
                 }
             });
@@ -2450,7 +2453,6 @@ function drawData() {
             .style("stroke-width", "2px");
 
     }
-
 
 
     function handleMouseOverNode(circle) {
@@ -2724,6 +2726,13 @@ function drawData() {
             });
 
         d3.select("#PCA").selectAll(".notSelected")
+            .style("display", function (d) {
+                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+                    return "block";
+                else
+                    return "none";
+            });
+        d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
                 if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
                     return "1";
@@ -2732,7 +2741,7 @@ function drawData() {
             });
         d3.select("#scatterPlot").selectAll(".dotDestination")
             .style("display", function (d) {
-                if (nodes.includes(d.target.id))
+                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
                     return "block";
                 else
                     return "none"
