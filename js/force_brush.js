@@ -2612,6 +2612,7 @@ function drawData() {
                 else
                     return "0.1";
             });
+
         d3.select("#scatterPlot").selectAll("circle")
             .style("opacity", function (d) {
                 if (((d.source.id === edge.source.id) && (d.target.id === edge.target.id)))
