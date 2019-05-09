@@ -122,7 +122,7 @@ function drawData() {
         .attr("d", "M 0 -40 V 35");
     var text2 = handle2.append('text')
         .text(formatDate(timeScale1.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
+        .attr("transform", "translate(" + (-14) + " ," + (heightSlider / 2 - 45) + ")");
     handle1.attr('transform', 'translate(0,0)');
     handle2.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -197,7 +197,7 @@ function drawData() {
         .attr("d", "M 0 -40 V 35");
     var text4 = handle4.append('text')
         .text(formatDate(timeScale2.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
+        .attr("transform", "translate(" + (-14) + " ," + (heightSlider / 2 - 45) + ")");
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -272,7 +272,7 @@ function drawData() {
         .attr("d", "M 0 -40 V 35");
     var text6 = handle6.append('text')
         .text(formatDate(timeScale3.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
+        .attr("transform", "translate(" + (-14) + " ," + (heightSlider / 2 - 45) + ")");
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -350,7 +350,7 @@ function drawData() {
         .attr("d", "M 0 -40 V 35");
     var text8 = handle8.append('text')
         .text(formatDate(timeScale4.domain()[1]))
-        .attr("transform", "translate(" + (-12) + " ," + (heightSlider / 2 - 45) + ")");
+        .attr("transform", "translate(" + (-14) + " ," + (heightSlider / 2 - 45) + ")");
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
 
@@ -645,6 +645,9 @@ function drawData() {
         legendaxis = d3.axisRight()
             .scale(legendscale)
             .tickValues(legendscale.ticks(3).concat(legendscale.domain())).tickSize(4);
+        tooltipLegendDay = d3.select('body').append('div')
+            .style('display', "none")
+            .attr('class', 'd3-tip');
 
         var svg = d3.select(selector_id)
             .append("svg")
@@ -652,7 +655,16 @@ function drawData() {
             .attr("width", (legendwidth) + "px")
             .style("position", "absolute")
             .style("left", (left - 2) + "px")
-            .style("top", (top - 11) + "px");
+            .style("top", (top - 11) + "px")
+            .on("mouseover", function () {
+                tooltipLegendDay.style("left", d3.event.pageX + 30 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html("N° Mlicious Packages");
+            })
+            .on("mouseout", function () {
+                tooltipLegendDay.style('display', "none")
+            });
 
         svg.append("g")
             .attr("class", "axis")
@@ -688,7 +700,7 @@ function drawData() {
     //==================================FINE BAR CHART =============================
     // ========================== DRAWING GRAPH ================================
     var edges = [], nodeSelected = new Set();
-    var widthGRAPH = 670, heightGRAPH = 500;
+    var widthGRAPH = 750, heightGRAPH = 500;
     // create the svg on
     var svgGRAPH = d3.select("#graph").append("svg")
         .attr("width", widthGRAPH)
@@ -726,10 +738,10 @@ function drawData() {
         canvas, ctx, legendscale, image, legendaxis, svgLegend, c, brushLegend;
     // ==============  FINE DICHIARAZIONI LEGEND ==============================
     // ================= DICHIARAZIONI CPA ====================================
-    var marginCPA = {top: 28, right: 0, bottom: 8, left: 148},
-        widthCPA = 1287 - marginCPA.left - marginCPA.right,
+    var marginCPA = {top: 28, right: 0, bottom: 8, left: 70},
+        widthCPA = 1240 - marginCPA.left - marginCPA.right,
         heightCPA = 500 - marginCPA.top - marginCPA.bottom;
-    var x = d3.scaleBand().rangeRound([0, widthCPA + 180]),
+    var x = d3.scaleBand().rangeRound([0, widthCPA + 165]),
         y = {},
         dragging = {},
         line = d3.line();
@@ -856,7 +868,7 @@ function drawData() {
         svgGRAPH.append("g")
             .append("text")
             .attr("class", "label")
-            .attr("x", widthGRAPH / 4 - 53)
+            .attr("x", widthGRAPH / 4 - 33)
             .attr("y", 17)
             .style("text-anchor", "end")
             .style("font-size", "13px")
@@ -865,7 +877,7 @@ function drawData() {
         svgGRAPH.append("g")
             .append("text")
             .attr("class", "label")
-            .attr("x", widthGRAPH / 2 + 28)
+            .attr("x", widthGRAPH / 2 + 30)
             .attr("y", 17)
             .style("text-anchor", "end")
             .style("font-size", "13px")
@@ -874,7 +886,7 @@ function drawData() {
         svgGRAPH.append("g")
             .append("text")
             .attr("class", "label")
-            .attr("x", widthGRAPH - 70)
+            .attr("x", widthGRAPH - 110)
             .attr("y", 17)
             .style("text-anchor", "end")
             .style("font-size", "13px")
@@ -1204,6 +1216,10 @@ function drawData() {
         }
 
         function updateNumberOfAttack(newData) {
+            tooltipAttack = d3.select('body').append('div')
+                .style('display', "none")
+                .attr('class', 'd3-tip');
+
             UPday1 = newData.filter(function (d) {
                 return d.Timestamp.slice(0, -6) === "4/7/2017"
             });
@@ -1218,11 +1234,56 @@ function drawData() {
             });
 
             // UPDATE number of attack per day
-            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>" + " (Tot)");
-            d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>");
-            d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>");
-            d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>");
-            d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>");
+            d3.select("#day").html((newData.length) + " / <b>" + (data.links.length) + "</b>")
+                .on("mouseover", function (d) {
+                    tooltipAttack.style("left", d3.event.pageX - 30 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style('display', "block")
+                        .html("Attack Selected / All the Attacks - All Days");
+                })
+                .on("mouseout", function () {
+                    tooltipAttack.style('display', "none")
+                });
+            d3.select("#day1").html(UPday1.length + " / <b>" + day1.length + "</b>")
+                .on("mouseover", function (d) {
+                    tooltipAttack.style("left", d3.event.pageX - 30 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style('display', "block")
+                        .html("Attack Selected / All the Attacks - 4/7/2017");
+                })
+                .on("mouseout", function () {
+                    tooltipAttack.style('display', "none")
+                });
+            d3.select("#day2").html(UPday2.length + " / <b>" + day2.length + "</b>")
+                .on("mouseover", function (d) {
+                    tooltipAttack.style("left", d3.event.pageX - 30 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style('display', "block")
+                        .html("Attack Selected / All the Attacks - 5/7/2017");
+                })
+                .on("mouseout", function () {
+                    tooltipAttack.style('display', "none")
+                });
+            d3.select("#day3").html(UPday3.length + " / <b>" + day3.length + "</b>")
+                .on("mouseover", function (d) {
+                    tooltipAttack.style("left", d3.event.pageX - 30 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style('display', "block")
+                        .html("Attack Selected / All the Attacks - 6/7/2017");
+                })
+                .on("mouseout", function () {
+                    tooltipAttack.style('display', "none")
+                });
+            d3.select("#day4").html(UPday4.length + " / <b>" + day4.length + "</b>")
+                .on("mouseover", function (d) {
+                    tooltipAttack.style("left", d3.event.pageX - 30 + "px")
+                        .style("top", d3.event.pageY - 70 + "px")
+                        .style('display', "block")
+                        .html("Attack Selected / All the Attacks - 7/7/2017");
+                })
+                .on("mouseout", function () {
+                    tooltipAttack.style('display', "none")
+                });
 
         }
 
@@ -1729,7 +1790,20 @@ function drawData() {
         if (init == false) {
             PortSelected = (FilteredPort);
         }
-        d3.select("#port").html("Selected ports: " + (PortSelected.length) + " / <b>" + (Ports.length) + "</b>");
+        tooltipPort = d3.select('body').append('div')
+            .style('display', "none")
+            .attr('class', 'd3-tip');
+
+        d3.select("#port").html((PortSelected.length) + " / <b>" + (Ports.length) + "</b>")
+            .on("mouseover", function (d) {
+                tooltipPort.style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style('display', "block")
+                    .html("Ports Selected / All the Ports");
+            })
+            .on("mouseout", function () {
+                tooltipPort.style('display', "none")
+            });
         $('.selectpicker').selectpicker('refresh');
 
         // ========================================== Fine selezione multipla =====================
@@ -2487,6 +2561,7 @@ function drawData() {
                         return "0.2"
                 }
             });
+
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", function (d) {
                 if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
@@ -2499,6 +2574,8 @@ function drawData() {
             .style("opacity", function (d) {
                 if (d.source.id === circle._groups[0][0].__data__.id || d.target.id === circle._groups[0][0].__data__.id)
                     return "1";
+                else
+                    return "0";
             })
             .style("stroke-width", "3px");
         select = newData.filter(function (d) {
@@ -2727,14 +2804,14 @@ function drawData() {
 
         d3.select("#PCA").selectAll(".notSelected")
             .style("display", function (d) {
-                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+                if ((nodes.includes(d.source.id) || nodes.includes(d.target.id)) && ((!nodeSelected.has(d.source.id) || (!nodeSelected.has(d.target.id)))))
                     return "block";
                 else
                     return "none";
             });
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", function (d) {
-                if (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+                if ((nodes.includes(d.source.id) || nodes.includes(d.target.id)) && ((nodeSelected.has(d.source.id) || (nodeSelected.has(d.target.id)))))
                     return "1";
                 else
                     return "0";
