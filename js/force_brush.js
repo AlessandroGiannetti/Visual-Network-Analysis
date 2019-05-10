@@ -97,7 +97,7 @@ function drawData() {
             .tickFormat("").tickSizeOuter(0)
         );
 
-    drawBoxPlotDay1();
+    drawScatterPlotDay1();
     var brush1 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay1)
@@ -173,7 +173,7 @@ function drawData() {
             .tickSize(-heightSlider + 4)
             .tickFormat("").tickSizeOuter(0)
         );
-    drawBoxPlotDay2();
+    drawScatterPlotDay2();
     var brush2 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay2)
@@ -248,7 +248,7 @@ function drawData() {
             .tickSize(-heightSlider + 4)
             .tickFormat("").tickSizeOuter(0)
         );
-    drawBoxPlotDay3();
+    drawScatterPlotDay3();
     var brush3 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay3)
@@ -326,7 +326,7 @@ function drawData() {
             .tickSize(-heightSlider + 4)
             .tickFormat("").tickSizeOuter(0)
         );
-    drawBoxPlotDay4();
+    drawScatterPlotDay4();
     var brush4 = d3.brushX()
         .extent([[0, 0], [widthSlider, heightSlider]])
         .on("brush", upgradeDay4)
@@ -427,7 +427,7 @@ function drawData() {
         text8.text(formatDate(timeScale4.invert(selection4[1])));
     }
 
-    function drawBoxPlotDay1() {
+    function drawScatterPlotDay1() {
 
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
@@ -473,7 +473,7 @@ function drawData() {
 
     }
 
-    function drawBoxPlotDay2() {
+    function drawScatterPlotDay2() {
 
 // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
@@ -517,7 +517,7 @@ function drawData() {
         continuous("#controller2", colorScaleDay2, 620, 427)
     }
 
-    function drawBoxPlotDay3() {
+    function drawScatterPlotDay3() {
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
             return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale3.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale3.invert(widthSlider))
@@ -560,7 +560,7 @@ function drawData() {
         continuous("#controller3", colorScaleDay3, 735, 427)
     }
 
-    function drawBoxPlotDay4() {
+    function drawScatterPlotDay4() {
         // Compute summary statistics used for the box:
         var outlier = data.links.filter(function (d) {
             return ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm'))) >= timeScale4.invert(0) && ((new Date(moment(d.Timestamp, 'DDMMYYYY HH:mm').format('MM/DD/YYYY HH:mm')))) <= timeScale4.invert(widthSlider))
@@ -1601,7 +1601,7 @@ function drawData() {
                 .call(xAxisScatterPlot.tickSize(7).tickSizeOuter(0))
                 .selectAll("text")
                 .attr("y", -1)
-                .attr("x", 4)
+                .attr("x", 9)
                 .attr("dy", ".35em")
                 .attr("transform", "rotate(90)")
                 .style("text-anchor", "start");
@@ -2430,20 +2430,6 @@ function drawData() {
         FocusDotScatterPlot(nodes);
     }
 
-    function focusDotSelectedOnTime(nodes) {
-        select = newData.filter(function (d) {
-            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
-        });
-        d3.selectAll(".dotDay").style("opacity", "0.3");
-        d3.selectAll(".dotDay")
-            .style("opacity", function (d) {
-                for (var i = 0; i < select.length; i++) {
-                    if ((d === select[i].Timestamp))
-                        return "1";
-                }
-            });
-    }
-
     function focusDotOnTime(nodes) {
         d3.selectAll(".dotDay").style("opacity", "0.3");
         d3.selectAll(".dotDay")
@@ -2527,7 +2513,6 @@ function drawData() {
             .style("stroke-width", "2px");
 
     }
-
 
     function handleMouseOverNode(circle) {
         var nodes = [];

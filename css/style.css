@@ -147,6 +147,9 @@ svg {
 
 .dotDay {
     opacity: 0.3;
+    stroke: black;
+    stroke-width: 0.4;
+
 }
 
 #day1, #day2, #day3, #day4 {
@@ -330,6 +333,7 @@ svg {
 
 .domain {
     stroke: #393939;
+    opacity: 0.7;
 }
 
 .text-muted {
