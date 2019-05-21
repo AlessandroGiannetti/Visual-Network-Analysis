@@ -59,7 +59,7 @@ svg {
 
 .evidence path {
     fill: none;
-    stroke: orangered;
+    stroke: maroon;
     shape-rendering: crispEdges;
     position: relative;
 }
@@ -147,8 +147,9 @@ svg {
 
 .dotDay {
     opacity: 0.3;
+    stroke-width: 0.6;
+    stroke-opacity: 0.8;
     stroke: black;
-    stroke-width: 0.4;
 
 }
 
@@ -295,6 +296,21 @@ svg {
     color: #fff;
     border-color: #808080;
     font-size: 13px;
+}
+
+/* Absolute Center CSS Spinner */
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 20px;
+    width: 800px;
+    overflow: auto;
+    margin: auto;
+    padding: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .actions-btn {

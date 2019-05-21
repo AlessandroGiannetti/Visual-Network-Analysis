@@ -25,6 +25,7 @@ var PortSelected = [];
 var resetCPA = false;
 var select;
 var resetLegend = false;
+
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, JsonData) {
@@ -34,10 +35,77 @@ d3.json("miserables.json", function (error, JsonData) {
 });
 totPackets = 0;
 
+var progress;
+var loading;
+var segmentWidthLoading;
+var queue = [];
+
+function showWorking() {
+    segmentWidthLoading = 40;
+
+    //declaration of the tooltipLink (extra info on over)
+    loading = d3.select('body').append('div')
+        .append('svg')
+        .attr("class", "loading")
+        .attr('height', 50)
+        .attr('width', 15);
+
+
+    loading.append('rect')
+        .attr('class', 'bg-rect')
+        .attr('rx', 20)
+        .attr('ry', 20)
+        .attr('fill', 'gray')
+        .attr('height', 15)
+        .attr('width', function () {
+            return segmentWidthLoading * 18;
+        })
+        .attr('x', 0);
+
+    progress = loading.append('rect')
+        .attr('height', 15)
+        .attr('rx', 10)
+        .attr('ry', 10)
+        .attr('x', 0);
+
+    progress.transition()
+        .duration(10)
+        .attr('width', segmentWidthLoading);
+
+}
+
+function moveProgressBar(value) {
+    if (value === 0) {
+        d3.selectAll("#controllers").transition().duration(150).style("opacity", "0.1");
+
+    }
+    progress.transition()
+        .duration(1)
+        .attr('fill', function () {
+            switch (value) {
+                case 0:
+                    return "orange";
+                case 17:
+                    return "green";
+                default:
+                    return "yellow";
+            }
+        })
+        .attr('width', function () {
+            return (value + 1) * segmentWidthLoading;
+        });
+    if (value === 17) {
+        loading.transition().delay(2600).style("display", "none");
+        d3.selectAll("#controllers").transition().delay(2600).style("opacity", "1");
+    }
+}
+
+
 function drawData() {
     d3.selectAll().remove();
-
+    showWorking();
     drawSelect(true, data.links);
+
 
     // Node scatterplot without duplicates
     DOTdestination = new Map();
@@ -398,6 +466,7 @@ function drawData() {
         text1.text(formatDate(timeScale1.invert(selection1[0])));
         handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
         text2.text(formatDate(timeScale1.invert(selection1[1])));
+
     }
 
     function resetDay2() {
@@ -407,6 +476,7 @@ function drawData() {
         text3.text(formatDate(timeScale2.invert(selection2[0])));
         handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
         text4.text(formatDate(timeScale2.invert(selection2[1])));
+
     }
 
     function resetDay3() {
@@ -416,6 +486,7 @@ function drawData() {
         text5.text(formatDate(timeScale3.invert(selection3[0])));
         handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
         text6.text(formatDate(timeScale3.invert(selection3[1])));
+
     }
 
     function resetDay4() {
@@ -425,6 +496,7 @@ function drawData() {
         text7.text(formatDate(timeScale4.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
         text8.text(formatDate(timeScale4.invert(selection4[1])));
+
     }
 
     function drawScatterPlotDay1() {
@@ -631,7 +703,6 @@ function drawData() {
             .range([1, legendheight - margin.top - margin.bottom])
             .domain(colorscale.domain());
 
-        // image data hackery based on http://bl.ocks.org/mbostock/048d21cf747371b11884f75ad896e5a5
         var image = ctx.createImageData(1, legendheight);
         d3.range(legendheight).forEach(function (i) {
             var c = d3.rgb(colorscale(legendscale.invert(i)));
@@ -828,9 +899,10 @@ function drawData() {
                     else
                         return colorScalePackets(0);
             }).on("click", function (d) {
-                d3.select(this).transition().duration(200).style("stroke", "orangered");
+                d3.select(this).transition().duration(200).style("stroke", "maroon");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                SelectDotOnTime(nodeSelected);
                 FocusDotScatterPlot(nodeSelected);
                 updateChartDay1();
                 updateChartDay2();
@@ -842,6 +914,7 @@ function drawData() {
                 d3.select(this).transition().duration(200).style("stroke", "none");
                 nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
+                unSelectDotOnTime(nodeSelected);
                 UnfocusDotScatterPlot(nodeSelected);
                 updateChartDay1();
                 updateChartDay2();
@@ -950,6 +1023,7 @@ function drawData() {
     update();
 
     function update() {
+        moveProgressBar(0);
         var TargetPort = [];
         var SourceIP = [];
         var TargetIP = [];
@@ -959,6 +1033,7 @@ function drawData() {
         showAllGraph();
 
         var checkedValue = [];
+        d3.selectAll(".loading").style('display', "block");
         d3.selectAll('.custom-control-input').each(function () {
             cb = d3.select(this);
             if (cb.property("checked")) {
@@ -987,6 +1062,7 @@ function drawData() {
             );
         });
         if (step === 1) {
+            moveProgressBar(1);
             drawSelect(false, newData);
             d3.select("#port").on("dblclick", function () {
                 drawSelect(true, data.links);
@@ -1000,27 +1076,40 @@ function drawData() {
 
         // se non è lo step iniziale eseguo queste funzioni
         if (step === 1) {
+            moveProgressBar(2);
             buildMapPacket(newData);
+            moveProgressBar(3);
             scalePacket(NumberDeliveredPackets);
+            moveProgressBar(4);
             updateGraph(newData);
         }
         step = 1;
+        moveProgressBar(5);
         updateNumberOfAttack(newData);
+        moveProgressBar(6);
         updateLegend();
+        moveProgressBar(7);
         updateCPA(newData);
+        moveProgressBar(8);
         updateScatterPlot(newData);
+        moveProgressBar(9);
         attackPackets(newData);
+        moveProgressBar(10);
         updateChartDay1();
+        moveProgressBar(11);
         updateChartDay2();
+        moveProgressBar(12);
         updateChartDay3();
+        moveProgressBar(13);
         updateChartDay4();
-
+        moveProgressBar(14);
         handleSelectedNode(nodeSelected);
+        moveProgressBar(15);
         FocusDotScatterPlot(nodeSelected);
+        moveProgressBar(16);
         focusDotOnTime(newData);
 
         function updateGraph() {
-
             LinkGraph = newData.filter(function (d) {
                 return LinkGraphPlot(d) === true && PortSelected.includes(d.DestinationPort)
             });
@@ -1059,9 +1148,10 @@ function drawData() {
                         else
                             return colorScalePackets(0);
                 }).on("click", function () {
-                    d3.select(this).transition().duration(200).style("stroke", "orangered");
+                    d3.select(this).transition().duration(200).style("stroke", "maroon");
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
+                    SelectDotOnTime(nodeSelected);
                     FocusDotScatterPlot(nodeSelected);
                     filterView();
                     updateChartDay1();
@@ -1073,6 +1163,7 @@ function drawData() {
                     d3.select(this).transition().duration(200).style("stroke", "none");
                     nodeSelected.delete(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
+                    unSelectDotOnTime(nodeSelected);
                     UnfocusDotScatterPlot(nodeSelected);
                     filterView();
                     updateChartDay1();
@@ -1297,7 +1388,7 @@ function drawData() {
                 .attr("width", widthCPA)
                 .attr("height", heightCPA + marginCPA.top + marginCPA.bottom)
                 .call(d3.zoom().scaleExtent([1, 10]).on("zoom", function () {
-                    d3.event.transform.x = Math.min(150, Math.max(d3.event.transform.x, widthCPA - widthCPA * d3.event.transform.k) + 130);
+                    d3.event.transform.x = Math.min(70, Math.max(d3.event.transform.x, widthCPA - widthCPA * d3.event.transform.k) + 130);
                     d3.event.transform.y = Math.min(28, Math.max(d3.event.transform.y, heightCPA - heightCPA * d3.event.transform.k) + 30);
                     svgCPA.attr("transform", d3.event.transform);
                 })).on("dblclick.zoom", null)
@@ -1725,6 +1816,8 @@ function drawData() {
             FocusDotScatterPlot(nodeSelected);
             focusDotOnTime(filteredData);
         }
+
+        moveProgressBar(17);
     }
 
     function drawSelect(init, data) {
@@ -1913,7 +2006,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay1(d[0]);
         })
-            .attr("fill", "orangered")
+            .attr("fill", "maroon")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2055,7 +2148,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay2(d[0]);
         })
-            .attr("fill", "orangered")
+            .attr("fill", "maroon")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2201,7 +2294,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay3(d[0]);
         })
-            .attr("fill", "orangered")
+            .attr("fill", "maroon")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2344,7 +2437,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay4(d[0]);
         })
-            .attr("fill", "orangered")
+            .attr("fill", "maroon")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2411,10 +2504,11 @@ function drawData() {
             .style("stroke", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if (((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
-                        return "orangered";
+                        return "maroon";
                 }
             });
     }
+
 
     function UnfocusDotScatterPlot(nodes) {
         select = newData.filter(function (d) {
@@ -2428,6 +2522,32 @@ function drawData() {
                 }
             });
         FocusDotScatterPlot(nodes);
+    }
+
+    function SelectDotOnTime(nodes) {
+        select = newData.filter(function (d) {
+            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
+        });
+        d3.selectAll(".dotDay")
+            .style("stroke", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "maroon";
+                }
+            });
+    }
+
+    function unSelectDotOnTime(nodes) {
+        select = newData.filter(function (d) {
+            return (nodes.has(d.source.id)) == true || (nodes.has(d.target.id)) == true
+        });
+        d3.selectAll(".dotDay")
+            .style("stroke", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d !== select[i].Timestamp))
+                        return "black";
+                }
+            });
     }
 
     function focusDotOnTime(nodes) {
@@ -2695,10 +2815,10 @@ function drawData() {
     function handleOutFocusStroke() {
         d3.select("#PCA").selectAll(".notSelected")
             .style("opacity", "1")
-            .style("stroke-width", "1px");
+            .style("stroke-width", "2px");
         d3.select("#PCA").selectAll(".selected")
             .style("opacity", "1")
-            .style("stroke-width", "1px");
+            .style("stroke-width", "2px");
     }
 
     function ticked() {
@@ -2760,10 +2880,10 @@ function drawData() {
 
     function filterView() {
         displayElements = [];
-        if (resetLegend == true) {
+        if (resetLegend == true || (d3.brushSelection(d3.select(".brushLegend").node()) == null)) {
             selectionLegendBegin = parseInt(legendscale.invert(-121));
             selectionLegendEnd = parseInt(legendscale.invert(55795));
-            resetLegend = false;
+
         } else {
             selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
             selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
