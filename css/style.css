@@ -59,7 +59,7 @@ svg {
 
 .evidence path {
     fill: none;
-    stroke: maroon;
+    stroke: orangered;
     shape-rendering: crispEdges;
     position: relative;
 }
@@ -147,7 +147,7 @@ svg {
 
 .dotDay {
     opacity: 0.3;
-    stroke-width: 0.6;
+    stroke-width: 0.4;
     stroke-opacity: 0.8;
     stroke: black;
 

@@ -899,7 +899,7 @@ function drawData() {
                     else
                         return colorScalePackets(0);
             }).on("click", function (d) {
-                d3.select(this).transition().duration(200).style("stroke", "maroon");
+                d3.select(this).transition().duration(200).style("stroke", "orangered");
                 nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                 handleSelectedNode(nodeSelected);
                 SelectDotOnTime(nodeSelected);
@@ -1148,7 +1148,7 @@ function drawData() {
                         else
                             return colorScalePackets(0);
                 }).on("click", function () {
-                    d3.select(this).transition().duration(200).style("stroke", "maroon");
+                    d3.select(this).transition().duration(200).style("stroke", "orangered");
                     nodeSelected.add(d3.select(this)._groups[0][0].__data__.id);
                     handleSelectedNode(nodeSelected);
                     SelectDotOnTime(nodeSelected);
@@ -2006,7 +2006,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay1(d[0]);
         })
-            .attr("fill", "maroon")
+            .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2148,7 +2148,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay2(d[0]);
         })
-            .attr("fill", "maroon")
+            .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2294,7 +2294,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay3(d[0]);
         })
-            .attr("fill", "maroon")
+            .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2437,7 +2437,7 @@ function drawData() {
             .attr('x', 5).attr('y', function (d) {
             return yScaleDay4(d[0]);
         })
-            .attr("fill", "maroon")
+            .attr("fill", "orangered")
             .on('mousemove', function (d) {
                 tooltipBar.style("left", d3.event.pageX - 50 + "px")
                     .style("top", d3.event.pageY - 70 + "px")
@@ -2504,7 +2504,7 @@ function drawData() {
             .style("stroke", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if (((d.source.id === select[i].source.id) && (d.target.id === select[i].target.id) || (select[i].DestinationPort === d.DestinationPort && select[i].target.id === d.target.id)))
-                        return "maroon";
+                        return "orangered";
                 }
             });
     }
@@ -2532,7 +2532,7 @@ function drawData() {
             .style("stroke", function (d) {
                 for (var i = 0; i < select.length; i++) {
                     if ((d === select[i].Timestamp))
-                        return "maroon";
+                        return "orangered";
                 }
             });
     }
