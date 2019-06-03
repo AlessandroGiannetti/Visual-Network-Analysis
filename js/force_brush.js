@@ -1282,7 +1282,7 @@ function drawData() {
                 });
 
             brushLegend = d3.brushY()
-                .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend - marginLegend.top - 20]])
+                .extent([[0, 0], [widthLegend - marginLegend.left - marginLegend.right, heightLegend - marginLegend.top - 60]])
                 .on("brush", filterView);
 
             svgLegend.append("g")
@@ -1299,11 +1299,11 @@ function drawData() {
             svgLegend.append("g")
                 .append("text")
                 .attr("class", "label")
-                .attr("x", widthLegend / 2 + 44)
+                .attr("x", widthLegend / 2 - 11)
                 .attr("y", 12)
                 .style("text-anchor", "end")
                 .style("font-size", "13px")
-                .text("N° Malicious Packages");
+                .text("Packages");
         }
 
         function updateNumberOfAttack(newData) {
@@ -2597,7 +2597,7 @@ function drawData() {
                 if ((d.source.id === edge.source.id) && (d.target.id === edge.target.id) && (d.DestinationPort === edge.DestinationPort))
                     return "1";
                 else
-                    return "0"
+                    return "0.3"
             });
 
         select = newData.filter(function (d) {
@@ -2880,7 +2880,7 @@ function drawData() {
 
     function filterView() {
         displayElements = [];
-        if (resetLegend == true || (d3.brushSelection(d3.select(".brushLegend").node()) == null)) {
+        if (resetLegend === true || (d3.brushSelection(d3.select(".brushLegend").node()) == null)) {
             selectionLegendBegin = parseInt(legendscale.invert(-121));
             selectionLegendEnd = parseInt(legendscale.invert(55795));
 
@@ -2888,6 +2888,7 @@ function drawData() {
             selectionLegendBegin = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[0]));
             selectionLegendEnd = parseInt(legendscale.invert(d3.brushSelection(d3.select(".brushLegend").node())[1]));
         }
+        resetLegend = false;
 
         for (var i = 0; i < data.nodes.length; i++) {
 
@@ -2928,6 +2929,18 @@ function drawData() {
                     return "block";
                 else
                     return "none"
+            });
+        select = newData.filter(function (d) {
+            return (nodes.includes(d.source.id) || nodes.includes(d.target.id))
+        });
+
+        d3.selectAll(".dotDay").style("opacity", "0.3");
+        d3.selectAll(".dotDay")
+            .style("opacity", function (d) {
+                for (var i = 0; i < select.length; i++) {
+                    if ((d === select[i].Timestamp))
+                        return "1";
+                }
             });
     }
 
