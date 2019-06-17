@@ -1002,6 +1002,7 @@ function drawData() {
     update();
 
     function update() {
+        console.log(d3.selectAll('input[name="scaleType"]:checked').property("value"));
         moveProgressBar(0);
         var TargetPort = [];
         var SourceIP = [];
