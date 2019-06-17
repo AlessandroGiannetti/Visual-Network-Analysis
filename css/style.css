@@ -390,11 +390,11 @@ select {
 .containerRadio {
     display: inline;
     position: relative;
-    padding-left: 25px;
-    padding-right: 15px;
-    margin-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 40px;
+    margin-bottom: 15px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -413,8 +413,8 @@ select {
     position: absolute;
     top: 0;
     left: 0;
-    height: 18px;
-    width: 18px;
+    height: 14px;
+    width: 14px;
     background-color: #eee;
     border-radius: 50%;
 }
@@ -426,7 +426,7 @@ select {
 
 /* When the radio button is checked, add a blue background */
 .containerRadio input:checked ~ .checkmarkRadio {
-    background-color: #2196F3;
+    background-color: #007bff;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -443,10 +443,10 @@ select {
 
 /* Style the indicator (dot/circle) */
 .containerRadio .checkmarkRadio:after {
-    top: 5.5px;
-    left: 5.5px;
-    width: 7px;
-    height: 7px;
+    top: 4px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: white;
 }

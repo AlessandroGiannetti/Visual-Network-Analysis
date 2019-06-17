@@ -16,14 +16,13 @@ var
     height = 805;
 var data;
 
-var attackDay1 = new Map(), attackDay2 = new Map(), attackDay3 = new Map(), attackDay4 = new Map();
+var attackDay1 = new Map(), attackDay2 = new Map(), attackDay3 = new Map(), attackDay4 = new Map(), AllPackets = [];
 var extents;
 var MapPorts = new Map();
 var Ports = [], PortSelected = [], select;
 var resetCPA = false, resetLegend = false;
 //loading variable
 var progress, loading, segmentWidthLoading, queue = [];
-
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
 d3.json("miserables.json", function (error, JsonData) {
@@ -1001,8 +1000,15 @@ function drawData() {
     d3.selectAll(".custom-control-input").on("change", update);
     update();
 
+    d3.select("#radio").on("change", function () {
+        updateChartDay1();
+        updateChartDay2();
+        updateChartDay3();
+        updateChartDay4();
+    });
+
+
     function update() {
-        console.log(d3.selectAll('input[name="scaleType"]:checked').property("value"));
         moveProgressBar(0);
         var TargetPort = [];
         var SourceIP = [];
@@ -1897,7 +1903,12 @@ function drawData() {
         for (var j = 0; j < attackSelectedDay1.length; j++) {
             valueAttackSelectedDay1.set(attackSelectedDay1[j].Label, valueAttackSelectedDay1.get(attackSelectedDay1[j].Label) + parseInt(attackSelectedDay1[j].TotalFwdPackets));
         }
-        xScaleDay1 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay1.values())))]).range([0, widthBar]);
+        if (d3.select('input[name="scaleType"]:checked').property("value") === "local")
+            xScaleDay1 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay1.values())))]).range([0, widthBar]);
+        else if (d3.select('input[name="scaleType"]:checked').property("value") === "global") {
+            xScaleDay1 = d3.scaleLinear().domain([0, d3.max(AllPackets)]).range([0, widthBar]);
+        }
+
         var yScaleDay1 = d3.scalePoint()
             .range([svgHeightBar, 0])
             .domain(bindedDay1.map(function (d) {
@@ -2034,7 +2045,13 @@ function drawData() {
         var valueAttackSelectedDay2 = new Map();
         attackDay2 = new Map([...attackDay2.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay2 = Array.from(attackDay2);
-        xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
+
+        if (d3.select('input[name="scaleType"]:checked').property("value") === "local")
+            xScaleDay2 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay2.values())))]).range([0, widthBar]);
+        else if (d3.select('input[name="scaleType"]:checked').property("value") === "global") {
+            xScaleDay2 = d3.scaleLinear().domain([0, d3.max(AllPackets)]).range([0, widthBar]);
+        }
+
         for (var i = 0; i < bindedDay2.length; i++) {
             valueAttackSelectedDay2.set(bindedDay2[i][0], 0);
         }
@@ -2177,7 +2194,13 @@ function drawData() {
         var valueAttackSelectedDay3 = new Map();
         attackDay3 = new Map([...attackDay3.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay3 = Array.from(attackDay3);
-        xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
+
+        if (d3.select('input[name="scaleType"]:checked').property("value") === "local")
+            xScaleDay3 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay3.values())))]).range([0, widthBar]);
+        else if (d3.select('input[name="scaleType"]:checked').property("value") === "global") {
+            xScaleDay3 = d3.scaleLinear().domain([0, d3.max(AllPackets)]).range([0, widthBar]);
+        }
+
         for (var i = 0; i < bindedDay3.length; i++) {
             valueAttackSelectedDay3.set(bindedDay3[i][0], 0);
         }
@@ -2322,7 +2345,13 @@ function drawData() {
         var valueAttackSelectedDay4 = new Map();
         attackDay4 = new Map([...attackDay4.entries()].sort((a, b) => a[1] - b[1]));
         bindedDay4 = Array.from(attackDay4);
-        xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
+
+        if (d3.select('input[name="scaleType"]:checked').property("value") === "local")
+            xScaleDay4 = d3.scaleLinear().domain([0, d3.max((Array.from(attackDay4.values())))]).range([0, widthBar]);
+        else if (d3.select('input[name="scaleType"]:checked').property("value") === "global") {
+            xScaleDay4 = d3.scaleLinear().domain([0, d3.max(AllPackets)]).range([0, widthBar]);
+        }
+
         for (var i = 0; i < bindedDay4.length; i++) {
             valueAttackSelectedDay4.set(bindedDay4[i][0], 0);
         }
@@ -3005,6 +3034,7 @@ function drawData() {
                     break;
             }
         }
+        AllPackets = Array.from(attackDay1.values()).concat(Array.from(attackDay2.values())).concat(Array.from(attackDay3.values())).concat(Array.from(attackDay4.values()));
     }
 
 // built the scale for the packets
