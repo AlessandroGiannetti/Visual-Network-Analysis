@@ -1,4 +1,6 @@
 // ======= Global variable declaration =======
+//step = 0 init state else step = 1
+var step = 0;
 var
     // ScalePack of packets for link dimension
     scalePackets,
@@ -13,18 +15,14 @@ var
     width = 950,
     height = 805;
 var data;
-var step = 0;
-var attackDay1 = new Map();
-var attackDay2 = new Map();
-var attackDay3 = new Map();
-var attackDay4 = new Map();
+
+var attackDay1 = new Map(), attackDay2 = new Map(), attackDay3 = new Map(), attackDay4 = new Map();
 var extents;
 var MapPorts = new Map();
-var Ports = [];
-var PortSelected = [];
-var resetCPA = false;
-var select;
-var resetLegend = false;
+var Ports = [], PortSelected = [], select;
+var resetCPA = false, resetLegend = false;
+//loading variable
+var progress, loading, segmentWidthLoading, queue = [];
 
 // ======= Fine Global variable declaration=======
 // extraction of the dataset from the file
@@ -35,11 +33,6 @@ d3.json("miserables.json", function (error, JsonData) {
 });
 totPackets = 0;
 
-var progress;
-var loading;
-var segmentWidthLoading;
-var queue = [];
-
 function showWorking() {
     segmentWidthLoading = 40;
 
@@ -49,7 +42,6 @@ function showWorking() {
         .attr("class", "loading")
         .attr('height', 50)
         .attr('width', 15);
-
 
     loading.append('rect')
         .attr('class', 'bg-rect')
@@ -71,7 +63,6 @@ function showWorking() {
     progress.transition()
         .duration(10)
         .attr('width', segmentWidthLoading);
-
 }
 
 function moveProgressBar(value) {
@@ -100,12 +91,10 @@ function moveProgressBar(value) {
     }
 }
 
-
 function drawData() {
     d3.selectAll().remove();
     showWorking();
     drawSelect(true, data.links);
-
 
     // Node scatterplot without duplicates
     DOTdestination = new Map();
@@ -269,7 +258,6 @@ function drawData() {
     handle3.attr('transform', 'translate(0,0)');
     handle4.attr('transform', 'translate(' + widthSlider + ",0)");
 
-
     // ================= FINE SLIDER GIORNO 5/7/2017 =========================
     // ====================== SLIDER GIORNO 6/7/2017 =========================
     var timeScale3 = d3.scaleTime()
@@ -344,7 +332,6 @@ function drawData() {
     handle5.attr('transform', 'translate(0,0)');
     handle6.attr('transform', 'translate(' + widthSlider + ",0)");
 
-
     // ================= FINE SLIDER GIORNO 6/7/2017 =========================
     // ====================== SLIDER GIORNO 7/7/2017 =========================
 
@@ -352,7 +339,6 @@ function drawData() {
         .domain([new Date(moment("07/07/2017 09:00", 'MMDDYYYY HH:mm')), new Date(moment("07/07/2017 17:00", 'MMDDYYYY HH:mm'))])
         .range([0, widthSlider])
         .clamp(true);
-
 
     var svgSlider4 = d3.select("#controller4").append("svg")
         .attr("width", widthSlider + marginSlider.left + marginSlider.right)
@@ -422,7 +408,6 @@ function drawData() {
     handle7.attr('transform', 'translate(0,0)');
     handle8.attr('transform', 'translate(' + widthSlider + ",0)");
 
-
     function upgradeDay1() {
         // EVENT LISTENER SLIDER 1 DATA 4/7/2017
         selection1 = d3.brushSelection(d3.select(".brush1").node());
@@ -466,7 +451,6 @@ function drawData() {
         text1.text(formatDate(timeScale1.invert(selection1[0])));
         handle2.attr('transform', 'translate(' + selection1[1] + ",0)");
         text2.text(formatDate(timeScale1.invert(selection1[1])));
-
     }
 
     function resetDay2() {
@@ -476,7 +460,6 @@ function drawData() {
         text3.text(formatDate(timeScale2.invert(selection2[0])));
         handle4.attr('transform', 'translate(' + selection2[1] + ",0)");
         text4.text(formatDate(timeScale2.invert(selection2[1])));
-
     }
 
     function resetDay3() {
@@ -486,7 +469,6 @@ function drawData() {
         text5.text(formatDate(timeScale3.invert(selection3[0])));
         handle6.attr('transform', 'translate(' + selection3[1] + ",0)");
         text6.text(formatDate(timeScale3.invert(selection3[1])));
-
     }
 
     function resetDay4() {
@@ -496,7 +478,6 @@ function drawData() {
         text7.text(formatDate(timeScale4.invert(selection4[0])));
         handle8.attr('transform', 'translate(' + selection4[1] + ",0)");
         text8.text(formatDate(timeScale4.invert(selection4[1])));
-
     }
 
     function drawScatterPlotDay1() {
@@ -517,7 +498,7 @@ function drawData() {
         day1Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay1 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay1 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 15;
         svgSlider1.selectAll(".dot")
@@ -563,7 +544,7 @@ function drawData() {
         day2Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay2 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay2 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 15;
         svgSlider2.selectAll(".dot")
@@ -606,7 +587,7 @@ function drawData() {
         day3Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay3 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay3 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 15;
         svgSlider3.selectAll(".dot")
@@ -649,7 +630,7 @@ function drawData() {
         day4Dot = Array.from(g2.keys()).sort(function (a, b) {
             return new Date(a) - new Date(b);
         });
-        colorScaleDay4 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(Array.from(g2.values()))]);
+        colorScaleDay4 = d3.scaleSequential(d3.interpolateViridis).domain([0, d3.max(Array.from(g2.values()))]);
 
         var i = 15;
         svgSlider4.selectAll(".dot")
@@ -818,9 +799,7 @@ function drawData() {
         line = d3.line();
     var svgCPA;
 
-
     // ================= FINE DICHIARAZIONI CPA ==================================
-
     // building the map packet
     buildMapPacket(data.links);
     // building the scale packet
