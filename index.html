@@ -89,6 +89,17 @@
             </div>
         </div>
         <div class="w-20 pt-0  d-inline-block">
+            <div id="radio">
+                <label class="containerRadio">Local scale
+                    <input type="radio" checked="checked" name="radio" id="local">
+                    <span class="checkmarkRadio"></span>
+                </label>
+                <label class="containerRadio">Global scale
+                    <input type="radio" name="radio" id="global">
+                    <span class="checkmarkRadio"></span>
+                </label>
+            </div>
+
             <div class="p-0 d-block" id="barchartDay1"></div>
             <div class="p-0 d-block" id="barchartDay2"></div>
             <div class="p-0 d-block" id="barchartDay3"></div>
@@ -98,14 +109,7 @@
         </div>
     </div>
 </div>
-<div>
-  <div class="w-20 pt-0  d-inline-block">
-    <form>
-      <input type="radio" name="scale" id="local">Local
-      <input type="radio" name="scale" id="global">Global
-    </form>
-  </div>
-</div>
+
 <script>
     $(document).ready(function () {
         $(document).keydown(function (event) {

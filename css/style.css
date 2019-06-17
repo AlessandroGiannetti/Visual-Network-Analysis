@@ -150,7 +150,6 @@ svg {
     stroke-width: 0.4;
     stroke-opacity: 0.8;
     stroke: black;
-
 }
 
 #day1, #day2, #day3, #day4 {
@@ -377,4 +376,77 @@ svg {
 /* chrome display menulist boostrap select*/
 select {
     -webkit-appearance: menulist;
+}
+
+/* radio button style*/
+
+#radio {
+    position: absolute;
+    left: 575px;
+    top: 470px;
+}
+
+/* The container */
+.containerRadio {
+    display: inline;
+    position: relative;
+    padding-left: 25px;
+    padding-right: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.containerRadio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmarkRadio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.containerRadio:hover input ~ .checkmarkRadio {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.containerRadio input:checked ~ .checkmarkRadio {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmarkRadio:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.containerRadio input:checked ~ .checkmarkRadio:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.containerRadio .checkmarkRadio:after {
+    top: 5.5px;
+    left: 5.5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: white;
 }
