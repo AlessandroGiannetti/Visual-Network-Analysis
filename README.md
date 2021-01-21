@@ -10,7 +10,7 @@ Lastly, we can observe a scatterplot, where we want to highlight the IP address 
 As we stated previously, in the graph we can see the nodes where they identify an IP address. We have decided to represent the dataset in this way because personally, we thought it was the best solution: using a bipartite graph enables us to identify who are the attackers and who are the victims. In general, all the networks are represented by a union of nodes and links which we can easily pinpoint a source and a target in the communication; the links demonstrate the dialogue between the two parties. In our case, we have drawn three layers: in the first one, we have assigned the attackers; in the second one, we noticed that some IP addresses receive packets but also distributes them, which clearly states a firewall; the third one, we have placed the target of the attacks.
 These nodes assume a colour (from violet to yellow) which change depending on how many packets they send and receive. If one scroll over them they can understand that there is a clear line of communication between the nodes.
 They are connected by a link, which describes the link between the two IP addresses and the results.
-### 1.2	PCA
+### 1.2	PARALLEL COORDINATES
 Given that we have seven features, we draw this plot to have an overview of the situation. We have four axes, one of them describes the following features: Source, Destination Port, Target and Label.
 Each tuple in the dataset has been represented by a line, where this line intersects a specific value of these four axes.
 ### 1.3	Timestamp & Bar Chart
